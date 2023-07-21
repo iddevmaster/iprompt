@@ -111,17 +111,27 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <i class="bi bi-building-check"></i>
-                                <p class="icon-title">นโยบาย</p>
+                                <a class="a-tag" href="/tables/policyTable">
+                                    <div class="w-100 h-100">
+                                        <i class="bi bi-building-check"></i>
+                                        <p class="icon-title">นโยบาย</p>
+                                    </div>
+                                </a>
                             </div>
                             <div class="col">
-                                <i class="bi bi-briefcase"></i>
-                                <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
+                                <a class="a-tag" href="/tables/sopTable">
+                                    <div class="w-100 h-100">
+                                        <i class="bi bi-briefcase"></i>
+                                        <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
+                                    </div>
+                                </a>
                             </div>
                             <div class="col">
                                 <a class="a-tag" href="/tables/wiTable">
-                                    <i class="bi bi-clipboard-check"></i>
-                                    <p class="icon-title">มาตรฐานขั้นตอนการปฏิบัติงาน</p>
+                                    <div class="w-100 h-100">
+                                        <i class="bi bi-clipboard-check"></i>
+                                        <p class="icon-title">มาตรฐานขั้นตอนการปฏิบัติงาน</p>
+                                    </div>
                                 </a>
                             </div>
                         </div>

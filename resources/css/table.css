@@ -8,3 +8,11 @@ i {
     -ms-transform: scale(1.5); /* IE 9 */
     transform: scale(1.2); 
 }
+.a-tag {
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+.export:hover a{
+    color: pink;
+}
+

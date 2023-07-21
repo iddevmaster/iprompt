@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\gendoc;
+use App\Models\User;
 
 class TablesController extends Controller
 {
@@ -26,6 +28,23 @@ class TablesController extends Controller
         
     }
     public function wiTable() {
-        return view('/tables/wiTable');
+        $gendoc = gendoc::where('type', 'wiForm')->get();
+        $user = User::all();
+        // dd($gendoc);
+        return view('/tables/wiTable', compact('gendoc', 'user'));
+    }
+
+    public function sopTable() {
+        $gendoc = gendoc::where('type', 'sopForm')->get();
+        $user = User::all();
+        // dd($gendoc);
+        return view('/tables/sopTable', compact('gendoc', 'user'));
+    }
+
+    public function policyTable() {
+        $gendoc = gendoc::where('type', 'policyForm')->get();
+        $user = User::all();
+        // dd($gendoc);
+        return view('/tables/policyTable', compact('gendoc', 'user'));
     }
 }
