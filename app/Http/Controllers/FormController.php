@@ -31,23 +31,27 @@ class FormController extends Controller
     }
     public function wiForm()
     {
+        $len = gendoc::where('type', 'wiForm')->count()+1;
         $class = 0;
-        return view('/forms/wiForm', compact('class'));
+        return view('/forms/wiForm', compact('class','len'));
     }
     public function sopForm()
     {
+        $len = gendoc::where('type', 'sopForm')->count()+1;
         $class = 0;
-        return view('/forms/sopForm', compact('class'));
+        return view('/forms/sopForm', compact('class', 'len'));
     }
     public function policyForm()
     {
+        $len = gendoc::where('type', 'policyForm')->count()+1;
         $class = 0;
-        return view('/forms/policyForm', compact('class'));
+        return view('/forms/policyForm', compact('class', 'len'));
     }
     public function annoForm()
     {
+        $len = announce_doc::all()->count()+1;
         $class = 0;
-        return view('/forms/annoForm', compact('class'));
+        return view('/forms/annoForm', compact('class', 'len'));
     }
     public function projForm()
     {
@@ -61,7 +65,7 @@ class FormController extends Controller
     }
     public function preview(Request $request)
     {
-        
+        // dd($request);
         if ($request->input('submit') === "preview") {
             $request->validate([
                 'myInput'=>'required'
@@ -107,11 +111,12 @@ class FormController extends Controller
                 return view('/forms/'.$formtype, compact( 'annNo','signName', 'signPosition','annoDate', 'useDate', 'editorContent','subject','class'));
             }
             else {
+                $bookNo = $request->input('bookNo');
                 $subject = $request->input('subject');
                 $creater = $request->input('creater');
                 $inspector = $request->input('inspector');
                 $approver = $request->input('approver');
-                return view('/forms/'.$formtype, compact( 'editorContent', 'approver', 'inspector', 'creater','subject','class'));
+                return view('/forms/'.$formtype, compact( 'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
             }
         }
         else{
@@ -170,8 +175,7 @@ class FormController extends Controller
         }   
         else{
             $gendoc = new gendoc;
-
-            $gendoc->book_num = "0000";
+            $gendoc->book_num = $request->bookNo;
             $gendoc->submit_by = $request->user()->id;
             $gendoc->created_date = date('Y-m-d');
             $gendoc->type = $request->formtype;

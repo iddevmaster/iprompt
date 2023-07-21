@@ -36,10 +36,27 @@
                         
                     </div>
                     <div class="col pt-2">
-                        <p class="text-start mb-0">เลขที่เอกสาร</p>
-                        <p class="text-start mb-0">แก้ไขครั้งที่</p>
-                        <p class="text-start mb-0">วันที่บังคับใช้</p>
-                        <p class="text-start">หน้าที่</p>
+                        @if ($class)
+                            <p class="text-start mb-0">เลขที่เอกสาร {{$bookNo}}</p>
+                            <input type="hidden" name="bookNo" value="{{$bookNo}}">
+                            <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
+                            <p class="text-start mb-0">วันที่บังคับใช้ <?php echo date('Y/m/d') ?></p>
+                            <p class="text-start">หน้าที่</p>
+                        @else
+                            <p class="text-start mb-0">เลขที่เอกสาร <span id="currentYear"></span></p>
+                            <input type="hidden" name="bookNo" value="">
+                            <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
+                            <p class="text-start mb-0">วันที่บังคับใช้ <?php echo date('Y/m/d') ?></p>
+                            <p class="text-start">หน้าที่</p>
+
+                            <script>
+                                // Get the current date
+                                var currentDate = new Date();
+                                var currentYear = currentDate.getFullYear()+543;
+                                document.getElementById("currentYear").innerText = "SOP0{{$len}}/"+currentYear;
+                                document.getElementsByName('bookNo')[0].value = "SOP0{{$len}}/"+currentYear;
+                            </script>
+                        @endif
                     </div>
                 </div><!-- end header row 1 -->
 

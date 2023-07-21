@@ -38,7 +38,7 @@
                             <td>{{$counter}}</td>
                             <td>{{ $row->book_num}}</td>
                             <td>{{ $row->bcreater}}</td>
-                            <td>{{ $row->title}}</td>
+                            <td class="truncate">{{ $row->title}}</td>
                             <td>{{ $row->created_date}}</td>
                             <td>
                                 @php

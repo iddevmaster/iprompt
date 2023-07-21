@@ -29,8 +29,15 @@
                         <h5 class="fw-bold">ประกาศที่ <span class="fw-normal">{{ $annNo }}</span></h5>
                         <input type="hidden" name="annNo" value="{{$annNo}}">
                     @else
-                        <h5 class="fw-bold">ประกาศที่ <input type="text" value="AN01/ITI66" name="annNo" readonly></h5>
+                        <h5 class="fw-bold">ประกาศที่ <input type="text" value="" name="annNo" readonly></h5>
+                        <script>
+                            // Get the current date
+                            var currentDate = new Date();
+                            var currentYear = currentDate.getFullYear()+543;
+                            document.getElementsByName('annNo')[0].value = "AN0{{$len}}/"+currentYear;
+                        </script>
                     @endif
+                        
                     
                     @if ($class)
                         <h5 class="text-start mt-3 ms-2 " id="subject"><b>เรื่อง</b> {{$subject}}</h5>

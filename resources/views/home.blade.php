@@ -97,16 +97,28 @@
 
                         <div class="row mb-2 justify-content-around">
                             <div class="col">
-                                <i class="bi bi-pen"></i>
-                                <p class="icon-title">บันทึกข้อตกลงความร่วมมือ</p>  
+                                <a class="a-tag" href="{{ route('mouTable') }}">
+                                    <div class="w-100 h-100">
+                                        <i class="bi bi-pen"></i>
+                                        <p class="icon-title">บันทึกข้อตกลงความร่วมมือ</p> 
+                                    </div>
+                                </a> 
                             </div>
                             <div class="col">
-                                <i class="bi bi-archive"></i>
-                                <p class="icon-title">โครงการ</p>
+                                <a class="a-tag" href="{{ route('projTable') }}">
+                                    <div class="w-100 h-100">
+                                        <i class="bi bi-archive"></i>
+                                        <p class="icon-title">โครงการ</p>
+                                    </div>
+                                </a>
                             </div>
                             <div class="col">
-                                <i class="bi bi-megaphone"></i>
-                                <p class="icon-title">ประกาศ</p>
+                                <a class="a-tag" href="{{ route('annoTable') }}">
+                                    <div class="w-100 h-100">
+                                        <i class="bi bi-megaphone"></i>
+                                        <p class="icon-title">ประกาศ</p>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <div class="row">

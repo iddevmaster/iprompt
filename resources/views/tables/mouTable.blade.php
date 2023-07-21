@@ -6,7 +6,7 @@
 @section('content')
 <body>
     <div class="container">
-        <div class="text-center"><h2>SOP Table</h2></div>
+        <div class="text-center"><h2>Mou Table</h2></div>
         <div class="d-flex">
             <div class="flex-grow-1"><input type="text" id="searchInput" class="form-control mb-2" placeholder="Search..."></div>
             <div class="p-1 ms-2 export"><a class="a-tag" href=""><i class="bi bi-file-earmark-arrow-down"></i></a></div>
@@ -19,8 +19,6 @@
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Book_num</th>
-                        <th scope="col">Creater</th>
                         <th scope="col">Subject</th>
                         <th scope="col">Created_date</th>
                         <th scope="col">Submit_by</th>
@@ -36,8 +34,6 @@
                     @foreach ($gendoc as $row)
                         <tr>
                             <td>{{$counter}}</td>
-                            <td>{{ $row->book_num}}</td>
-                            <td>{{ $row->bcreater}}</td>
                             <td class="truncate">{{ $row->title}}</td>
                             <td>{{ $row->created_date}}</td>
                             <td>
