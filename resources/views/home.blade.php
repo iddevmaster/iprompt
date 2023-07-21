@@ -119,8 +119,10 @@
                                 <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
                             </div>
                             <div class="col">
-                                <i class="bi bi-clipboard-check"></i>
-                                <p class="icon-title">มาตรฐานขั้นตอนการปฏิบัติงาน</p>
+                                <a class="a-tag" href="/tables/wiTable">
+                                    <i class="bi bi-clipboard-check"></i>
+                                    <p class="icon-title">มาตรฐานขั้นตอนการปฏิบัติงาน</p>
+                                </a>
                             </div>
                         </div>
                         

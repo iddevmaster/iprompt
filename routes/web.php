@@ -29,3 +29,6 @@ Route::get('/form/annoForm', [App\Http\Controllers\FormController::class, 'annoF
 Route::get('/form/projForm', [App\Http\Controllers\FormController::class, 'projForm'])->name('projForm');
 Route::get('/form/mouForm', [App\Http\Controllers\FormController::class, 'mouForm'])->name('mouForm');
 Route::post('/form/preview', [App\Http\Controllers\FormController::class, 'preview'])->name('preview');
+
+// Table
+Route::get('/tables/wiTable', [App\Http\Controllers\TablesController::class, 'wiTable'])->name('wiTable');

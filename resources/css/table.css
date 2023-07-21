@@ -1,0 +1,10 @@
+i {
+    font-size: 30px;
+}
+.export{
+    transition: transform .2s;
+}
+.export:hover{
+    -ms-transform: scale(1.5); /* IE 9 */
+    transform: scale(1.2); 
+}
