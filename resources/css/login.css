@@ -1,0 +1,67 @@
+
+
+body{
+    /* background: rgb(238,174,202);
+    background: linear-gradient(90deg, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%); */
+    font-family: 'Sarabun';
+    background-image: url('public/img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.row{
+    height: inherit;
+}
+.form-control{
+    background-color: rgba(255, 255, 0255, 0.3);
+    border: none;
+    border-radius: 20px;
+    height: 45px;
+    font-size: medium;
+}
+
+
+#submitBtn{
+    /* background-color: pink; */
+    width: 100%;
+    height: 45px;
+    border: 2px solid pink;
+    color: pink;
+    border-radius: 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+#submitBtn:hover{
+    background-color: pink;
+    color: white;
+}
+input{
+    margin: 0px !important;
+}
+form{
+    width: 300px;
+}
+h2{
+    font-size: 40px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+h4{
+    font-size: 25px;
+    font-weight: bold;
+}
+#togglePasswordBtn{
+    background-color: rgba(255, 255, 0255, .5);
+    width: 60px;
+    border-radius: 0 20px 20px 0;
+}
+#togglePasswordBtn:hover{
+    background-color: pink;
+}
