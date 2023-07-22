@@ -42,12 +42,12 @@
                         
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
-                                    <li><a class="dropdown-item" href="{{ route('mouForm') }}">บันทึกข้อตกลงความร่วมมือ</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('mouForm') }}">MOU</a></li>
                                     <li><a class="dropdown-item" href="{{ route('projForm') }}">โครงการ</a></li>
                                     <li><a class="dropdown-item" href="{{ route('annoForm') }}">ประกาศ</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('policyForm') }}">นโยบาย</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('sopForm') }}">ระเบียบการปฏิบัติงาน</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('wiForm') }}">มาตรฐานขั้นตอนการปฏิบัติงาน</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('policyForm') }}">Policy</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('sopForm') }}">SOP</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('wiForm') }}">WI</a></li>
                                 </div>
                             </ul>
                         </li>
@@ -58,12 +58,12 @@
                         
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
-                                    <li><a class="dropdown-item" href="#">บันทึกข้อตกลงความร่วมมือ</a></li>
+                                    <li><a class="dropdown-item" href="#">MOU</a></li>
                                     <li><a class="dropdown-item" href="#">โครงการ</a></li>
                                     <li><a class="dropdown-item" href="#">ประกาศ</a></li>
-                                    <li><a class="dropdown-item" href="#">นโยบาย</a></li>
-                                    <li><a class="dropdown-item" href="#">ระเบียบการปฏิบัติงาน</a></li>
-                                    <li><a class="dropdown-item" href="#">มาตรฐานขั้นตอนการปฏิบัติงาน</a></li>
+                                    <li><a class="dropdown-item" href="#">Policy</a></li>
+                                    <li><a class="dropdown-item" href="#">SOP</a></li>
+                                    <li><a class="dropdown-item" href="#">WI</a></li>
                                 </div>
                             </ul>
                         </li>

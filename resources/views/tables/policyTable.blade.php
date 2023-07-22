@@ -47,10 +47,10 @@
                                 @endphp
                             </td>
                             <td>
-                            <button type="button" class="btn btn-warning">Edit</button>
+                                <a href="{{url('/form/editpol/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
                             </td>
                             <td>
-                            <button type="button" class="btn btn-primary">Download</button>
+                                <a href="{{url('/form/downloadpol/'.$row->id)}}"><button type="button" class="btn btn-primary">Download</button></a>
                             </td>
                         </tr>
                         <?php $counter++ ?>

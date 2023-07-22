@@ -187,4 +187,133 @@ class FormController extends Controller
             $gendoc->save();
         }
     }
+
+    // Function for edit form
+    public function editFormwi(Request $request,$id){
+        
+        $form = gendoc::find($id);
+        // dd($form->title);
+        return view('/editForms/wiForm', compact('form'));
+    }
+
+    // Function for download form
+    public function downloadFormwi(Request $request,$id){
+        dd($id);
+    }
+
+    // Function for edit form
+    public function editFormsop(Request $request,$id){
+        $form = gendoc::find($id);
+        // dd($form->title);
+        return view('/editForms/sopForm', compact('form'));
+    }
+
+    // Function for download form
+    public function downloadFormsop(Request $request,$id){
+        dd($id);
+    }
+
+    // Function for edit form
+    public function editFormproj(Request $request,$id){
+        $form = project_doc::find($id);
+        return view('/editForms/projForm', compact('form'));
+    }
+
+    // Function for download form
+    public function downloadFormproj(Request $request,$id){
+        dd($id);
+    }
+
+    // Function for edit form
+    public function editFormpol(Request $request,$id){
+        $form = gendoc::find($id);
+        // dd($form->title);
+        return view('/editForms/policyForm', compact('form'));
+    }
+
+    // Function for download form
+    public function downloadFormpol(Request $request,$id){
+        dd($id);
+    }
+
+    // Function for edit form
+    public function editFormmou(Request $request,$id){
+        $form = mou_doc::find($id);
+        dd($form);
+        return view('/editForms/mouForm', compact('form'));
+    }
+
+    // Function for download form
+    public function downloadFormmou(Request $request,$id){
+        dd($id);
+    }
+
+    // Function for edit form
+    public function editFormanno(Request $request,$id){
+        $form = announce_doc::find($id);
+        return view('/editForms/annoForm', compact('form'));
+    }
+
+    // Function for download form
+    public function downloadFormanno(Request $request,$id){
+        dd($id);
+    }
+
+    public function update(Request $request) {
+        if ($request->formtype === "annoForm") {
+            $form = announce_doc::find($request->formid);
+            if ($form) {
+                // Row with id found, update data
+                $form->title = $request->subject;
+                $form->detail = $request->myInput;
+                $form->use_date = $request->useDate;
+                $form->anno_date = $request->annoDate;
+                $form->sign_name = $request->signName;
+                $form->sign_position = $request->signPosition;
+                $form->edit_count++;
+                $form->save();
+            }
+            return redirect('/tables/annoTable');
+        }
+        elseif ($request->formtype === "mouForm") {
+
+        }
+        elseif ($request->formtype === "projForm") {
+            $form = project_doc::find($request->formid);
+            if ($form) {
+                // Row with id found, update data
+                $form->title = $request->projName;
+                $form->detail = $request->myInput;
+                $form->proj_code = $request->projNo;
+                $form->edit_count++;
+                $form->save();
+            }
+            return redirect('/tables/projTable');
+        }
+        else {
+            $form = gendoc::find($request->formid);
+            if ($form) {
+                // Row with id found, update data
+                $form->title = $request->subject;
+                $form->bcreater = $request->creater;
+                $form->binspector = $request->inspector;
+                $form->bapprover = $request->approver;
+                $form->detail = $request->myInput;
+                $form->edit_count++;
+                $form->save();
+            }
+            
+            if ($request->formtype === "wiForm") {
+                return redirect('/tables/wiTable');
+            } elseif ($request->formtype === "sopForm") {
+                return redirect('/tables/sopTable');
+            } else {
+                return redirect('/tables/policyTable');
+            }
+            
+        }
+        
+        
+    }
+    
 }

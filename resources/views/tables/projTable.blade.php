@@ -45,10 +45,10 @@
                                 @endphp
                             </td>
                             <td>
-                            <button type="button" class="btn btn-warning">Edit</button>
+                                <a href="{{url('/form/editproj/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button>
                             </td>
                             <td>
-                            <button type="button" class="btn btn-primary">Download</button>
+                                <a href="{{url('/form/downloadproj/'.$row->id)}}"><button type="button" class="btn btn-primary">Download</button></a>
                             </td>
                         </tr>
                         <?php $counter++ ?>

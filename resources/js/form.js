@@ -125,6 +125,7 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
     myEditor = editor;
 } )
 .catch( err => {
+    console.error(error);
 } );
 
 // add input buttom

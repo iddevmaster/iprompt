@@ -43,10 +43,10 @@
                                 @endphp
                             </td>
                             <td>
-                            <button type="button" class="btn btn-warning">Edit</button>
+                                <a href="{{url('/form/editmou/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
                             </td>
                             <td>
-                            <button type="button" class="btn btn-primary">Download</button>
+                                <a href="{{url('/form/downloadmou/'.$row->id)}}"><button type="button" class="btn btn-primary">Download</button></a>
                             </td>
                         </tr>
                         <?php $counter++ ?>

@@ -30,7 +30,7 @@
                                 <a class="a-tag" href="{{ route('mouForm') }}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-pen"></i>
-                                        <p class="icon-title">บันทึกข้อตกลงความร่วมมือ</p>
+                                        <p class="icon-title">MOU</p>
                                     </div>
                                 </a>  
                             </div>
@@ -56,7 +56,7 @@
                                 <a class="a-tag" href="{{ route('policyForm') }}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-building-check"></i>
-                                        <p class="icon-title">นโยบาย</p>
+                                        <p class="icon-title">Policy</p>
                                     </div>
                                 </a>
                             </div>
@@ -64,7 +64,7 @@
                                 <a class="a-tag" href="{{ route('sopForm') }}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-briefcase"></i>
-                                        <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
+                                        <p class="icon-title">SOP</p>
                                     </div>
                                 </a>
                             </div>
@@ -72,7 +72,7 @@
                                 <a class="a-tag" href="{{ route('wiForm') }}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-clipboard-check"></i>
-                                        <p class="icon-title">มาตรฐานขั้นตอนการปฏิบัติงาน</p>
+                                        <p class="icon-title">WI</p>
                                     </div>
                                 </a>
                             </div>
@@ -100,7 +100,7 @@
                                 <a class="a-tag" href="{{ route('mouTable') }}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-pen"></i>
-                                        <p class="icon-title">บันทึกข้อตกลงความร่วมมือ</p> 
+                                        <p class="icon-title">MOU</p> 
                                     </div>
                                 </a> 
                             </div>
@@ -126,7 +126,7 @@
                                 <a class="a-tag" href="/tables/policyTable">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-building-check"></i>
-                                        <p class="icon-title">นโยบาย</p>
+                                        <p class="icon-title">Policy</p>
                                     </div>
                                 </a>
                             </div>
@@ -134,7 +134,7 @@
                                 <a class="a-tag" href="/tables/sopTable">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-briefcase"></i>
-                                        <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
+                                        <p class="icon-title">SOP</p>
                                     </div>
                                 </a>
                             </div>
@@ -142,7 +142,7 @@
                                 <a class="a-tag" href="/tables/wiTable">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-clipboard-check"></i>
-                                        <p class="icon-title">มาตรฐานขั้นตอนการปฏิบัติงาน</p>
+                                        <p class="icon-title">WI</p>
                                     </div>
                                 </a>
                             </div>
