@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth/login');
 });
+Route::get('/register', [App\Http\Controllers\HomeController::class, 'register'])->name('register');
 
 Auth::routes();
 
@@ -62,3 +63,6 @@ Route::get('/form/downloadanno/{id}',[App\Http\Controllers\FormController::class
 
 // Update form
 Route::post('/form/update', [App\Http\Controllers\FormController::class, 'update'])->name('update');
+
+// Download form
+Route::get('/export-pdf', [App\Http\Controllers\TablesController::class, 'exportPDF'])->name('export.pdf');
