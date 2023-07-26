@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<?php $regData = \App\CoreFunction\Helper::regData();
+?>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -60,6 +62,68 @@
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                             </div>
                         </div>
+
+                        <div class="row mb-3">
+                            <label class="col-md-4 col-form-label text-md-end">{{ __('Agency') }}</label>
+
+                            <div class="col-md-6">
+                                <select class="form-select" aria-label="Default select example" name="agency">
+                                    <option disabled selected>Please select agency</option>
+                                    @foreach ($regData['agencie'] as $data)
+                                        <option value="{{$data->id}}">{{$data->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-md-4 col-form-label text-md-end">{{ __('Branch') }}</label>
+
+                            <div class="col-md-6">
+                                <select class="form-select" aria-label="Default select example" name="branch">
+                                    <option disabled selected>Please select branch</option>
+                                    @foreach ($regData['branche'] as $data)
+                                        <option value="{{$data->id}}">{{$data->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-md-4 col-form-label text-md-end">{{ __('Department') }}</label>
+
+                            <div class="col-md-6">
+                                <select class="form-select" aria-label="Default select example" name="dpm">
+                                    <option disabled selected>Please select department</option>
+                                    @foreach ($regData['department'] as $data)
+                                        <option value="{{$data->id}}">{{$data->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-md-4 col-form-label text-md-end">{{ __('Phone') }}</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="phone" >
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-md-4 col-form-label text-md-end">{{ __('Role') }}</label>
+
+                            <div class="col-md-6">
+                                <select class="form-select" aria-label="Default select example" name="role">
+                                    <option disabled selected>Please select role</option>
+                                    @foreach ($regData['role'] as $data)
+                                        <option value="{{$data->id}}">{{$data->role_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        
 
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">

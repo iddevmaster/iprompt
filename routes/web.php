@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('auth/login');
 });
-Route::get('/register', [App\Http\Controllers\HomeController::class, 'register'])->name('register');
 
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/register', [App\Http\Controllers\HomeController::class, 'register'])->name('register');
 
 // Form
 Route::get('/form/wiForm', [App\Http\Controllers\FormController::class, 'wiForm'])->name('wiForm');

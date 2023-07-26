@@ -1,5 +1,6 @@
 body {
     font-family: 'Sarabun', sans-serif;
+    background-color: rgb(242, 255, 255);
 }
 
 #brand{
@@ -11,3 +12,58 @@ body {
     background-color: pink;
     color: white;
 }
+
+:root{
+    --bs-dark: rgb(242, 255, 255);
+  }
+  
+  .theme-container {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+  }
+  
+  .theme-container:hover {
+    opacity: 0.8;
+  }
+  
+  @keyframes change {
+    0% {
+      transform: scale(1);
+    }
+  
+    100% {
+      transform: scale(1.4);
+    }
+  }
+  
+  .change {
+    animation-name: change;
+    animation-duration: 1s;
+    animation-direction: alternate;
+  }
+  .bi-moon-stars{
+    color: white;
+  }
+  .nav-light{
+    background-color: white;
+    color: black;
+  }
+
+  .nav-dark{
+    background-color: black;
+    color: white;
+  }
+  .nav-dark .navbarMenu{
+    color: white;
+  }
+  .nav-dark .navbarMenu:hover{
+    color: pink;
+  }

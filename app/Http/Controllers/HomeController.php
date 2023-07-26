@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\agencie;
+use App\Models\branche;
+use App\Models\department;
+use App\Models\role;
 
 class HomeController extends Controller
 {
