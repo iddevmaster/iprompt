@@ -58,12 +58,12 @@
                         
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
-                                    <li><a class="dropdown-item" href="#">MOU</a></li>
-                                    <li><a class="dropdown-item" href="#">โครงการ</a></li>
-                                    <li><a class="dropdown-item" href="#">ประกาศ</a></li>
-                                    <li><a class="dropdown-item" href="#">Policy</a></li>
-                                    <li><a class="dropdown-item" href="#">SOP</a></li>
-                                    <li><a class="dropdown-item" href="#">WI</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('mouTable') }}">MOU</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('projTable') }}">โครงการ</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('annoTable') }}">ประกาศ</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('policyTable') }}">Policy</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('sopTable') }}">SOP</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('wiTable') }}">WI</a></li>
                                 </div>
                             </ul>
                         </li>
