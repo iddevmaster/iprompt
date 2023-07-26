@@ -1,4 +1,6 @@
 @extends('layouts.app')
+<script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script>
+@vite(['resources/css/form.css' , 'resources/js/form.js'])
 
 @section('content')
 <body>
@@ -124,9 +126,6 @@
     </form>
 </body>
 <!-- Scripts -->
-<script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script>
-@vite(['resources/css/form.css' , 'resources/js/form.js'])
-<script src="{{ asset('js/html2pdf.bundle.min.js') }}"></script>
 
 
 @endsection

@@ -60,7 +60,7 @@
 
         <div class="d-flex justify-content-center ">
                 <a href="#" onclick="goBack()"><button type="button" class="btn btn-secondary">cancle</button></a>
-                <button type="submit" id="preview-btn" class="btn btn-success ms-2" >Preview</button>
+                <button type="submit" id="preview-btn" class="btn btn-success ms-2" >Save</button>
             <script>
                 function goBack() {
                     window.history.go(-1);
