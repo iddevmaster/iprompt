@@ -1,7 +1,16 @@
 @extends('layouts.app')
 <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script>
 @vite(['resources/css/form.css' , 'resources/js/form.js'])
-
+<style>
+.a4lan-container {
+    width: 297mm; /* Width of A4 paper in millimeters */
+    min-height: 210mm; /* Height of A4 paper in millimeters */
+    margin: 0 auto; /* Center the container horizontally */
+    background-color: white;
+    position: relative; /* Required for footer positioning */
+    padding: 1cm;
+}
+</style>
 @section('content')
 <body>
     <div class="text-center my-4">
