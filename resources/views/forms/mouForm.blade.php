@@ -15,15 +15,19 @@
 
             <!-- header -->
             <div class="header d-flex flex-column justify-content-center text-center align-items-center">
+                <img src="{{ asset('dist/img/logoiddrives.png') }}" height="60">
                 <p class="mb-1 fw-bold">บันทึกข้อตกลงความร่วมมือ</p>
                 
                 @if ($class)
+                <p class="text-end w-100">เลขที่ {{$mou_num}}</p>
+                <input type="hidden" name="mou_num" value="{{$mou_num}}">
                     <div class="d-flex">
                         <p class="fw-bold mb-1">เรื่อง</p>
                         <div class="text-start mb-1 ms-2" style="font-size: 16px;">{{$subject}}</div>
                         <input type="hidden" name="subject" value="{{$subject}}">
                     </div>
                 @else
+                    <p class="text-end w-100">เลขที่ <input class="" type="text" value="MOU0{{$len ?? 0}}/2566" name="mou_num" readonly></p>
                     <p class="no-wrap w-100">เรื่อง <input class="ms-2" type="text" name="subject" id="" required></p>
                 @endif
 

@@ -39,6 +39,7 @@ Route::get('/tables/policyTable', [App\Http\Controllers\TablesController::class,
 Route::get('/tables/annoTable', [App\Http\Controllers\TablesController::class, 'annoTable'])->name('annoTable');
 Route::get('/tables/projTable', [App\Http\Controllers\TablesController::class, 'projTable'])->name('projTable');
 Route::get('/tables/mouTable', [App\Http\Controllers\TablesController::class, 'mouTable'])->name('mouTable');
+Route::get('/tables/createPDF', [App\Http\Controllers\TablesController::class, 'createPDF'])->name('createPDF');
 
 
 // Edit form
@@ -63,6 +64,3 @@ Route::get('/form/downloadanno/{id}',[App\Http\Controllers\FormController::class
 
 // Update form
 Route::post('/form/update', [App\Http\Controllers\FormController::class, 'update'])->name('update');
-
-// Download form
-Route::get('/export-pdf', [App\Http\Controllers\TablesController::class, 'exportPDF'])->name('export.pdf');

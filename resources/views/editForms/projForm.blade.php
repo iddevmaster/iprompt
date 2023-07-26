@@ -20,7 +20,9 @@
                     <p>โครงการ <input class="ms-2" type="text" name="projName" value="{{$form->title}}" required></p>
                 </div>
                 <div>
-                    <p>เอกสารโครงการเลขที่ <input class="ms-2" id="projNo" type="text" name="projNo" value="{{$form->proj_code}}" required></p>
+                    <p>เอกสารโครงการเลขที่ <input class="ms-2" id="projNo" type="text" name="proj_num" value="{{$form->proj_num}}" readonly></p>
+                    <p class="mb-0">Project Code: <input class="ms-2" id="projNo" type="text" name="projNo" value="{{$form->proj_code}}" required></p>
+                    <p class="fs-6 text-warning">#กรุณาขอเลข project code จากฝ่ายบัญชี</p>
                 </div>
             </div> <!-- end header -->
 

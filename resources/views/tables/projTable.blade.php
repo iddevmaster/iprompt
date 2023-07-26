@@ -19,6 +19,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">#</th>
+                        <th scope="col">เลขที่หนังสือ</th>
                         <th scope="col">Project_code</th>
                         <th scope="col">Subject</th>
                         <th scope="col">Created_date</th>
@@ -35,6 +36,7 @@
                     @foreach ($gendoc as $row)
                         <tr>
                             <td>{{$counter}}</td>
+                            <td>{{ $row->proj_num}}</td>
                             <td>{{ $row->proj_code}}</td>
                             <td class="truncate">{{ $row->title}}</td>
                             <td>{{ $row->created_date}}</td>
@@ -48,7 +50,7 @@
                                 <a href="{{url('/form/editproj/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button>
                             </td>
                             <td>
-                                <a href="{{url('/form/downloadproj/'.$row->id)}}"><button type="button" class="btn btn-primary">Download</button></a>
+                                <a href="{{url('/form/downloadproj/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
                             </td>
                         </tr>
                         <?php $counter++ ?>

@@ -7,6 +7,8 @@ use App\Models\gendoc;
 use App\Models\project_doc;
 use App\Models\announce_doc;
 use App\Models\mou_doc;
+use Dompdf\Dompdf;
+use PDF;
 
 class FormController extends Controller
 {
@@ -55,13 +57,15 @@ class FormController extends Controller
     }
     public function projForm()
     {
+        $len = project_doc::all()->count()+1;
         $class = 0;
-        return view('/forms/projForm', compact('class'));
+        return view('/forms/projForm', compact('class', 'len'));
     }
     public function mouForm()
     {
+        $len = mou_doc::all()->count()+1;
         $class = 0;
-        return view('/forms/mouForm', compact('class'));
+        return view('/forms/mouForm', compact('class', 'len'));
     }
     public function preview(Request $request)
     {
@@ -76,14 +80,16 @@ class FormController extends Controller
             $parties = [];
 
             if ($formtype === "projForm") {
+                $proj_num = $request->proj_num;
                 $projName = $request->input('projName');
                 $projNo = $request->input('projNo');
-                return view('/forms/'.$formtype, compact('projName','class', 'projNo','editorContent'));
+                return view('/forms/'.$formtype, compact( 'proj_num','projName','class', 'projNo','editorContent'));
             }
             elseif ($formtype === "mouForm") {
                 $subject = $request->input('subject');
                 $party1 = $request->input('party1');
                 $location = $request->input('location');
+                $mou_num = $request->mou_num;
 
                 if ($request->input('party2')) {
                     $parties[] = $request->input('party2');
@@ -97,7 +103,7 @@ class FormController extends Controller
                 if ($request->input('party5')){
                     $parties[] = $request->input('party5');
                 }
-                return view('/forms/'.$formtype, compact('parties', 'location', 'subject', 'party1','class','editorContent'));
+                return view('/forms/'.$formtype, compact( 'mou_num','parties', 'location', 'subject', 'party1','class','editorContent'));
                 
                 
             }
@@ -130,7 +136,7 @@ class FormController extends Controller
         $formtype = $request->input('formtype');
         if ($formtype === "projForm") {
             $project_doc = new project_doc;
-
+            $project_doc->proj_num = $request->proj_num;
             $project_doc->proj_code = $request->projNo;
             $project_doc->submit_by = $request->user()->id;
             $project_doc->type = $request->formtype;
@@ -143,7 +149,7 @@ class FormController extends Controller
         }
         elseif ($formtype === "mouForm"){
             $mou_doc = new mou_doc;
-
+            $mou_doc->mou_num = $request->mou_num;
             $mou_doc->submit_by = $request->user()->id;
             $mou_doc->type = $request->formtype;
             $mou_doc->title = $request->subject;
@@ -198,7 +204,11 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormwi(Request $request,$id){
-        dd($id);
+        $form = gendoc::find($id);
+        $pdf = PDF::loadView('forms.export.wiForm', compact('form'));
+        $pdf->setPaper('a4', 'landscape');
+        return $pdf->stream('preview.pdf');
+        
     }
 
     // Function for edit form
@@ -210,7 +220,10 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormsop(Request $request,$id){
-        dd($id);
+        $form = gendoc::find($id);
+        $pdf = PDF::loadView('forms.export.sopForm', compact('form'));
+        $pdf->setPaper('a4');
+        return $pdf->stream('preview.pdf');
     }
 
     // Function for edit form
@@ -221,7 +234,10 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormproj(Request $request,$id){
-        dd($id);
+        $form = project_doc::find($id);
+        $pdf = PDF::loadView('forms.export.projForm', compact('form'));
+        $pdf->setPaper('a4');
+        return $pdf->stream('preview.pdf');
     }
 
     // Function for edit form
@@ -233,19 +249,24 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormpol(Request $request,$id){
-        dd($id);
+        $form = gendoc::find($id);
+        $pdf = PDF::loadView('forms.export.policyForm', compact('form'));
+        $pdf->setPaper('a4');
+        return $pdf->stream('preview.pdf');
     }
 
     // Function for edit form
     public function editFormmou(Request $request,$id){
         $form = mou_doc::find($id);
-        dd($form);
         return view('/editForms/mouForm', compact('form'));
     }
 
     // Function for download form
     public function downloadFormmou(Request $request,$id){
-        dd($id);
+        $form = mou_doc::find($id);
+        $pdf = PDF::loadView('forms.export.mouForm', compact('form'));
+        $pdf->setPaper('a4');
+        return $pdf->stream('preview.pdf');
     }
 
     // Function for edit form
@@ -256,7 +277,11 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormanno(Request $request,$id){
-        dd($id);
+        
+        $form = announce_doc::find($id);
+        $pdf = PDF::loadView('forms.export.annoForm', compact('form'));
+        $pdf->setPaper('a4');
+        return $pdf->stream('preview.pdf');
     }
 
     public function update(Request $request) {
@@ -270,22 +295,42 @@ class FormController extends Controller
                 $form->anno_date = $request->annoDate;
                 $form->sign_name = $request->signName;
                 $form->sign_position = $request->signPosition;
-                $form->edit_count++;
                 $form->save();
             }
             return redirect('/tables/annoTable');
         }
         elseif ($request->formtype === "mouForm") {
-
+            $form = mou_doc::find($request->formid);
+            $parties = [];
+            if ($request->input('aparty1')) {
+                $parties[] = $request->input('aparty1');
+            }
+            if ($request->input('aparty2')) {
+                $parties[] = $request->input('aparty2');
+            }
+            if ($request->input('party2')) {
+                $parties[] = $request->input('party2');
+            }
+            if ($request->input('party3')) {
+                $parties[] = $request->input('party3');
+            }
+            if ($form) {
+                $form->title = $request->subject;
+                $form->party1 = $request->party1;
+                $form->parties = $parties;
+                $form->place = $request->location;
+                $form->detail = $request->myInput;
+                $form->save();
+            }
         }
         elseif ($request->formtype === "projForm") {
             $form = project_doc::find($request->formid);
+            dd($request);
             if ($form) {
                 // Row with id found, update data
                 $form->title = $request->projName;
                 $form->detail = $request->myInput;
                 $form->proj_code = $request->projNo;
-                $form->edit_count++;
                 $form->save();
             }
             return redirect('/tables/projTable');
@@ -299,7 +344,6 @@ class FormController extends Controller
                 $form->binspector = $request->inspector;
                 $form->bapprover = $request->approver;
                 $form->detail = $request->myInput;
-                $form->edit_count++;
                 $form->save();
             }
             

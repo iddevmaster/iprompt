@@ -19,25 +19,29 @@
                 <div class="flex-grow-1">
                     @if ($class)
                         <div class="d-flex">
-                            <p class="fw-bold">โครงการ</p>
+                            <p class="fw-bold">ชื่อโครงการ</p>
                             <div class="text-start ms-2" style="font-size: 16px;">{{$projName}}</div>
                             <input type="hidden" name="projName" value="{{$projName}}">
                         </div>
                         
                     @else
-                        <p>โครงการ <input class="ms-2" type="text" name="projName" required></p>
+                        <p>ชื่อโครงการ <input class="ms-2" type="text" name="projName" required></p>
                     @endif
                 </div>
 
                 <div>
                     @if ($class)
+                        <p>เอกสารโครงการเลขที่ {{$proj_num}}</p>
+                        <input type="hidden" name="proj_num" value="{{$proj_num}}">
                         <div class="d-flex ms-2">
-                            <p class="fw-bold no-wrap">เอกสารโครงการเลขที่</p>
+                            <p class="no-wrap">Project Code: </p>
                             <div class="text-start ms-2" style="font-size: 16px;">{{$projNo}}</div>
                             <input type="hidden" name="projNo" value="{{$projNo}}">
                         </div>
                     @else
-                        <p>เอกสารโครงการเลขที่ <input class="ms-2" id="projNo" type="text" name="projNo" required></p>
+                        <p>เอกสารโครงการเลขที่ <input class="w-50" type="text" value="PRO0{{$len ?? 0}}/2566" name="proj_num" readonly></p>
+                        <p class="mb-0">Project Code: <input class="ms-2" id="projNo" type="text" name="projNo" required></p>
+                        <p class="fs-6 text-warning">#กรุณาขอเลข project code จากฝ่ายบัญชี</p>
                     @endif
                 </div>
             </div> <!-- end header -->

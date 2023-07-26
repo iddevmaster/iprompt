@@ -7,22 +7,22 @@
     </div>
     <form id="myForm" action="{{ route('preview') }}" method="POST" >
         @csrf
-        <div class="a4-container border mb-5 d-flex align-items-center flex-column">
+        <div class="a4lan-container border mb-5 d-flex align-items-center flex-column">
             <!-- header -->
             <div class="header">
                 <!-- header row 1 -->
                 <div class="row border border-black mx-0  text-center" id="page-header">
                     <div class="col pt-2">
-                        <img src="{{ asset('dist/img/logoiddrives.png') }}" height="100">
+                        <img src="{{ asset('dist/img/logoiddrives.png') }}" height="60">
                         <p class="mt-1">บริษัท ไอดีไดรฟ์ จำกัด</p>
                     </div>
                     <div class="col-5 border border-black border-top-0 border-bottom-0">
                         <h5 class="mt-3 fw-bold">มาตรฐานขั้นตอนการปฏิบัติงาน</h5>
                         <h5 class="fw-bold">Work instruction (WI)</h5>
-                        <div class="d-flex ">
-                            <h5 class="text-start mt-3 fw-bold">เรื่อง</h5>
+                        <div class="d-flex">
+                            <h5 class="text-start mt-2 fw-bold">เรื่อง</h5>
                             @if ($class)
-                                <h5 class="text-start mt-3 ms-2 " id="subject">{{$subject}}</h5>
+                                <h5 class="text-start mt-2 ms-2 " id="subject">{{$subject}}</h5>
                                 <input type="hidden" name="subject" value="{{$subject}}">
                             @else
                                 <input class="ms-2 w-100" id="subject" style="overflow-wrap: break-word;" type="text" name="subject" required>
@@ -36,13 +36,13 @@
                             <input type="hidden" name="bookNo" value="{{$bookNo}}">
                             <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
                             <p class="text-start mb-0">วันที่บังคับใช้ <?php echo date('Y/m/d') ?></p>
-                            <p class="text-start">หน้าที่</p>
+                            <p class="text-start mb-1">หน้าที่ 1/1</p>
                         @else
                             <p class="text-start mb-0">เลขที่เอกสาร <span id="currentYear"></span></p>
                             <input type="hidden" name="bookNo" value="">
                             <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
                             <p class="text-start mb-0">วันที่บังคับใช้ <?php echo date('Y/m/d') ?></p>
-                            <p class="text-start">หน้าที่</p>
+                            <p class="text-start">หน้าที่ 1/1</p>
 
                             <script>
                                 // Get the current date
@@ -90,8 +90,8 @@
             <!-- content -->
             <div class="content py-5 w-100 h-100">
                 @if ($class)
-                    <div style="text-indent: 2.5em;"> {!! $editorContent !!} </div>
-                    <input type="hidden" name="editorContent" value="{!! $editorContent !!}">
+                    <div class="editorContent" style="text-indent: 2.5em;"> {!! $editorContent !!}</div>
+                    <input type="hidden" name="editorContent" value="{{ $editorContent }}">
                 @else
                     <textarea id="editor" name="myInput"></textarea>
                 @endif
@@ -114,7 +114,7 @@
 
         <div class="d-flex justify-content-center ">
             @if ($class)
-                <a href="javascript:void(0);"><button type="button" class="btn btn-secondary">Back</button></a>
+                <a href="javascript:history.back()"><button type="button" class="btn btn-secondary">Back</button></a>
                 <button type="submit" class="btn btn-success ms-2" name="submit" value="save">Save</button>
             @else
                 <a href="{{ route('home') }}"><button type="button" class="btn btn-secondary">cancle</button></a>
@@ -126,7 +126,7 @@
 <!-- Scripts -->
 <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script>
 @vite(['resources/css/form.css' , 'resources/js/form.js'])
-
+<script src="{{ asset('js/html2pdf.bundle.min.js') }}"></script>
 
 
 @endsection

@@ -7,13 +7,13 @@
     </div>
     <form id="myForm" action="{{ route('update') }}" method="POST" >
         @csrf
-        <div class="a4-container border mb-5 d-flex align-items-center flex-column">
+        <div class="a4lan-container border mb-5 d-flex align-items-center flex-column">
             <!-- header -->
             <div class="header">
                 <!-- header row 1 -->
                 <div class="row border border-black mx-0  text-center" id="page-header">
                     <div class="col pt-2">
-                        <img src="{{ asset('dist/img/logoiddrives.png') }}" height="100">
+                        <img src="{{ asset('dist/img/logoiddrives.png') }}" height="80">
                         <p class="mt-1">บริษัท ไอดีไดรฟ์ จำกัด</p>
                     </div>
                     <div class="col-5 border border-black border-top-0 border-bottom-0">
@@ -29,7 +29,7 @@
                         <p class="text-start mb-0">เลขที่เอกสาร {{$form->book_num}}</p>
                         <p class="text-start mb-0">แก้ไขครั้งที่ {{$form->edit_count}}</p>
                         <p class="text-start mb-0">วันที่บังคับใช้ {{$form->created_date}}</p>
-                        <p class="text-start">หน้าที่</p>
+                        <p class="text-start mb-1">หน้าที่ 1/1</p>
                     </div>
                 </div><!-- end header row 1 -->
 

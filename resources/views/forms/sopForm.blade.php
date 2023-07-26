@@ -41,13 +41,13 @@
                             <input type="hidden" name="bookNo" value="{{$bookNo}}">
                             <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
                             <p class="text-start mb-0">วันที่บังคับใช้ <?php echo date('Y/m/d') ?></p>
-                            <p class="text-start">หน้าที่</p>
+                            <p class="text-start">หน้าที่ 1/1</p>
                         @else
                             <p class="text-start mb-0">เลขที่เอกสาร <span id="currentYear"></span></p>
                             <input type="hidden" name="bookNo" value="">
                             <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
                             <p class="text-start mb-0">วันที่บังคับใช้ <?php echo date('Y/m/d') ?></p>
-                            <p class="text-start">หน้าที่</p>
+                            <p class="text-start">หน้าที่ 1/1</p>
 
                             <script>
                                 // Get the current date

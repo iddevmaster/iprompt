@@ -1,6 +1,11 @@
-body {
-  font-family: 'Sarabun';
+.a4-container {
+  font-family: 'Sarabun', sans-serif;
 }
+
+body {
+  font-family: 'Sarabun', sans-serif;
+}
+
 .a4-container {
     width: 210mm; /* Width of A4 paper in millimeters */
     min-height: 297mm; /* Height of A4 paper in millimeters */
@@ -8,6 +13,15 @@ body {
     background-color: white;
     position: relative; /* Required for footer positioning */
     padding: 1cm;
+}
+
+.a4lan-container {
+  width: 297mm; /* Width of A4 paper in millimeters */
+  min-height: 210mm; /* Height of A4 paper in millimeters */
+  margin: 0 auto; /* Center the container horizontally */
+  background-color: white;
+  position: relative; /* Required for footer positioning */
+  padding: 1cm;
 }
 
 .header {
@@ -60,4 +74,33 @@ p{
 }
 .anno-content{
   min-height: 730px;
+}
+.editorContent {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.editorContent p{
+  width: 100%;
+  display: flex;
+  justify-content: start;
+}
+
+.editorContent table{
+  width:fit-content;
+  text-align: center;
+  min-width: 30%;
+}
+.editorContent figure{
+  display: flex;
+  justify-content: center;
+}
+.editorContent img{
+  width: inherit;
+}
+.editorContent ul, ol{
+  text-indent: unset;
+  text-align: start;
+  width: 100%;
 }

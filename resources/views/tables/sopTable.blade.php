@@ -50,7 +50,7 @@
                                 <a href="{{url('/form/editsop/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
                             </td>
                             <td>
-                                <a href="{{url('/form/downloadsop/'.$row->id)}}"><button type="button" class="btn btn-primary">Download</button></a>
+                                <a href="{{url('/form/downloadsop/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
                             </td>
                         </tr>
                         <?php $counter++ ?>
