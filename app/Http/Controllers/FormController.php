@@ -325,7 +325,6 @@ class FormController extends Controller
         }
         elseif ($request->formtype === "projForm") {
             $form = project_doc::find($request->formid);
-            dd($request);
             if ($form) {
                 // Row with id found, update data
                 $form->title = $request->projName;
