@@ -91,7 +91,7 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         <li class="nav-item "><a href="{{ route('home') }}" class="nav-link navbarMenu">Home</a></li>
-                        <li class="nav-item "><a href="#" class="nav-link navbarMenu">Imported</a></li>
+                        <li class="nav-item "><a href="{{ route('imported') }}" class="nav-link navbarMenu">Imported</a></li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle navbarMenu" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Create
@@ -176,6 +176,7 @@
             </div>
         </h5>
     </div>
+    @include('sweetalert::alert')
 </body>
 
 <script>

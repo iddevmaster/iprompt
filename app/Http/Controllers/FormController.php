@@ -9,6 +9,7 @@ use App\Models\announce_doc;
 use App\Models\mou_doc;
 use Dompdf\Dompdf;
 use PDF;
+Use Alert;
 
 class FormController extends Controller
 {
@@ -127,6 +128,7 @@ class FormController extends Controller
         }
         else{
             $this->store($request);
+            Alert::toast('Your Form as been Saved!','success');
             return redirect('/home');
         }
     }

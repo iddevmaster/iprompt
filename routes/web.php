@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/imported', [App\Http\Controllers\ImportController::class, 'index'])->name('imported');
 
 // Route::get('/register', [App\Http\Controllers\HomeController::class, 'register'])->name('register');
 

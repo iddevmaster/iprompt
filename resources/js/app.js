@@ -1,5 +1,7 @@
 import './bootstrap';
 
+window.Swal = require('sweetalert2');
+
 
 document.body.style="background-color: var(--bs-dark);transition: 0.5s;"
 const sun = "bi-sun";
