@@ -25,7 +25,6 @@ class ImportController extends Controller
      */
     public function index()
     {
-        Alert::success('SuccessAlert','Lorem ipsum dolor sit amet.');
         return view('imported');
     }
 }
