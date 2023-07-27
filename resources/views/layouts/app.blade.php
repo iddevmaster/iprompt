@@ -18,7 +18,6 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/css/app.css' , 'resources/js/app.js'])
-    @vite(['resources/css/imported.css' , 'resources/js/imported.js'])
 
     <style>
         :root{
