@@ -75,7 +75,7 @@
             @endforeach
             <p >บันทึกข้อตกลงนี้จัดทำขึ้น ณ {{$form->place}}</p>
         </div>
-        <div class="editorContent" style="text-indent: 2.5em;line-height: 16px;">
+        <div class="editorContent" style="text-indent: 2.5em;line-height: 16px;padding-left:1.5cm;padding-right:1cm">
             {!! $form->detail !!}
         </div>
     </article>

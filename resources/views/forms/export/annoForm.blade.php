@@ -75,7 +75,7 @@
             <p style="font-weight: bold;font-size: 16;margin-bottom: 0px;">ประกาศที่ {{$form->book_num}}</p>
             <p style="font-weight: bold;font-size: 16;">เรื่อง {{$form->title}}</p>
         </div>
-        <div class="editorContent" style="text-indent: 2.5em;line-height: 16px;">
+        <div class="editorContent" style="text-indent: 2.5em;line-height: 16px;padding-left:1.5cm;padding-right:1cm">
             {!! $form->detail !!}
         </div>
     </article>
