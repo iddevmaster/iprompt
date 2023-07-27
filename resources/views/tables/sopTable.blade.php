@@ -46,12 +46,22 @@
                                     echo $submitUser ? $submitUser->name : 'Unknown';
                                 @endphp
                             </td>
+                            <?php   $permis = Auth::user()->role ;
+                                    $dpm = Auth::user()->dpm;?>
+                            
+                            @if (!($permis === '4' | $permis === '5' | $dpm === '5'))
                             <td>
                                 <a href="{{url('/form/editsop/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
                             </td>
                             <td>
                                 <a href="{{url('/form/downloadsop/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
                             </td>
+                            @else
+                            <td></td>
+                            <td>
+                                <a href="{{url('/form/viewsop/'.$row->id)}}" ><button type="button" class="btn btn-primary">View</button></a>
+                            </td>
+                            @endif
                         </tr>
                         <?php $counter++ ?>
                     @endforeach

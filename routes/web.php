@@ -65,3 +65,10 @@ Route::get('/form/downloadanno/{id}',[App\Http\Controllers\FormController::class
 
 // Update form
 Route::post('/form/update', [App\Http\Controllers\FormController::class, 'update'])->name('update');
+
+Route::get('/form/viewwi/{id}',[App\Http\Controllers\TablesController::class,'viewwi']);
+Route::get('/form/viewsop/{id}',[App\Http\Controllers\TablesController::class,'viewsop']);
+Route::get('/form/viewpolicy/{id}',[App\Http\Controllers\TablesController::class,'viewpolicy']);
+Route::get('/form/viewproj/{id}',[App\Http\Controllers\TablesController::class,'viewproj']);
+Route::get('/form/viewanno/{id}',[App\Http\Controllers\TablesController::class,'viewanno']);
+Route::get('/form/viewmou/{id}',[App\Http\Controllers\TablesController::class,'viewmou']);

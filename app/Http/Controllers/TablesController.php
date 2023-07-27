@@ -95,5 +95,103 @@ class TablesController extends Controller
     //     return $pdf->stream('preview.pdf'); // Stream the PDF to the browser
     // }
 
+    public function viewwi(Request $request,$id) {
+
+        $form = gendoc::find($id);
+        // dd($form);
+        $formtype = $form->type;
+        $class = 1;
+        $editorContent = $form->detail;
+        $parties = [];
+
+
+        $bookNo = $form->book_num;
+        $subject = $form->title;
+        $creater = $form->bcreater;
+        $inspector = $form->binspector;
+        $approver = $form->bapprover;
+        return view('/forms/'.$formtype, compact( 'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+    }
+
+    public function viewsop(Request $request,$id) {
+
+        $form = gendoc::find($id);
+        // dd($form);
+        $formtype = $form->type;
+        $class = 1;
+        $editorContent = $form->detail;
+        $parties = [];
+
+
+        $bookNo = $form->book_num;
+        $subject = $form->title;
+        $creater = $form->bcreater;
+        $inspector = $form->binspector;
+        $approver = $form->bapprover;
+        return view('/forms/'.$formtype, compact( 'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+    }
+
+    public function viewpolicy(Request $request,$id) {
+
+        $form = gendoc::find($id);
+        // dd($form);
+        $formtype = $form->type;
+        $class = 1;
+        $editorContent = $form->detail;
+        $parties = [];
+
+
+        $bookNo = $form->book_num;
+        $subject = $form->title;
+        $creater = $form->bcreater;
+        $inspector = $form->binspector;
+        $approver = $form->bapprover;
+        return view('/forms/'.$formtype, compact( 'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+    }
+
+    public function viewanno(Request $request,$id) 
+    {
+        $form = announce_doc::find($id);
+        $class = 1;
+        $formtype = $form->type;
+        $editorContent = $form->detail;
+        $annNo = $form->book_num;
+        $subject = $form->title;
+        $annoDate = $form->anno_date;
+        $useDate = $form->use_date;
+        $signName = $form->sign_name;
+        $signPosition = $form->sign_position;
+        return view('/forms/'.$formtype, compact( 'annNo','signName', 'signPosition','annoDate', 'useDate', 'editorContent','subject','class'));
+    }
+
+    public function viewproj(Request $request,$id)
+    {
+        $form = project_doc::find($id);
+        $class = 1;
+        $formtype = $form->type;
+        $proj_num = $form->proj_num;
+        $editorContent = $form->detail;
+        $projName = $form->title;
+        $projNo = $form->proj_code;
+        return view('/forms/'.$formtype, compact( 'proj_num','projName','class', 'projNo','editorContent'));
+    }
+
+    public function viewmou(Request $request,$id) 
+    {
+        $form = mou_doc::find($id);
+        
+        $class = 1;
+        $formtype = $form->type;
+        $editorContent = $form->detail;
+
+        $subject = $form->title;
+        $party1 = $form->party1;
+        $location = $form->place;
+        $mou_num = $form->mou_num;
+        $parties = json_decode($form->parties, true);
+        // dd($parties);
+        return view('/forms/'.$formtype, compact( 'mou_num','parties', 'location', 'subject', 'party1','class','editorContent'));
+    }
+
 
 }

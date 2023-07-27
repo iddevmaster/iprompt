@@ -42,14 +42,22 @@
                                 @php
                                     $submitUser = $user->firstWhere('id', $row->submit_by);
                                     echo $submitUser ? $submitUser->name : 'Unknown';
+                                    $permis = Auth::user()->role ;
+                                    $dpm = Auth::user()->dpm;
                                 @endphp
                             </td>
+
+                            @if (!($permis === '4' | $permis === '5' | $dpm === '5'))
                             <td>
                                 <a href="{{url('/form/editmou/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
                             </td>
                             <td>
                                 <a href="{{url('/form/downloadmou/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
                             </td>
+                            @else
+                            <td></td>
+                            <td><a href="{{url('/form/viewmou/'.$row->id)}}" ><button type="button" class="btn btn-primary">View</button></a></td>
+                            @endif
                         </tr>
                         <?php $counter++ ?>
                     @endforeach
