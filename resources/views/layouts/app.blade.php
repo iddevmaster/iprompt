@@ -77,7 +77,7 @@
     </style>
 </head>
 <body>
-<?php $permis = Auth::user()->role ;
+<?php $permis = Auth::user()->role ?? '' ;
       $dpm = Auth::user()->dpm;
 ?>
     <div id="app">
