@@ -78,7 +78,7 @@
 </head>
 <body>
 <?php $permis = Auth::user()->role ?? '' ;
-      $dpm = Auth::user()->dpm;
+      $dpm = Auth::user()->dpm ?? '';
 ?>
     <div id="app">
         <nav class="navbar navbar-expand-md nav-light shadow-sm" id="navb">
