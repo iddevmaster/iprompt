@@ -48,7 +48,7 @@
                     <br>
                 </div>  
                 @if ($class)
-                    <div style="text-indent: 2.5em;"> {!! $editorContent !!} </div>
+                    <div style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
                     <input type="hidden" name="editorContent" value="{{$editorContent}}">
                 @else
                     <textarea id="editor" name="myInput"></textarea>

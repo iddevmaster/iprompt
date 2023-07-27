@@ -101,7 +101,7 @@
             <!-- content -->
             <div class="content py-5 w-100 h-100">
                 @if ($class)
-                    <div class="editorContent" style="text-indent: 2.5em;"> {!! $editorContent !!}</div>
+                    <div class="editorContent" style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!}</div>
                     <input type="hidden" name="editorContent" value="{{ $editorContent }}">
                 @else
                     <textarea id="editor" name="myInput"></textarea>
