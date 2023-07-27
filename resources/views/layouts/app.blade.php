@@ -77,6 +77,9 @@
     </style>
 </head>
 <body>
+<?php $permis = Auth::user()->role ;
+      $dpm = Auth::user()->dpm;
+?>
     <div id="app">
         <nav class="navbar navbar-expand-md nav-light shadow-sm" id="navb">
             <div class="container">
@@ -99,12 +102,16 @@
                         
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
+                                @if (!($permis === '4' | $permis === '5'))
+                                    @if (!($dpm === '5'))
                                     <li><a class="dropdown-item" href="{{ route('mouForm') }}">MOU</a></li>
                                     <li><a class="dropdown-item" href="{{ route('projForm') }}">โครงการ</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('annoForm') }}">ประกาศ</a></li>
                                     <li><a class="dropdown-item" href="{{ route('policyForm') }}">Policy</a></li>
                                     <li><a class="dropdown-item" href="{{ route('sopForm') }}">SOP</a></li>
                                     <li><a class="dropdown-item" href="{{ route('wiForm') }}">WI</a></li>
+                                    @endif
+                                    <li><a class="dropdown-item" href="{{ route('annoForm') }}">ประกาศ</a></li>
+                                @endif
                                 </div>
                             </ul>
                         </li>
@@ -115,12 +122,14 @@
                         
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
+                                    @if (!($dpm === '5'))
                                     <li><a class="dropdown-item" href="{{ route('mouTable') }}">MOU</a></li>
                                     <li><a class="dropdown-item" href="{{ route('projTable') }}">โครงการ</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('annoTable') }}">ประกาศ</a></li>
                                     <li><a class="dropdown-item" href="{{ route('policyTable') }}">Policy</a></li>
                                     <li><a class="dropdown-item" href="{{ route('sopTable') }}">SOP</a></li>
                                     <li><a class="dropdown-item" href="{{ route('wiTable') }}">WI</a></li>
+                                    @endif
+                                    <li><a class="dropdown-item" href="{{ route('annoTable') }}">ประกาศ</a></li>
                                 </div>
                             </ul>
                         </li>
