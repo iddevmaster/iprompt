@@ -18,6 +18,8 @@ export default defineConfig({
                 'resources/js/home.js',
                 'resources/js/table.js',
                 'resources/js/login.js',
+                'resources/css/imported.css',
+                'resources/js/imported.js',
 
             ],
             refresh: true,
