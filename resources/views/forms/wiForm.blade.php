@@ -59,7 +59,7 @@
                                 // Get the current date
                                 var currentDate = new Date();
                                 var currentYear = currentDate.getFullYear()+543;
-                                document.getElementById("currentYear").innerText = "WI0{{$len}}/"+currentYear;
+                                document.getElementById("currentYear").innerText = "WI-ID-0{{$len}}";
                                 document.getElementsByName('bookNo')[0].value = "WI-ID-0{{$len}}";
                             </script>
                         @endif
