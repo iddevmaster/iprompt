@@ -1,10 +1,13 @@
 @extends('layouts.app')
 
 <!-- Scripts -->
-
+<style>
+    label{
+        min-width: 200px;
+    }
+</style>
 
 @section('content')
-
 <body>
     <?php $regData = \App\CoreFunction\Helper::regData();?>
     <div class="container">
