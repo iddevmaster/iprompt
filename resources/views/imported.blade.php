@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 <!-- Scripts -->
-@vite(['resources/css/imported.css' , 'resources/js/imported.js'])
+
 
 @section('content')
 
