@@ -1,111 +1,254 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <link rel="icon" type="image/png" href="{{ asset('dist/img/logo.png') }}"  />
-        <title>ระบบสารบรรณ</title>
-    <!-- icon -->
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-</head>
-<style>
-    @font-face {
-            font-family: 'THSarabunNew';
-            font-style: normal;
-            font-weight: normal;
-            src: url("{{ public_path('fonts/THSarabunNew.ttf') }}") format('truetype');
-        }
-        @font-face {
-            font-family: 'THSarabunNew';
-            font-style: normal;
-            font-weight: bold;
-            src: url("{{ public_path('fonts/THSarabunNew Bold.ttf') }}") format('truetype');
-        }
-        @font-face {
-            font-family: 'THSarabunNew';
-            font-style: italic;
-            font-weight: normal;
-            src: url("{{ public_path('fonts/THSarabunNew Italic.ttf') }}") format('truetype');
-        }
-        @font-face {
-            font-family: 'THSarabunNew';
-            font-style: italic;
-            font-weight: bold;
-            src: url("{{ public_path('fonts/THSarabunNew BoldItalic.ttf') }}") format('truetype');
-        }
-      body {
-        font-family: "THSarabunNew";
-        font-size: 18px;
-        height: 100%;
-      }
-      .header{
-        border: 1px solid black;
-      }
-      footer{
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        height: fit-content;
-      }
-      .editorContent table{
-  width:fit-content;
-  text-align: center;
-  min-width: 30%;
-}
-.editorContent img{
-  width: inherit;
-}
-.editorContent tr:first-child{
-  border-bottom: 1px solid;
-}
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-</style>
-<!-- <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('dist/img/logoiddrives.png'))) }}" style=""  height="53"/> -->
-<body>
-    <article>
-        <table style="width: 100%;">
-            <tbody >
-                <tr style="border:1px solid;">
-                    <td style="text-align: center;padding-top: 10px;line-height: 15px;border-right: 1px solid;">
-                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('dist/img/logoiddrives.png'))) }}"  height="53"/>
-                        <p>บริษัท ไอดีไดรฟ์ จำกัด</p>
-                    </td>
-                    <td style="text-align: center;line-height: 15px;">
-                        <p style="font-size: 20px;font-weight: bold;">มาตรฐานขั้นตอนการปฏิบัติงาน <br> Work instruction (WI) <br>เรื่อง {{$form->title}}</p>
-                    </td>
-                    <td style="line-height: 5px;padding-top: 15px;border-left: 1px solid;padding-left: 10px;">
-                        <p>เลขที่เอกสาร {{$form->book_num}}</p>
-                        <p>แก้ไขครั้งที่ {{$form->edit_count}}</p>
-                        <p>วันที่บังคับใช้ {{$form->created_date}}</p>
-                        <p>หน้าที่ 1/1</p>
-                    </td>
-                </tr>
-                <tr style="border:1px solid;line-height: 50%;">
-                    <td style="border-right: 1px solid;padding-left: 10px;padding-top: 10px;">
-                        <p>ผู้จัดทำ </p>
-                        <p style="text-align: center;">{{$form->bcreater}}</p>
-                    </td>
-                    <td style="padding-left: 10px;padding-top: 10px;">
-                        <p>ผู้ตรวจสอบ </p>
-                        <p style="text-align: center;">{{$form->binspector}}</p>
-                    </td>
-                    <td style="border-left: 1px solid;padding-left: 10px;padding-top: 10px;">
-                        <p>ผู้อนุมัติ </p>
-                        <p style="text-align: center;">{{$form->bapprover}}</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="editorContent" style="text-indent: 2.5em;line-height: 16px;padding-left:1.5cm;padding-right:1cm">
-            {!! $form->detail !!}
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
+
+        <title>{{ config("app.name", "Laravel") }}</title>
+
+        <!-- Fonts -->
+        <link rel="dns-prefetch" href="//fonts.bunny.net" />
+        <link
+            href="https://fonts.bunny.net/css?family=Nunito"
+            rel="stylesheet"
+        />
+
+        <!-- Icon -->
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+        />
+
+        <!-- Scripts -->
+        @vite(['resources/sass/app.scss', 'resources/css/app.css' ,
+        'resources/js/app.js']) @vite(['resources/css/form.css'])
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+        <!-- (Optional) html2canvas library to convert HTML content to canvas -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+
+        <style>
+            @font-face {
+                font-family: "THSarabunNew";
+                font-style: normal;
+                font-weight: normal;
+                src: url("{{ public_path('fonts/THSarabunNew.ttf') }}")
+                    format("truetype");
+            }
+            @font-face {
+                font-family: "THSarabunNew";
+                font-style: normal;
+                font-weight: bold;
+                src: url("{{ public_path('fonts/THSarabunNew Bold.ttf') }}")
+                    format("truetype");
+            }
+            @font-face {
+                font-family: "THSarabunNew";
+                font-style: italic;
+                font-weight: normal;
+                src: url("{{ public_path('fonts/THSarabunNew Italic.ttf') }}")
+                    format("truetype");
+            }
+            @font-face {
+                font-family: "THSarabunNew";
+                font-style: italic;
+                font-weight: bold;
+                src: url("{{ public_path('fonts/THSarabunNew BoldItalic.ttf') }}")
+                    format("truetype");
+            }
+            body {
+                font-family: "THSarabunNew";
+                font-size: 18px;
+                height: 100%;
+            }
+            .a4lan-container {
+                width: 297mm; /* Width of A4 paper in millimeters */
+                min-height: 210mm; /* Height of A4 paper in millimeters */
+                margin: 0 auto; /* Center the container horizontally */
+                background-color: white;
+                position: relative; /* Required for footer positioning */
+                padding: 1cm;
+            }
+            .downloadbtn {
+                position: absolute;
+                top: 0;
+                right: 0;
+                margin: 50px;
+            }
+            @page {
+                margin: 0;
+                size: "A4"; /* Define the paper size, you can use 'A4', 'letter', etc. */
+            }
+            @media print {
+                .downloadbtn {
+                    visibility: hidden;
+                }
+                .a4-container {
+                    visibility: visible;
+                }
+            }
+            @page {
+                margin: 0;
+                size: "A4"; /* Define the paper size, you can use 'A4', 'letter', etc. */
+            }
+            @media print {
+                .downloadbtn {
+                    visibility: hidden;
+                }
+                .a4-container {
+                    visibility: visible;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div
+            id="a4container"
+            class="a4lan-container border mb-5 d-flex align-items-center flex-column"
+        >
+            <!-- header -->
+            <div class="header">
+                <!-- header row 1 -->
+                <div
+                    class="row border border-black mx-0 text-center"
+                    id="page-header"
+                >
+                    <div class="col pt-2">
+                        <img
+                            src="{{ asset('dist/img/logoiddrives.png') }}"
+                            height="60"
+                        />
+                        <p class="mt-1">บริษัท ไอดีไดรฟ์ จำกัด</p>
+                    </div>
+                    <div
+                        class="col-5 border border-black border-top-0 border-bottom-0"
+                    >
+                        <h5 class="mt-3 fw-bold">
+                            มาตรฐานขั้นตอนการปฏิบัติงาน
+                        </h5>
+                        <h5 class="fw-bold">Work instruction (WI)</h5>
+                        <div class="d-flex">
+                            <h5 class="text-start mt-2 fw-bold">เรื่อง</h5>
+                            <h5 class="text-start mt-2 ms-2" id="subject">
+                                {{ $subject }}
+                            </h5>
+                            <input
+                                type="hidden"
+                                name="subject"
+                                value="{{ $subject }}"
+                            />
+                        </div>
+                    </div>
+                    <div class="col pt-2">
+                        <p class="text-start mb-0">
+                            เลขที่เอกสาร {{ $bookNo }}
+                        </p>
+                        <input
+                            type="hidden"
+                            name="bookNo"
+                            value="{{ $bookNo }}"
+                        />
+                        <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
+                        <p class="text-start mb-0">
+                            วันที่บังคับใช้
+                            <?php echo date('Y/m/d') ?>
+                        </p>
+                        <p class="text-start mb-1">หน้าที่ 1/1</p>
+                    </div>
+                </div>
+                <!-- end header row 1 -->
+
+                <!-- header row 2 -->
+                <div
+                    class="row mx-0 w-100 border border-black border-top-0 justify-content-center text-center"
+                >
+                    <div class="col py-2 text-start d-flex align-items-start">
+                        <p class="no-wrap">ผู้จัดทำ:</p>
+                        <p class="no-wrap mt-4">{{ $creater }}</p>
+                        <input
+                            type="hidden"
+                            name="creater"
+                            value="{{ $creater }}"
+                        />
+                    </div>
+                    <div
+                        class="col-5 py-2 text-start d-flex align-items-start border border-black border-top-0 border-bottom-0"
+                    >
+                        <p class="no-wrap">ผู้ตรวจสอบ:</p>
+                        <p class="no-wrap mt-4">{{ $inspector }}</p>
+                        <input
+                            type="hidden"
+                            name="inspector"
+                            value="{{ $inspector }}"
+                        />
+                    </div>
+                    <div class="col py-2 text-start d-flex align-items-start">
+                        <p class="no-wrap">ผู้อนุมัติ:</p>
+                        <p class="no-wrap mt-4">{{ $approver }}</p>
+                        <input
+                            type="hidden"
+                            name="approver"
+                            value="{{ $approver }}"
+                        />
+                    </div>
+                </div>
+                <!-- end header row 2 -->
+            </div>
+            <!-- end header -->
+
+            <!-- content -->
+            <div class="content py-5 w-100 h-100">
+                <div
+                    class="editorContent"
+                    style="
+                        text-indent: 2.5em;
+                        padding-left: 1.5cm;
+                        padding-right: 1cm;
+                    "
+                >
+                    {!! $editorContent !!}
+                </div>
+                <input
+                    type="hidden"
+                    name="editorContent"
+                    value="{{ $editorContent }}"
+                />
+            </div>
+            <!-- end content -->
+
+            <!-- footer -->
+            <div class="footer mt-auto">
+                <p id="footertext">
+                    เอกสารนี้ ฉบับทางการ จะอยู่ในรูปไฟล์อิเล็กทรอนิกส์
+                    อยู่ในระบบเครือข่ายสารสนเทศ เท่านั้น
+                    หากปรากฎเอกสารนี้ส่วนหนึ่งส่วนใด หรือทั้งฉบับ<br />
+                    ในรูปสื่อกระดาษให้ตรวจสอบความทันสมัยกับฉบับทางการในระบบเครือข่ายสารสนเทศ
+                    ก่อนใช้อ้างอิง และทำลายทิ้งทันที หากพบว่าเป็นฉบับไม่ทันสมัย
+                    <br />
+                    เอกสารนี้ เป็น สมบัติของบริษัท ไอดีไดรฟ์
+                    จำกัดห้ามแจกจ่ายไปยังภายนอก โดยไม่ได้รับอนุญาตจาก
+                    กรรมการผู้จัดการ บริษัท ไอดีไดรฟ์ จำกัด
+                </p>
+            </div>
+            <!-- end footer -->
+
+            <!-- send form type for preview -->
+            <input type="hidden" name="formtype" id="formtype" value="wiForm" />
         </div>
-    </article>
-    <footer>
-        <p style="text-align: center;border: 1px solid;width: 100%;font-size: 12px;padding-bottom: 5px;">
-            เอกสารนี้ ฉบับทางการ จะอยู่ในรูปไฟล์อิเล็กทรอนิกส์ อยู่ในระบบเครือข่ายสารสนเทศ เท่านั้น หากปรากฎเอกสารนี้ส่วนหนึ่งส่วนใด 
-            หรือทั้งฉบับในรูปสื่อกระดาษให้ตรวจสอบความทันสมัยกับฉบับทางการในระบบเครือข่ายสารสนเทศ ก่อนใช้อ้างอิง และทำลายทิ้งทันที 
-            <br>หากพบว่าเป็นฉบับไม่ทันสมัย เอกสารนี้ เป็น สมบัติของบริษัท ไอดีไดรฟ์ จำกัดห้ามแจกจ่ายไปยังภายนอก โดยไม่ได้รับอนุญาตจาก กรรมการผู้จัดการ บริษัท ไอดีไดรฟ์ จำกัด
-        </p>
-    </footer>
-</body>
+        <!-- end paper page -->
+
+        <div class="d-flex justify-content-center downloadbtn">
+            <button class="btn btn-success ms-2" onclick="printDiv()">
+                Print
+            </button>
+        </div>
+        <script>
+            function printDiv() {
+                window.print();
+            }
+        </script>
+    </body>
 </html>

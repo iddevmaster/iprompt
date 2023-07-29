@@ -13,41 +13,29 @@
     <form id="myForm" action="{{ route('preview') }}" method="POST" >
         @csrf
         <div id="proj-paper" class="a4-container border mb-5 d-flex align-items-center flex-column">
-
             <!-- header -->
-            <div class="header mb-5 d-flex flex-row justify-content-end text-center ">
-                <div class="flex-grow-1">
+            <div class="header mb-3  text-center ">
                     @if ($class)
-                        <div class="d-flex">
-                            <p class="fw-bold">ชื่อโครงการ</p>
-                            <div class="text-start ms-2" style="font-size: 16px;">{{$projName}}</div>
-                            <input type="hidden" name="projName" value="{{$projName}}">
-                        </div>
-                        
-                    @else
-                        <p>ชื่อโครงการ <input class="ms-2" type="text" name="projName" required></p>
-                    @endif
-                </div>
-
-                <div>
-                    @if ($class)
-                        <p>เอกสารโครงการเลขที่ {{$proj_num}}</p>
+                        <p class="text-end mb-0">เอกสารโครงการเลขที่ {{$proj_num}}</p>
                         <input type="hidden" name="proj_num" value="{{$proj_num}}">
-                        <div class="d-flex ms-2">
-                            <p class="no-wrap">Project Code: </p>
-                            <div class="text-start ms-2" style="font-size: 16px;">{{$projNo}}</div>
-                            <input type="hidden" name="projNo" value="{{$projNo}}">
-                        </div>
+                        <p class="text-end">Project Code: {{$projNo}}</p>
+                        <input type="hidden" name="projNo" value="{{$projNo}}">
                     @else
-                        <p>เอกสารโครงการเลขที่ <input class="w-50" type="text" value="PRO0{{$len ?? 0}}/2566" name="proj_num" readonly></p>
-                        <p class="mb-0">Project Code: <input class="ms-2" id="projNo" type="text" name="projNo" required></p>
-                        <p class="fs-6 text-warning">#กรุณาขอเลข project code จากฝ่ายบัญชี</p>
+                        <p class="text-end">เอกสารโครงการเลขที่ <input type="text" value="PRO0{{$len ?? 0}}/2566" name="proj_num" readonly></p>
+                        <p class="mb-0 text-end">Project Code: <input class="ms-2" id="projNo" type="text" name="projNo" required></p>
+                        <p class="fs-6 text-warning text-end">#กรุณาขอเลข project code จากฝ่ายบัญชี</p>
                     @endif
-                </div>
+
+                    @if ($class)
+                        <p class="fw-bold">โครงการ {{$projName}}</p>
+                        <input type="hidden" name="projName" value="{{$projName}}">
+                    @else
+                        <p>ชื่อโครงการ <input class="ms-2 w-100" type="text" name="projName" required></p>
+                    @endif
             </div> <!-- end header -->
 
             <!-- content -->
-            <div class="content py-3 w-100 h-100 d-flex flex-column">
+            <div class="content py-3 w-100 ">
                 @if ($class)
                     <div style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
                     <input type="hidden" name="editorContent" value="{{$editorContent}}">

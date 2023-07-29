@@ -1,15 +1,31 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <link rel="icon" type="image/png" href="{{ asset('dist/img/logo.png') }}"  />
-        <title>ระบบสารบรรณ</title>
-    <!-- icon -->
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-</head>
-<style>
-    @font-face {
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+
+    <!-- Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/css/app.css' , 'resources/js/app.js'])
+    @vite(['resources/css/form.css'])
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!-- (Optional) html2canvas library to convert HTML content to canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+
+    <style>
+        @font-face {
             font-family: 'THSarabunNew';
             font-style: normal;
             font-weight: normal;
@@ -33,69 +49,130 @@
             font-weight: bold;
             src: url("{{ public_path('fonts/THSarabunNew BoldItalic.ttf') }}") format('truetype');
         }
-      body {
+        body {
         font-family: "THSarabunNew";
         font-size: 18px;
         height: 100%;
       }
-      .header{
-        border: 1px solid black;
-      }
-      footer{
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        height: fit-content;
-      }
-      .editorContent table{
-  width:fit-content;
-  text-align: center;
-  min-width: 30%;
+  .a4lan-container {
+    width: 297mm; /* Width of A4 paper in millimeters */
+    min-height: 210mm; /* Height of A4 paper in millimeters */
+    margin: 0 auto; /* Center the container horizontally */
+    background-color: white;
+    position: relative; /* Required for footer positioning */
+    padding: 1cm;
 }
-.editorContent img{
-  width: inherit;
+.downloadbtn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 50px;
 }
-.editorContent tr:first-child{
-  border-bottom: 1px solid;
+@page {
+    margin: 0;
+    size: 'A4'; /* Define the paper size, you can use 'A4', 'letter', etc. */
 }
-
-</style>
-<!-- <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('dist/img/logoiddrives.png'))) }}" style=""  height="53"/> -->
+@media print {
+            .downloadbtn {
+                visibility: hidden;
+            }
+            .a4-container {
+                visibility: visible;
+            }
+            
+        }
+    </style>
+</head>
 <body>
-    <article>
-        <div style="text-align: center;border-bottom: 1px solid; line-height: 20px;margin-bottom: 10px;">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('dist/img/logoiddrives.png'))) }}"  height="60"/>
-            <p style="font-weight: bold; font-size: 18;margin-bottom: 0px;">บริษัท ไอดีไดรฟ์ จำกัด (สำนักงานใหญ่)</p>
-            <p style="font-size: 14;line-height: 16px;margin-bottom: 0px;"> 200/222 หมู่2 ถนนชัยพฤกษ์ อำเภอเมืองขอนแก่น จังหวัดขอนแก่น Tel:043-228-899 <br>
-                เลขที่ผู้เสียภาษี 0 4055 36000 53 1  Email: idofficer@iddrives.co.th
+    <div id="a4container" class="a4-container border mb-5 d-flex align-items-center flex-column">
+
+        <!-- header -->
+        <div class="header border-bottom d-flex flex-column justify-content-center text-center align-items-center">
+            <div class="mb-2"><img style="" src="{{ asset('dist/img/logoiddrives.png') }}" height="80"></div>
+            <h4 class="fw-bold">บริษัท ไอดีไดรฟ์ จำกัด (สำนักงานใหญ่)</h4>
+            <p>200/222 หมู่2 ถนนชัยพฤกษ์ อำเภอเมืองขอนแก่น จังหวัดขอนแก่น Tel:043-228-899 <br>    
+                เลขที่ผู้เสียภาษี 0 4055 36000 53 1  Email: idofficer@iddrives.co.th</p>
+        </div> <!-- end header -->
+
+        <!-- content -->
+        <div class="anno-content py-3 w-100 d-flex flex-column">
+            <div class="text-center d-flex flex-column align-items-center">
+                <br>
+                @if ($class)
+                    <h5 class="fw-bold">ประกาศที่ <span class="fw-normal">{{ $annNo }}</span></h5>
+                    <input type="hidden" name="annNo" value="{{$annNo}}">
+                @else
+                    <h5 class="fw-bold">ประกาศที่ <input type="text" value="" name="annNo" readonly></h5>
+                    <script>
+                        // Get the current date
+                        var currentDate = new Date();
+                        var currentYear = currentDate.getFullYear()+543;
+                        document.getElementsByName('annNo')[0].value = "AN0{{$len}}/"+currentYear;
+                    </script>
+                @endif
+                    
+                
+                @if ($class)
+                    <h5 class="text-start mt-3 ms-2 " id="subject"><b>เรื่อง</b> {{$subject}}</h5>
+                    <input type="hidden" name="subject" value="{{$subject}}">
+                @else
+                    <h5 class="fw-bold">เรื่อง <input type="text" name="subject" required></h5>
+                @endif
+                <br>
+            </div>  
+            @if ($class)
+                <div style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
+                <input type="hidden" name="editorContent" value="{{$editorContent}}">
+            @else
+                <textarea id="editor" name="myInput"></textarea>
+            @endif
+            <div class="mt-auto w-100 ">
+                <div class="ms-5 mt-4">
+                    
+                    @if ($class)
+                        <p class="ms-5">มีผลบังคับใช้ตั้งแต่วันที่ {{ $useDate }}</p>
+                        <p class="ms-5">ประกาศ ณ วันที่ {{ $annoDate }}</p>
+                        <input type="hidden" name="useDate" value="{{$useDate}}">
+                        <input type="hidden" name="annoDate" value="{{$annoDate}}">
+                    @else
+                        <p class="ms-5">มีผลบังคับใช้ตั้งแต่วันที่  <input class="ms-2" type="text" name="useDate" required></p>
+                        <p class="ms-5">ประกาศ ณ วันที่  <input class="ms-2" type="text" name="annoDate" required></p>
+                    @endif
+                    
+                </div>
+                <div class="mt-5 text-center d-flex flex-column align-items-center">
+                    <p>จึงประกาศมาเพื่อทราบโดยทั่วกัน</p>
+                    <div class="mb-1" id="sign"> <br></div>
+                    @if ($class)
+                        <p class="mb-0">( {{ $signName }} )</p>
+                        <p>{{ $signPosition }}</p>
+                        <input type="hidden" name="signName" value="{{$signName}}">
+                        <input type="hidden" name="signPosition" value="{{$signPosition}}">
+                    @else
+                        <p>( <input name="signName" type="text" placeholder="กรุณากรอกชื่อ" required> )</p>
+                        <input class="w-50 mb-2" name="signPosition" type="text" placeholder="กรุณากรอกตำแหน่ง" required>
+                    @endif
+                    
+                    <p class="mb-0">บริษัท ไอดีไดรฟ์ จำกัด</p>
+                </div>
+            </div>
+        </div><!-- end content -->
+
+        <!-- footer -->
+        <div class="footer mt-auto">
+            <p id="footertext">เอกสารนี้ ฉบับทางการ จะอยู่ในรูปไฟล์อิเล็กทรอนิกส์ อยู่ในระบบเครือข่ายสารสนเทศ เท่านั้น หากปรากฎเอกสารนี้ส่วนหนึ่งส่วนใด หรือทั้งฉบับ
+                ในรูปสื่อกระดาษให้ตรวจสอบความทันสมัยกับฉบับทางการในระบบเครือข่ายสารสนเทศ ก่อนใช้อ้างอิง และทำลายทิ้งทันที หากพบว่าเป็นฉบับไม่ทันสมัย <br>
+                เอกสารนี้ เป็น สมบัติของบริษัท ไอดีไดรฟ์ จำกัดห้ามแจกจ่ายไปยังภายนอก โดยไม่ได้รับอนุญาตจาก กรรมการผู้จัดการ บริษัท ไอดีไดรฟ์ จำกัด
             </p>
-            <p></p>
-        </div>
-        <div style="text-align: center;line-height: 20px;">
-            <p style="font-weight: bold;font-size: 16;margin-bottom: 0px;">ประกาศที่ {{$form->book_num}}</p>
-            <p style="font-weight: bold;font-size: 16;">เรื่อง {{$form->title}}</p>
-        </div>
-        <div class="editorContent" style="text-indent: 2.5em;line-height: 16px;padding-left:1.5cm;padding-right:1cm">
-            {!! $form->detail !!}
-        </div>
-    </article>
-    <footer>
-        <div>
-            <p style="font-size: 16;margin-left: 40px;margin-bottom: unset;">มีผลบังคับใช้ตั้งแต่วันที่ {{$form->use_date}}</p>
-            <p style="font-size: 16;margin-left: 40px;">ประกาศ ณ วันที่ {{$form->anno_date}}</p>
-        </div>
-        <div style="text-align: center;">
-            <p style="font-size: 16;">จึงประกาศมาเพื่อทราบโดยทั่วกัน</p>
-            <p style="margin-bottom: -5;font-size: 16;">..........................................</p>
-            <p style="margin-bottom: -5;font-size: 16;">( {{$form->sign_name}} )</p>
-            <p style="margin-bottom: -5;font-size: 16;">{{$form->sign_position}}</p>
-            <p style="font-size: 16;">บริษัท ไอดีไดรฟ์ จำกัด</p>
-        </div>
-        <p style="text-align: center;border: 1px solid;width: 100%;font-size: 12px;padding-bottom: 5px;">
-            เอกสารนี้ ฉบับทางการ จะอยู่ในรูปไฟล์อิเล็กทรอนิกส์ อยู่ในระบบเครือข่ายสารสนเทศ เท่านั้น หากปรากฎเอกสารนี้ส่วนหนึ่งส่วนใด 
-            หรือทั้งฉบับในรูปสื่อกระดาษให้ตรวจสอบความทันสมัยกับฉบับทางการในระบบเครือข่ายสารสนเทศ ก่อนใช้อ้างอิง และทำลายทิ้งทันที 
-            <br>หากพบว่าเป็นฉบับไม่ทันสมัย เอกสารนี้ เป็น สมบัติของบริษัท ไอดีไดรฟ์ จำกัดห้ามแจกจ่ายไปยังภายนอก โดยไม่ได้รับอนุญาตจาก กรรมการผู้จัดการ บริษัท ไอดีไดรฟ์ จำกัด
-        </p>
-    </footer>
+        </div> <!-- end footer -->
+    </div>
+
+    <div class="d-flex justify-content-center downloadbtn">
+        <button class="btn btn-success ms-2" onclick="printDiv()">Print</button>
+</div>
+<script>
+function printDiv() {
+            window.print();
+        }
+</script>
 </body>
-</html>

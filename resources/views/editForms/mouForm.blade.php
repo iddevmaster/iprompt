@@ -16,7 +16,8 @@
             <!-- header -->
             <div class="header d-flex flex-column justify-content-center text-center align-items-center">
                 <img src="{{ asset('dist/img/logoiddrives.png') }}" height="60">
-                <p class="mb-1 fw-bold">บันทึกข้อตกลงความร่วมมือ เลขที่ {{$form->mou_num}}</p>
+                <p class="mb-1 fw-bold">บันทึกข้อตกลงความร่วมมือ</p>
+                <p class="text-end w-100">เลขที่ {{$form->mou_num}}</p>
                     <p class="no-wrap w-100">เรื่อง <input class="ms-2" type="text" name="subject" value="{{$form->title}}" required></p>
                     <p class="mb-0">ระหว่าง</p>
                     <input class="w-50" type="text" id="input1" name="party1" value="{{$form->party1}}" required>

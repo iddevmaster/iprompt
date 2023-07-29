@@ -207,9 +207,16 @@ class FormController extends Controller
     // Function for download form
     public function downloadFormwi(Request $request,$id){
         $form = gendoc::find($id);
-        $pdf = PDF::loadView('forms.export.wiForm', compact('form'));
-        $pdf->setPaper('a4', 'landscape');
-        return $pdf->stream('preview.pdf');
+        // dd($form);
+        $formtype = $form->type;
+        $class = 1;
+        $editorContent = $form->detail;
+        $bookNo = $form->book_num;
+        $subject = $form->title;
+        $creater = $form->bcreater;
+        $inspector = $form->binspector;
+        $approver = $form->bapprover;
+        return view('/forms/export/wiForm', compact( 'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
         
     }
 
@@ -223,9 +230,16 @@ class FormController extends Controller
     // Function for download form
     public function downloadFormsop(Request $request,$id){
         $form = gendoc::find($id);
-        $pdf = PDF::loadView('forms.export.sopForm', compact('form'));
-        $pdf->setPaper('a4');
-        return $pdf->stream('preview.pdf');
+        // dd($form);
+        $formtype = $form->type;
+        $class = 1;
+        $editorContent = $form->detail;
+        $bookNo = $form->book_num;
+        $subject = $form->title;
+        $creater = $form->bcreater;
+        $inspector = $form->binspector;
+        $approver = $form->bapprover;
+        return view('/forms/export/sopForm', compact( 'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
     }
 
     // Function for edit form
@@ -237,9 +251,13 @@ class FormController extends Controller
     // Function for download form
     public function downloadFormproj(Request $request,$id){
         $form = project_doc::find($id);
-        $pdf = PDF::loadView('forms.export.projForm', compact('form'));
-        $pdf->setPaper('a4');
-        return $pdf->stream('preview.pdf');
+        $class = 1;
+        $formtype = $form->type;
+        $proj_num = $form->proj_num;
+        $editorContent = $form->detail;
+        $projName = $form->title;
+        $projNo = $form->proj_code;
+        return view('/forms/export/projForm', compact( 'proj_num','projName','class', 'projNo','editorContent'));
     }
 
     // Function for edit form
@@ -252,9 +270,16 @@ class FormController extends Controller
     // Function for download form
     public function downloadFormpol(Request $request,$id){
         $form = gendoc::find($id);
-        $pdf = PDF::loadView('forms.export.policyForm', compact('form'));
-        $pdf->setPaper('a4');
-        return $pdf->stream('preview.pdf');
+        // dd($form);
+        $formtype = $form->type;
+        $class = 1;
+        $editorContent = $form->detail;
+        $bookNo = $form->book_num;
+        $subject = $form->title;
+        $creater = $form->bcreater;
+        $inspector = $form->binspector;
+        $approver = $form->bapprover;
+        return view('/forms/export/policyForm', compact( 'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
     }
 
     // Function for edit form
@@ -266,9 +291,18 @@ class FormController extends Controller
     // Function for download form
     public function downloadFormmou(Request $request,$id){
         $form = mou_doc::find($id);
-        $pdf = PDF::loadView('forms.export.mouForm', compact('form'));
-        $pdf->setPaper('a4');
-        return $pdf->stream('preview.pdf');
+        
+        $class = 1;
+        $formtype = $form->type;
+        $editorContent = $form->detail;
+
+        $subject = $form->title;
+        $party1 = $form->party1;
+        $location = $form->place;
+        $mou_num = $form->mou_num;
+        $parties = json_decode($form->parties, true);
+        // dd($parties);
+        return view('/forms/export/mouForm', compact( 'mou_num','parties', 'location', 'subject', 'party1','class','editorContent'));
     }
 
     // Function for edit form
@@ -281,9 +315,16 @@ class FormController extends Controller
     public function downloadFormanno(Request $request,$id){
         
         $form = announce_doc::find($id);
-        $pdf = PDF::loadView('forms.export.annoForm', compact('form'));
-        $pdf->setPaper('a4');
-        return $pdf->stream('preview.pdf');
+        $class = 1;
+        $formtype = $form->type;
+        $editorContent = $form->detail;
+        $annNo = $form->book_num;
+        $subject = $form->title;
+        $annoDate = $form->anno_date;
+        $useDate = $form->use_date;
+        $signName = $form->sign_name;
+        $signPosition = $form->sign_position;
+        return view('/forms/export/annoForm', compact( 'annNo','signName', 'signPosition','annoDate', 'useDate', 'editorContent','subject','class'));
     }
 
     public function update(Request $request) {
@@ -299,6 +340,7 @@ class FormController extends Controller
                 $form->sign_position = $request->signPosition;
                 $form->save();
             }
+            Alert::toast('Your Form as been Updated!','success');
             return redirect('/tables/annoTable');
         }
         elseif ($request->formtype === "mouForm") {
@@ -324,6 +366,8 @@ class FormController extends Controller
                 $form->detail = $request->myInput;
                 $form->save();
             }
+            Alert::toast('Your Form as been Updated!','success');
+            return redirect('/tables/mouTable');
         }
         elseif ($request->formtype === "projForm") {
             $form = project_doc::find($request->formid);
@@ -334,6 +378,7 @@ class FormController extends Controller
                 $form->proj_code = $request->projNo;
                 $form->save();
             }
+            Alert::toast('Your Form as been Updated!','success');
             return redirect('/tables/projTable');
         }
         else {
@@ -347,7 +392,7 @@ class FormController extends Controller
                 $form->detail = $request->myInput;
                 $form->save();
             }
-            
+            Alert::toast('Your Form as been Updated!','success');
             if ($request->formtype === "wiForm") {
                 return redirect('/tables/wiTable');
             } elseif ($request->formtype === "sopForm") {

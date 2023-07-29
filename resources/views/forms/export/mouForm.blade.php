@@ -1,15 +1,31 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <link rel="icon" type="image/png" href="{{ asset('dist/img/logo.png') }}"  />
-        <title>ระบบสารบรรณ</title>
-    <!-- icon -->
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-</head>
-<style>
-    @font-face {
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
+
+    <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+
+    <!-- Icon -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/css/app.css' , 'resources/js/app.js'])
+    @vite(['resources/css/form.css'])
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <!-- (Optional) html2canvas library to convert HTML content to canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+
+    <style>
+        @font-face {
             font-family: 'THSarabunNew';
             font-style: normal;
             font-weight: normal;
@@ -33,81 +49,119 @@
             font-weight: bold;
             src: url("{{ public_path('fonts/THSarabunNew BoldItalic.ttf') }}") format('truetype');
         }
-      body {
+        body {
         font-family: "THSarabunNew";
-        font-size: 16;
+        font-size: 18px;
         height: 100%;
       }
-      .header{
-        border: 1px solid black;
-      }
-      footer{
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        height: fit-content;
-      }
-      .editorContent table{
-  width:fit-content;
-  text-align: center;
-  min-width: 30%;
+  .a4-container {
+    width: 210mm; /* Width of A4 paper in millimeters */
+    min-height: 297mm; /* Height of A4 paper in millimeters */
+    margin: 0 auto; /* Center the container horizontally */
+    background-color: white;
+    position: relative; /* Required for footer positioning */
+    padding: 1cm;
 }
-.editorContent img{
-  width: inherit;
+.downloadbtn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 50px;
 }
-.editorContent tr:first-child{
-  border-bottom: 1px solid;
+@page {
+    margin: 0;
+    size: 'A4'; /* Define the paper size, you can use 'A4', 'letter', etc. */
 }
-
-</style>
-<!-- <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('dist/img/logoiddrives.png'))) }}" style=""  height="53"/> -->
+@media print {
+            .downloadbtn {
+                visibility: hidden;
+            }
+            .a4-container {
+                visibility: visible;
+            }
+            
+        }
+    </style>
+</head>
 <body>
-    <article>
-        <div style="text-align: center;">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('dist/img/logoiddrives.png'))) }}"  height="60"/>
-            <p style="margin-bottom: -5;font-size: 18;font-weight: bold;margin-bottom: 0;">บันทึกข้อตกลงความร่วมมือ เลขที่ {{$form->mou_num}}</p>
-            <p style="margin-bottom: -5;font-size: 18;font-weight: bold;">เรื่อง {{$form->title}}</p>
-            <p style="margin-bottom: -5;">ระหว่าง</p>
-            <p style="margin-bottom: -5;">{{$form->party1}}</p>
-            @foreach(json_decode($form->parties, true) as $party)
-                <p class="mb-0">และ</p>
-                <p class="mb-0">{{$party}}</p>
-            @endforeach
-            <p >บันทึกข้อตกลงนี้จัดทำขึ้น ณ {{$form->place}}</p>
+<div id="a4container" class="a4-container border mb-5 d-flex align-items-center flex-column">
+
+<!-- header -->
+<div class="header d-flex flex-column justify-content-center text-center align-items-center">
+    <img src="{{ asset('dist/img/logoiddrives.png') }}" height="60">
+    <p class="mb-1 fw-bold">บันทึกข้อตกลงความร่วมมือ</p>
+    <p class="text-end w-100">เลขที่ {{$mou_num}}</p>
+    <input type="hidden" name="mou_num" value="{{$mou_num}}">
+        <div class="d-flex">
+            <p class="fw-bold mb-1">เรื่อง</p>
+            <div class="text-start mb-1 ms-2" style="font-size: 16px;">{{$subject}}</div>
+            <input type="hidden" name="subject" value="{{$subject}}">
         </div>
-        <div class="editorContent" style="text-indent: 2.5em;line-height: 16px;padding-left:1.5cm;padding-right:1cm">
-            {!! $form->detail !!}
+        <p class="mb-0">ระหว่าง</p>
+        <p class="mb-0">{{$party1}}</p>
+        <input type="hidden" name="party1" value="{{$party1}}">
+        @foreach($parties as $party)
+        <p class="mb-0">และ</p>
+        <p class="mb-0">{{$party}}</p>
+        @endforeach
+        <input type="hidden" name="parties" value="{{ json_encode($parties) }}">
+        <p class="my-2 w-100 text-center">บันทึกข้อตกลงฉบับนี้จัดทำขึ้น ณ {{$location}}</p>
+        <input type="hidden" name="location" value="{{$location}}">
+</div> <!-- end header -->
+
+<!-- content -->
+<div class="content my-4 w-100 h-100 d-flex flex-column">
+        <div style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
+        <input type="hidden" name="editorContent" value="{{$editorContent}}">
+</div><!-- end content -->
+
+<!-- footer -->
+<div class="footer mt-auto">
+    <div class="d-flex justify-content-evenly">
+        <div class="p-2">
+            <p class="mb-0">.............................................</p>
+            <p>(...........................................)</p>
+            <p>ตำแหน่ง</p>
         </div>
-    </article>
-    <footer >
-        <table style="width: 100%;">
-            <tbody>
-                <tr style="width: 100%;">
-                    <td style="text-align: center;padding: 10px;">
-                        <p style="margin-bottom: -5;font-size: 16;">..........................................</p>
-                        <p style="margin-bottom: -5;font-size: 16;">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</p>
-                        <p style="margin-bottom: -5;font-size: 16;">พยาน</p>
-                    </td>
-                    <td style="text-align: center;padding: 10px;">
-                        <p style="margin-bottom: -5;font-size: 16;">..........................................</p>
-                        <p style="margin-bottom: -5;font-size: 16;">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</p>
-                        <p style="margin-bottom: -5;font-size: 16;">พยาน</p>
-                    </td>
-                </tr>
-                <tr style="width: 100%;">
-                    <td style="text-align: center;padding: 10px;">
-                        <p style="margin-bottom: -5;font-size: 16;">..........................................</p>
-                        <p style="margin-bottom: -5;font-size: 16;">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</p>
-                        <p style="margin-bottom: -5;font-size: 16;">พยาน</p>
-                    </td>
-                    <td style="text-align: center;padding: 10px;">
-                        <p style="margin-bottom: -5;font-size: 16;">..........................................</p>
-                        <p style="margin-bottom: -5;font-size: 16;">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</p>
-                        <p style="margin-bottom: -5;font-size: 16;">พยาน</p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </footer>
+        <div class="p-2">
+            <p class="mb-0">.............................................</p>
+            <p>(...........................................)</p>
+            <p>ตำแหน่ง</p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-evenly">
+        <div class="p-2">
+            <p class="mb-0">.............................................</p>
+            <p>(...........................................)</p>
+            <p>พยาน</p>
+        </div>
+        <div class="p-2">
+            <p class="mb-0">.............................................</p>
+            <p>(...........................................)</p>
+            <p>พยาน</p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-evenly">
+        <div class="p-2">
+            <p class="mb-0">.............................................</p>
+            <p>(...........................................)</p>
+            <p>ตำแหน่ง</p>
+        </div>
+        <div class="p-2">
+            <p class="mb-0">.............................................</p>
+            <p>(...........................................)</p>
+            <p>ตำแหน่ง</p>
+        </div>
+    </div>
+</div> <!-- end footer -->
+</div> <!-- end page -->
+
+<div class="d-flex justify-content-center downloadbtn">
+        <button class="btn btn-success ms-2" onclick="printDiv()">Print</button>
+</div>
+<script>
+function printDiv() {
+            window.print();
+        }
+</script>
 </body>
-</html>
