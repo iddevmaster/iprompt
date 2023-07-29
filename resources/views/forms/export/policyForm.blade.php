@@ -132,7 +132,7 @@
         <!-- content -->
         <div class="content py-5 w-100 h-100">
                 <div style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
-                <input type="hidden" name="editorContent" value="{!! $editorContent !!}">
+                <input type="hidden" name="editorContent" value="{{ $editorContent }}">
         </div><!-- end content -->
 
         <!-- footer -->
