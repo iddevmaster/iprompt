@@ -58,7 +58,7 @@ class ImportController extends Controller
         $imported->receiver_brn = $request->recive_brn;
         $imported->save();
         Alert::toast('Your Form as been Imported!','success');
-        return redirect('/home');
+        return redirect('/tables/imported');
     }
 
     public function imported() {

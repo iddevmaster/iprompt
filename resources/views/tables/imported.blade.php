@@ -355,20 +355,36 @@
                 Swal.fire({
                     title: 'Accept or Deny?',
                     html:
+                        '<label for="swal-input1">ชื่อผู้ตอบรับ:</label>' +
                         '<input id="swal-input1" class="swal2-input">' +
+                        '<label for="swal-input2">หมายเหตุ:</label>' +
                         '<input id="swal-input2" class="swal2-input">',
                     showDenyButton: true,
                     showCancelButton: true,
-                    confirmButtonText: 'Save',
+                    confirmButtonText: 'Accept',
                     denyButtonText: 'Deny',
                     preConfirm: () => {
                         const swalInput1Value = document.getElementById('swal-input1').value;
                         const swalInput2Value = document.getElementById('swal-input2').value;
-
                         return {
                             swalInput1: swalInput1Value,
                             swalInput2: swalInput2Value,
                         };
+                    },
+                    didOpen: () => {
+                        // Disable the "Accept" and "Deny" buttons initially
+                        const confirmButton = Swal.getConfirmButton();
+                        const denyButton = Swal.getDenyButton();
+                        confirmButton.disabled = true;
+                        denyButton.disabled = true;
+
+                        // Listen for changes in the input fields
+                        const input1 = document.getElementById('swal-input1');
+
+                        input1.addEventListener('input', () => {
+                            confirmButton.disabled = input1.value.trim() === '';
+                            denyButton.disabled = input1.value.trim() === '';
+                        });
                     },
                 }).then((result) => {
                     statusValue = ckbtn.value;
