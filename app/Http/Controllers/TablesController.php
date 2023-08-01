@@ -8,7 +8,9 @@ use App\Models\User;
 use App\Models\project_doc;
 use App\Models\announce_doc;
 use App\Models\mou_doc;
+use App\Models\imported;
 use PDF;
+Use Alert;
 
 class TablesController extends Controller
 {
@@ -192,6 +194,4 @@ class TablesController extends Controller
         // dd($parties);
         return view('/forms/'.$formtype, compact( 'mou_num','parties', 'location', 'subject', 'party1','class','editorContent'));
     }
-
-
 }
