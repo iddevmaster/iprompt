@@ -123,9 +123,7 @@
                         />
                         <p class="mt-1">บริษัท ไอดีไดรฟ์ จำกัด</p>
                     </div>
-                    <div
-                        class="col-5 border border-black border-top-0 border-bottom-0"
-                    >
+                    <div class="col-5 border border-black border-top-0 border-bottom-0">
                         <h5 class="mt-3 fw-bold">
                             มาตรฐานขั้นตอนการปฏิบัติงาน
                         </h5>
@@ -200,22 +198,10 @@
             <!-- end header -->
 
             <!-- content -->
-            <div class="content py-3 w-100 h-100">
-                <div
-                    class="editorContent"
-                    style="
-                        text-indent: 2.5em;
-                        padding-left: 1.5cm;
-                        padding-right: 1cm;
-                    "
-                >
+            <div class="content py-3">
+                <div class="editorContent">
                     {!! $editorContent !!}
                 </div>
-                <input
-                    type="hidden"
-                    name="editorContent"
-                    value="{{ $editorContent }}"
-                />
             </div>
             <!-- end content -->
 
@@ -234,9 +220,6 @@
                 </p>
             </div>
             <!-- end footer -->
-
-            <!-- send form type for preview -->
-            <input type="hidden" name="formtype" id="formtype" value="wiForm" />
         </div>
         <!-- end paper page -->
 
