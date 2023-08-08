@@ -22,9 +22,7 @@
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
         />
 
-        <!-- Scripts -->
-        @vite(['resources/sass/app.scss', 'resources/css/app.css' ,
-        'resources/js/app.js']) @vite(['resources/css/form.css'])
+        
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
         <!-- (Optional) html2canvas library to convert HTML content to canvas -->
@@ -228,6 +226,9 @@
                 Print
             </button>
         </div>
+        <!-- Scripts -->
+        @vite(['resources/sass/app.scss', 'resources/css/app.css' ,
+        'resources/js/app.js']) @vite(['resources/css/form.css'])
         <script>
             function printDiv() {
                 window.print();
