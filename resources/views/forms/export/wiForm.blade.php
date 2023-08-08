@@ -100,6 +100,10 @@
                     visibility: visible;
                 }
             }
+
+            .editorContent img{
+                width: inherit;
+            }
         </style>
     </head>
     <body>
