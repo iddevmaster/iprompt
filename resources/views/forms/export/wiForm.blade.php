@@ -200,7 +200,7 @@
             <!-- end header -->
 
             <!-- content -->
-            <div class="content py-5 w-100 h-100">
+            <div class="content py-3 w-100 h-100">
                 <div
                     class="editorContent"
                     style="
