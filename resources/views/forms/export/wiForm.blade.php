@@ -111,6 +111,9 @@
                 width: 100%;
                 display: flex;
                 justify-content: start;
+                padding-left:1.5cm;
+                padding-right:1cm;
+                text-indent: 2.5em;
             }
 
             .editorContent table{
@@ -227,7 +230,7 @@
 
             <!-- content -->
             <div class="content py-3">
-                <div class="editorContent">
+                <div class="editorContent" style="">
                     {!! $editorContent !!}
                 </div>
             </div>
