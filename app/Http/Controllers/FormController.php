@@ -90,7 +90,7 @@ class FormController extends Controller
                 $subject = $request->input('subject');
                 $party1 = $request->input('party1');
                 $location = $request->input('location');
-                $mou_num = $request->mou_num;
+                $book_num = $request->book_num;
 
                 if ($request->input('party2')) {
                     $parties[] = $request->input('party2');
@@ -104,7 +104,7 @@ class FormController extends Controller
                 if ($request->input('party5')){
                     $parties[] = $request->input('party5');
                 }
-                return view('/forms/'.$formtype, compact( 'mou_num','parties', 'location', 'subject', 'party1','class','editorContent'));
+                return view('/forms/'.$formtype, compact( 'book_num','parties', 'location', 'subject', 'party1','class','editorContent'));
                 
                 
             }
@@ -151,7 +151,7 @@ class FormController extends Controller
         }
         elseif ($formtype === "mouForm"){
             $mou_doc = new mou_doc;
-            $mou_doc->mou_num = $request->mou_num;
+            $mou_doc->book_num = $request->book_num;
             $mou_doc->submit_by = $request->user()->id;
             $mou_doc->type = $request->formtype;
             $mou_doc->title = $request->subject;
@@ -205,18 +205,20 @@ class FormController extends Controller
     }
 
     // Function for download form
-    public function downloadFormwi(Request $request,$id){
+    public function downloadFormwi(Request $request,$dorv,$id){
         $form = gendoc::find($id);
         // dd($form);
-        $formtype = $form->type;
-        $class = 1;
-        $editorContent = $form->detail;
-        $bookNo = $form->book_num;
-        $subject = $form->title;
-        $creater = $form->bcreater;
-        $inspector = $form->binspector;
-        $approver = $form->bapprover;
-        return view('/forms/export/wiForm', compact( 'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+        if ($form) {
+            $formtype = $form->type;
+            $class = 1;
+            $editorContent = $form->detail;
+            $bookNo = $form->book_num;
+            $subject = $form->title;
+            $creater = $form->bcreater;
+            $inspector = $form->binspector;
+            $approver = $form->bapprover;
+        }
+        return view('/forms/export/wiForm', compact( 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
         
     }
 
@@ -228,7 +230,7 @@ class FormController extends Controller
     }
 
     // Function for download form
-    public function downloadFormsop(Request $request,$id){
+    public function downloadFormsop(Request $request,$dorv,$id){
         $form = gendoc::find($id);
         // dd($form);
         $formtype = $form->type;
@@ -239,7 +241,7 @@ class FormController extends Controller
         $creater = $form->bcreater;
         $inspector = $form->binspector;
         $approver = $form->bapprover;
-        return view('/forms/export/sopForm', compact( 'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+        return view('/forms/export/sopForm', compact( 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
     }
 
     // Function for edit form
@@ -249,7 +251,7 @@ class FormController extends Controller
     }
 
     // Function for download form
-    public function downloadFormproj(Request $request,$id){
+    public function downloadFormproj(Request $request,$dorv,$id){
         $form = project_doc::find($id);
         $class = 1;
         $formtype = $form->type;
@@ -257,7 +259,7 @@ class FormController extends Controller
         $editorContent = $form->detail;
         $projName = $form->title;
         $projNo = $form->proj_code;
-        return view('/forms/export/projForm', compact( 'proj_num','projName','class', 'projNo','editorContent'));
+        return view('/forms/export/projForm', compact( 'dorv' ,'proj_num','projName','class', 'projNo','editorContent'));
     }
 
     // Function for edit form
@@ -268,7 +270,7 @@ class FormController extends Controller
     }
 
     // Function for download form
-    public function downloadFormpol(Request $request,$id){
+    public function downloadFormpol(Request $request,$dorv,$id){
         $form = gendoc::find($id);
         // dd($form);
         $formtype = $form->type;
@@ -279,7 +281,7 @@ class FormController extends Controller
         $creater = $form->bcreater;
         $inspector = $form->binspector;
         $approver = $form->bapprover;
-        return view('/forms/export/policyForm', compact( 'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+        return view('/forms/export/policyForm', compact( 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
     }
 
     // Function for edit form
@@ -289,7 +291,7 @@ class FormController extends Controller
     }
 
     // Function for download form
-    public function downloadFormmou(Request $request,$id){
+    public function downloadFormmou(Request $request,$dorv,$id){
         $form = mou_doc::find($id);
         
         $class = 1;
@@ -299,10 +301,10 @@ class FormController extends Controller
         $subject = $form->title;
         $party1 = $form->party1;
         $location = $form->place;
-        $mou_num = $form->mou_num;
+        $book_num = $form->book_num;
         $parties = json_decode($form->parties, true);
         // dd($parties);
-        return view('/forms/export/mouForm', compact( 'mou_num','parties', 'location', 'subject', 'party1','class','editorContent'));
+        return view('/forms/export/mouForm', compact( 'dorv' ,'book_num','parties', 'location', 'subject', 'party1','class','editorContent'));
     }
 
     // Function for edit form
@@ -312,7 +314,7 @@ class FormController extends Controller
     }
 
     // Function for download form
-    public function downloadFormanno(Request $request,$id){
+    public function downloadFormanno(Request $request,$dorv,$id){
         
         $form = announce_doc::find($id);
         $class = 1;
@@ -324,7 +326,7 @@ class FormController extends Controller
         $useDate = $form->use_date;
         $signName = $form->sign_name;
         $signPosition = $form->sign_position;
-        return view('/forms/export/annoForm', compact( 'annNo','signName', 'signPosition','annoDate', 'useDate', 'editorContent','subject','class'));
+        return view('/forms/export/annoForm', compact('dorv' ,'annNo','signName', 'signPosition','annoDate', 'useDate', 'editorContent','subject','class'));
     }
 
     public function update(Request $request) {

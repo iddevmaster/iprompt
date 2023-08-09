@@ -106,6 +106,8 @@
                             </ul>
 
                         </li>
+
+                        @can('create')
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle navbarMenu" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Create
@@ -113,19 +115,29 @@
                         
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
-                                @if (!($permis === '4' | $permis === '5'))
-                                    @if (!($dpm === '5'))
-                                    <li><a class="dropdown-item" href="{{ route('mouForm') }}">MOU</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('projForm') }}">โครงการ</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('policyForm') }}">Policy</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('sopForm') }}">SOP</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('wiForm') }}">WI</a></li>
-                                    @endif
-                                    <li><a class="dropdown-item" href="{{ route('annoForm') }}">ประกาศ</a></li>
-                                @endif
+                                    @can('MOU')
+                                        <li><a class="dropdown-item" href="{{ route('mouForm') }}">MOU</a></li>
+                                    @endcan
+                                    @can('PRO')
+                                        <li><a class="dropdown-item" href="{{ route('projForm') }}">โครงการ</a></li>
+                                    @endcan
+                                    @can('POL')
+                                        <li><a class="dropdown-item" href="{{ route('policyForm') }}">Policy</a></li>
+                                    @endcan
+                                    @can('SOP')
+                                        <li><a class="dropdown-item" href="{{ route('sopForm') }}">SOP</a></li>
+                                    @endcan
+                                    @can('WI')
+                                        <li><a class="dropdown-item" href="{{ route('wiForm') }}">WI</a></li>
+                                    @endcan
+                                    @can('ANNO')
+                                        <li><a class="dropdown-item" href="{{ route('annoForm') }}">ประกาศ</a></li>
+                                    @endcan
                                 </div>
                             </ul>
                         </li>
+                        @endcan
+                        
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle navbarMenu" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 Table
@@ -133,17 +145,31 @@
                         
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
-                                    @if (!($dpm === '5'))
-                                    <li><a class="dropdown-item" href="{{ route('mouTable') }}">MOU</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('projTable') }}">โครงการ</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('policyTable') }}">Policy</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('sopTable') }}">SOP</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('wiTable') }}">WI</a></li>
-                                    @endif
-                                    <li><a class="dropdown-item" href="{{ route('annoTable') }}">ประกาศ</a></li>
+                                    @can('MOU')
+                                        <li><a class="dropdown-item" href="{{ route('mouTable') }}">MOU</a></li>
+                                    @endcan
+                                    @can('PRO')
+                                        <li><a class="dropdown-item" href="{{ route('projTable') }}">โครงการ</a></li>
+                                    @endcan
+                                    @can('POL')
+                                        <li><a class="dropdown-item" href="{{ route('policyTable') }}">Policy</a></li>
+                                    @endcan
+                                    @can('SOP')
+                                        <li><a class="dropdown-item" href="{{ route('sopTable') }}">SOP</a></li>
+                                    @endcan
+                                    @can('WI')
+                                        <li><a class="dropdown-item" href="{{ route('wiTable') }}">WI</a></li>
+                                    @endcan
+                                    @can('ANNO')
+                                        <li><a class="dropdown-item" href="{{ route('annoTable') }}">ประกาศ</a></li>
+                                    @endcan
                                 </div>
                             </ul>
                         </li>
+                        <li class="nav-item "><a href="{{ route('verifyDoc') }}" class="nav-link navbarMenu">Verify</a></li>
+                        @role('admin')
+                        <li class="nav-item "><a href="{{ route('alluser') }}" class="nav-link navbarMenu">User</a></li>
+                        @endrole
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -167,20 +193,28 @@
                                     {{ Auth::user()->name }}
                                 </a>
                             
-                                <div class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdown">
-                                    <div class="d-flex justify-content-center">
-                                        <a class="dropdown-item text-center" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                        document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
-                                        </a>
-                                
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
+                                <ul class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdown">
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <li class="text-center"><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
+                                        <li>
+                                            <a class="dropdown-item text-center" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a>
+                                    
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </li>
+                                        
                                     </div>
-                                </div>
+                                </ul>
+
+                                
+
                             </li>
+
                         @endguest
                     </ul>
                 </div>

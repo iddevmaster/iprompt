@@ -20,6 +20,7 @@ export default defineConfig({
                 'resources/js/login.js',
                 'resources/css/imported.css',
                 'resources/js/imported.js',
+                'resources/css/profile.css',
 
             ],
             refresh: true,

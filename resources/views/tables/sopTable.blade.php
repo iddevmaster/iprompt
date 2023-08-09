@@ -6,7 +6,7 @@
 @section('content')
 <body>
     <div class="container">
-        <div class="text-center"><h2>SOP Table</h2></div>
+        <div class="text-center mb-4"><h2>SOP Table</h2></div>
         <div class="d-flex">
             <div class="flex-grow-1"><input type="text" id="searchInput" class="form-control mb-2" placeholder="Search..."></div>
             <div class="p-1 ms-2 export"><a class="a-tag" href=""><i class="bi bi-file-earmark-arrow-down"></i></a></div>
@@ -24,6 +24,7 @@
                         <th scope="col">Subject</th>
                         <th scope="col">Created_date</th>
                         <th scope="col">Submit_by</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Download</th>
                     </tr>
@@ -47,27 +48,117 @@
                                 @endphp
                             </td>
                             <?php   $permis = Auth::user()->role ;
-                                    $dpm = Auth::user()->dpm;?>
+                                    $dpm = Auth::user()->dpm;
+                            ?>
+
+                            <td>
+                                @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
+                                    <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}">{{$row->stat}}</button>
+                                @elseif ($row->stat === 'ผ่านการอนุมัติ')
+                                    <button class="btn btn-success" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button>
+                                @elseif ($row->stat === 'ไม่ผ่านการตรวจสอบ' || $row->stat === 'ไม่ผ่านการอนุมัติ')
+                                    <button class="btn btn-danger" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button>
+                                @else
+                                    <button class="btn btn-secondary" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button>
+                                @endif
+                            </td>
                             
-                            @if (!($permis === '4' | $permis === '5' | $dpm === '5'))
-                            <td>
-                                <a href="{{url('/form/editsop/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
-                            </td>
-                            <td>
-                                <a href="{{url('/form/downloadsop/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
-                            </td>
+                            @can('create')
+                                <td>
+                                    <a href="{{url('/form/editsop/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
+                                </td>
                             @else
-                            <td></td>
-                            <td>
-                                <a href="{{url('/form/viewsop/'.$row->id)}}" ><button type="button" class="btn btn-primary">View</button></a>
-                            </td>
-                            @endif
+                                <td></td>
+                            @endcan
+
+                            @can('download')
+                                <td>
+                                    <a href="{{url('/form/downloadsop/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
+                                </td>
+                            @else
+                                <td>
+                                    <a href="{{url('/form/viewsop/'.$row->id)}}" ><button type="button" class="btn btn-primary">View</button></a>
+                                </td>
+                            @endcan
                         </tr>
                         <?php $counter++ ?>
                     @endforeach
                 </tbody>
             </table>
+            <!-- Pagination Links -->
+            <div class="d-flex justify-content-end pagination">
+                {{ $gendoc->links('vendor.pagination.bootstrap-5') }}
+            </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const statbtns = document.querySelectorAll('#status');
+        statbtns.forEach((ckbtn) => {
+            let status = ckbtn.getAttribute('name');
+            let docid = ckbtn.value;
+            let type = ckbtn.getAttribute('docType');
+            ckbtn.addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Verification',
+                    html: `
+                        <select class="form-select mb-2" id="ins" >
+                            <option value="" selected disabled>กรุณาเลือกผู้ตรวจสอบ</option>
+                            @foreach ($inspectors as $ins)
+                                <option value="{{$ins->id}}">{{$ins->name}}</option>
+                            @endforeach
+                        </select>
+                        <select class="form-select mb-2" id="appr" >
+                            <option value="" selected disabled>กรุณาเลือกผู้อนุมัติ</option>
+                            @foreach ($approvers as $appr)
+                                <option value="{{$appr->id}}">{{$appr->name}}</option>
+                            @endforeach
+                        </select>
+                        `,
+                    showCancelButton: true,
+                    preConfirm: () => {
+                        const insValue = document.getElementById('ins').value;
+                        const appValue = document.getElementById('appr').value;
+                        if (!insValue || !appValue) {
+                            return Promise.reject('Please select both inspector and approver.');
+                        }
+                        
+                        return [insValue, appValue];
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+
+                        fetch('/table/form/verify', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                            },
+                            body: JSON.stringify({
+                                ins: result.value[0],
+                                app: result.value[1],
+                                docId: docid,
+                                status: status,
+                                type: type,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Handle the response if needed
+                            console.log(data);
+                            // You can also reload the page to see the changes,
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            // Handle errors if any
+                            Swal.fire('Error!', error.message, 'error');
+                        });
+                    }
+                }).catch((error) => {
+                    Swal.fire('Error!', error, 'error'); // Display error to user
+                });
+            });
+        });
+    </script>
 </body>
 @endsection

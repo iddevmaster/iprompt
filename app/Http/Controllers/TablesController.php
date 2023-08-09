@@ -36,49 +36,61 @@ class TablesController extends Controller
 
     // query all wi form from database to wi table page
     public function wiTable() {
-        $gendoc = gendoc::where('type', 'wiForm')->orderBy('id', 'desc')->get();
+        $gendoc = gendoc::where('type', 'wiForm')->orderBy('id', 'desc')->paginate(10);
         $user = User::all();
-        return view('/tables/wiTable', compact('gendoc', 'user'));
+        $approvers = User::permission('approve')->get();
+        $inspectors = User::permission('inspect')->get();
+        return view('/tables/wiTable', compact('inspectors','approvers','gendoc', 'user'));
     }
 
     // query all sop form from database to sop table page
     public function sopTable() {
-        $gendoc = gendoc::where('type', 'sopForm')->orderBy('id', 'desc')->get();
+        $gendoc = gendoc::where('type', 'sopForm')->orderBy('id', 'desc')->paginate(10);
         $user = User::all();
+        $approvers = User::permission('approve')->get();
+        $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
-        return view('/tables/sopTable', compact('gendoc', 'user'));
+        return view('/tables/sopTable', compact('inspectors','approvers','gendoc', 'user'));
     }
 
     // query all policy form from database to policy table page
     public function policyTable() {
-        $gendoc = gendoc::where('type', 'policyForm')->orderBy('id', 'desc')->get();
+        $gendoc = gendoc::where('type', 'policyForm')->orderBy('id', 'desc')->paginate(10);
         $user = User::all();
+        $approvers = User::permission('approve')->get();
+        $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
-        return view('/tables/policyTable', compact('gendoc', 'user'));
+        return view('/tables/policyTable', compact('inspectors','approvers','gendoc', 'user'));
     }
 
     // query all mou form from database to mou table page
     public function mouTable() {
-        $gendoc = mou_doc::orderBy('id', 'desc')->get();
+        $gendoc = mou_doc::orderBy('id', 'desc')->paginate(10);
         $user = User::all();
+        $approvers = User::permission('approve')->get();
+        $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
-        return view('/tables/mouTable', compact('gendoc', 'user'));
+        return view('/tables/mouTable', compact('inspectors','approvers','gendoc', 'user'));
     }
 
     // query all project form from database to project table page
     public function projTable() {
-        $gendoc = project_doc::orderBy('id', 'desc')->get();
+        $gendoc = project_doc::orderBy('id', 'desc')->paginate(10);
         $user = User::all();
+        $approvers = User::permission('approve')->get();
+        $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
-        return view('/tables/projTable', compact('gendoc', 'user'));
+        return view('/tables/projTable', compact('inspectors','approvers','gendoc', 'user'));
     }
 
     // query all anno form from database to anno table page
     public function annoTable() {
-        $gendoc = announce_doc::orderBy('id', 'desc')->get();
+        $gendoc = announce_doc::orderBy('id', 'desc')->paginate(10);
         $user = User::all();
+        $approvers = User::permission('approve')->get();
+        $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
-        return view('/tables/annoTable', compact('gendoc', 'user'));
+        return view('/tables/annoTable', compact('inspectors','approvers','gendoc', 'user'));
     }
 
     public function createPDF() {
@@ -189,9 +201,93 @@ class TablesController extends Controller
         $subject = $form->title;
         $party1 = $form->party1;
         $location = $form->place;
-        $mou_num = $form->mou_num;
+        $book_num = $form->book_num;
         $parties = json_decode($form->parties, true);
         // dd($parties);
-        return view('/forms/'.$formtype, compact( 'mou_num','parties', 'location', 'subject', 'party1','class','editorContent'));
+        return view('/forms/'.$formtype, compact( 'book_num','parties', 'location', 'subject', 'party1','class','editorContent'));
+    }
+
+
+    public function verifyDoc() {
+        $gendocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat'];
+        $mouDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat'];
+        $projectDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat'];
+        $announceDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat'];
+        
+        $gendocQuery = gendoc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($gendocColumns);
+        $mouDocQuery = mou_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($mouDocColumns);
+        $projectDocQuery = project_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($projectDocColumns);
+        $announceDocQuery = announce_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($announceDocColumns);
+
+        $form = $gendocQuery
+                    ->union($mouDocQuery)
+                    ->union($projectDocQuery)
+                    ->union($announceDocQuery)
+                    ->get();
+
+        $user = User::all();
+        return view('/tables/verify', compact('form','user'));
+    }
+
+    public function setVerify(Request $request) {
+        try {
+            $id = $request->docId;
+            if ($request->type === 'annoForm') { 
+                $form = announce_doc::find($id);
+            }
+            elseif ($request->type === 'mouForm') { 
+                $form = mou_doc::find($id);
+            }
+            elseif ($request->type === 'projForm') { 
+                $form = project_doc::find($id);
+            }
+            else {
+                $form = gendoc::find($id);
+            }
+
+            if ($request->status === 'ยังไม่ได้ตรวจสอบ') {
+                $app = [
+                    'appId' => $request->app,
+                    'note' => '-',
+                    'date' => date('Y-m-d H:i:s'),
+                ];
+                $ins = [
+                    'appId' => $request->ins,
+                    'note' => '-',
+                    'date' => date('Y-m-d H:i:s'),
+                ];
+                $form->app = $app;
+                $form->ins = $ins;
+                $form->stat = 'รอตรวจสอบ';
+                $form->save();
+            } elseif ($request->status === 'รอตรวจสอบ') {
+                $ins = json_decode($form->ins);
+                $ins->note = $request->note ?? '-';
+                $ins->date = date('Y-m-d H:i:s');
+                $form->ins = json_encode($ins);
+                if ($request->res) {
+                    $form->stat = 'รออนุมัติ';
+                } else {
+                    $form->stat = 'ไม่ผ่านการตรวจสอบ';
+                }
+                $form->save();
+            } elseif ($request->status === 'รออนุมัติ') {
+                $app = json_decode($form->app);
+                $app->note = $request->note ?? '-';
+                $app->date = date('Y-m-d H:i:s');
+                $form->app = json_encode($app);
+                if ($request->res) {
+                    $form->stat = 'ผ่านการอนุมัติ';
+                } else {
+                    $form->stat = 'ไม่ผ่านการอนุมัติ';
+                }
+                $form->save();
+            }
+            Alert::toast('Form has been saved!','success');
+            return response()->json($request);
+        } catch (\Exception $e){
+            return response()->json(['error' => $e]);
+        }
+        
     }
 }

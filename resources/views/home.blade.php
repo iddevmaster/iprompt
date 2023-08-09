@@ -15,7 +15,7 @@
                 </div>
             </div>
 
-            @if (!($permis === '4' | $permis === '5' | $dpm === '5'))
+            @can('create')
                 <!-- create doc card -->
                 <div class="col-md-8 mb-5">
                     <div class="card">
@@ -29,6 +29,7 @@
                             @endif
 
                             <div class="row mb-2 justify-content-around">
+                                @can('MOU')
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('mouForm') }}">
                                         <div class="w-100 h-100">
@@ -37,6 +38,9 @@
                                         </div>
                                     </a>  
                                 </div>
+                                @endcan
+
+                                @can('PRO')
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('projForm') }}">
                                         <div class="w-100 h-100">
@@ -45,6 +49,9 @@
                                         </div>
                                     </a>
                                 </div>
+                                @endcan
+
+                                @can('ANNO')
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('annoForm') }}">
                                         <div class="w-100 h-100">
@@ -53,8 +60,12 @@
                                         </div>
                                     </a>
                                 </div>
+                                @endcan
                             </div>
+
+
                             <div class="row">
+                                @can('POL')
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('policyForm') }}">
                                         <div class="w-100 h-100">
@@ -63,6 +74,9 @@
                                         </div>
                                     </a>
                                 </div>
+                                @endcan
+
+                                @can('SOP')
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('sopForm') }}">
                                         <div class="w-100 h-100">
@@ -71,6 +85,9 @@
                                         </div>
                                     </a>
                                 </div>
+                                @endcan
+
+                                @can('WI')
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('wiForm') }}">
                                         <div class="w-100 h-100">
@@ -79,12 +96,12 @@
                                         </div>
                                     </a>
                                 </div>
+                                @endcan
                             </div>
-                            
                         </div>
                     </div>
                 </div>
-            @endif
+            @endcan
             <!-- end create doc card -->
 
             <!-- Table card -->
@@ -101,7 +118,7 @@
 
                         
                         <div class="row mb-2 justify-content-around">
-                            @if (!($dpm === '5'))
+                            @can('MOU')
                             <div class="col">
                                 <a class="a-tag" href="{{ route('mouTable') }}">
                                     <div class="w-100 h-100">
@@ -110,9 +127,9 @@
                                     </div>
                                 </a> 
                             </div>
-                            @endif
+                            @endcan
 
-                            @if (!($dpm === '5'))
+                            @can('PRO')
                             <div class="col">
                                 <a class="a-tag" href="{{ route('projTable') }}">
                                     <div class="w-100 h-100">
@@ -121,9 +138,9 @@
                                     </div>
                                 </a>
                             </div>
-                            @endif
+                            @endcan
 
-                        
+                            @can('ANNO')
                             <div class="col">
                                 <a class="a-tag" href="{{ route('annoTable') }}">
                                     <div class="w-100 h-100">
@@ -132,12 +149,12 @@
                                     </div>
                                 </a>
                             </div>
-                   
+                            @endcan
                         </div>
 
                         <div class="row">
 
-                            @if (!($dpm === '5'))
+                            @can('POL')
                             <div class="col">
                                 <a class="a-tag" href="/tables/policyTable">
                                     <div class="w-100 h-100">
@@ -146,9 +163,9 @@
                                     </div>
                                 </a>
                             </div>
-                            @endif
+                            @endcan
 
-                            @if (!($dpm === '5'))
+                            @can('SOP')
                             <div class="col">
                                 <a class="a-tag" href="/tables/sopTable">
                                     <div class="w-100 h-100">
@@ -157,9 +174,9 @@
                                     </div>
                                 </a>
                             </div>
-                            @endif
+                            @endcan
 
-                            @if (!($dpm === '5'))
+                            @can('WI')
                             <div class="col">
                                 <a class="a-tag" href="/tables/wiTable">
                                     <div class="w-100 h-100">
@@ -168,15 +185,12 @@
                                     </div>
                                 </a>
                             </div>
-                            @endif
+                            @endcan
                         </div>
-                        
                     </div>
                 </div>
             </div>
             <!-- end Table card -->
-
-
         </div>
     </div>
 </body>

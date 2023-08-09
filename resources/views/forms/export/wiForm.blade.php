@@ -253,12 +253,14 @@
             <!-- end footer -->
         </div>
         <!-- end paper page -->
-
+        
+        @if ($dorv !== 'verify')
         <div class="d-flex justify-content-center downloadbtn">
             <button class="btn btn-success ms-2" onclick="printDiv()">
                 Print
             </button>
         </div>
+        @endif
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/css/app.css' ,
         'resources/js/app.js']) @vite(['resources/css/form.css'])

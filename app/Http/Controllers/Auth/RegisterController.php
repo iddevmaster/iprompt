@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -29,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '';
 
     /**
      * Create a new controller instance.
@@ -64,7 +65,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $role = Role::where('name', $data['role'])->first();
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -74,5 +76,15 @@ class RegisterController extends Controller
             'phone' => $data['phone'],
             'dpm'  => $data['dpm'],
         ]);
+
+        if ($user && $role) {
+            $user->assignRole($role);
+            $user->save();
+        
+            // Role 'admin' has been assigned to the user
+        } else {
+            // User or role not found, handle the error accordingly
+        }
+        return $user;
     }
 }

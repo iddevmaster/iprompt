@@ -90,8 +90,8 @@
 <div class="header d-flex flex-column justify-content-center text-center align-items-center">
     <img src="{{ asset('dist/img/logoiddrives.png') }}" height="60">
     <p class="mb-1 fw-bold">บันทึกข้อตกลงความร่วมมือ</p>
-    <p class="text-end w-100">เลขที่ {{$mou_num}}</p>
-    <input type="hidden" name="mou_num" value="{{$mou_num}}">
+    <p class="text-end w-100">เลขที่ {{$book_num}}</p>
+    <input type="hidden" name="book_num" value="{{$book_num}}">
         <div class="d-flex">
             <p class="fw-bold mb-1">เรื่อง</p>
             <div class="text-start mb-1 ms-2" style="font-size: 16px;">{{$subject}}</div>
@@ -153,15 +153,16 @@
             <p>ตำแหน่ง</p>
         </div>
     </div>
-</div> <!-- end footer -->
+    </div> <!-- end footer -->
 </div> <!-- end page -->
-
-<div class="d-flex justify-content-center downloadbtn">
+    @if ($dorv !== 'verify')
+    <div class="d-flex justify-content-center downloadbtn">
         <button class="btn btn-success ms-2" onclick="printDiv()">Print</button>
-</div>
-<script>
-function printDiv() {
-            window.print();
-        }
-</script>
+    </div>
+    @endif
+    <script>
+    function printDiv() {
+                window.print();
+            }
+    </script>
 </body>

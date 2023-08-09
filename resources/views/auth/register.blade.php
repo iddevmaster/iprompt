@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<?php $regData = \App\CoreFunction\Helper::regData();?>
+<?php $regData = \App\CoreFunction\Helper::regData();
+        $roles = Spatie\Permission\Models\Role::all();
+?>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -9,7 +11,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('users.store') }}">
                         @csrf
 
                         <div class="row mb-3">
@@ -115,8 +117,8 @@
                             <div class="col-md-6">
                                 <select class="form-select" aria-label="Default select example" name="role">
                                     <option disabled selected>Please select role</option>
-                                    @foreach ($regData['role'] as $data)
-                                        <option value="{{$data->id}}">{{$data->role_name}}</option>
+                                    @foreach ($roles as $data)
+                                        <option value="{{$data->name}}">{{$data->name}}</option>
                                     @endforeach
                                 </select>
                             </div>

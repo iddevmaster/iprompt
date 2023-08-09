@@ -75,9 +75,8 @@
             <!-- send form type and id to specific update -->
             <input type="hidden" name="formtype" id="formtype" value="{{$form->type}}">
             <input type="hidden" name="formid"  value="{{$form->id}}">
-
         </div> <!-- end paper page -->
-
+        @if ($form->stat !== 'ผ่านการอนุมัติ')
         <div class="d-flex justify-content-center ">
                 <a href="#" onclick="goBack()"><button type="button" class="btn btn-secondary">cancle</button></a>
                 <button type="submit" class="btn btn-success ms-2" >Save</button>
@@ -88,12 +87,11 @@
                     }
                 </script>
         </div>
+        @endif
     </form>
+    <!-- Scripts -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script>
+    @vite(['resources/css/form.css' , 'resources/js/form.js'])
+
 </body>
-<!-- Scripts -->
-<script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script>
-@vite(['resources/css/form.css' , 'resources/js/form.js'])
-
-
-
 @endsection

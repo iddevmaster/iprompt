@@ -73,6 +73,8 @@
             <input type="hidden" name="formid"  value="{{$form->id}}">
 
         </div>
+
+        @if ($form->stat !== 'ผ่านการอนุมัติ')
         <div class="d-flex justify-content-center ">
                 <a href="#" onclick="goBack()"><button type="button" class="btn btn-secondary">cancle</button></a>
                 <button type="submit" id="preview-btn" class="btn btn-success ms-2">Save</button>
@@ -83,6 +85,7 @@
                 }
             </script>
         </div>
+        @endif
     </form>
 </body>
 

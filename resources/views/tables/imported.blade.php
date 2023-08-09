@@ -7,14 +7,14 @@
 <body>
 <?php $regData = \App\CoreFunction\Helper::regData();?>
     <div class="container">
-        <div class="text-center"><h2>Imported Document Table</h2></div>
+        <div class="text-center mb-4"><h2>Imported Document Table</h2></div>
         <div class="d-flex">
             <div class="flex-grow-1"><input type="text" id="searchInput" class="form-control mb-2" placeholder="Search..."></div>
             <div class="p-1 ms-2 export"><a class="a-tag" href=""><i class="bi bi-file-earmark-arrow-down"></i></a></div>
         </div>
 
         <!-- Table -->
-        <div class="table-responsive mt-3">
+        <div class="mt-3">
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true">All</button>
@@ -26,7 +26,7 @@
             </nav>
 
             <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab" tabindex="0">
+                <div class="tab-pane table-responsive fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab" tabindex="0">
 
                     <!-- All imported table -->
                     <table class="table table-hover mt-2">
@@ -84,10 +84,14 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-end pagination">
+                        {{ $imported->links('vendor.pagination.bootstrap-5') }}
+                    </div>
                 </div>
 
 
-                <div class="tab-pane fade" id="nav-cont" role="tabpanel" aria-labelledby="nav-cont-tab" tabindex="0">
+                <div class="tab-pane fade table-responsive" id="nav-cont" role="tabpanel" aria-labelledby="nav-cont-tab" tabindex="0">
                     <!-- Contract imported table -->
                     <table class="table table-hover mt-2">
                         <!-- Table Header -->
@@ -144,10 +148,14 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-end pagination">
+                        {{ $imp_cont->links('vendor.pagination.bootstrap-5') }}
+                    </div>
                 </div>
 
 
-                <div class="tab-pane fade" id="nav-mou" role="tabpanel" aria-labelledby="nav-mou-tab" tabindex="0">
+                <div class="tab-pane fade table-responsive" id="nav-mou" role="tabpanel" aria-labelledby="nav-mou-tab" tabindex="0">
                     <!-- MOU imported table -->
                     <table class="table table-hover mt-2">
                         <!-- Table Header -->
@@ -204,10 +212,14 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-end pagination">
+                        {{ $imp_mou->links('vendor.pagination.bootstrap-5') }}
+                    </div>
                 </div>
 
 
-                <div class="tab-pane fade" id="nav-anno" role="tabpanel" aria-labelledby="nav-anno-tab" tabindex="0">
+                <div class="tab-pane fade table-responsive" id="nav-anno" role="tabpanel" aria-labelledby="nav-anno-tab" tabindex="0">
                     <!-- Announce imported table -->
                     <table class="table table-hover mt-2">
                         <!-- Table Header -->
@@ -264,10 +276,14 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-end pagination">
+                        {{ $imp_anno->links('vendor.pagination.bootstrap-5') }}
+                    </div>
                 </div>
 
 
-                <div class="tab-pane fade" id="nav-proj" role="tabpanel" aria-labelledby="nav-proj-tab" tabindex="0">
+                <div class="tab-pane fade table-responsive" id="nav-proj" role="tabpanel" aria-labelledby="nav-proj-tab" tabindex="0">
                     <!-- project imported table -->
                     <table class="table table-hover mt-2">
                         <!-- Table Header -->
@@ -324,6 +340,10 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <!-- Pagination Links -->
+                    <div class="d-flex justify-content-end pagination">
+                        {{ $imp_proj->links('vendor.pagination.bootstrap-5') }}
+                    </div>
                 </div>
 
 
@@ -416,17 +436,17 @@
                     res: res,
                 }),
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    // Handle the response if needed
-                    Swal.fire('Saved!', '', 'success');
-                    // You can also reload the page to see the changes, if required
-                    // window.location.reload();
-                })
-                .catch((error) => {
-                    // Handle errors if any
-                    Swal.fire('Error!', 'An error occurred while saving the data.', 'error');
-                });
+            .then((response) => response.json())
+            .then((data) => {
+                // Handle the response if needed
+                Swal.fire('Saved!', '', 'success');
+                // You can also reload the page to see the changes, if required
+                window.location.reload();
+            })
+            .catch((error) => {
+                // Handle errors if any
+                Swal.fire('Error!', 'An error occurred while saving the data.', 'error');
+            });
         }
     </script>
 </body>

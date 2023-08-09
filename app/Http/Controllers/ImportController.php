@@ -62,11 +62,11 @@ class ImportController extends Controller
     }
 
     public function imported() {
-        $imported = imported::orderBy('id', 'desc')->get();
-        $imp_mou = imported::where('type', 'mou')->orderBy('id', 'desc')->get();
-        $imp_proj = imported::where('type', 'proj')->orderBy('id', 'desc')->get();
-        $imp_cont = imported::where('type', 'cont')->orderBy('id', 'desc')->get();
-        $imp_anno = imported::where('type', 'anno')->orderBy('id', 'desc')->get();
+        $imported = imported::orderBy('id', 'desc')->paginate(10);
+        $imp_mou = imported::where('type', 'mou')->orderBy('id', 'desc')->paginate(10);
+        $imp_proj = imported::where('type', 'proj')->orderBy('id', 'desc')->paginate(10);
+        $imp_cont = imported::where('type', 'cont')->orderBy('id', 'desc')->paginate(10);
+        $imp_anno = imported::where('type', 'anno')->orderBy('id', 'desc')->paginate(10);
         $user = User::all();
         return view('/tables/imported', compact('imported', 'user','imp_mou','imp_cont','imp_proj','imp_anno'));
     }

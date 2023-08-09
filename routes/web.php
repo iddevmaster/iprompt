@@ -19,9 +19,23 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/alluser', [App\Http\Controllers\HomeController::class, 'alluser'])->name('alluser');
+Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 Route::get('/imported', [App\Http\Controllers\ImportController::class, 'index'])->name('imported');
+Route::get('/userProfile/{id}',[App\Http\Controllers\HomeController::class,'userProfile']);
 
-// Route::get('/register', [App\Http\Controllers\HomeController::class, 'register'])->name('register');
+// manage User
+Route::get('/users/create', [App\Http\Controllers\HomeController::class, 'createUser'])->name('users.create');
+Route::post('/users/store', [App\Http\Controllers\HomeController::class, 'storeUser'])->name('users.store');
+Route::post('/users/update', [App\Http\Controllers\HomeController::class, 'updateUser']);
+
+
+// change password
+Route::get('/change-password/{id}', [App\Http\Controllers\ChangePasswordController::class,'showChangePasswordForm'])->name('changepassword');
+Route::post('/change-password/update/{id}', [App\Http\Controllers\ChangePasswordController::class,'changePassword'])->name('updatepassword');
+
+// register new user
+// Route::get('/register2', [App\Http\Controllers\HomeController::class, 'register'])->name('register');
 
 // Form
 Route::get('/form/wiForm', [App\Http\Controllers\FormController::class, 'wiForm'])->name('wiForm');
@@ -42,26 +56,29 @@ Route::get('/tables/projTable', [App\Http\Controllers\TablesController::class, '
 Route::get('/tables/mouTable', [App\Http\Controllers\TablesController::class, 'mouTable'])->name('mouTable');
 Route::get('/tables/createPDF', [App\Http\Controllers\TablesController::class, 'createPDF'])->name('createPDF');
 Route::get('/tables/imported', [App\Http\Controllers\ImportController::class, 'imported'])->name('importedTable');
+Route::get('/tables/verify', [App\Http\Controllers\TablesController::class, 'verifyDoc'])->name('verifyDoc');
+
+Route::post('/table/form/verify', [App\Http\Controllers\TablesController::class, 'setVerify']);
 
 
 // Edit form
 Route::get('/form/editwi/{id}',[App\Http\Controllers\FormController::class,'editFormwi']);
-Route::get('/form/downloadwi/{id}',[App\Http\Controllers\FormController::class,'downloadFormwi']);
+Route::get('/form/downloadwi/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormwi']);
 
 Route::get('/form/editsop/{id}',[App\Http\Controllers\FormController::class,'editFormsop']);
-Route::get('/form/downloadsop/{id}',[App\Http\Controllers\FormController::class,'downloadFormsop']);
+Route::get('/form/downloadsop/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormsop']);
 
 Route::get('/form/editproj/{id}',[App\Http\Controllers\FormController::class,'editFormproj']);
-Route::get('/form/downloadproj/{id}',[App\Http\Controllers\FormController::class,'downloadFormproj']);
+Route::get('/form/downloadproj/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormproj']);
 
 Route::get('/form/editpol/{id}',[App\Http\Controllers\FormController::class,'editFormpol']);
-Route::get('/form/downloadpol/{id}',[App\Http\Controllers\FormController::class,'downloadFormpol']);
+Route::get('/form/downloadpol/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormpol']);
 
 Route::get('/form/editmou/{id}',[App\Http\Controllers\FormController::class,'editFormmou']);
-Route::get('/form/downloadmou/{id}',[App\Http\Controllers\FormController::class,'downloadFormmou']);
+Route::get('/form/downloadmou/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormmou']);
 
 Route::get('/form/editanno/{id}',[App\Http\Controllers\FormController::class,'editFormanno']);
-Route::get('/form/downloadanno/{id}',[App\Http\Controllers\FormController::class,'downloadFormanno']);
+Route::get('/form/downloadanno/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormanno']);
 
 
 // Update form
