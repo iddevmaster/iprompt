@@ -26,11 +26,6 @@ class RolesAndPermissionsSeeder extends Seeder
 
         foreach ($roles as $roleName => $rolePermissions) {
             $role = Role::create(['name' => $roleName]);
-
-            foreach ($rolePermissions as $permission) {
-                $permission = Permission::where('name', $permission)->first();
-                $role->givePermissionTo($permission);
-            }
         }
     }
 }
