@@ -16,12 +16,12 @@
             <!-- header -->
             <div class="header mb-3  text-center ">
                     @if ($class)
-                        <p class="text-end mb-0">เอกสารโครงการเลขที่ {{$proj_num}}</p>
-                        <input type="hidden" name="proj_num" value="{{$proj_num}}">
+                        <p class="text-end mb-0">เอกสารโครงการเลขที่ {{$book_num}}</p>
+                        <input type="hidden" name="book_num" value="{{$book_num}}">
                         <p class="text-end">Project Code: {{$projNo}}</p>
                         <input type="hidden" name="projNo" value="{{$projNo}}">
                     @else
-                        <p class="text-end">เอกสารโครงการเลขที่ <input type="text" value="PRO0{{$len ?? 0}}/2566" name="proj_num" readonly></p>
+                        <p class="text-end">เอกสารโครงการเลขที่ <input type="text" value="PRO0{{$len ?? 0}}/2566" name="book_num" readonly></p>
                         <p class="mb-0 text-end">Project Code: <input class="ms-2" id="projNo" type="text" name="projNo" required></p>
                         <p class="fs-6 text-warning text-end">#กรุณาขอเลข project code จากฝ่ายบัญชี</p>
                     @endif

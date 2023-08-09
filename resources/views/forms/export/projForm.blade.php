@@ -99,7 +99,7 @@
 @page:first {
     margin-top: 0cm;
 }er mb-3 text-center ">
-            <p class="text-end mb-0">เอกสารโครงการเลขที่ {{$proj_num}}</p>
+            <p class="text-end mb-0">เอกสารโครงการเลขที่ {{$book_num}}</p>
             <p class="text-end">Project Code: {{$projNo}}</p>
             <p class="fw-bold">โครงการ {{$projName}}</p>
         </div> <!-- end header -->

@@ -37,7 +37,7 @@
                     @foreach ($gendoc as $row)
                         <tr>
                             <td>{{$counter}}</td>
-                            <td>{{ $row->proj_num}}</td>
+                            <td>{{ $row->book_num}}</td>
                             <td>{{ $row->proj_code}}</td>
                             <td class="truncate">{{ $row->title}}</td>
                             <td>{{ $row->created_date}}</td>

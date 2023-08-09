@@ -183,11 +183,11 @@ class TablesController extends Controller
         $form = project_doc::find($id);
         $class = 1;
         $formtype = $form->type;
-        $proj_num = $form->proj_num;
+        $book_num = $form->book_num;
         $editorContent = $form->detail;
         $projName = $form->title;
         $projNo = $form->proj_code;
-        return view('/forms/'.$formtype, compact( 'proj_num','projName','class', 'projNo','editorContent'));
+        return view('/forms/'.$formtype, compact( 'book_num','projName','class', 'projNo','editorContent'));
     }
 
     public function viewmou(Request $request,$id) 

@@ -16,7 +16,7 @@
 
             <!-- header -->
             <div class="header mb-3 text-center ">
-                    <p class="mb-0 text-end">เอกสารโครงการเลขที่ <input class="ms-2" id="projNo" type="text" name="proj_num" value="{{$form->proj_num}}" readonly></p>
+                    <p class="mb-0 text-end">เอกสารโครงการเลขที่ <input class="ms-2" id="projNo" type="text" name="book_num" value="{{$form->book_num}}" readonly></p>
                     <p class="mb-0 text-end">Project Code: <input class="ms-2" id="projNo" type="text" name="projNo" value="{{$form->proj_code}}" required></p>
                     <p class="fs-6 text-warning text-end">#กรุณาขอเลข project code จากฝ่ายบัญชี</p>
                     <p>โครงการ <input class="ms-2 w-100" type="text" name="projName" value="{{$form->title}}" required></p>

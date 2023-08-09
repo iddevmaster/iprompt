@@ -81,10 +81,10 @@ class FormController extends Controller
             $parties = [];
 
             if ($formtype === "projForm") {
-                $proj_num = $request->proj_num;
+                $book_num = $request->book_num;
                 $projName = $request->input('projName');
                 $projNo = $request->input('projNo');
-                return view('/forms/'.$formtype, compact( 'proj_num','projName','class', 'projNo','editorContent'));
+                return view('/forms/'.$formtype, compact( 'book_num','projName','class', 'projNo','editorContent'));
             }
             elseif ($formtype === "mouForm") {
                 $subject = $request->input('subject');
@@ -138,7 +138,7 @@ class FormController extends Controller
         $formtype = $request->input('formtype');
         if ($formtype === "projForm") {
             $project_doc = new project_doc;
-            $project_doc->proj_num = $request->proj_num;
+            $project_doc->book_num = $request->book_num;
             $project_doc->proj_code = $request->projNo;
             $project_doc->submit_by = $request->user()->id;
             $project_doc->type = $request->formtype;
@@ -255,11 +255,11 @@ class FormController extends Controller
         $form = project_doc::find($id);
         $class = 1;
         $formtype = $form->type;
-        $proj_num = $form->proj_num;
+        $book_num = $form->book_num;
         $editorContent = $form->detail;
         $projName = $form->title;
         $projNo = $form->proj_code;
-        return view('/forms/export/projForm', compact( 'dorv' ,'proj_num','projName','class', 'projNo','editorContent'));
+        return view('/forms/export/projForm', compact( 'dorv' ,'book_num','projName','class', 'projNo','editorContent'));
     }
 
     // Function for edit form
