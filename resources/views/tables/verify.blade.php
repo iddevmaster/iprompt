@@ -85,19 +85,26 @@
             let type = ckbtn.getAttribute('docType');
             ckbtn.addEventListener('click', function () {
                 Swal.fire({
+                title: 'ผลการตรวจสอบ',
+                showCancelButton: true,
+                showDenyButton: true,
+                confirmButtonText: 'ผ่าน',
+                denyButtonText: 'ไม่ผ่าน',
+                cancelButtonText: 'Cancel'
+                }).then((result) => { 
+                if (result.isConfirmed) {
+                    Swal.fire({
                     input: 'textarea',
-                    inputLabel: 'ผลการประเมิน',
+                    inputLabel: 'ผ่านการตรวจสอบ',
                     inputPlaceholder: 'หมายเหตุ',
                     inputAttributes: {
                         'aria-label': 'Type your message here'
                     },
                     showCancelButton: true,
-                    showDenyButton: true,
-                    confirmButtonText: 'ผ่าน',
-                    denyButtonText: `ไม่ผ่าน`,
-                    cancelButtonText: `ยกเลิก`,
-                }).then((result) => {
-                    if (result.isConfirmed) {
+                    confirmButtonText: 'Submit',
+                    cancelButtonText: 'Cancel'
+                    }).then((confirmationResult) => {
+                    if (confirmationResult.isConfirmed) {
                         fetch('/table/form/verify', {
                             method: 'POST',
                             headers: {
@@ -108,7 +115,7 @@
                                 docId: docid,
                                 status: status,
                                 type: type,
-                                note: result.value,
+                                note: confirmationResult.value,
                                 res : true,
                             }),
                         })
@@ -123,7 +130,21 @@
                             // Handle errors if any
                             Swal.fire('Error!', error.message, 'error');
                         });
-                    } else if (result.isDenied) {
+                    }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire({
+                    input: 'textarea',
+                    inputLabel: 'ไม่ผ่านการตรวจสอบ',
+                    inputPlaceholder: 'หมายเหตุ',
+                    inputAttributes: {
+                        'aria-label': 'Type your message here'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Submit',
+                    cancelButtonText: 'Cancel'
+                    }).then((denialResult) => {
+                    if (denialResult.isConfirmed) {
                         fetch('/table/form/verify', {
                             method: 'POST',
                             headers: {
@@ -134,7 +155,7 @@
                                 docId: docid,
                                 status: status,
                                 type: type,
-                                note: result.value,
+                                note: denialResult.value,
                                 res : false,
                             }),
                         })
@@ -150,7 +171,10 @@
                             Swal.fire('Error!', error.message, 'error');
                         });
                     }
-                })
+                    });
+                }
+                });
+
             });
         });
 
@@ -161,19 +185,26 @@
             let type = ckbtn.getAttribute('docType');
             ckbtn.addEventListener('click', function () {
                 Swal.fire({
+                title: 'ผลการอนุมัติ',
+                showCancelButton: true,
+                showDenyButton: true,
+                confirmButtonText: 'ผ่าน',
+                denyButtonText: 'ไม่ผ่าน',
+                cancelButtonText: 'Cancel'
+                }).then((result) => { 
+                if (result.isConfirmed) {
+                    Swal.fire({
                     input: 'textarea',
-                    inputLabel: 'ผลการประเมิน',
+                    inputLabel: 'ผ่านการอนุมัติ',
                     inputPlaceholder: 'หมายเหตุ',
                     inputAttributes: {
                         'aria-label': 'Type your message here'
                     },
                     showCancelButton: true,
-                    showDenyButton: true,
-                    confirmButtonText: 'ผ่าน',
-                    denyButtonText: `ไม่ผ่าน`,
-                    cancelButtonText: `ยกเลิก`,
-                }).then((result) => {
-                    if (result.isConfirmed) {
+                    confirmButtonText: 'Submit',
+                    cancelButtonText: 'Cancel'
+                    }).then((confirmationResult) => {
+                    if (confirmationResult.isConfirmed) {
                         fetch('/table/form/verify', {
                             method: 'POST',
                             headers: {
@@ -184,7 +215,7 @@
                                 docId: docid,
                                 status: status,
                                 type: type,
-                                note: result.value,
+                                note: confirmationResult.value,
                                 res : true,
                             }),
                         })
@@ -199,7 +230,21 @@
                             // Handle errors if any
                             Swal.fire('Error!', error.message, 'error');
                         });
-                    } else if (result.isDenied) {
+                    }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire({
+                    input: 'textarea',
+                    inputLabel: 'ไม่ผ่านการอนุมัติ',
+                    inputPlaceholder: 'หมายเหตุ',
+                    inputAttributes: {
+                        'aria-label': 'Type your message here'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Submit',
+                    cancelButtonText: 'Cancel'
+                    }).then((denialResult) => {
+                    if (denialResult.isConfirmed) {
                         fetch('/table/form/verify', {
                             method: 'POST',
                             headers: {
@@ -210,7 +255,7 @@
                                 docId: docid,
                                 status: status,
                                 type: type,
-                                note: result.value,
+                                note: denialResult.value,
                                 res : false,
                             }),
                         })
@@ -226,7 +271,9 @@
                             Swal.fire('Error!', error.message, 'error');
                         });
                     }
-                })
+                    });
+                }
+                });
             });
         });
     </script>

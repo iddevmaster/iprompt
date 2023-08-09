@@ -49,14 +49,29 @@
                                     echo $submitUser ? $submitUser->name : 'Unknown';
                                 @endphp
                             </td>
-
                             <td>
                                 @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
                                     <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}">{{$row->stat}}</button>
                                 @elseif ($row->stat === 'ผ่านการอนุมัติ')
                                     <button class="btn btn-success" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button>
                                 @elseif ($row->stat === 'ไม่ผ่านการตรวจสอบ' || $row->stat === 'ไม่ผ่านการอนุมัติ')
-                                    <button class="btn btn-danger" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button>
+                                    @php
+                                        $app = json_decode($row->app);
+                                        $ins = json_decode($row->ins);
+                                        $appName = $user->firstWhere('id', $app->appId) ?? '-';
+                                        $insName = $user->firstWhere('id', $ins->appId) ?? '-';
+                                        $note = $app->note ?? '-';
+                                        $insnote = $ins->note ?? '-';
+                                    @endphp
+                                    <button class="btn btn-danger" 
+                                            name="{{$row->stat}}" 
+                                            id="notpass" 
+                                            note="{{$note}}" 
+                                            insnote="{{$insnote}}"
+                                            appName="{{$appName->name}}" 
+                                            insName="{{$insName->name}}"  
+                                            docType="{{$row->type}}" 
+                                            value="{{$row->id}}">{{$row->stat}}</button>
                                 @else
                                     <button class="btn btn-secondary" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button>
                                 @endif
@@ -159,6 +174,91 @@
                 }).catch((error) => {
                     Swal.fire('Error!', error, 'error'); // Display error to user
                 });
+            });
+        });
+
+
+        const notpbtns = document.querySelectorAll('#notpass');
+        notpbtns.forEach((ckbtn) => {
+            let status = ckbtn.getAttribute('name');
+            let docid = ckbtn.value;
+            let type = ckbtn.getAttribute('docType');
+            let appName = ckbtn.getAttribute('appName');
+            let appnote = ckbtn.getAttribute('note');
+            let insName = ckbtn.getAttribute('insName');
+            let insnote = ckbtn.getAttribute('insnote');
+            ckbtn.addEventListener('click', function () {
+                Swal.fire({
+                    title: status,
+                    html: `Inspector: ${insName}<br>Note: ${insnote}<br>
+                            Approver: ${appName}<br>Note: ${appnote}
+                            `,
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'verify'
+                    }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: 'Verification',
+                            html: `
+                                <select class="form-select mb-2" id="ins" >
+                                    <option value="" selected disabled>กรุณาเลือกผู้ตรวจสอบ</option>
+                                    @foreach ($inspectors as $ins)
+                                        <option value="{{$ins->id}}">{{$ins->name}}</option>
+                                    @endforeach
+                                </select>
+                                <select class="form-select mb-2" id="appr" >
+                                    <option value="" selected disabled>กรุณาเลือกผู้อนุมัติ</option>
+                                    @foreach ($approvers as $appr)
+                                        <option value="{{$appr->id}}">{{$appr->name}}</option>
+                                    @endforeach
+                                </select>
+                                `,
+                            showCancelButton: true,
+                            preConfirm: () => {
+                                const insValue = document.getElementById('ins').value;
+                                const appValue = document.getElementById('appr').value;
+                                if (!insValue || !appValue) {
+                                    return Promise.reject('Please select both inspector and approver.');
+                                }
+                                
+                                return [insValue, appValue];
+                            }
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                console.log(result);
+                                fetch('/table/form/verify', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                                    },
+                                    body: JSON.stringify({
+                                        ins: result.value[0],
+                                        app: result.value[1],
+                                        docId: docid,
+                                        status: status,
+                                        type: type,
+                                    }),
+                                })
+                                .then((response) => response.json())
+                                .then((data) => {
+                                    // Handle the response if needed
+                                    console.log(data);
+                                    // You can also reload the page to see the changes,
+                                    //window.location.reload();
+                                })
+                                .catch((error) => {
+                                    // Handle errors if any
+                                    Swal.fire('Error!', error.message, 'error');
+                                });
+                            }
+                        }).catch((error) => {
+                            Swal.fire('Error!', error, 'error'); // Display error to user
+                        });
+                    }
+                })
             });
         });
     </script>
