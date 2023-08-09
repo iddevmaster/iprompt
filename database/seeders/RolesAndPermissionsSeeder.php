@@ -24,7 +24,7 @@ class RolesAndPermissionsSeeder extends Seeder
         // Create roles and assign permissions based on the configuration
         $roles = config('permission.roles');
 
-        foreach ($roles as $roleName => $rolePermissions) {
+        foreach ($roles as $roleName) {
             $role = Role::create(['name' => $roleName]);
         }
     }
