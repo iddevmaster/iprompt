@@ -70,7 +70,12 @@
 }
 @page {
     margin: 0;
-    size: 'A4'; /* Define the paper size, you can use 'A4', 'letter', etc. */
+    margin-bottom: 1cm;
+    margin-top: 1cm;
+    size: "A4"; /* Define the paper size, you can use 'A4', 'letter', etc. */
+}
+@page:first {
+    margin-top: 0cm;
 }
 @media print {
             .downloadbtn {

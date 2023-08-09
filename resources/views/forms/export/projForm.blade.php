@@ -70,7 +70,12 @@
 }
 @page {
     margin: 0;
-    size: 'A4'; /* Define the paper size, you can use 'A4', 'letter', etc. */
+    margin-bottom: 1cm;
+    margin-top: 1cm;
+    size: "A4"; /* Define the paper size, you can use 'A4', 'letter', etc. */
+}
+@page:first {
+    margin-top: 0cm;
 }
 @media print {
             .downloadbtn {
@@ -86,8 +91,14 @@
 <body>
     <div id="proj-paper" class="a4-container border mb-5 d-flex align-items-center flex-column">
 
-        <!-- header -->
-        <div class="header mb-3 text-center ">
+        <!-- header --margin: 0;
+    margin-bottom: 1cm;
+    margin-top: 1cm;
+    size: "A4"; /* Define the paper size, you can use 'A4', 'letter', etc. */
+}
+@page:first {
+    margin-top: 0cm;
+}er mb-3 text-center ">
             <p class="text-end mb-0">เอกสารโครงการเลขที่ {{$proj_num}}</p>
             <p class="text-end">Project Code: {{$projNo}}</p>
             <p class="fw-bold">โครงการ {{$projName}}</p>
