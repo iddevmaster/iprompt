@@ -170,7 +170,7 @@ return [
     */
 
     'default_permissions' => [
-        'downloads',
+        'download',
         'approve',
         'inspect',
         'edit',
