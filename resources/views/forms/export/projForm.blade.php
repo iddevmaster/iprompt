@@ -54,9 +54,9 @@
         font-size: 18px;
         height: 100%;
       }
-  .a4lan-container {
-    width: 297mm; /* Width of A4 paper in millimeters */
-    min-height: 210mm; /* Height of A4 paper in millimeters */
+    .a4-container {
+    width: 210mm; /* Width of A4 paper in millimeters */
+    min-height: 297mm; /* Height of A4 paper in millimeters */
     margin: 0 auto; /* Center the container horizontally */
     background-color: white;
     position: relative; /* Required for footer positioning */
@@ -70,13 +70,14 @@
 }
 @page {
     margin: 0;
-    margin-bottom: 1cm;
     margin-top: 1cm;
     size: "A4"; /* Define the paper size, you can use 'A4', 'letter', etc. */
 }
 @page:first {
     margin-top: 0cm;
 }
+
+
 @media print {
             .downloadbtn {
                 visibility: hidden;
@@ -90,19 +91,11 @@
 </head>
 <body>
     <div id="proj-paper" class="a4-container border mb-5 d-flex align-items-center flex-column">
-
-        <!-- header --margin: 0;
-    margin-bottom: 1cm;
-    margin-top: 1cm;
-    size: "A4"; /* Define the paper size, you can use 'A4', 'letter', etc. */
-}
-@page:first {
-    margin-top: 0cm;
-}er mb-3 text-center ">
+        <div class="header mb-3  text-center ">
             <p class="text-end mb-0">เอกสารโครงการเลขที่ {{$book_num}}</p>
             <p class="text-end">Project Code: {{$projNo}}</p>
             <p class="fw-bold">โครงการ {{$projName}}</p>
-        </div> <!-- end header -->
+        </div>
 
         <!-- content -->
         <div class="content py-3 w-100 h-100 d-flex flex-column">
@@ -114,12 +107,7 @@
         <div class="footer mt-auto">
             <div class="d-flex justify-content-evenly">
                 <div class="p-2 border border-black">
-                    <p>ผู้จัดทำโครงการ</p>
-                    <br>
-                    <p>(..................................)</p>
-                </div>
-                <div class="p-2 border border-black">
-                    <p>ผู้เสนอโครงการ</p>
+                    <p>ผู้จัดทำ/ผู้เสนอโครงการ</p>
                     <br>
                     <p>(..................................)</p>
                 </div>
@@ -134,6 +122,7 @@
                     <p>(..................................)</p>
                 </div>
             </div>
+            <p class="mb-0 mt-1" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: ระบบสารบัญ <?php echo date('Y-m-d H:i:s') ?></p>
         </div> <!-- end footer -->
     </div>
     @if ($dorv !== 'verify')

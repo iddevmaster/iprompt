@@ -70,7 +70,6 @@
 }
 @page {
     margin: 0;
-    margin-bottom: 1cm;
     margin-top: 1cm;
     size: "A4"; /* Define the paper size, you can use 'A4', 'letter', etc. */
 }
@@ -158,7 +157,8 @@
             <p>ตำแหน่ง</p>
         </div>
     </div>
-    </div> <!-- end footer -->
+    <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: ระบบสารบัญ <?php echo date('Y-m-d H:i:s') ?></p>
+</div> <!-- end footer -->
 </div> <!-- end page -->
     @if ($dorv !== 'verify')
     <div class="d-flex justify-content-center downloadbtn">

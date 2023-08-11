@@ -100,7 +100,7 @@
         </div> <!-- end header -->
 
         <!-- content -->
-        <div class="anno-content py-3 w-100 d-flex flex-column">
+        <div class="anno-content pt-3 w-100 d-flex flex-column">
             <div class="text-center d-flex flex-column align-items-center">
                 <br>
                     <h5 class="fw-bold">ประกาศที่ <span class="fw-normal">{{ $annNo }}</span></h5>
@@ -117,7 +117,7 @@
                 </div>
                 <div class="mt-5 text-center d-flex flex-column align-items-center">
                     <p>จึงประกาศมาเพื่อทราบโดยทั่วกัน</p>
-                    <div class="mb-1" id="sign"> <br></div>
+                    <div class="mb-1" id=""> <br>....................................</div>
                         <p class="mb-0">( {{ $signName }} )</p>
                         <p>{{ $signPosition }}</p>            
                     <p class="mb-0">บริษัท ไอดีไดรฟ์ จำกัด</p>
@@ -130,6 +130,11 @@
             <p id="footertext">เอกสารนี้ ฉบับทางการ จะอยู่ในรูปไฟล์อิเล็กทรอนิกส์ อยู่ในระบบเครือข่ายสารสนเทศ เท่านั้น หากปรากฎเอกสารนี้ส่วนหนึ่งส่วนใด หรือทั้งฉบับ
                 ในรูปสื่อกระดาษให้ตรวจสอบความทันสมัยกับฉบับทางการในระบบเครือข่ายสารสนเทศ ก่อนใช้อ้างอิง และทำลายทิ้งทันที หากพบว่าเป็นฉบับไม่ทันสมัย <br>
                 เอกสารนี้ เป็น สมบัติของบริษัท ไอดีไดรฟ์ จำกัดห้ามแจกจ่ายไปยังภายนอก โดยไม่ได้รับอนุญาตจาก กรรมการผู้จัดการ บริษัท ไอดีไดรฟ์ จำกัด
+                <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: ระบบสารบัญ <?php date_default_timezone_set('Asia/Bangkok');
+                                                                                                                        $now = time(); 
+                                                                                                                        $thaiYear = intval(date('Y', $now)) + 543;
+                                                                                                                        echo date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s', $now) . " +543 years")); ?>
+                </p>
             </p>
         </div> <!-- end footer -->
     </div>

@@ -28,7 +28,8 @@
                         <?php $count++ ?>
                     @endforeach
                     <div class="w-100" id="inputContainer"></div>
-                    <button type="button" class="my-2 btn btn-info" id="addInputButton">Add Input</button>
+                    <button type="button" class="my-2 btn btn-info" id="addInputButton">เพิ่มข้อมูล</button>
+                    <p class="text-danger">*สามารถเพิ่มได้ไม่เกิน 3 ฝ่าย</p>
 
                     <p class="no-wrap my-2 w-100">บันทึกข้อตกลงฉบับนี้จัดทำขึ้น ณ <input class="ms-2 w-100" type="text" name="location" value="{{$form->place}}" required></p>
             </div> <!-- end header -->

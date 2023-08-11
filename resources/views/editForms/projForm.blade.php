@@ -31,12 +31,7 @@
             <div class="footer mt-auto">
                 <div class="d-flex justify-content-evenly">
                     <div class="p-2 border border-black">
-                        <p>ผู้จัดทำโครงการ</p>
-                        <br>
-                        <p>(..................................)</p>
-                    </div>
-                    <div class="p-2 border border-black">
-                        <p>ผู้เสนอโครงการ</p>
+                        <p>ผู้จัดทำ/ผู้เสนอโครงการ</p>
                         <br>
                         <p>(..................................)</p>
                     </div>

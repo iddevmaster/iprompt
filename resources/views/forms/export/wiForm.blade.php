@@ -242,6 +242,7 @@
                     เอกสารนี้ เป็น สมบัติของบริษัท ไอดีไดรฟ์
                     จำกัดห้ามแจกจ่ายไปยังภายนอก โดยไม่ได้รับอนุญาตจาก
                     กรรมการผู้จัดการ บริษัท ไอดีไดรฟ์ จำกัด
+                    <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: ระบบสารบัญ <?php echo date('Y-m-d H:i:s') ?></p>
                 </p>
             </div>
             <!-- end footer -->
@@ -257,7 +258,7 @@
         @endif
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/css/app.css' ,
-        'resources/js/app.js']) @vite(['resources/css/form.css'])
+        'resources/js/app.js', 'resources/css/form.css'])
         <script>
             function printDiv() {
                 window.print();

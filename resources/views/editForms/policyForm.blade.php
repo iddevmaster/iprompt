@@ -27,9 +27,13 @@
                     </div>
 
                     <div class="col pt-2">
+                        <?php 
+                            $datetime = (json_decode($form->app))->date;
+                            $dated = new DateTime($datetime);
+                         ?>
                         <p class="text-start mb-0">เลขที่เอกสาร {{$form->book_num}}</p>
                         <p class="text-start mb-0">แก้ไขครั้งที่ {{$form->edit_count}}</p>
-                        <p class="text-start mb-0">วันที่บังคับใช้ {{$form->created_date}}</p>
+                        <p class="text-start mb-0">วันที่บังคับใช้ {{$dated->format('Y-m-d') ?? ''}}</p>
                         <p class="text-start">หน้าที่</p>
                     </div>
                 </div><!-- end header row 1 -->

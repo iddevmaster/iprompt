@@ -9,7 +9,7 @@
     <div class="text-center my-4">
         <h2>บันทึกข้อตกลงความร่วมมือ</h2>
     </div>
-    <form id="myForm" action="{{ route('preview') }}" method="POST" >
+    <form id="myForm" class="overflow-x-auto" action="{{ route('preview') }}" method="POST" >
         @csrf
         <div class="a4-container border mb-5 d-flex align-items-center flex-column">
 
@@ -44,7 +44,8 @@
                 @else
                     <input class="w-50" type="text" id="input1" name="party1" required>
                     <div class="w-100" id="inputContainer"></div>
-                    <button type="button" class="my-2 btn btn-info" id="addInputButton">Add Input</button>
+                    <button type="button" class="my-2 btn btn-info" id="addInputButton">เพิ่มข้อมูล</button>
+                    <p class="text-danger">*สามารถเพิ่มได้ไม่เกิน 3 ฝ่าย</p>
                 @endif
                 
                 @if ($class)

@@ -9,7 +9,7 @@
     <div class="text-center my-4">
         <h2>ประกาศ</h2>
     </div>
-    <form id="myForm" action="{{ route('preview') }}" method="POST" >
+    <form id="myForm" class="overflow-x-auto" action="{{ route('preview') }}" method="POST" >
         @csrf
         <div class="a4-container border mb-5 d-flex align-items-center flex-column">
 

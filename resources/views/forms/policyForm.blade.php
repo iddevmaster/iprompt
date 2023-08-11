@@ -9,7 +9,7 @@
     <div class="text-center my-4">
         <h2>นโยบาย</h2>
     </div>
-    <form id="myForm" action="{{ route('preview') }}" method="POST" >
+    <form id="myForm" class="overflow-x-auto" action="{{ route('preview') }}" method="POST" >
         @csrf
         <div class="a4-container border mb-5 d-flex align-items-center flex-column">
 
@@ -36,13 +36,13 @@
                             <p class="text-start mb-0">เลขที่เอกสาร {{$bookNo}}</p>
                             <input type="hidden" name="bookNo" value="{{$bookNo}}">
                             <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
-                            <p class="text-start mb-0">วันที่บังคับใช้ <?php echo date('Y/m/d') ?></p>
+                            <p class="text-start mb-0">วันที่บังคับใช้ </p>
                             <p class="text-start">หน้าที่ 1/1</p>
                         @else
                             <p class="text-start mb-0">เลขที่เอกสาร <span id="currentYear"></span></p>
                             <input type="hidden" name="bookNo" value="">
                             <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
-                            <p class="text-start mb-0">วันที่บังคับใช้ <?php echo date('Y/m/d') ?></p>
+                            <p class="text-start mb-0">วันที่บังคับใช้ </p>
                             <p class="text-start">หน้าที่ 1/1</p>
 
                             <script>
@@ -58,28 +58,28 @@
 
                 <!-- header row 2 -->
                 <div class="row mx-0 w-100 border border-black border-top-0 justify-content-center text-center">
-                    <div class="col py-2 text-start d-flex align-items-start">
-                        <p class="no-wrap">ผู้จัดทำ:</p>
+                    <div class="col py-2 text-start align-items-start">
+                        <p class="mb-1">ผู้จัดทำ:</p>
                         @if ($class)
-                            <p class="no-wrap mt-4">{{ $creater }}</p>
+                            <p class="mb-0 text-center mt-4">{{ $creater }}</p>
                             <input type="hidden" name="creater" value="{{ $creater }}">
                         @else
                             <input class="w-100" type="text" name="creater" required>
                         @endif
                     </div>
-                    <div class="col-5 py-2 text-start d-flex align-items-start border border-black border-top-0 border-bottom-0">
-                        <p class="no-wrap">ผู้ตรวจสอบ:</p>
+                    <div class="col-5 py-2 text-start align-items-start border border-black border-top-0 border-bottom-0">
+                        <p class="mb-1">ผู้ตรวจสอบ:</p>
                         @if ($class)
-                            <p class="no-wrap mt-4">{{ $inspector }}</p>
+                            <p class="mb-0 text-center mt-4">{{ $inspector }}</p>
                             <input type="hidden" name="inspector" value="{{ $inspector }}">
                         @else
                             <input class="w-100" type="text" name="inspector" required>
                         @endif
                     </div>
-                    <div class="col py-2 text-start d-flex align-items-start">
-                        <p class="no-wrap">ผู้อนุมัติ:</p>
+                    <div class="col py-2 text-start align-items-start">
+                        <p class="mb-0">ผู้อนุมัติ:</p>
                         @if ($class)
-                            <p class="no-wrap mt-4">{{ $approver }}</p>
+                            <p class="mb-0 text-center mt-4">{{ $approver }}</p>
                             <input type="hidden" name="approver" value="{{ $approver }}">
                         @else
                             <input class="w-100" type="text" name="approver" required>
