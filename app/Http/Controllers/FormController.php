@@ -224,7 +224,7 @@ class FormController extends Controller
             $inspector = $form->binspector;
             $approver = $form->bapprover;
         }
-        return view('/forms/export/wiForm', compact( 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+        return view('/forms/export/wiForm', compact('form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
         
     }
 
@@ -247,7 +247,7 @@ class FormController extends Controller
         $creater = $form->bcreater;
         $inspector = $form->binspector;
         $approver = $form->bapprover;
-        return view('/forms/export/sopForm', compact( 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+        return view('/forms/export/sopForm', compact( 'form','dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
     }
 
     // Function for edit form
@@ -287,7 +287,7 @@ class FormController extends Controller
         $creater = $form->bcreater;
         $inspector = $form->binspector;
         $approver = $form->bapprover;
-        return view('/forms/export/policyForm', compact( 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+        return view('/forms/export/policyForm', compact( 'form','dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
     }
 
     // Function for edit form

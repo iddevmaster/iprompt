@@ -36,7 +36,7 @@
                     </div>
                     <div class="col pt-2">
                         <?php 
-                            $datetime = (json_decode($form->app))->date;
+                            $datetime = (json_decode($form->app))->date ?? date('Y-m-d');
                             $dated = new DateTime($datetime);
                          ?>
                         <p class="text-start mb-0">เลขที่เอกสาร {{$form->book_num}}</p>

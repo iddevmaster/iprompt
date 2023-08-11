@@ -106,10 +106,14 @@
                 </div>
 
                 <div class="col pt-2">
+                        <?php 
+                            $datetime = (json_decode($form->app))->date ?? date('Y-m-d');
+                            $dated = new DateTime($datetime);
+                         ?>
                         <p class="text-start mb-0">เลขที่เอกสาร {{$bookNo}}</p>
                         <input type="hidden" name="bookNo" value="{{$bookNo}}">
                         <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
-                        <p class="text-start mb-0">วันที่บังคับใช้ <?php echo date('Y/m/d') ?></p>
+                        <p class="text-start mb-0">วันที่บังคับใช้ {{$dated->format('Y-m-d') ?? ''}}</p>
                         <p class="text-start">หน้าที่ 1/1</p>
                 </div>
             </div><!-- end header row 1 -->
