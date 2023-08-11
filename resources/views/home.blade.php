@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-<!-- Scripts -->
-@vite(['resources/css/home.css' , 'resources/js/home.js'])
 <?php $permis = Auth::user()->role ;
       $dpm = Auth::user()->dpm;
 ?>
@@ -193,5 +191,7 @@
             <!-- end Table card -->
         </div>
     </div>
+    <!-- Scripts -->
+@vite(['resources/css/home.css' , 'resources/js/home.js'])
 </body>
 @endsection
