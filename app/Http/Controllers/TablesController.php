@@ -11,6 +11,9 @@ use App\Models\mou_doc;
 use App\Models\imported;
 use PDF;
 Use Alert;
+use App\Models\department;
+use Illuminate\Support\Facades\Auth;
+
 
 class TablesController extends Controller
 {
@@ -36,7 +39,20 @@ class TablesController extends Controller
 
     // query all wi form from database to wi table page
     public function wiTable() {
-        $gendoc = gendoc::where('type', 'wiForm')->orderBy('id', 'desc')->paginate(10);
+        if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
+            $gendoc = gendoc::where('type', 'wiForm')->where('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->paginate(10);
+        } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
+            $gendoc = gendoc::where('type', 'wiForm')->whereIn('dpm', json_decode((department::find((Auth::user())->dpm))->prefix))->orderBy('id', 'desc')->paginate(10);
+        }
+        else {
+            $gendoc = gendoc::where('type', 'wiForm')->orderBy('id', 'desc')->paginate(10);
+        };
+        foreach($gendoc as $doc) {
+            if ($doc->dpm === '-'){
+                $doc->dpm = (department::find((User::find($doc->submit_by))->dpm))->prefix;
+                $doc->save();
+            }
+        };
         $user = User::all();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
@@ -44,9 +60,22 @@ class TablesController extends Controller
     }
 
     // query all sop form from database to sop table page
-    public function sopTable() {
-        $gendoc = gendoc::where('type', 'sopForm')->orderBy('id', 'desc')->paginate(10);
+    public function sopTable() { 
+        if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
+            $gendoc = gendoc::where('type', 'sopForm')->where('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->paginate(10);
+        } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
+            $gendoc = gendoc::where('type', 'sopForm')->whereIn('dpm', json_decode((department::find((Auth::user())->dpm))->prefix))->orderBy('id', 'desc')->paginate(10);
+        }
+        else {
+            $gendoc = gendoc::where('type', 'sopForm')->orderBy('id', 'desc')->paginate(10);
+        };
         $user = User::all();
+        foreach($gendoc as $doc) {
+            if ($doc->dpm === '-'){
+                $doc->dpm = (department::find((User::find($doc->submit_by))->dpm))->prefix;
+                $doc->save();
+            }
+        };
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
@@ -55,7 +84,20 @@ class TablesController extends Controller
 
     // query all policy form from database to policy table page
     public function policyTable() {
-        $gendoc = gendoc::where('type', 'policyForm')->orderBy('id', 'desc')->paginate(10);
+        if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
+            $gendoc = gendoc::where('type', 'policyForm')->where('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->paginate(10);
+        } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
+            $gendoc = gendoc::where('type', 'policyForm')->whereIn('dpm', json_decode((department::find((Auth::user())->dpm))->prefix))->orderBy('id', 'desc')->paginate(10);
+        }
+         else {
+            $gendoc = gendoc::where('type', 'policyForm')->orderBy('id', 'desc')->paginate(10);
+        };
+        foreach($gendoc as $doc) {
+            if ($doc->dpm === '-'){
+                $doc->dpm = (department::find((User::find($doc->submit_by))->dpm))->prefix;
+                $doc->save();
+            }
+        };
         $user = User::all();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
@@ -65,7 +107,21 @@ class TablesController extends Controller
 
     // query all mou form from database to mou table page
     public function mouTable() {
-        $gendoc = mou_doc::orderBy('id', 'desc')->paginate(10);
+        if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
+            $gendoc = mou_doc::where('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->paginate(10);
+        } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
+            $gendoc = mou_doc::whereIn('dpm', json_decode((department::find((Auth::user())->dpm))->prefix))->orderBy('id', 'desc')->paginate(10);
+        }
+        else {
+            $gendoc = mou_doc::orderBy('id', 'desc')->paginate(10);
+        };
+
+        foreach($gendoc as $doc) {
+            if ($doc->dpm === '-'){
+                $doc->dpm = (department::find((User::find($doc->submit_by))->dpm))->prefix;
+                $doc->save();
+            }
+        };
         $user = User::all();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
@@ -75,7 +131,21 @@ class TablesController extends Controller
 
     // query all project form from database to project table page
     public function projTable() {
-        $gendoc = project_doc::orderBy('id', 'desc')->paginate(10);
+        if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
+            $gendoc = project_doc::where('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->paginate(10);
+        } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
+            $gendoc = project_doc::whereIn('dpm', json_decode((department::find((Auth::user())->dpm))->prefix))->orderBy('id', 'desc')->paginate(10);
+        }
+        else {
+            $gendoc = project_doc::orderBy('id', 'desc')->paginate(10);
+        };
+
+        foreach($gendoc as $doc) {
+            if ($doc->dpm === '-'){
+                $doc->dpm = (department::find((User::find($doc->submit_by))->dpm))->prefix;
+                $doc->save();
+            }
+        };
         $user = User::all();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
@@ -85,7 +155,21 @@ class TablesController extends Controller
 
     // query all anno form from database to anno table page
     public function annoTable() {
-        $gendoc = announce_doc::orderBy('id', 'desc')->paginate(10);
+        if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
+            $gendoc = announce_doc::where('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->paginate(10);
+        } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
+            $gendoc = announce_doc::whereIn('dpm', json_decode((department::find((Auth::user())->dpm))->prefix))->orderBy('id', 'desc')->paginate(10);
+        }
+        else {
+            $gendoc = announce_doc::orderBy('id', 'desc')->paginate(10);
+        };
+
+        foreach($gendoc as $doc) {
+            if ($doc->dpm === '-'){
+                $doc->dpm = (department::find((User::find($doc->submit_by))->dpm))->prefix;
+                $doc->save();
+            }
+        };
         $user = User::all();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
@@ -209,22 +293,21 @@ class TablesController extends Controller
 
 
     public function verifyDoc() {
-        $gendocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat'];
-        $mouDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat'];
-        $projectDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat'];
-        $announceDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat'];
+        $gendocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins'];
+        $mouDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins'];
+        $projectDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins'];
+        $announceDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins'];
         
         $gendocQuery = gendoc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($gendocColumns);
         $mouDocQuery = mou_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($mouDocColumns);
         $projectDocQuery = project_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($projectDocColumns);
         $announceDocQuery = announce_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($announceDocColumns);
-
+        
         $form = $gendocQuery
                     ->union($mouDocQuery)
                     ->union($projectDocQuery)
                     ->union($announceDocQuery)
                     ->get();
-
         $user = User::all();
         return view('/tables/verify', compact('form','user'));
     }

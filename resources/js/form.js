@@ -1,9 +1,10 @@
 import './bootstrap';
 
 var myEditor;
+const editorElement = document.getElementById("editor");
 // This sample still does not showcase all CKEditor 5 features (!)
 // Visit https://ckeditor.com/docs/ckeditor5/latest/features/index.html to browse all the features.
-CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+const editor = CKEDITOR.ClassicEditor.create(editorElement, {
     // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
     toolbar: {
         items: [
@@ -122,11 +123,13 @@ CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
     ]
 })
 .then( editor => {
-    myEditor = editor;
+    console.log(editor);
 } )
-.catch( err => {
+.catch( error => {
     console.error(error);
 } );
+
+
 
 // add input buttom
 var addButton = document.getElementById('addInputButton');

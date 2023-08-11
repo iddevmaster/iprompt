@@ -1,8 +1,6 @@
 @extends('layouts.app')
 
-<!-- Scripts -->
-<script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script>
-@vite(['resources/css/form.css' , 'resources/js/form.js'])
+
 
 @section('content')
 <body>
@@ -68,7 +66,7 @@
                             <p class="no-wrap mt-4">{{ $creater }}</p>
                             <input type="hidden" name="creater" value="{{ $creater }}">
                         @else
-                            <input class="w-100" type="text" name="creater" required>
+                            <input class="w-100" type="text" id="creater" name="creater" required>
                         @endif
                     </div>
                     <div class="col-5 py-2 text-start d-flex align-items-start border border-black border-top-0 border-bottom-0">
@@ -93,13 +91,22 @@
             </div> <!-- end header -->
 
             <!-- content -->
-            <div class="content py-5 w-100 h-100">
+            <div class="content py-4 w-100 h-100">
                 @if ($class)
+                    <?php 
+                        session_start();
+                        $_SESSION['data'] = $editorContent;
+                    ?>
                     <div style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
-                    <input type="hidden" name="editorContent" value="{!! $editorContent !!}">
+                    <input type="hidden" name="editorContent" value="{{ $editorContent }}">
                 @else
-                    <textarea id="editor" name="myInput"></textarea>
-                    
+                    <textarea id="editor" name="myInput">
+                    <?php session_start();?>
+                        @if ($_SESSION['data'] ?? false)
+                            {!! $_SESSION['data'] !!}
+                        @endif
+                    <?php session_destroy();?>
+                    </textarea> 
                 @endif
             </div><!-- end content -->
 
@@ -121,7 +128,7 @@
                 <button type="submit" class="btn btn-success ms-2" name="submit" value="save">Save</button>
             @else
                 <a href="{{ route('home') }}"><button type="button" class="btn btn-secondary">cancle</button></a>
-                <button type="submit" id="preview-btn" class="btn btn-success ms-2" name="submit" value="preview">Preview</button>
+                <button type="submit" on id="preview-btn" class="btn btn-success ms-2" name="submit" value="preview">Preview</button>
             @endif
             <script>
                 function goBack() {
@@ -131,6 +138,17 @@
             </script>
         </div>
     </form>
+    <!-- Scripts -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script>
+    @vite(['resources/css/form.css' , 'resources/js/form.js'])
+
+    <script>
+        const editorData = document.getElementById('editor');
+        const textField = document.getElementById('creater');
+        textField.addEventListener('input', () => {
+            console.log(editor);
+        });
+    </script>
 </body>
 
 

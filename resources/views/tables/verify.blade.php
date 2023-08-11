@@ -8,7 +8,7 @@
       $dpm = Auth::user()->dpm;
 ?>
     <div class="container">
-        <div class="text-center mb-4"><h2>Verify Doc Table</h2></div>
+        <div class="text-center mb-4"><h2>ตรวจสอบ / อนุมัติ หนังสือ</h2></div>
         <div class="d-flex">
             <div class="flex-grow-1"><input type="text" id="searchInput" class="form-control mb-2" placeholder="Search..."></div>
             <div class="p-1 ms-2 export"><a class="a-tag" href="#"><i class="bi bi-file-earmark-arrow-down"></i></a></div>
@@ -21,13 +21,13 @@
                 <thead class="table-dark">
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Book_num</th>
-                        <th scope="col">Type</th>
-                        <th scope="col">Subject</th>
-                        <th scope="col">Created_date</th>
-                        <th scope="col">Submit_by</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Book</th>
+                        <th scope="col">เลขที่หนังสือ</th>
+                        <th scope="col">ประเภทหนังสือ</th>
+                        <th scope="col">เรื่อง</th>
+                        <th scope="col">วันที่สร้าง</th>
+                        <th scope="col">ผู้บันทึก</th>
+                        <th scope="col">สถานะ</th>
+                        <th scope="col">หนังสือ</th>
                     </tr>
                 </thead>
 
@@ -36,39 +36,45 @@
                     <!-- Table rows will be dynamically added here -->
                     <?php  $counter = 1 ?>
                     @foreach ($form as $row)
-                    <tr>
-                        <td>{{$counter}}</td>
-                        <td>{{ $row->book_num}}</td>
-                        <td>{{ $row->type}}</td>
-                        <td class="truncate">{{ $row->title}}</td>
-                        <td>{{ $row->created_date}}</td>
-                        <td>
-                            @php
-                                $submitUser = $user->firstWhere('id', $row->submit_by);
-                                echo $submitUser ? $submitUser->name : 'Unknown';
-                            @endphp
-                        </td>
+                        @php
+                            $app = json_decode($row->app);
+                            $ins = json_decode($row->ins);
+                        @endphp
+                        @if (($row->stat === 'รออนุมัติ' && $app->appId == Auth::user()->id) || ($row->stat === 'รอตรวจสอบ' && $ins->appId == Auth::user()->id))
+                            <tr>
+                                <td>{{$counter}}</td>
+                                <td>{{ $row->book_num}}</td>
+                                <td>{{ $row->type}}</td>
+                                <td class="truncate">{{ $row->title}}</td>
+                                <td>{{ $row->created_date}}</td>
+                                <td>
+                                    @php
+                                        $submitUser = $user->firstWhere('id', $row->submit_by);
+                                        echo $submitUser ? $submitUser->name : 'Unknown';
+                                    @endphp
+                                </td>
 
-                        <td>
-                            <button class="btn btn-secondary" name="{{$row->id}}" id="{{$row->stat}}" docType="{{$row->type}}">{{$row->stat}}</button>
-                        </td>
+                                <td>
+                                    <button class="btn btn-secondary" name="{{$row->id}}" id="{{$row->stat}}" docType="{{$row->type}}">{{$row->stat}}</button>
+                                </td>
 
-                        <td>
-                            @if ($row->type === 'wiForm')
-                                <a href="{{url('/form/downloadwi/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
-                            @elseif ($row->type === 'sopForm')
-                                <a href="{{url('/form/downloadsop/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
-                            @elseif ($row->type === 'policyForm')
-                                <a href="{{url('/form/downloadpol/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
-                            @elseif ($row->type === 'annoForm')
-                                <a href="{{url('/form/downloadanno/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
-                            @elseif ($row->type === 'mouForm')
-                                <a href="{{url('/form/downloadmou/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
-                            @elseif ($row->type === 'projForm')
-                                <a href="{{url('/form/downloadproj/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
-                            @endif
-                        </td>
-                    </tr>
+                                <td>
+                                    @if ($row->type === 'wiForm')
+                                        <a href="{{url('/form/downloadwi/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                    @elseif ($row->type === 'sopForm')
+                                        <a href="{{url('/form/downloadsop/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                    @elseif ($row->type === 'policyForm')
+                                        <a href="{{url('/form/downloadpol/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                    @elseif ($row->type === 'annoForm')
+                                        <a href="{{url('/form/downloadanno/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                    @elseif ($row->type === 'mouForm')
+                                        <a href="{{url('/form/downloadmou/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                    @elseif ($row->type === 'projForm')
+                                        <a href="{{url('/form/downloadproj/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endif
                     <?php $counter++ ?>
                     @endforeach
                 </tbody>

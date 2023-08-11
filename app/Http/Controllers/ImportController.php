@@ -10,6 +10,7 @@ use App\Models\agencie;
 use App\Models\branche;
 use App\Models\department;
 use App\Models\user_role;
+use Illuminate\Support\Facades\Auth;
 
 
 class ImportController extends Controller
@@ -62,11 +63,20 @@ class ImportController extends Controller
     }
 
     public function imported() {
-        $imported = imported::orderBy('id', 'desc')->paginate(10);
-        $imp_mou = imported::where('type', 'mou')->orderBy('id', 'desc')->paginate(10);
-        $imp_proj = imported::where('type', 'proj')->orderBy('id', 'desc')->paginate(10);
-        $imp_cont = imported::where('type', 'cont')->orderBy('id', 'desc')->paginate(10);
-        $imp_anno = imported::where('type', 'anno')->orderBy('id', 'desc')->paginate(10);
+        if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
+            $imported = imported::orderBy('id', 'desc')->where('receiver_dpm', Auth::user()->dpm)->orderBy('id', 'desc')->paginate(10);
+            $imp_mou = imported::where('type', 'mou')->where('receiver_dpm', Auth::user()->dpm)->orderBy('id', 'desc')->paginate(10);
+            $imp_proj = imported::where('type', 'proj')->where('receiver_dpm', Auth::user()->dpm)->orderBy('id', 'desc')->paginate(10);
+            $imp_cont = imported::where('type', 'cont')->where('receiver_dpm', Auth::user()->dpm)->orderBy('id', 'desc')->paginate(10);
+            $imp_anno = imported::where('type', 'anno')->where('receiver_dpm', Auth::user()->dpm)->orderBy('id', 'desc')->paginate(10);
+        } else {
+            $imported = imported::orderBy('id', 'desc')->orderBy('id', 'desc')->paginate(10);
+            $imp_mou = imported::where('type', 'mou')->orderBy('id', 'desc')->paginate(10);
+            $imp_proj = imported::where('type', 'proj')->orderBy('id', 'desc')->paginate(10);
+            $imp_cont = imported::where('type', 'cont')->orderBy('id', 'desc')->paginate(10);
+            $imp_anno = imported::where('type', 'anno')->orderBy('id', 'desc')->paginate(10);
+        }
+        
         $user = User::all();
         return view('/tables/imported', compact('imported', 'user','imp_mou','imp_cont','imp_proj','imp_anno'));
     }

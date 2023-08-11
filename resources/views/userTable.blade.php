@@ -49,7 +49,7 @@
                             <td>
                                 <?php echo $brn->firstWhere('id', $row->branch)->name ?? '-Unknow-'; ?>
                             </td>
-                            <td>
+                            <td class="truncate">
                                 <?php echo $dpm->firstWhere('id', $row->dpm)->name ?? '-Unknow-'; ?>
                             </td>
                             <td>{{ $row->phone}}</td>

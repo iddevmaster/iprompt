@@ -37,7 +37,7 @@ class ChangePasswordController extends Controller
                 'password' => Hash::make($request->new_password),
             ]);
             Alert::toast('Password updated successfully!','success');
-            return redirect()->route('home');
+            return redirect()->route('alluser');
         }
         return redirect()->route('changepassword')->with('error', 'Current password is incorrect.');
     }

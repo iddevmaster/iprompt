@@ -30,7 +30,7 @@
     border-radius: 50%;
     position: fixed;
     bottom: 20px;
-    right: 20px;
+    left: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -93,15 +93,20 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item "><a href="{{ route('home') }}" class="nav-link navbarMenu">Home</a></li>
+                        <li class="nav-item "><a href="{{ route('home') }}" class="nav-link navbarMenu">หน้าแรก</a></li>
                         <li class="nav-item dropdown ">
                             <a id="navbarDropdown" href="" class="nav-link dropdown-toggle navbarMenu" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Imported</a>
+                                หนังสือรับเข้า</a>
                             
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
-                                    <li><a class="dropdown-item" href="{{ route('imported') }}">Create</a></li>
-                                    <li><a class="dropdown-item" href="{{ route('importedTable') }}">Table</a></li>
+                                    @php
+                                        $userDpm = (App\Models\department::find((Auth::user())->dpm))->prefix ?? '-';
+                                    @endphp
+                                    @if ($userDpm === 'AD' || Auth::user()->role === 'admin')
+                                        <li><a class="dropdown-item" href="{{ route('imported') }}">รับเข้าหนังสือ</a></li>
+                                    @endif
+                                        <li><a class="dropdown-item" href="{{ route('importedTable') }}">ทะเบียนหนังสือ</a></li>
                                 </div>
                             </ul>
 
@@ -110,7 +115,7 @@
                         @can('create')
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle navbarMenu" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Create
+                                สร้างหนังสือ
                             </a>
                         
                             <ul class="dropdown-menu dropdown-menu-end ">
@@ -140,7 +145,7 @@
                         
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle navbarMenu" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Table
+                                ทะเบียนหนังสือ
                             </a>
                         
                             <ul class="dropdown-menu dropdown-menu-end ">
@@ -166,9 +171,11 @@
                                 </div>
                             </ul>
                         </li>
-                        <li class="nav-item "><a href="{{ route('verifyDoc') }}" class="nav-link navbarMenu">Verify</a></li>
+                        @if (auth()->check() && (auth()->user()->can('approve') || auth()->user()->can('inspect')))
+                            <li class="nav-item"><a href="{{ route('verifyDoc') }}" class="nav-link navbarMenu">ตรวจสอบ/อนุมัติ</a></li>
+                        @endif
                         @role('admin')
-                        <li class="nav-item "><a href="{{ route('alluser') }}" class="nav-link navbarMenu">User</a></li>
+                        <li class="nav-item "><a href="{{ route('alluser') }}" class="nav-link navbarMenu">จัดการบัญชีผู้ใช้</a></li>
                         @endrole
                     </ul>
 
@@ -195,12 +202,12 @@
                             
                                 <ul class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdown">
                                     <div class="d-flex flex-column justify-content-center">
-                                        <li class="text-center"><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
+                                        <li class="text-center"><a class="dropdown-item" href="{{ route('profile') }}">ตั้งค่าบัญชี</a></li>
                                         <li>
                                             <a class="dropdown-item text-center" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();
                                                             document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
+                                                {{ __('ออกจากระบบ') }}
                                             </a>
                                     
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -225,7 +232,7 @@
             @yield('content')
         </main>
         <h5 class="fixed-bottom m-5">
-            <div class="theme-container shadow-light">
+            <div class="theme-container shadow-light" >
                 <i class="bi bi-sun" id="theme-icon"></i>
             </div>
         </h5>

@@ -47,12 +47,24 @@
                     @endif
                     <br>
                 </div>  
+
                 @if ($class)
+                    <?php 
+                        session_start();
+                        $_SESSION['data'] = $editorContent;
+                    ?>
                     <div style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
                     <input type="hidden" name="editorContent" value="{{$editorContent}}">
                 @else
-                    <textarea id="editor" name="myInput"></textarea>
+                    <textarea id="editor" name="myInput">
+                        <?php session_start();?>
+                            @if ($_SESSION['data'] ?? false)
+                                {!! $_SESSION['data'] !!}
+                            @endif
+                        <?php session_destroy();?>
+                    </textarea>
                 @endif
+
                 <div class="mt-auto w-100 ">
                     <div class="ms-5 mt-4">
                         

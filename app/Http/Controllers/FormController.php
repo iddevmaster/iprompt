@@ -10,6 +10,7 @@ use App\Models\mou_doc;
 use Dompdf\Dompdf;
 use PDF;
 Use Alert;
+use App\Models\department;
 
 class FormController extends Controller
 {
@@ -128,6 +129,7 @@ class FormController extends Controller
         }
         else{
             $this->store($request);
+            session_destroy();
             Alert::toast('Your Form as been Saved!','success');
             return redirect('/home');
         }
@@ -145,6 +147,7 @@ class FormController extends Controller
             $project_doc->title = $request->projName;
             $project_doc->detail = $request->editorContent;
             $project_doc->sign = "";
+            $project_doc->dpm = (department::find($request->user()->dpm))->prefix;
             $project_doc->created_date = date('Y-m-d');
             $project_doc->save();
             
@@ -161,6 +164,7 @@ class FormController extends Controller
             $mou_doc->place = $request->location;
             $mou_doc->detail = $request->editorContent;
             $mou_doc->sign = '';
+            $mou_doc->dpm = (department::find($request->user()->dpm))->prefix;
             $mou_doc->created_date = date('Y-m-d');
             $mou_doc->save();
 
@@ -177,6 +181,7 @@ class FormController extends Controller
             $announce_doc->use_date = $request->useDate;
             $announce_doc->anno_date = $request->annoDate;
             $announce_doc->sign = '';
+            $announce_doc->dpm = (department::find($request->user()->dpm))->prefix;
             $announce_doc->sign_name = $request->signName;
             $announce_doc->sign_position = $request->signPosition;
             $announce_doc->save();
@@ -192,6 +197,7 @@ class FormController extends Controller
             $gendoc->binspector = $request->inspector;
             $gendoc->bapprover = $request->approver;
             $gendoc->detail = $request->editorContent;
+            $gendoc->dpm = (department::find($request->user()->dpm))->prefix;
             $gendoc->save();
         }
     }

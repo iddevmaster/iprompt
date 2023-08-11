@@ -7,7 +7,7 @@
 <body>
 <?php $regData = \App\CoreFunction\Helper::regData();?>
     <div class="container">
-        <div class="text-center mb-4"><h2>Imported Document Table</h2></div>
+        <div class="text-center mb-4"><h2>ทะเบียนหนังสือรับเข้า</h2></div>
         <div class="d-flex">
             <div class="flex-grow-1"><input type="text" id="searchInput" class="form-control mb-2" placeholder="Search..."></div>
             <div class="p-1 ms-2 export"><a class="a-tag" href=""><i class="bi bi-file-earmark-arrow-down"></i></a></div>
@@ -18,10 +18,10 @@
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <button class="nav-link active" id="nav-all-tab" data-bs-toggle="tab" data-bs-target="#nav-all" type="button" role="tab" aria-controls="nav-all" aria-selected="true">All</button>
-                    <button class="nav-link" id="nav-cont-tab" data-bs-toggle="tab" data-bs-target="#nav-cont" type="button" role="tab" aria-controls="nav-cont" aria-selected="false">Contract</button>
+                    <button class="nav-link" id="nav-cont-tab" data-bs-toggle="tab" data-bs-target="#nav-cont" type="button" role="tab" aria-controls="nav-cont" aria-selected="false">สัญญา</button>
                     <button class="nav-link" id="nav-mou-tab" data-bs-toggle="tab" data-bs-target="#nav-mou" type="button" role="tab" aria-controls="nav-mou" aria-selected="false">MoU</button>
-                    <button class="nav-link" id="nav-anno-tab" data-bs-toggle="tab" data-bs-target="#nav-anno" type="button" role="tab" aria-controls="nav-anno" aria-selected="false">Announcement</button>
-                    <button class="nav-link" id="nav-proj-tab" data-bs-toggle="tab" data-bs-target="#nav-proj" type="button" role="tab" aria-controls="nav-proj" aria-selected="false">Project</button>
+                    <button class="nav-link" id="nav-anno-tab" data-bs-toggle="tab" data-bs-target="#nav-anno" type="button" role="tab" aria-controls="nav-anno" aria-selected="false">ประกาศ</button>
+                    <button class="nav-link" id="nav-proj-tab" data-bs-toggle="tab" data-bs-target="#nav-proj" type="button" role="tab" aria-controls="nav-proj" aria-selected="false">โครงการ</button>
                 </div>
             </nav>
 
@@ -34,15 +34,15 @@
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Book_num</th><?php $regData = \App\CoreFunction\Helper::regData();?>
-                                <th scope="col">Subject</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Source</th>
-                                <th scope="col">Receiver</th>
-                                <th scope="col">Receiver_dpm</th>
-                                <th scope="col">Receive_date</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Book_file</th>
+                                <th scope="col">เลขที่หนังสือ</th><?php $regData = \App\CoreFunction\Helper::regData();?>
+                                <th scope="col">เรื่อง</th>
+                                <th scope="col">ประเภทหนังสือ</th>
+                                <th scope="col">ผู้ส่งหนังสือ</th>
+                                <th scope="col">ผู้รับ</th>
+                                <th scope="col">ฝ่ายผู้รับ</th>
+                                <th scope="col">วันที่รับ</th>
+                                <th scope="col">สถานะ</th>
+                                <th scope="col">หนังสือ</th>
                             </tr>
                         </thead>
         
@@ -75,9 +75,11 @@
                                         <button type="button" data-file-path="{{ asset('storage/uploads/' . $row->file) }}" class="btn btn-info viewPdfBtn">Book</button>
                                     </td>
                                     @if ($row->status === '1')
-                                    <td>
-                                        <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
-                                    </td>
+                                        @hasanyrole('employee|leader_dpm|ceo|admin')
+                                            <td>
+                                                <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
+                                            </td>
+                                        @endhasanyrole
                                     @endif
                                 </tr>
                                 <?php $counter++ ?>
@@ -139,9 +141,11 @@
                                         <button type="button" data-file-path="{{ asset('storage/uploads/' . $row->file) }}" class="btn btn-info viewPdfBtn">Book</button>
                                     </td>
                                     @if ($row->status === '1')
-                                    <td>
-                                        <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
-                                    </td>
+                                        @hasanyrole('employee|leader_dpm|ceo|admin')
+                                            <td>
+                                                <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
+                                            </td>
+                                        @endhasanyrole
                                     @endif
                                 </tr>
                                 <?php $counter++ ?>
@@ -203,9 +207,11 @@
                                         <button type="button" data-file-path="{{ asset('storage/uploads/' . $row->file) }}" class="btn btn-info viewPdfBtn">Book</button>
                                     </td>
                                     @if ($row->status === '1')
-                                    <td>
-                                        <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
-                                    </td>
+                                        @hasanyrole('employee|leader_dpm|ceo|admin')
+                                            <td>
+                                                <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
+                                            </td>
+                                        @endhasanyrole
                                     @endif
                                 </tr>
                                 <?php $counter++ ?>
@@ -267,9 +273,11 @@
                                         <button type="button" data-file-path="{{ asset('storage/uploads/' . $row->file) }}" class="btn btn-info viewPdfBtn">Book</button>
                                     </td>
                                     @if ($row->status === '1')
-                                    <td>
-                                        <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
-                                    </td>
+                                        @hasanyrole('employee|leader_dpm|ceo|admin')
+                                            <td>
+                                                <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
+                                            </td>
+                                        @endhasanyrole
                                     @endif
                                 </tr>
                                 <?php $counter++ ?>
@@ -331,9 +339,11 @@
                                         <button type="button" data-file-path="{{ asset('storage/uploads/' . $row->file) }}" class="btn btn-info viewPdfBtn">Book</button>
                                     </td>
                                     @if ($row->status === '1')
-                                    <td>
-                                        <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
-                                    </td>
+                                        @hasanyrole('employee|leader_dpm|ceo|admin')
+                                            <td>
+                                                <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
+                                            </td>
+                                        @endhasanyrole
                                     @endif
                                 </tr>
                                 <?php $counter++ ?>
@@ -373,7 +383,7 @@
         checkbtn.forEach((ckbtn) => {
             ckbtn.addEventListener('click', function () {
                 Swal.fire({
-                    title: 'Accept or Deny?',
+                    title: 'ตอบรับหนังสือ',
                     html:
                         '<label for="swal-input1">ชื่อผู้ตอบรับ:</label>' +
                         '<input id="swal-input1" class="swal2-input">' +
@@ -381,8 +391,9 @@
                         '<input id="swal-input2" class="swal2-input">',
                     showDenyButton: true,
                     showCancelButton: true,
-                    confirmButtonText: 'Accept',
-                    denyButtonText: 'Deny',
+                    confirmButtonText: 'ยอมรับ',
+                    denyButtonText: 'ปฏิเสธ',
+                    cancelButtonText: 'ยกเลิก',
                     preConfirm: () => {
                         const swalInput1Value = document.getElementById('swal-input1').value;
                         const swalInput2Value = document.getElementById('swal-input2').value;
@@ -439,7 +450,6 @@
             .then((response) => response.json())
             .then((data) => {
                 // Handle the response if needed
-                Swal.fire('Saved!', '', 'success');
                 // You can also reload the page to see the changes, if required
                 window.location.reload();
             })
