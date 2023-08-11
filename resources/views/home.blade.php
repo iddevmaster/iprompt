@@ -26,7 +26,7 @@
                                 </div>
                             @endif
 
-                            <div class="row mb-2 justify-content-around">
+                            <div class="row mb-2 justify-content-around border-bottom">
                                 @can('MOU')
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('mouForm') }}">
@@ -38,12 +38,12 @@
                                 </div>
                                 @endcan
 
-                                @can('PRO')
+                                @can('POL')
                                 <div class="col">
-                                    <a class="a-tag" href="{{ route('projForm') }}">
+                                    <a class="a-tag" href="{{ route('policyForm') }}">
                                         <div class="w-100 h-100">
-                                            <i class="bi bi-archive"></i>
-                                            <p class="icon-title">โครงการ</p>
+                                            <i class="bi bi-building-check"></i>
+                                            <p class="icon-title">Policy</p>
                                         </div>
                                     </a>
                                 </div>
@@ -63,12 +63,13 @@
 
 
                             <div class="row">
-                                @can('POL')
+
+                                @can('PRO')
                                 <div class="col">
-                                    <a class="a-tag" href="{{ route('policyForm') }}">
+                                    <a class="a-tag" href="{{ route('projForm') }}">
                                         <div class="w-100 h-100">
-                                            <i class="bi bi-building-check"></i>
-                                            <p class="icon-title">Policy</p>
+                                            <i class="bi bi-archive"></i>
+                                            <p class="icon-title">โครงการ</p>
                                         </div>
                                     </a>
                                 </div>
@@ -115,7 +116,7 @@
                         @endif
 
                         
-                        <div class="row mb-2 justify-content-around">
+                        <div class="row mb-2 justify-content-around border-bottom">
                             @can('MOU')
                             <div class="col">
                                 <a class="a-tag" href="{{ route('mouTable') }}">
@@ -127,12 +128,12 @@
                             </div>
                             @endcan
 
-                            @can('PRO')
+                            @can('POL')
                             <div class="col">
-                                <a class="a-tag" href="{{ route('projTable') }}">
+                                <a class="a-tag" href="/tables/policyTable">
                                     <div class="w-100 h-100">
-                                        <i class="bi bi-archive"></i>
-                                        <p class="icon-title">โครงการ</p>
+                                        <i class="bi bi-building-check"></i>
+                                        <p class="icon-title">Policy</p>
                                     </div>
                                 </a>
                             </div>
@@ -152,12 +153,12 @@
 
                         <div class="row">
 
-                            @can('POL')
+                            @can('PRO')
                             <div class="col">
-                                <a class="a-tag" href="/tables/policyTable">
+                                <a class="a-tag" href="{{ route('projTable') }}">
                                     <div class="w-100 h-100">
-                                        <i class="bi bi-building-check"></i>
-                                        <p class="icon-title">Policy</p>
+                                        <i class="bi bi-archive"></i>
+                                        <p class="icon-title">โครงการ</p>
                                     </div>
                                 </a>
                             </div>
