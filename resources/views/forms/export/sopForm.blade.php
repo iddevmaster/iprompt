@@ -86,6 +86,38 @@
             }
             
         }
+        .editorContent {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+            }
+            .editorContent p{
+                width: 100%;
+                display: flex;
+                justify-content: start;
+                padding-left:1.5cm;
+                padding-right:1cm;
+                text-indent: 2.5em;
+            }
+
+            .editorContent table{
+                width:fit-content;
+                text-align: center;
+                min-width: 30%;
+            }
+            .editorContent figure{
+                display: flex;
+                justify-content: center;
+            }
+            .editorContent img{
+                width: inherit;
+            }
+            .editorContent ul, ol{
+                text-indent: unset;
+                text-align: start;
+                width: 100%;
+            }
     </style>
 </head>
 <body>
