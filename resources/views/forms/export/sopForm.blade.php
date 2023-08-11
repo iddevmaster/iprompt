@@ -162,12 +162,12 @@
                 </div>
                 <div class="col-5 py-2 text-start align-items-start border border-black border-top-0 border-bottom-0">
                     <p class="mb-1">ผู้ตรวจสอบ:</p>
-                        <p class="mb-0 text-center mt-4">{{ $inspector }}</p>
+                        <p class="mb-0 text-center mt-2">{{ $inspector }}</p>
                         <input type="hidden" name="inspector" value="{{ $inspector }}">
                 </div>
                 <div class="col py-2 text-start align-items-start">
                     <p class="mb-1">ผู้อนุมัติ:</p>
-                        <p class="mb-0 text-center mt-4">{{ $approver }}</p>
+                        <p class="mb-0 text-center mt-2">{{ $approver }}</p>
                         <input type="hidden" name="approver" value="{{ $approver }}">
                 </div>
             </div><!-- end header row 2 -->
