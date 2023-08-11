@@ -149,7 +149,7 @@
             </p>
         </div> <!-- end footer -->
     </div>
-    @if ($dorv !== 'verify')
+    @if ($dorv !== 'verify' && auth()->user()->can('download'))
     <div class="d-flex justify-content-center downloadbtn">
         <button class="btn btn-success ms-2" onclick="printDiv()">Print</button>
     </div>

@@ -160,7 +160,7 @@
     <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: ระบบสารบัญ <?php echo date('Y-m-d H:i:s') ?></p>
 </div> <!-- end footer -->
 </div> <!-- end page -->
-    @if ($dorv !== 'verify')
+    @if ($dorv !== 'verify' && auth()->user()->can('download'))
     <div class="d-flex justify-content-center downloadbtn">
         <button class="btn btn-success ms-2" onclick="printDiv()">Print</button>
     </div>

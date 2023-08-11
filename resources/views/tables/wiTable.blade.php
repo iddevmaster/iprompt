@@ -93,7 +93,7 @@
                                 </td>
                             @else
                                 <td>
-                                    <a href="{{url('/form/viewwi/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                    <a href="{{url('/form/downloadwi/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                 </td>
                             @endcan
                             

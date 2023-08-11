@@ -74,7 +74,7 @@
                                 </td>
                             @else
                                 <td>
-                                    <a href="{{url('/form/viewsop/'.$row->id)}}" ><button type="button" class="btn btn-primary">View</button></a>
+                                    <a href="{{url('/form/downloadsop/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                 </td>
                             @endcan
                         </tr>

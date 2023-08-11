@@ -74,7 +74,7 @@
                                     <a href="{{url('/form/downloadmou/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
                                 </td>
                             @else
-                                <td><a href="{{url('/form/viewmou/'.$row->id)}}" ><button type="button" class="btn btn-primary">View</button></a></td>
+                                <td><a href="{{url('/form/downloadmou/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a></td>
                             @endcan
                         </tr>
                         <?php $counter++ ?>
