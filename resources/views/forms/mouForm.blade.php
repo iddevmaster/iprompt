@@ -78,9 +78,22 @@
 
             <!-- footer -->
             <div class="footer mt-auto">
+            @if ($class)
+                <div class="d-flex justify-content-evenly" id="signcontainer" style="flex-wrap:wrap; padding: 0 50px 0 50px;">
+                @foreach ($allSigns as $sign)
+                    <div class="p-2">
+                        <p class="mb-0">.............................................</p>
+                        <p class="mb-0">( {{$sign['signName']}} )</p>
+                        <p>{{$sign['signPos']}}</p>
+                    </div>
+                @endforeach
+                    <input type="hidden" name="allSigns" value="{{json_encode($allSigns)}}">
+                </div>
+            @else
                 <div class="d-flex justify-content-evenly" id="signcontainer" style="flex-wrap:wrap; padding: 0 50px 0 50px;"></div>
                 <button type="button" class="btn btn-primary" id="addsignButton">เพิ่มผู้ลงนาม</button>
                 <input type="hidden" id="signCount" name="signCount" value="0">
+            @endif
             </div> <!-- end footer -->
 
             <!-- send form type for preview -->

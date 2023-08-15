@@ -38,45 +38,24 @@
             <div class="content my-4 w-100 h-100 d-flex flex-column">
                     <textarea id="editor" name="myInput" >{!!$form->detail!!}</textarea>
             </div><!-- end content -->
-
             <!-- footer -->
+            <script>let sCount = 0;</script>
             <div class="footer mt-auto">
-                <div class="d-flex justify-content-evenly">
-                    <div class="p-2">
-                        <p class="mb-0">.............................................</p>
-                        <p>(...........................................)</p>
-                        <p>ตำแหน่ง</p>
-                    </div>
-                    <div class="p-2">
-                        <p class="mb-0">.............................................</p>
-                        <p>(...........................................)</p>
-                        <p>ตำแหน่ง</p>
-                    </div>
+                <div class="d-flex justify-content-evenly" id="signcontainer" style="flex-wrap:wrap; padding: 0 50px 0 50px;">
+                @if ($form->sign)
+                    <?php $allSign = $form->sign; ?>
+                    @foreach (json_decode($allSign) as $index => $sign)
+                        <script> sCount += 1;</script>
+                        <div class="p-2">
+                            <p class="mb-0">.............................................</p>
+                            <p class="mb-0">(<input type="text" name="signname{{$index +1}}" value="{{$sign->signName}}">)</p>
+                            <p><input type="text" name="signpos{{$index +1}}" value="{{$sign->signPos}}"></p>
+                        </div>
+                    @endforeach
+                @endif
                 </div>
-                <div class="d-flex justify-content-evenly">
-                    <div class="p-2">
-                        <p class="mb-0">.............................................</p>
-                        <p>(...........................................)</p>
-                        <p>พยาน</p>
-                    </div>
-                    <div class="p-2">
-                        <p class="mb-0">.............................................</p>
-                        <p>(...........................................)</p>
-                        <p>พยาน</p>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-evenly">
-                    <div class="p-2">
-                        <p class="mb-0">.............................................</p>
-                        <p>(...........................................)</p>
-                        <p>ตำแหน่ง</p>
-                    </div>
-                    <div class="p-2">
-                        <p class="mb-0">.............................................</p>
-                        <p>(...........................................)</p>
-                        <p>ตำแหน่ง</p>
-                    </div>
-                </div>
+                <button type="button" class="btn btn-primary" id="addsignButton">เพิ่มผู้ลงนาม</button>
+                <input type="hidden" id="signCount" name="signCount" value="0">
             </div> <!-- end footer -->
 
             <!-- send form type for preview -->
@@ -94,6 +73,28 @@
                     window.history.go(-1);
                     window.scrollTo(0, 0);
                 }
+
+                // Get references to the button and container elements
+                const addButton = document.getElementById('addsignButton');
+                const container = document.getElementById('signcontainer');
+                const signCount = document.getElementById('signCount');
+                signCount.value = sCount;
+                // Function to add content to the container
+                function addContent() {
+                    sCount += 1;
+                    const content = `
+                        <div class="p-2">
+                            <p class="mb-0">.............................................</p>
+                            <p class="mb-0">(<input type="text" name="signname${sCount}" placeholder="ชื่อ">)</p>
+                            <p><input type="text" name="signpos${sCount}" placeholder="ตำแหน่ง"></p>
+                        </div>
+                    `;
+                    container.innerHTML += content;
+                    signCount.value = sCount;
+                }
+
+                // Add a click event listener to the button
+                addButton.addEventListener('click', addContent);
             </script>
         </div>
         @endif

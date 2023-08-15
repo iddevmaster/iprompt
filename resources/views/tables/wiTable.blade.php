@@ -247,7 +247,7 @@
                                     // Handle the response if needed
                                     console.log(data);
                                     // You can also reload the page to see the changes,
-                                    //window.location.reload();
+                                    window.location.reload();
                                 })
                                 .catch((error) => {
                                     // Handle errors if any

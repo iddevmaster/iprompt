@@ -62,7 +62,7 @@
                             </div>
 
 
-                            <div class="row">
+                            <div class="row border-bottom">
 
                                 @can('PRO')
                                 <div class="col">
@@ -96,6 +96,75 @@
                                     </a>
                                 </div>
                                 @endcan
+                            </div>
+
+                            <div class="row ">
+                                <div class="col">
+                                    <a class="a-tag" href="">
+                                        <div class="w-100 h-100">
+                                        <i class="bi bi-file-earmark"></i>
+                                            <p class="icon-title">กฏบัตร</p>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col">
+                                    <a class="a-tag" href="">
+                                        <div class="w-100 h-100">
+                                        <i class="bi bi-file-earmark"></i>
+                                            <p class="icon-title">คู่มือพนักงาน</p>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col">
+                                    <a class="a-tag" href="">
+                                        <div class="w-100 h-100">
+                                        <i class="bi bi-file-earmark"></i>
+                                            <p class="icon-title">Brochure</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row ">
+
+                                <div class="col">
+                                    <a class="a-tag" href="">
+                                        <div class="w-100 h-100">
+                                        <i class="bi bi-file-earmark"></i>
+                                            <p class="icon-title">JD</p>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col">
+                                    <a class="a-tag" href="">
+                                        <div class="w-100 h-100">
+                                        <i class="bi bi-file-earmark"></i>
+                                            <p class="icon-title">Member</p>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col">
+                                    <a class="a-tag" href="">
+                                        <div class="w-100 h-100">
+                                        <i class="bi bi-file-earmark"></i>
+                                            <p class="icon-title">Contract</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row ">
+
+                                <div class="col">
+                                    <a class="a-tag" href="">
+                                        <div class="w-100 h-100">
+                                        <i class="bi bi-file-earmark"></i>
+                                            <p class="icon-title">ISO</p>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

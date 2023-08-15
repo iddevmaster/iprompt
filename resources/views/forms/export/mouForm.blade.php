@@ -121,41 +121,16 @@
 
 <!-- footer -->
 <div class="footer mt-auto">
-    <div class="d-flex justify-content-evenly">
-        <div class="p-2">
-            <p class="mb-0">.............................................</p>
-            <p>(...........................................)</p>
-            <p>ตำแหน่ง</p>
-        </div>
-        <div class="p-2">
-            <p class="mb-0">.............................................</p>
-            <p>(...........................................)</p>
-            <p>ตำแหน่ง</p>
-        </div>
-    </div>
-    <div class="d-flex justify-content-evenly">
-        <div class="p-2">
-            <p class="mb-0">.............................................</p>
-            <p>(...........................................)</p>
-            <p>พยาน</p>
-        </div>
-        <div class="p-2">
-            <p class="mb-0">.............................................</p>
-            <p>(...........................................)</p>
-            <p>พยาน</p>
-        </div>
-    </div>
-    <div class="d-flex justify-content-evenly">
-        <div class="p-2">
-            <p class="mb-0">.............................................</p>
-            <p>(...........................................)</p>
-            <p>ตำแหน่ง</p>
-        </div>
-        <div class="p-2">
-            <p class="mb-0">.............................................</p>
-            <p>(...........................................)</p>
-            <p>ตำแหน่ง</p>
-        </div>
+    <div class="d-flex justify-content-evenly" id="signcontainer" style="flex-wrap:wrap; padding: 0 50px 0 50px;">
+        @if ($allSigns)
+            @foreach ($allSigns as $sign)
+                <div class="p-2">
+                    <p class="mb-0">.............................................</p>
+                    <p class="mb-0">( {{$sign->signName}} )</p>
+                    <p>{{$sign->signPos}}</p>
+                </div>
+            @endforeach
+        @endif
     </div>
     <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: ระบบสารบัญ <?php echo date('Y-m-d H:i:s') ?></p>
 </div> <!-- end footer -->

@@ -117,9 +117,7 @@ class FormController extends Controller
                         $allSigns[] = $sign;  // Add the current sign array to the collection
                     }
                 };
-                dd($allSigns);
-
-                return view('/forms/'.$formtype, compact( 'book_num','parties', 'location', 'subject', 'party1','class','editorContent'));
+                return view('/forms/'.$formtype, compact('allSigns' ,'book_num','parties', 'location', 'subject', 'party1','class','editorContent'));
                 
                 
             }
@@ -181,7 +179,7 @@ class FormController extends Controller
             // $mou_doc->parties = json_decode($request->input('parties'), true);
             $mou_doc->place = $request->location;
             $mou_doc->detail = $request->editorContent;
-            $mou_doc->sign = '';
+            $mou_doc->sign = $request->allSigns;
             $mou_doc->dpm = (department::find($request->user()->dpm))->prefix;
             $mou_doc->created_date = date('Y-m-d');
             $mou_doc->save();
@@ -330,14 +328,13 @@ class FormController extends Controller
         $class = 1;
         $formtype = $form->type;
         $editorContent = $form->detail;
-
+        $allSigns = json_decode($form->sign);
         $subject = $form->title;
         $party1 = $form->party1;
         $location = $form->place;
         $book_num = $form->book_num;
         $parties = json_decode($form->parties, true);
-        // dd($parties);
-        return view('/forms/export/mouForm', compact( 'dorv' ,'book_num','parties', 'location', 'subject', 'party1','class','editorContent'));
+        return view('/forms/export/mouForm', compact('allSigns' ,'dorv' ,'book_num','parties', 'location', 'subject', 'party1','class','editorContent'));
     }
 
     // Function for edit form
@@ -393,12 +390,25 @@ class FormController extends Controller
             if ($request->input('party3')) {
                 $parties[] = $request->input('party3');
             }
+            $allSigns = [];
+            if ($request->signCount) {
+                for ($i = 1; $i <= $request->signCount; $i++) {
+                    if ($request->input("signname{$i}") && $request->input("signpos{$i}")) {
+                        $sign = [
+                            'signName' => $request->input("signname{$i}"),  // Access input values using input() method
+                            'signPos' => $request->input("signpos{$i}")
+                        ];
+                        $allSigns[] = $sign;
+                    }
+                }
+            };
             if ($form) {
                 $form->title = $request->subject;
                 $form->party1 = $request->party1;
                 $form->parties = $parties;
                 $form->place = $request->location;
                 $form->detail = $request->myInput;
+                $form->sign = json_encode($allSigns);
                 $form->save();
             }
             Alert::toast('Your Form as been Updated!','success');

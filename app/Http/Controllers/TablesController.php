@@ -328,7 +328,7 @@ class TablesController extends Controller
                 $form = gendoc::find($id);
             }
 
-            if ($request->status === 'ยังไม่ได้ตรวจสอบ') {
+            if ($request->status === 'ยังไม่ได้ตรวจสอบ' || $request->status === 'ไม่ผ่านการตรวจสอบ' || $request->status === 'ไม่ผ่านการอนุมัติ') {
                 $app = [
                     'appId' => $request->app,
                     'note' => '-',
