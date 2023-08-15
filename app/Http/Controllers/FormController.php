@@ -83,28 +83,42 @@ class FormController extends Controller
 
             if ($formtype === "projForm") {
                 $book_num = $request->book_num;
+                $proj_subm = $request->proj_subm ?? '       ';
+                $proj_ins = $request->proj_ins ?? '       ';
+                $proj_app = $request->proj_app ?? '       ';
                 $projName = $request->input('projName');
                 $projNo = $request->input('projNo');
-                return view('/forms/'.$formtype, compact( 'book_num','projName','class', 'projNo','editorContent'));
+                return view('/forms/'.$formtype, compact('proj_app','proj_ins','proj_subm' ,'book_num','projName','class', 'projNo','editorContent'));
             }
             elseif ($formtype === "mouForm") {
                 $subject = $request->input('subject');
                 $party1 = $request->input('party1');
                 $location = $request->input('location');
                 $book_num = $request->book_num;
-
                 if ($request->input('party2')) {
                     $parties[] = $request->input('party2');
-                }
+                };
                 if ($request->input('party3')){
                     $parties[] = $request->input('party3');
-                }
+                };
                 if ($request->input('party4')){
                     $parties[] = $request->input('party4');
-                }
+                };
                 if ($request->input('party5')){
                     $parties[] = $request->input('party5');
-                }
+                };
+                $allSigns = [];  // Initialize an array to hold all sign arrays
+                if ($request->signCount) {
+                    for ($i = 1; $i <= $request->signCount; $i++) {
+                        $sign = [
+                            'signName' => $request->input("signname{$i}"),  // Access input values using input() method
+                            'signPos' => $request->input("signpos{$i}")
+                        ];
+                        $allSigns[] = $sign;  // Add the current sign array to the collection
+                    }
+                };
+                dd($allSigns);
+
                 return view('/forms/'.$formtype, compact( 'book_num','parties', 'location', 'subject', 'party1','class','editorContent'));
                 
                 
@@ -129,8 +143,6 @@ class FormController extends Controller
         }
         else{
             $this->store($request);
-            session_destroy();
-            Alert::toast('Your Form as been Saved!','success');
             return redirect('/home');
         }
     }
@@ -139,6 +151,11 @@ class FormController extends Controller
     {
         $formtype = $request->input('formtype');
         if ($formtype === "projForm") {
+            $data = [
+                'proj_subm' => $request->proj_subm ?? '',
+                'proj_ins' => $request->proj_ins ?? '',
+                'proj_app' => $request->proj_app ?? '',
+            ];
             $project_doc = new project_doc;
             $project_doc->book_num = $request->book_num;
             $project_doc->proj_code = $request->projNo;
@@ -146,10 +163,11 @@ class FormController extends Controller
             $project_doc->type = $request->formtype;
             $project_doc->title = $request->projName;
             $project_doc->detail = $request->editorContent;
-            $project_doc->sign = "";
+            $project_doc->sign = json_encode($data);
             $project_doc->dpm = (department::find($request->user()->dpm))->prefix;
             $project_doc->created_date = date('Y-m-d');
             $project_doc->save();
+            Alert::toast('Your Form as been Saved!','success');
             
         }
         elseif ($formtype === "mouForm"){
@@ -159,7 +177,7 @@ class FormController extends Controller
             $mou_doc->type = $request->formtype;
             $mou_doc->title = $request->subject;
             $mou_doc->party1 = $request->party1;
-            $mou_doc->parties = $request->parties;
+            $mou_doc->parties = $request->parties ?? '';
             // $mou_doc->parties = json_decode($request->input('parties'), true);
             $mou_doc->place = $request->location;
             $mou_doc->detail = $request->editorContent;
@@ -167,6 +185,7 @@ class FormController extends Controller
             $mou_doc->dpm = (department::find($request->user()->dpm))->prefix;
             $mou_doc->created_date = date('Y-m-d');
             $mou_doc->save();
+            Alert::toast('Your Form as been Saved!','success');
 
         }
         elseif ($formtype === "annoForm"){
@@ -185,6 +204,7 @@ class FormController extends Controller
             $announce_doc->sign_name = $request->signName;
             $announce_doc->sign_position = $request->signPosition;
             $announce_doc->save();
+            Alert::toast('Your Form as been Saved!','success');
         }   
         else{
             $gendoc = new gendoc;
@@ -199,6 +219,7 @@ class FormController extends Controller
             $gendoc->detail = $request->editorContent;
             $gendoc->dpm = (department::find($request->user()->dpm))->prefix;
             $gendoc->save();
+            Alert::toast('Your Form as been Saved!','success');
         }
     }
 
@@ -259,13 +280,19 @@ class FormController extends Controller
     // Function for download form
     public function downloadFormproj(Request $request,$dorv,$id){
         $form = project_doc::find($id);
+        $data = [
+            'proj_subm' => '',
+            'proj_ins' => '',
+            'proj_app' => '',
+        ];
         $class = 1;
         $formtype = $form->type;
         $book_num = $form->book_num;
         $editorContent = $form->detail;
         $projName = $form->title;
         $projNo = $form->proj_code;
-        return view('/forms/export/projForm', compact( 'dorv' ,'book_num','projName','class', 'projNo','editorContent'));
+        $sign = json_decode($form->sign ?? json_encode($data));
+        return view('/forms/export/projForm', compact('sign' ,'dorv' ,'book_num','projName','class', 'projNo','editorContent'));
     }
 
     // Function for edit form
@@ -381,9 +408,15 @@ class FormController extends Controller
             $form = project_doc::find($request->formid);
             if ($form) {
                 // Row with id found, update data
+                $data = [
+                    'proj_subm' => $request->proj_subm ?? '',
+                    'proj_ins' => $request->proj_ins ?? '',
+                    'proj_app' => $request->proj_app ?? '',
+                ];
                 $form->title = $request->projName;
                 $form->detail = $request->myInput;
                 $form->proj_code = $request->projNo;
+                $form->sign = json_encode($data);
                 $form->save();
             }
             Alert::toast('Your Form as been Updated!','success');

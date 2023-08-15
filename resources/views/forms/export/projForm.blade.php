@@ -109,17 +109,29 @@
                 <div class="p-2 border border-black">
                     <p>ผู้จัดทำ/ผู้เสนอโครงการ</p>
                     <br>
-                    <p>(..................................)</p>
+                    @if ($sign->proj_subm ?? '' === '')
+                        <p>(&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;)</p>
+                    @else
+                        <p>( {{$sign->proj_subm}} )</p>
+                    @endif
                 </div>
                 <div class="p-2 border border-black">
                     <p>ผู้ตรวจสอบโครงการ</p>
                     <br>
-                    <p>(..................................)</p>
+                    @if ($sign->proj_ins ?? '' === '')
+                        <p>(&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;)</p>
+                    @else
+                        <p>( {{$sign->proj_ins}} )</p>
+                    @endif
                 </div>
                 <div class="p-2 border border-black">
                     <p>ผู้อนุมัติโครงการ</p>
                     <br>
-                    <p>(..................................)</p>
+                    @if ($sign->proj_app ?? '' === '')
+                        <p>(&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;)</p>
+                    @else
+                        <p>( {{$sign->proj_app}} )</p>
+                    @endif
                 </div>
             </div>
             <p class="mb-0 mt-1" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: ระบบสารบัญ <?php echo date('Y-m-d H:i:s') ?></p>

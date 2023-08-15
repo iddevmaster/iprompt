@@ -60,17 +60,38 @@
                     <div class="p-2 border border-black">
                         <p>ผู้จัดทำ/ผู้เสนอโครงการ</p>
                         <br>
-                        <p>(..................................)</p>
+                        <p class="no-wrap d-block">(
+                            @if ($class)
+                                {{$proj_subm}}
+                                <input type="hidden" name="proj_subm" value="{{$proj_subm}}">
+                            @else
+                            <input type="text" name="proj_subm">
+                            @endif
+                            )</p>
                     </div>
                     <div class="p-2 border border-black">
                         <p>ผู้ตรวจสอบโครงการ</p>
                         <br>
-                        <p>(..................................)</p>
+                        <p class="no-wrap d-block">(
+                            @if ($class)
+                                {{$proj_ins}}
+                                <input type="hidden" name="proj_ins" value="{{$proj_ins}}">
+                            @else
+                            <input type="text" name="proj_ins">
+                            @endif
+                            )</p>
                     </div>
-                    <div class="p-2 border border-black">
+                    <div class="p-2 border border-black text-center">
                         <p>ผู้อนุมัติโครงการ</p>
                         <br>
-                        <p>(..................................)</p>
+                        <p class="no-wrap d-block">(
+                            @if ($class)
+                                {{$proj_app}}
+                                <input type="hidden" name="proj_app" value="{{$proj_app}}">
+                            @else
+                            <input type="text" name="proj_app">
+                            @endif
+                            )</p>
                     </div>
                 </div>
             </div> <!-- end footer -->

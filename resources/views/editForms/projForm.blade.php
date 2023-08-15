@@ -27,23 +27,27 @@
                     <textarea id="editor" name="myInput" >{{$form->detail}}</textarea>
             </div><!-- end content -->
 
+
+            @php 
+                $sign = json_decode($form->sign);
+            @endphp
             <!-- footer -->
             <div class="footer mt-auto">
                 <div class="d-flex justify-content-evenly">
                     <div class="p-2 border border-black">
                         <p>ผู้จัดทำ/ผู้เสนอโครงการ</p>
                         <br>
-                        <p>(..................................)</p>
+                        <p class="no-wrap">( <input type="text" name="proj_subm" id="" value="{{$sign->proj_subm ?? ''}}"> )</p>
                     </div>
                     <div class="p-2 border border-black">
                         <p>ผู้ตรวจสอบโครงการ</p>
                         <br>
-                        <p>(..................................)</p>
+                        <p class="no-wrap">( <input type="text" name="proj_ins" id="" value="{{$sign->proj_ins ?? ''}}"> )</p>
                     </div>
                     <div class="p-2 border border-black">
                         <p>ผู้อนุมัติโครงการ</p>
                         <br>
-                        <p>(..................................)</p>
+                        <p class="no-wrap">( <input type="text" name="proj_app" id="" value="{{$sign->proj_app ?? ''}}"> )</p>
                     </div>
                 </div>
             </div> <!-- end footer -->
