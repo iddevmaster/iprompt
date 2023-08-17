@@ -99,16 +99,16 @@
                         <!-- Table Header -->
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Book_num</th><?php $regData = \App\CoreFunction\Helper::regData();?>
-                                <th scope="col">Subject</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Source</th>
-                                <th scope="col">Receiver</th>
-                                <th scope="col">Receiver_dpm</th>
-                                <th scope="col">Receive_date</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Book_file</th>
+                            <th scope="col">#</th>
+                                <th scope="col">เลขที่หนังสือ</th><?php $regData = \App\CoreFunction\Helper::regData();?>
+                                <th scope="col">เรื่อง</th>
+                                <th scope="col">ประเภทหนังสือ</th>
+                                <th scope="col">ผู้ส่งหนังสือ</th>
+                                <th scope="col">ผู้รับ</th>
+                                <th scope="col">ฝ่ายผู้รับ</th>
+                                <th scope="col">วันที่รับ</th>
+                                <th scope="col">สถานะ</th>
+                                <th scope="col">หนังสือ</th>
                             </tr>
                         </thead>
         
@@ -165,16 +165,16 @@
                         <!-- Table Header -->
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Book_num</th><?php $regData = \App\CoreFunction\Helper::regData();?>
-                                <th scope="col">Subject</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Source</th>
-                                <th scope="col">Receiver</th>
-                                <th scope="col">Receiver_dpm</th>
-                                <th scope="col">Receive_date</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Book_file</th>
+                            <th scope="col">#</th>
+                                <th scope="col">เลขที่หนังสือ</th><?php $regData = \App\CoreFunction\Helper::regData();?>
+                                <th scope="col">เรื่อง</th>
+                                <th scope="col">ประเภทหนังสือ</th>
+                                <th scope="col">ผู้ส่งหนังสือ</th>
+                                <th scope="col">ผู้รับ</th>
+                                <th scope="col">ฝ่ายผู้รับ</th>
+                                <th scope="col">วันที่รับ</th>
+                                <th scope="col">สถานะ</th>
+                                <th scope="col">หนังสือ</th>
                             </tr>
                         </thead>
         
@@ -231,16 +231,16 @@
                         <!-- Table Header -->
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Book_num</th><?php $regData = \App\CoreFunction\Helper::regData();?>
-                                <th scope="col">Subject</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Source</th>
-                                <th scope="col">Receiver</th>
-                                <th scope="col">Receiver_dpm</th>
-                                <th scope="col">Receive_date</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Book_file</th>
+                            <th scope="col">#</th>
+                                <th scope="col">เลขที่หนังสือ</th><?php $regData = \App\CoreFunction\Helper::regData();?>
+                                <th scope="col">เรื่อง</th>
+                                <th scope="col">ประเภทหนังสือ</th>
+                                <th scope="col">ผู้ส่งหนังสือ</th>
+                                <th scope="col">ผู้รับ</th>
+                                <th scope="col">ฝ่ายผู้รับ</th>
+                                <th scope="col">วันที่รับ</th>
+                                <th scope="col">สถานะ</th>
+                                <th scope="col">หนังสือ</th>
                             </tr>
                         </thead>
         
@@ -297,16 +297,16 @@
                         <!-- Table Header -->
                         <thead class="table-dark">
                             <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Book_num</th><?php $regData = \App\CoreFunction\Helper::regData();?>
-                                <th scope="col">Subject</th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Source</th>
-                                <th scope="col">Receiver</th>
-                                <th scope="col">Receiver_dpm</th>
-                                <th scope="col">Receive_date</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Book_file</th>
+                            <th scope="col">#</th>
+                                <th scope="col">เลขที่หนังสือ</th><?php $regData = \App\CoreFunction\Helper::regData();?>
+                                <th scope="col">เรื่อง</th>
+                                <th scope="col">ประเภทหนังสือ</th>
+                                <th scope="col">ผู้ส่งหนังสือ</th>
+                                <th scope="col">ผู้รับ</th>
+                                <th scope="col">ฝ่ายผู้รับ</th>
+                                <th scope="col">วันที่รับ</th>
+                                <th scope="col">สถานะ</th>
+                                <th scope="col">หนังสือ</th>
                             </tr>
                         </thead>
         
