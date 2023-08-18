@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 Use Alert;
 use App\Models\imported;
+use App\Models\impdType;
 use App\Models\User;
 use App\Models\agencie;
 use App\Models\branche;
@@ -32,7 +33,22 @@ class ImportController extends Controller
      */
     public function index()
     {
-        return view('forms/imported');
+        $impd = impdType::all();
+        return view('forms/imported', compact('impd'));
+    }
+
+    public function addType(Request $request)
+    {
+        try {
+            $addType = impdType::create([
+                'name' => $request->doct,
+                'val' => $request->doct,
+            ]);
+            Alert::toast('บันทึกข้อมูลสำเร็จ','success');
+            return response()->json(['message' => 'success']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e]);
+        }
     }
 
     public function storeImported (Request $request) {
@@ -54,7 +70,7 @@ class ImportController extends Controller
         $imported->from = $request->source;
         $imported->book_subj = $request->book_subj;
         $imported->status = '1';
-        $imported->file = $originalFilename;
+        $imported->file = $originalFilename ?? '';
         $imported->receiver_agn = $request->recive_agn;
         $imported->receiver_brn = $request->recive_brn;
         $imported->save();

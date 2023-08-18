@@ -9,7 +9,7 @@
         <div class="text-center mb-4"><h2>ทะเบียนโครงการ</h2></div>
         <div class="d-flex">
             <div class="flex-grow-1"><input type="text" id="searchInput" class="form-control mb-2" placeholder="Search..."></div>
-            <div class="p-1 ms-2 export"><a class="a-tag" href=""><i class="bi bi-file-earmark-arrow-down"></i></a></div>
+            <div class="p-1 ms-2 export"><a class="a-tag" href="/export/table/projTable"><i class="bi bi-file-earmark-arrow-down"></i></a></div>
         </div>
         <!-- Table -->
         <div class="table-responsive">
@@ -51,19 +51,28 @@
                             </td>
 
                             <td>
+                                @php
+                                    $app = json_decode($row->app);
+                                    $ins = json_decode($row->ins);
+                                    $appName = $user->firstWhere('id', $app->appId ?? '') ?? '-';
+                                    $insName = $user->firstWhere('id', $ins->appId ?? '') ?? '-';
+                                    $note = $app->note ?? '-';
+                                    $insnote = $ins->note ?? '-';
+                                @endphp
                                 @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
                                     <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}">{{$row->stat}}</button>
                                 @elseif ($row->stat === 'ผ่านการอนุมัติ')
-                                    <button class="btn btn-success" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button>
+                                    <button class="btn btn-success"
+                                            name="{{$row->stat}}" 
+                                            docType="{{$row->type}}" 
+                                            id="passbtn"
+                                            note="{{$note}}"
+                                            insnote="{{$insnote}}"
+                                            appName="{{$appName->name}}" 
+                                            insName="{{$insName->name}}" 
+                                            value="{{$row->id}}">{{$row->stat}}</button>
                                 @elseif ($row->stat === 'ไม่ผ่านการตรวจสอบ' || $row->stat === 'ไม่ผ่านการอนุมัติ')
-                                    @php
-                                        $app = json_decode($row->app);
-                                        $ins = json_decode($row->ins);
-                                        $appName = $user->firstWhere('id', $app->appId) ?? '-';
-                                        $insName = $user->firstWhere('id', $ins->appId) ?? '-';
-                                        $note = $app->note ?? '-';
-                                        $insnote = $ins->note ?? '-';
-                                    @endphp
+                                    
                                     <button class="btn btn-danger" 
                                             name="{{$row->stat}}" 
                                             id="notpass" 
@@ -256,6 +265,28 @@
                         });
                     }
                 })
+            });
+        });
+
+        const pbtns = document.querySelectorAll('#passbtn');
+        pbtns.forEach((ckbtn) => {
+            let status = ckbtn.getAttribute('name');
+            let docid = ckbtn.value;
+            let type = ckbtn.getAttribute('docType');
+            let appName = ckbtn.getAttribute('appName');
+            let appnote = ckbtn.getAttribute('note');
+            let insName = ckbtn.getAttribute('insName');
+            let insnote = ckbtn.getAttribute('insnote');
+            ckbtn.addEventListener('click', function () {
+                Swal.fire({
+                    title: status,
+                    html: `ผู้ตรวจสอบ: ${insName}<br>Note: ${insnote}<br>
+                            ผู้อนุมัติ: ${appName}<br>Note: ${appnote}
+                            `,
+                    showCancelButton: false,
+                    confirmButtonText: 'OK',
+                    showConfirmButton: true,
+                    });
             });
         });
     </script>

@@ -22,14 +22,14 @@
                         <div class="col-auto">
                             <label for="docType" class="col-form-label">ประเภทหนังสือ</label>
                         </div>
-                        <div class="col-8">
+                        <div class="col-8 d-flex">
                             <select class="form-select" aria-label="Default select example" name="doctype" required>
                                 <option selected disabled>เลือกประเภทหนังสือรับเข้า</option>
-                                <option value="proj">โครงการ</option>
-                                <option value="cont">สัญญา</option>
-                                <option value="mou">MoU</option>
-                                <option value="anno">ประกาศ</option>
+                                @foreach ($impd as $imp)
+                                    <option value="{{$imp->val}}">{{$imp->name}}</option>
+                                @endforeach
                             </select>
+                            <button type="button" class="btn btn-success ms-2" style="width:40px;height:35px" id="addTypebtn"><i class="bi bi-plus-square"></i></button>
                         </div>
                     </div>
 
@@ -148,8 +148,6 @@
             </div>
         </div>
     </div>
-</body>
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.getElementById('cancel').addEventListener('click', function () {
@@ -167,6 +165,45 @@
             }
         })
     });
+
+    document.getElementById('addTypebtn').addEventListener('click', () => {
+        Swal.fire({
+            title: 'เพิ่มประเภทหนังสือรับเข้า',
+            input: 'text',
+            inputLabel: 'ประเภทหนังสือรับเข้า',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                return 'กรุณากรอกประเภทหนังสือ!'
+                }
+            }
+        }).then( async (result) => {
+            if (result.isConfirmed) {
+                await saveData(result.value);
+            }
+        })
+    })
+
+    function saveData (docType) {
+        console.log(docType);
+        fetch('/imported/addtype', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+            },
+            body: JSON.stringify({
+                doct: docType,
+            }),
+        }).then((response) => response.json())
+        .then((data) => {
+            window.location.reload();
+        })
+        .catch((error) => {
+            console.log('error: ' + error);
+        });
+    }
 </script>
+</body>
 
 @endsection

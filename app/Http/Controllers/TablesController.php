@@ -373,4 +373,37 @@ class TablesController extends Controller
         }
         
     }
+
+    public function exTable (Request $request, $type) {
+        if ($type === 'wiTable') {
+            $gendoc = gendoc::where('type', 'wiForm')->orderBy('id', 'desc')->get();
+            $user = User::all();
+            return view('/forms/export/'.$type, compact('gendoc', 'user'));
+        } 
+        elseif ($type === 'sopTable') {
+            $gendoc = gendoc::where('type', 'sopForm')->orderBy('id', 'desc')->get();
+            $user = User::all();
+            return view('/forms/export/'.$type, compact('gendoc', 'user'));
+        } 
+        elseif ($type === 'policyTable') {
+            $gendoc = gendoc::where('type', 'policyForm')->orderBy('id', 'desc')->get();
+            $user = User::all();
+            return view('/forms/export/'.$type, compact('gendoc', 'user'));
+        } 
+        elseif ($type === 'projTable') {
+            $gendoc = project_doc::orderBy('id', 'desc')->get();
+            $user = User::all();
+            return view('/forms/export/'.$type, compact('gendoc', 'user'));
+        } 
+        elseif ($type === 'mouTable') {
+            $gendoc = mou_doc::orderBy('id', 'desc')->get();
+            $user = User::all();
+            return view('/forms/export/'.$type, compact('gendoc', 'user'));
+        } 
+        elseif ($type === 'annoTable') {
+            $gendoc = announce_doc::orderBy('id', 'desc')->get();
+            $user = User::all();
+            return view('/forms/export/'.$type, compact('gendoc', 'user'));
+        };
+    }
 }

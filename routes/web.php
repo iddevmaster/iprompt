@@ -22,6 +22,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/alluser', [App\Http\Controllers\HomeController::class, 'alluser'])->name('alluser');
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 Route::get('/imported', [App\Http\Controllers\ImportController::class, 'index'])->name('imported');
+Route::post('/imported/addtype', [App\Http\Controllers\ImportController::class, 'addType']);
 Route::get('/userProfile/{id}',[App\Http\Controllers\HomeController::class,'userProfile']);
 
 // manage User
@@ -61,7 +62,7 @@ Route::get('/tables/verify', [App\Http\Controllers\TablesController::class, 'ver
 Route::post('/table/form/verify', [App\Http\Controllers\TablesController::class, 'setVerify']);
 
 
-// Edit form
+// Edit & export form
 Route::get('/form/editwi/{id}',[App\Http\Controllers\FormController::class,'editFormwi']);
 Route::get('/form/downloadwi/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormwi']);
 
@@ -79,6 +80,8 @@ Route::get('/form/downloadmou/{dorv}/{id}',[App\Http\Controllers\FormController:
 
 Route::get('/form/editanno/{id}',[App\Http\Controllers\FormController::class,'editFormanno']);
 Route::get('/form/downloadanno/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormanno']);
+
+Route::get('/export/table/{type}',[App\Http\Controllers\TablesController::class,'exTable']);
 
 
 // Update form
