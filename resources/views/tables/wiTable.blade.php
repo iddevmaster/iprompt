@@ -53,8 +53,8 @@
                                 @php
                                     $app = json_decode($row->app);
                                     $ins = json_decode($row->ins);
-                                    $appName = $user->firstWhere('id', $app->appId) ?? '-';
-                                    $insName = $user->firstWhere('id', $ins->appId) ?? '-';
+                                    $appName = $user->firstWhere('id', $app->appId ?? '') ?? '-';
+                                    $insName = $user->firstWhere('id', $ins->appId ?? '') ?? '-';
                                     $note = $app->note ?? '-';
                                     $insnote = $ins->note ?? '-';
                                 @endphp
