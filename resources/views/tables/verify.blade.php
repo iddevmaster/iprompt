@@ -11,7 +11,6 @@
         <div class="text-center mb-4"><h2>ตรวจสอบ / อนุมัติ หนังสือ</h2></div>
         <div class="d-flex">
             <div class="flex-grow-1"><input type="text" id="searchInput" class="form-control mb-2" placeholder="Search..."></div>
-            <div class="p-1 ms-2 export"><a class="a-tag" href="#"><i class="bi bi-file-earmark-arrow-down"></i></a></div>
         </div>
         <!-- Table -->
         <div class="table-responsive">

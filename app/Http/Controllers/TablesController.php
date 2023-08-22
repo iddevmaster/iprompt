@@ -404,6 +404,12 @@ class TablesController extends Controller
             $gendoc = announce_doc::orderBy('id', 'desc')->get();
             $user = User::all();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
+        } 
+        elseif ($type === 'imported') {
+            $gendoc = imported::orderBy('id', 'desc')->get();
+            $user = User::all();
+            $dpm = department::all();
+            return view('/forms/export/'.$type, compact('gendoc', 'user', 'dpm'));
         };
     }
 }
