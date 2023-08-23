@@ -22,8 +22,8 @@
                         <th scope="col">เลขที่หนังสือ</th>
                         <th scope="col">Project_code</th>
                         <th scope="col">เรื่อง</th>
-                        <th scope="col">วันที่สร้าง</th>
-                        <th scope="col">ผู้บันทึก</th>
+                        <th scope="col">อัพเดทล่าสุด / วันที่สร้าง</th>
+                        <th scope="col">คณะผู้จัดทำ</th>
                         <th scope="col">สถานะ</th>
                         <th scope="col">แก้ไข</th>
                         <th scope="col">Download</th>
@@ -40,14 +40,24 @@
                             <td>{{ $row->book_num}}</td>
                             <td>{{ $row->proj_code}}</td>
                             <td class="truncate">{{ $row->title}}</td>
-                            <td>{{ $row->created_date}}</td>
-                            <td>
+                            <td>{{ $row->created_date}} / {{ $row->created_at->toDateString() }}</td>
+                            <td><button class="btn btn-success" id="projtBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}">
                                 @php
-                                    $submitUser = $user->firstWhere('id', $row->submit_by);
-                                    echo $submitUser ? $submitUser->name : 'Unknown';
+                                    $team = $row->submit_by;
+                                    $teamArr = json_decode($team);
+                                    if (is_array($teamArr)) {
+                                        foreach ($teamArr as $memb) {
+                                            $submitUser = $user->firstWhere('id', $memb);
+                                            echo ($submitUser ? $submitUser->name : 'Unknow') . " / ";
+                                        }
+                                    } else {
+                                        $submitUser = $user->firstWhere('id', $row->submit_by);
+                                        echo $submitUser ? $submitUser->name : 'Unknow';
+                                    }
                                     $permis = Auth::user()->role ;
                                     $dpm = Auth::user()->dpm;
                                 @endphp
+                                </button>
                             </td>
 
                             <td>
@@ -287,6 +297,65 @@
                     confirmButtonText: 'OK',
                     showConfirmButton: true,
                     });
+            });
+        });
+
+        const ptbtns = document.querySelectorAll('#projtBtn');
+        ptbtns.forEach((ckbtn) => {
+            const bookid = ckbtn.getAttribute('bookid');
+            const team = ckbtn.value;
+            ckbtn.addEventListener('click', function () {
+                Swal.fire({
+                    title: 'เพิ่มผู้ร่วมโครงการ',
+                    html: `
+                        <select class="form-select mb-2" id="usrt" >
+                            <option value="" selected disabled>กรุณาเลือกผู้ร่วมโครงการ</option>
+                            @foreach ($user as $usr)
+                                <option value="{{$usr->id}}">{{$usr->name}}</option>
+                            @endforeach
+                        </select>
+                        `,
+                    showCancelButton: true,
+                    confirmButtonText: 'บันทึก',
+                    cancelButtonText: 'ยกเลิก',
+                    preConfirm: () => {
+                        const usrtValue = document.getElementById('usrt').value;
+                        if (!usrtValue) {
+                            return Promise.reject('โปรดเลือกผู้ตรวจสอบ');
+                        }
+                        
+                        return [usrtValue];
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log(result);
+                        fetch('/table/form/addTeam', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                            },
+                            body: JSON.stringify({
+                                memb: result.value[0],
+                                bid: bookid,
+                                oldT: team,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Handle the response if needed
+                            console.log(data);
+                            // You can also reload the page to see the changes,
+                            // window.location.reload();
+                        })
+                        .catch((error) => {
+                            // Handle errors if any
+                            Swal.fire('Error!', error.message, 'error');
+                        });
+                    }
+                }).catch((error) => {
+                    Swal.fire('Error!', error, 'error'); // Display error to user
+                });
             });
         });
     </script>

@@ -60,6 +60,7 @@ Route::get('/tables/imported', [App\Http\Controllers\ImportController::class, 'i
 Route::get('/tables/verify', [App\Http\Controllers\TablesController::class, 'verifyDoc'])->name('verifyDoc');
 
 Route::post('/table/form/verify', [App\Http\Controllers\TablesController::class, 'setVerify']);
+Route::post('/table/form/addTeam', [App\Http\Controllers\TablesController::class, 'addTeam']);
 
 
 // Edit & export form

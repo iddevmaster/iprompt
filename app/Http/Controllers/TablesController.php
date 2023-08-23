@@ -412,4 +412,18 @@ class TablesController extends Controller
             return view('/forms/export/'.$type, compact('gendoc', 'user', 'dpm'));
         };
     }
+
+    public function addTeam(Request $request) {
+        try {
+            $data = [];
+            $oldt = json_decode($request->oldT);
+            $data[] = $request->memb;
+            $gendoc = project_doc::find($request->bid);
+            $gendoc->submit_by = $data;
+            $gendoc->save();
+            return response()->json(['success' => $oldt[0]]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e]);
+        }
+    }
 }
