@@ -103,7 +103,7 @@
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
                                     @php
-                                        $userDpm = (App\Models\department::find((Auth::user())->dpm))->prefix ?? '-';
+                                        $userDpm = (App\Models\department::find((Auth::user())->dpm ?? ''))->prefix ?? '-';
                                     @endphp
                                     @if ($userDpm === 'AD' || Auth::user()->role === 'admin')
                                         <li><a class="dropdown-item" href="{{ route('imported') }}">รับเข้าหนังสือ</a></li>

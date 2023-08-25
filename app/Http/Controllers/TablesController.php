@@ -132,14 +132,15 @@ class TablesController extends Controller
     // query all project form from database to project table page
     public function projTable() {
         if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
-            $gendoc = project_doc::where('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->paginate(10);
+            $gendoc = project_doc::where('dpm', (department::find((Auth::user())->dpm))->prefix)->orWhere('submit_by', 'LIKE', '%' . Auth::user()->id . '%')
+                ->orderBy('id', 'desc')->paginate(10);
         } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
             $gendoc = project_doc::whereIn('dpm', json_decode((department::find((Auth::user())->dpm))->prefix))->orderBy('id', 'desc')->paginate(10);
         }
         else {
             $gendoc = project_doc::orderBy('id', 'desc')->paginate(10);
         };
-
+        
         foreach($gendoc as $doc) {
             if ($doc->dpm === '-'){
                 $doc->dpm = (department::find((User::find($doc->submit_by))->dpm))->prefix;
@@ -417,11 +418,36 @@ class TablesController extends Controller
         try {
             $data = [];
             $oldt = json_decode($request->oldT);
+            if (is_array($oldt)) {
+                $data = $oldt;
+            } else {
+                $data[] = $oldt;
+            }
+            
             $data[] = $request->memb;
             $gendoc = project_doc::find($request->bid);
             $gendoc->submit_by = $data;
             $gendoc->save();
-            return response()->json(['success' => $oldt[0]]);
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e]);
+        }
+    }
+    
+
+    public function clearTeam (Request $request) {
+        try {
+            $data = [];
+            $oldt = json_decode($request->oldT);
+            if (is_array($oldt)) {
+                $data[] = $oldt[0];
+            } else {
+                $data[] = $oldt;
+            }
+            $gendoc = project_doc::find($request->bid);
+            $gendoc->submit_by = $data;
+            $gendoc->save();
+            return response()->json($data);
         } catch (\Exception $e) {
             return response()->json(['error' => $e]);
         }

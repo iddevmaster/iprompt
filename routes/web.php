@@ -61,6 +61,7 @@ Route::get('/tables/verify', [App\Http\Controllers\TablesController::class, 'ver
 
 Route::post('/table/form/verify', [App\Http\Controllers\TablesController::class, 'setVerify']);
 Route::post('/table/form/addTeam', [App\Http\Controllers\TablesController::class, 'addTeam']);
+Route::post('/table/form/clearTeam', [App\Http\Controllers\TablesController::class, 'clearTeam']);
 
 
 // Edit & export form

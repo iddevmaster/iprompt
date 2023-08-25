@@ -2,7 +2,6 @@
 
 <!-- Scripts -->
 @vite(['resources/css/table.css' , 'resources/js/table.js'])
-
 @section('content')
 <body>
     <div class="container">
@@ -316,12 +315,14 @@
                         </select>
                         `,
                     showCancelButton: true,
+                    showDenyButton: true,
+                    denyButtonText: 'ล้างรายชื่อทั้งหมด',
                     confirmButtonText: 'บันทึก',
                     cancelButtonText: 'ยกเลิก',
                     preConfirm: () => {
                         const usrtValue = document.getElementById('usrt').value;
                         if (!usrtValue) {
-                            return Promise.reject('โปรดเลือกผู้ตรวจสอบ');
+                            return Promise.reject('โปรดเลือกรายชื่อ');
                         }
                         
                         return [usrtValue];
@@ -344,9 +345,33 @@
                         .then((response) => response.json())
                         .then((data) => {
                             // Handle the response if needed
-                            console.log(data);
+                            console.log("res= " + data);
                             // You can also reload the page to see the changes,
-                            // window.location.reload();
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            // Handle errors if any
+                            Swal.fire('Error!', error.message, 'error');
+                        });
+                    } else if (result.isDenied) {
+                        console.log(result);
+                        fetch('/table/form/clearTeam', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                            },
+                            body: JSON.stringify({
+                                bid: bookid,
+                                oldT: team,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Handle the response if needed
+                            console.log("res= " + data);
+                            // You can also reload the page to see the changes,
+                            window.location.reload();
                         })
                         .catch((error) => {
                             // Handle errors if any
