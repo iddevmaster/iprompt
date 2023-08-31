@@ -25,7 +25,7 @@
         :root{
     --bs-dark: rgb(242, 255, 255);
   }
-  
+
   .theme-container {
     width: 70px;
     height: 70px;
@@ -38,21 +38,21 @@
     align-items: center;
     transition: 0.5s;
   }
-  
+
   .theme-container:hover {
     opacity: 0.8;
   }
-  
+
   @keyframes change {
     0% {
       transform: scale(1);
     }
-  
+
     100% {
       transform: scale(1.4);
     }
   }
-  
+
   .change {
     animation-name: change;
     animation-duration: 1s;
@@ -99,7 +99,7 @@
                         <li class="nav-item dropdown ">
                             <a id="navbarDropdown" href="" class="nav-link dropdown-toggle navbarMenu" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 หนังสือรับเข้า</a>
-                            
+
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
                                     @php
@@ -119,56 +119,56 @@
                             <a id="navbarDropdown" class="nav-link dropdown-toggle navbarMenu" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 สร้างหนังสือ
                             </a>
-                        
+
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
                                     @can('MOU')
                                         <li><a class="dropdown-item" href="{{ route('mouForm') }}">MOU</a></li>
                                     @endcan
                                     @can('PRO')
-                                        <li><a class="dropdown-item" href="{{ route('projForm') }}">โครงการ</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('projForm') }}">Project</a></li>
                                     @endcan
                                     @can('POL')
                                         <li><a class="dropdown-item" href="{{ route('policyForm') }}">Policy</a></li>
                                     @endcan
                                     @can('SOP')
-                                        <li><a class="dropdown-item" href="{{ route('sopForm') }}">SOP</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('sopForm') }}">WF</a></li>
                                     @endcan
                                     @can('WI')
                                         <li><a class="dropdown-item" href="{{ route('wiForm') }}">WI</a></li>
                                     @endcan
                                     @can('ANNO')
-                                        <li><a class="dropdown-item" href="{{ route('annoForm') }}">ประกาศ</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('annoForm') }}">Announce</a></li>
                                     @endcan
                                 </div>
                             </ul>
                         </li>
                         @endcan
-                        
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle navbarMenu" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 ทะเบียนหนังสือ
                             </a>
-                        
+
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
                                     @can('MOU')
                                         <li><a class="dropdown-item" href="{{ route('mouTable') }}">MOU</a></li>
                                     @endcan
                                     @can('PRO')
-                                        <li><a class="dropdown-item" href="{{ route('projTable') }}">โครงการ</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('projTable') }}">Project</a></li>
                                     @endcan
                                     @can('POL')
                                         <li><a class="dropdown-item" href="{{ route('policyTable') }}">Policy</a></li>
                                     @endcan
                                     @can('SOP')
-                                        <li><a class="dropdown-item" href="{{ route('sopTable') }}">SOP</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('sopTable') }}">WF</a></li>
                                     @endcan
                                     @can('WI')
                                         <li><a class="dropdown-item" href="{{ route('wiTable') }}">WI</a></li>
                                     @endcan
                                     @can('ANNO')
-                                        <li><a class="dropdown-item" href="{{ route('annoTable') }}">ประกาศ</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('annoTable') }}">Announce</a></li>
                                     @endcan
                                 </div>
                             </ul>
@@ -201,7 +201,7 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle navbarMenu" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
-                            
+
                                 <ul class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdown">
                                     <div class="d-flex flex-column justify-content-center">
                                         <li class="text-center"><a class="dropdown-item" href="{{ route('profile') }}">ตั้งค่าบัญชี</a></li>
@@ -211,16 +211,16 @@
                                                             document.getElementById('logout-form').submit();">
                                                 {{ __('ออกจากระบบ') }}
                                             </a>
-                                    
+
                                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                                 @csrf
                                             </form>
                                         </li>
-                                        
+
                                     </div>
                                 </ul>
 
-                                
+
 
                             </li>
 

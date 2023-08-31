@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +18,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/alluser', [App\Http\Controllers\HomeController::class, 'alluser'])->name('alluser');
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
@@ -40,6 +41,7 @@ Route::post('/change-password/update/{id}', [App\Http\Controllers\ChangePassword
 
 // Form
 Route::get('/form/wiForm', [App\Http\Controllers\FormController::class, 'wiForm'])->name('wiForm');
+Route::get('/form/jdForm', [App\Http\Controllers\FormController::class, 'jdForm'])->name('jdForm');
 Route::get('/form/sopForm', [App\Http\Controllers\FormController::class, 'sopForm'])->name('sopForm');
 Route::get('/form/policyForm', [App\Http\Controllers\FormController::class, 'policyForm'])->name('policyForm');
 Route::get('/form/annoForm', [App\Http\Controllers\FormController::class, 'annoForm'])->name('annoForm');

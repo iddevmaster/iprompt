@@ -31,47 +31,60 @@ class FormController extends Controller
      */
     public function index(Request $request)
     {
-        
+
     }
     public function wiForm()
     {
+        // หน้า wi form
         $len = gendoc::where('type', 'wiForm')->count()+1;
         $class = 0;
         return view('/forms/wiForm', compact('class','len'));
     }
+
+    public function jdForm()
+    {
+        // หน้า jd form
+        $class = 0;
+        return view('/forms/jdForm', compact('class'));
+    }
     public function sopForm()
     {
+        // หน้า sop form
         $len = gendoc::where('type', 'sopForm')->count()+1;
         $class = 0;
         return view('/forms/sopForm', compact('class', 'len'));
     }
     public function policyForm()
     {
+        // หน้า policy form
         $len = gendoc::where('type', 'policyForm')->count()+1;
         $class = 0;
         return view('/forms/policyForm', compact('class', 'len'));
     }
     public function annoForm()
     {
+        // หน้า ประกาศ form
         $len = announce_doc::all()->count()+1;
         $class = 0;
         return view('/forms/annoForm', compact('class', 'len'));
     }
     public function projForm()
     {
+        // หน้า โครงการ form
         $len = project_doc::all()->count()+1;
         $class = 0;
         return view('/forms/projForm', compact('class', 'len'));
     }
     public function mouForm()
     {
+        // หน้า mou form
         $len = mou_doc::all()->count()+1;
         $class = 0;
         return view('/forms/mouForm', compact('class', 'len'));
     }
     public function preview(Request $request)
     {
-        // dd($request);
+        // preview เอกสารแต่ละประเภท
         if ($request->input('submit') === "preview") {
             $request->validate([
                 'myInput'=>'required'
@@ -118,8 +131,8 @@ class FormController extends Controller
                     }
                 };
                 return view('/forms/'.$formtype, compact('allSigns' ,'book_num','parties', 'location', 'subject', 'party1','class','editorContent'));
-                
-                
+
+
             }
             elseif ($formtype === "annoForm") {
                 $annNo = $request->input('annNo');
@@ -147,6 +160,7 @@ class FormController extends Controller
 
     public function store(Request $request)
     {
+        // บันทึกเอกสารแต่ละประเภทไปยัง Database
         $formtype = $request->input('formtype');
         if ($formtype === "projForm") {
             $data = [
@@ -166,7 +180,7 @@ class FormController extends Controller
             $project_doc->created_date = date('Y-m-d');
             $project_doc->save();
             Alert::toast('Your Form as been Saved!','success');
-            
+
         }
         elseif ($formtype === "mouForm"){
             $mou_doc = new mou_doc;
@@ -203,7 +217,7 @@ class FormController extends Controller
             $announce_doc->sign_position = $request->signPosition;
             $announce_doc->save();
             Alert::toast('Your Form as been Saved!','success');
-        }   
+        }
         else{
             $gendoc = new gendoc;
             $gendoc->book_num = $request->bookNo;
@@ -223,7 +237,7 @@ class FormController extends Controller
 
     // Function for edit form
     public function editFormwi(Request $request,$id){
-        
+        // แก้ไข wi form
         $form = gendoc::find($id);
         // dd($form->title);
         return view('/editForms/wiForm', compact('form'));
@@ -244,7 +258,7 @@ class FormController extends Controller
             $approver = $form->bapprover;
         }
         return view('/forms/export/wiForm', compact('form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
-        
+
     }
 
     // Function for edit form
@@ -324,7 +338,7 @@ class FormController extends Controller
     // Function for download form
     public function downloadFormmou(Request $request,$dorv,$id){
         $form = mou_doc::find($id);
-        
+
         $class = 1;
         $formtype = $form->type;
         $editorContent = $form->detail;
@@ -345,7 +359,7 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormanno(Request $request,$dorv,$id){
-        
+
         $form = announce_doc::find($id);
         $class = 1;
         $formtype = $form->type;
@@ -426,6 +440,7 @@ class FormController extends Controller
                 $form->title = $request->projName;
                 $form->detail = $request->myInput;
                 $form->proj_code = $request->projNo;
+                $form->created_date = date('Y-m-d');
                 $form->sign = json_encode($data);
                 $form->save();
             }
@@ -451,10 +466,10 @@ class FormController extends Controller
             } else {
                 return redirect('/tables/policyTable');
             }
-            
+
         }
-        
-        
+
+
     }
-    
+
 }

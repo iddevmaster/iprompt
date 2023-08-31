@@ -31,10 +31,10 @@
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('mouForm') }}">
                                         <div class="w-100 h-100">
-                                            <i class="bi bi-pen"></i>
+                                            <img src="{{ asset('dist/logo/MOU.png') }}" alt="" height="50px">
                                             <p class="icon-title">MOU</p>
                                         </div>
-                                    </a>  
+                                    </a>
                                 </div>
                                 @endcan
 
@@ -42,7 +42,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('policyForm') }}">
                                         <div class="w-100 h-100">
-                                            <i class="bi bi-building-check"></i>
+                                            <img src="{{ asset('dist/logo/Policy.png') }}" alt="" height="50px">
                                             <p class="icon-title">Policy</p>
                                         </div>
                                     </a>
@@ -53,7 +53,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('annoForm') }}">
                                         <div class="w-100 h-100">
-                                            <i class="bi bi-megaphone"></i>
+                                            <img src="{{ asset('dist/logo/Announce.png') }}" alt="" height="50px">
                                             <p class="icon-title">ประกาศ</p>
                                         </div>
                                     </a>
@@ -68,7 +68,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('projForm') }}">
                                         <div class="w-100 h-100">
-                                            <i class="bi bi-archive"></i>
+                                            <img src="{{ asset('dist/logo/Project.png') }}" alt="" height="50px">
                                             <p class="icon-title">โครงการ</p>
                                         </div>
                                     </a>
@@ -79,7 +79,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('sopForm') }}">
                                         <div class="w-100 h-100">
-                                            <i class="bi bi-briefcase"></i>
+                                            <i class="bi bi-file-earmark"></i>
                                             <p class="icon-title">SOP</p>
                                         </div>
                                     </a>
@@ -90,7 +90,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('wiForm') }}">
                                         <div class="w-100 h-100">
-                                            <i class="bi bi-clipboard-check"></i>
+                                            <img src="{{ asset('dist/logo/WI.png') }}" alt="" height="50px">
                                             <p class="icon-title">WI</p>
                                         </div>
                                     </a>
@@ -100,13 +100,14 @@
 
                             <div class="row ">
                                 <div class="col">
-                                    <a class="a-tag" href="">
+                                    <a class="a-tag" href="{{ route('jdForm') }}">
                                         <div class="w-100 h-100">
-                                        <i class="bi bi-file-earmark"></i>
-                                            <p class="icon-title">กฏบัตร</p>
+                                            <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
+                                            <p class="icon-title">JD</p>
                                         </div>
                                     </a>
                                 </div>
+
 
                                 <div class="col">
                                     <a class="a-tag" href="">
@@ -132,7 +133,7 @@
                                     <a class="a-tag" href="">
                                         <div class="w-100 h-100">
                                         <i class="bi bi-file-earmark"></i>
-                                            <p class="icon-title">JD</p>
+                                            <p class="icon-title">กฏบัตร</p>
                                         </div>
                                     </a>
                                 </div>
@@ -184,16 +185,16 @@
                             </div>
                         @endif
 
-                        
+
                         <div class="row mb-2 justify-content-around border-bottom">
                             @can('MOU')
                             <div class="col">
                                 <a class="a-tag" href="{{ route('mouTable') }}">
                                     <div class="w-100 h-100">
-                                        <i class="bi bi-pen"></i>
-                                        <p class="icon-title">MOU</p> 
+                                        <img src="{{ asset('dist/logo/MOU.png') }}" alt="" height="50px">
+                                        <p class="icon-title">MOU</p>
                                     </div>
-                                </a> 
+                                </a>
                             </div>
                             @endcan
 
@@ -201,7 +202,7 @@
                             <div class="col">
                                 <a class="a-tag" href="/tables/policyTable">
                                     <div class="w-100 h-100">
-                                        <i class="bi bi-building-check"></i>
+                                        <img src="{{ asset('dist/logo/Policy.png') }}" alt="" height="50px">
                                         <p class="icon-title">Policy</p>
                                     </div>
                                 </a>
@@ -212,7 +213,7 @@
                             <div class="col">
                                 <a class="a-tag" href="{{ route('annoTable') }}">
                                     <div class="w-100 h-100">
-                                        <i class="bi bi-megaphone"></i>
+                                        <img src="{{ asset('dist/logo/Announce.png') }}" alt="" height="50px">
                                         <p class="icon-title">ประกาศ</p>
                                     </div>
                                 </a>
@@ -226,7 +227,7 @@
                             <div class="col">
                                 <a class="a-tag" href="{{ route('projTable') }}">
                                     <div class="w-100 h-100">
-                                        <i class="bi bi-archive"></i>
+                                        <img src="{{ asset('dist/logo/Project.png') }}" alt="" height="50px">
                                         <p class="icon-title">โครงการ</p>
                                     </div>
                                 </a>
@@ -237,7 +238,7 @@
                             <div class="col">
                                 <a class="a-tag" href="/tables/sopTable">
                                     <div class="w-100 h-100">
-                                        <i class="bi bi-briefcase"></i>
+                                        <i class="bi bi-file-earmark"></i>
                                         <p class="icon-title">SOP</p>
                                     </div>
                                 </a>
@@ -248,7 +249,7 @@
                             <div class="col">
                                 <a class="a-tag" href="/tables/wiTable">
                                     <div class="w-100 h-100">
-                                        <i class="bi bi-clipboard-check"></i>
+                                        <img src="{{ asset('dist/logo/WI.png') }}" alt="" height="50px">
                                         <p class="icon-title">WI</p>
                                     </div>
                                 </a>

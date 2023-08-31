@@ -56,7 +56,7 @@ const editor = CKEDITOR.ClassicEditor.create(editorElement, {
         options: [ 10, 12, 14, 16, 18, 20, 22 ],
         supportAllValues: true
     },
-    
+
     // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
     link: {
         decorators: {

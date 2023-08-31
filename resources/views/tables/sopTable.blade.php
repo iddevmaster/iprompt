@@ -6,7 +6,7 @@
 @section('content')
 <body>
     <div class="container">
-        <div class="text-center mb-4"><h2>ทะเบียน SOP</h2></div>
+        <div class="text-center mb-4"><h2>ทะเบียน WF</h2></div>
         <div class="d-flex">
             <div class="flex-grow-1"><input type="text" id="searchInput" class="form-control mb-2" placeholder="Search..."></div>
             <div class="p-1 ms-2 export"><a class="a-tag" href="/export/table/sopTable"><i class="bi bi-file-earmark-arrow-down"></i></a></div>
@@ -61,30 +61,30 @@
                                     <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}">{{$row->stat}}</button>
                                 @elseif ($row->stat === 'ผ่านการอนุมัติ')
                                     <button class="btn btn-success"
-                                                name="{{$row->stat}}" 
-                                                docType="{{$row->type}}" 
+                                                name="{{$row->stat}}"
+                                                docType="{{$row->type}}"
                                                 id="passbtn"
                                                 note="{{$note}}"
                                                 insnote="{{$insnote}}"
-                                                appName="{{$appName->name}}" 
-                                                insName="{{$insName->name}}" 
+                                                appName="{{$appName->name}}"
+                                                insName="{{$insName->name}}"
                                                 value="{{$row->id}}">{{$row->stat}}</button>
                                 @elseif ($row->stat === 'ไม่ผ่านการตรวจสอบ' || $row->stat === 'ไม่ผ่านการอนุมัติ')
-                                    
-                                    <button class="btn btn-danger" 
-                                            name="{{$row->stat}}" 
-                                            id="notpass" 
-                                            note="{{$note}}" 
+
+                                    <button class="btn btn-danger"
+                                            name="{{$row->stat}}"
+                                            id="notpass"
+                                            note="{{$note}}"
                                             insnote="{{$insnote}}"
-                                            appName="{{$appName->name}}" 
-                                            insName="{{$insName->name}}"  
-                                            docType="{{$row->type}}" 
+                                            appName="{{$appName->name}}"
+                                            insName="{{$insName->name}}"
+                                            docType="{{$row->type}}"
                                             value="{{$row->id}}">{{$row->stat}}</button>
                                 @else
                                     <button class="btn btn-secondary" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button>
                                 @endif
                             </td>
-                            
+
                             @can('create')
                                 <td>
                                     <a href="{{url('/form/editsop/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
@@ -144,7 +144,7 @@
                         if (!insValue || !appValue) {
                             return Promise.reject('Please select both inspector and approver.');
                         }
-                        
+
                         return [insValue, appValue];
                     }
                 }).then((result) => {
@@ -227,7 +227,7 @@
                                 if (!insValue || !appValue) {
                                     return Promise.reject('Please select both inspector and approver.');
                                 }
-                                
+
                                 return [insValue, appValue];
                             }
                         }).then((result) => {
