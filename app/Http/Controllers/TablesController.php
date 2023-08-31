@@ -13,6 +13,7 @@ use PDF;
 Use Alert;
 use App\Models\department;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 
 class TablesController extends Controller
@@ -34,7 +35,7 @@ class TablesController extends Controller
      */
     public function index(Request $request)
     {
-        
+
     }
 
     // query all wi form from database to wi table page
@@ -60,7 +61,7 @@ class TablesController extends Controller
     }
 
     // query all sop form from database to sop table page
-    public function sopTable() { 
+    public function sopTable() {
         if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
             $gendoc = gendoc::where('type', 'sopForm')->where('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->paginate(10);
         } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
@@ -140,7 +141,7 @@ class TablesController extends Controller
         else {
             $gendoc = project_doc::orderBy('id', 'desc')->paginate(10);
         };
-        
+
         foreach($gendoc as $doc) {
             if ($doc->dpm === '-'){
                 $doc->dpm = (department::find((User::find($doc->submit_by))->dpm))->prefix;
@@ -248,7 +249,7 @@ class TablesController extends Controller
         return view('/forms/'.$formtype, compact( 'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
     }
 
-    public function viewanno(Request $request,$id) 
+    public function viewanno(Request $request,$id)
     {
         $form = announce_doc::find($id);
         $class = 1;
@@ -275,10 +276,10 @@ class TablesController extends Controller
         return view('/forms/'.$formtype, compact( 'book_num','projName','class', 'projNo','editorContent'));
     }
 
-    public function viewmou(Request $request,$id) 
+    public function viewmou(Request $request,$id)
     {
         $form = mou_doc::find($id);
-        
+
         $class = 1;
         $formtype = $form->type;
         $editorContent = $form->detail;
@@ -298,12 +299,12 @@ class TablesController extends Controller
         $mouDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins'];
         $projectDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins'];
         $announceDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins'];
-        
+
         $gendocQuery = gendoc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($gendocColumns);
         $mouDocQuery = mou_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($mouDocColumns);
         $projectDocQuery = project_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($projectDocColumns);
         $announceDocQuery = announce_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($announceDocColumns);
-        
+
         $form = $gendocQuery
                     ->union($mouDocQuery)
                     ->union($projectDocQuery)
@@ -316,13 +317,13 @@ class TablesController extends Controller
     public function setVerify(Request $request) {
         try {
             $id = $request->docId;
-            if ($request->type === 'annoForm') { 
+            if ($request->type === 'annoForm') {
                 $form = announce_doc::find($id);
             }
-            elseif ($request->type === 'mouForm') { 
+            elseif ($request->type === 'mouForm') {
                 $form = mou_doc::find($id);
             }
-            elseif ($request->type === 'projForm') { 
+            elseif ($request->type === 'projForm') {
                 $form = project_doc::find($id);
             }
             else {
@@ -372,7 +373,7 @@ class TablesController extends Controller
         } catch (\Exception $e){
             return response()->json(['error' => $e]);
         }
-        
+
     }
 
     public function exTable (Request $request, $type) {
@@ -380,32 +381,32 @@ class TablesController extends Controller
             $gendoc = gendoc::where('type', 'wiForm')->orderBy('id', 'desc')->get();
             $user = User::all();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
-        } 
+        }
         elseif ($type === 'sopTable') {
             $gendoc = gendoc::where('type', 'sopForm')->orderBy('id', 'desc')->get();
             $user = User::all();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
-        } 
+        }
         elseif ($type === 'policyTable') {
             $gendoc = gendoc::where('type', 'policyForm')->orderBy('id', 'desc')->get();
             $user = User::all();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
-        } 
+        }
         elseif ($type === 'projTable') {
             $gendoc = project_doc::orderBy('id', 'desc')->get();
             $user = User::all();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
-        } 
+        }
         elseif ($type === 'mouTable') {
             $gendoc = mou_doc::orderBy('id', 'desc')->get();
             $user = User::all();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
-        } 
+        }
         elseif ($type === 'annoTable') {
             $gendoc = announce_doc::orderBy('id', 'desc')->get();
             $user = User::all();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
-        } 
+        }
         elseif ($type === 'imported') {
             $gendoc = imported::orderBy('id', 'desc')->get();
             $user = User::all();
@@ -423,7 +424,7 @@ class TablesController extends Controller
             } else {
                 $data[] = $oldt;
             }
-            
+
             $data[] = $request->memb;
             $gendoc = project_doc::find($request->bid);
             $gendoc->submit_by = $data;
@@ -433,7 +434,7 @@ class TablesController extends Controller
             return response()->json(['error' => $e]);
         }
     }
-    
+
 
     public function clearTeam (Request $request) {
         try {
@@ -448,6 +449,80 @@ class TablesController extends Controller
             $gendoc->submit_by = $data;
             $gendoc->save();
             return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function uploadFile(Request $request) {
+
+        try {
+            // Validate the request
+            $request->validate([
+                'file' => 'required|mimes:pdf,jpg,jpeg,png', // Adjust the validation rules for PDF files
+                'valueid' => 'required',
+            ]);
+            $destinationPath = 'files/';
+            // Handle file upload
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $fileName = $file->getClientOriginalName();
+                $file->move($destinationPath, $fileName);
+            } else {
+                return response()->json(['error' => 'File not found'], 400);
+            }
+            $fileList = [];
+            if ($request->type == 'proj') {
+                $yourModel = project_doc::find($request->input('valueid'));
+            } elseif ($request->type == 'announce') {
+                $yourModel = announce_doc::find($request->input('valueid'));
+            } elseif ($request->type == 'mou') {
+                $yourModel = mou_doc::find($request->input('valueid'));
+            } else {
+                $yourModel = gendoc::find($request->input('valueid'));
+            }
+            $fileData = $yourModel->files;
+            $fileList = json_decode($fileData);
+            $fileList[] = $fileName;
+            $yourModel->files = $fileList;
+            $yourModel->save();
+
+            return response()->json(['success' => $request->input('valueid')]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function deleteFile(Request $request) {
+        try {
+            // Handle file upload
+            $filePath = $request->fileName; // Provide the relative path to the file
+
+            if (Storage::disk('files')->exists($filePath)) {
+                Storage::disk('files')->delete($filePath);
+            }
+            $fileList = [];
+            if ($request->type == 'proj') {
+                $yourModel = project_doc::find($request->input('id'));
+            } elseif ($request->type == 'announce') {
+                $yourModel = announce_doc::find($request->input('id'));
+            } elseif ($request->type == 'mou') {
+                $yourModel = mou_doc::find($request->input('id'));
+            } else {
+                $yourModel = gendoc::find($request->input('id'));
+            }
+            $fileData = $yourModel->files;
+            $fileList = json_decode($fileData);
+            foreach ($fileList as $index => $item) {
+                if ($fileList[$index] == $request->fileName) {
+                    unset($fileList[$index]); // Remove the object from the array
+                    break; // No need to continue searching
+                }
+            }
+            $yourModel->files = $fileList;
+            $yourModel->save();
+
+            return response()->json(['success' => $fileList]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e]);
         }

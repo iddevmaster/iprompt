@@ -44,6 +44,13 @@ return [
             'throw' => false,
         ],
 
+        'files' => [
+            'driver' => 'local',
+            'root' => public_path('files'), // This points to public/files directory
+            'url' => env('APP_URL') . '/files', // URL for accessing files
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

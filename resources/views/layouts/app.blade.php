@@ -216,14 +216,9 @@
                                                 @csrf
                                             </form>
                                         </li>
-
                                     </div>
                                 </ul>
-
-
-
                             </li>
-
                         @endguest
                     </ul>
                 </div>
