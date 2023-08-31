@@ -132,7 +132,7 @@
                                         <li><a class="dropdown-item" href="{{ route('policyForm') }}">Policy</a></li>
                                     @endcan
                                     @can('SOP')
-                                        <li><a class="dropdown-item" href="{{ route('sopForm') }}">WF</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('sopForm') }}">SOP</a></li>
                                     @endcan
                                     @can('WI')
                                         <li><a class="dropdown-item" href="{{ route('wiForm') }}">WI</a></li>
@@ -162,7 +162,7 @@
                                         <li><a class="dropdown-item" href="{{ route('policyTable') }}">Policy</a></li>
                                     @endcan
                                     @can('SOP')
-                                        <li><a class="dropdown-item" href="{{ route('sopTable') }}">WF</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('sopTable') }}">SOP</a></li>
                                     @endcan
                                     @can('WI')
                                         <li><a class="dropdown-item" href="{{ route('wiTable') }}">WI</a></li>
