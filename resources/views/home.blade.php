@@ -79,7 +79,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('sopForm') }}">
                                         <div class="w-100 h-100">
-                                            <i class="bi bi-file-earmark"></i>
+                                            <i class="bi bi-check-lg"></i>
                                             <p class="icon-title">SOP</p>
                                         </div>
                                     </a>
@@ -238,7 +238,7 @@
                             <div class="col">
                                 <a class="a-tag" href="/tables/sopTable">
                                     <div class="w-100 h-100">
-                                        <i class="bi bi-file-earmark"></i>
+                                        <i class="bi bi-check-lg"></i>
                                         <p class="icon-title">SOP</p>
                                     </div>
                                 </a>
