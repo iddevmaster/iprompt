@@ -121,7 +121,7 @@
         <div class="d-flex justify-content-center ">
             @if (true)
                 <a href="javascript:history.back()"><button type="button" class="btn btn-secondary">Back</button></a>
-                <button type="submit" class="btn btn-success ms-2" name="submit" value="save">Save</button>
+                <button type="submit" class="btn btn-success ms-2" name="submit" value="save" disabled>Save</button>
             @else
                 <a href="{{ route('home') }}"><button type="button" class="btn btn-secondary">cancle</button></a>
                 <button type="submit" id="preview-btn" class="btn btn-success ms-2" name="submit" value="preview">Preview</button>
