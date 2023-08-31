@@ -16,7 +16,7 @@
     <div class="text-center my-4">
         <h2>มาตรฐานขั้นตอนการปฏิบัติงาน</h2>
     </div>
-    <form class="overflow-x-auto" id="myForm" action="{{ route('preview') }}" method="POST" >
+    <form class="overflow-x-auto" id="myForm" action="#" method="POST" >
         @csrf
         <div class="a4-container border mb-5 d-flex align-items-center flex-column">
             <!-- header -->
