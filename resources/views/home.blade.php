@@ -98,7 +98,7 @@
                                 @endcan
                             </div>
 
-                            <div class="row ">
+                            {{-- <div class="row ">
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('jdForm') }}">
                                         <div class="w-100 h-100">
@@ -166,7 +166,7 @@
                                         </div>
                                     </a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
