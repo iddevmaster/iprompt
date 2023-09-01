@@ -79,7 +79,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('sopForm') }}">
                                         <div class="w-100 h-100">
-                                            <i class="bi bi-check-lg"></i>
+                                            <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
                                             <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
                                         </div>
                                     </a>
@@ -112,7 +112,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="">
                                         <div class="w-100 h-100">
-                                        <i class="bi bi-file-earmark"></i>
+                                            <img src="{{ asset('dist/logo/manual.png') }}" alt="" height="50px">
                                             <p class="icon-title">คู่มือพนักงาน</p>
                                         </div>
                                     </a>
@@ -121,7 +121,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="">
                                         <div class="w-100 h-100">
-                                        <i class="bi bi-file-earmark"></i>
+                                            <img src="{{ asset('dist/logo/Brochure.png') }}" alt="" height="50px">
                                             <p class="icon-title">Brochure</p>
                                         </div>
                                     </a>
@@ -132,7 +132,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="">
                                         <div class="w-100 h-100">
-                                        <i class="bi bi-file-earmark"></i>
+                                            <img src="{{ asset('dist/logo/card.png') }}" alt="" height="50px">
                                             <p class="icon-title">กฏบัตร</p>
                                         </div>
                                     </a>
@@ -141,7 +141,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="">
                                         <div class="w-100 h-100">
-                                        <i class="bi bi-file-earmark"></i>
+                                            <img src="{{ asset('dist/logo/member.png') }}" alt="" height="50px">
                                             <p class="icon-title">Member</p>
                                         </div>
                                     </a>
@@ -150,7 +150,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="">
                                         <div class="w-100 h-100">
-                                        <i class="bi bi-file-earmark"></i>
+                                            <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
                                             <p class="icon-title">Contract</p>
                                         </div>
                                     </a>
@@ -161,7 +161,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="">
                                         <div class="w-100 h-100">
-                                        <i class="bi bi-file-earmark"></i>
+                                            <img src="{{ asset('dist/logo/iso.png') }}" alt="" height="50px">
                                             <p class="icon-title">ISO</p>
                                         </div>
                                     </a>
@@ -238,7 +238,7 @@
                             <div class="col">
                                 <a class="a-tag" href="/tables/sopTable">
                                     <div class="w-100 h-100">
-                                        <i class="bi bi-check-lg"></i>
+                                        <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
                                         <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
                                     </div>
                                 </a>
