@@ -17,7 +17,7 @@
             <div class="card p-4 ">
                 <form action="{{route('storeImported')}}" method="post" enctype="multipart/form-data">
                     @csrf
-                    
+
                     <div class="row g-3 mb-3 d-flex justify-content-center">
                         <div class="col-auto">
                             <label for="docType" class="col-form-label">ประเภทหนังสือ</label>
@@ -66,7 +66,7 @@
                         </div>
                         <div class="col-8">
                             <select class="form-select" aria-label="Default select example" name="recive_dpm" required>
-                                <option selected disabled>Open this select Department</option>
+                                <option selected disabled>กรุณาเลือกฝ่าย</option>
                                 @foreach ($regData['department'] as $dpm)
                                     <option value="{{$dpm->id}}">{{$dpm->name}}</option>
                                 @endforeach
@@ -80,7 +80,7 @@
                         </div>
                         <div class="col-8">
                             <select class="form-select" aria-label="Default select example" name="recive_agn" required>
-                                <option selected disabled>Open this select Agency</option>
+                                <option selected disabled>กรุณาเลือกหน่วยงานผู้รับ</option>
                                 @foreach ($regData['agencie'] as $agn)
                                     <option value="{{$agn->id}}">{{$agn->name}}</option>
                                 @endforeach
@@ -94,7 +94,7 @@
                         </div>
                         <div class="col-8">
                             <select class="form-select" aria-label="Default select example" name="recive_brn" required>
-                                <option selected disabled>Open this select Branch</option>
+                                <option selected disabled>กรุณาเลือกสาขาผู้รับ</option>
                                 @foreach ($regData['branche'] as $brn)
                                     <option value="{{$brn->id}}">{{$brn->name}}</option>
                                 @endforeach
@@ -137,7 +137,7 @@
                             <input class="form-control mb-2" type="file" id="book_file" name="file">
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="d-flex justify-content-center">
                             <button id="cancel" type="button" class="btn btn-danger ms-2" >ยกเลิก</button>
@@ -152,13 +152,14 @@
 <script>
     document.getElementById('cancel').addEventListener('click', function () {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'ยกเลิกการบันทึกข้อมูล?',
+            text: "ข้อมูลของคุณจะถูกลบ!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes!'
+            confirmButtonText: 'ตกลง!',
+            cancelButtonText: 'ย้อนกลับ'
         }).then((result) => {
             if (result.isConfirmed) {
                 window.location.href = '{{ route('home') }}';
@@ -172,6 +173,8 @@
             input: 'text',
             inputLabel: 'ประเภทหนังสือรับเข้า',
             showCancelButton: true,
+            confirmButtonText: 'บันทึก',
+            cancelButtonText: 'ยกเลิก',
             inputValidator: (value) => {
                 if (!value) {
                 return 'กรุณากรอกประเภทหนังสือ!'

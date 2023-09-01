@@ -123,22 +123,22 @@
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
                                     @can('MOU')
-                                        <li><a class="dropdown-item" href="{{ route('mouForm') }}">MOU</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('mouForm') }}">บันทึกความร่วมมือ</a></li>
                                     @endcan
                                     @can('PRO')
-                                        <li><a class="dropdown-item" href="{{ route('projForm') }}">Project</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('projForm') }}">โครงการ</a></li>
                                     @endcan
                                     @can('POL')
-                                        <li><a class="dropdown-item" href="{{ route('policyForm') }}">Policy</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('policyForm') }}">นโยบาย</a></li>
                                     @endcan
                                     @can('SOP')
-                                        <li><a class="dropdown-item" href="{{ route('sopForm') }}">SOP</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('sopForm') }}">ระเบียบการปฏิบัติงาน</a></li>
                                     @endcan
                                     @can('WI')
-                                        <li><a class="dropdown-item" href="{{ route('wiForm') }}">WI</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('wiForm') }}">ขั้นตอนการปฏิบัติงาน</a></li>
                                     @endcan
                                     @can('ANNO')
-                                        <li><a class="dropdown-item" href="{{ route('annoForm') }}">Announce</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('annoForm') }}">ประกาศ</a></li>
                                     @endcan
                                 </div>
                             </ul>
@@ -153,22 +153,22 @@
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
                                     @can('MOU')
-                                        <li><a class="dropdown-item" href="{{ route('mouTable') }}">MOU</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('mouTable') }}">บันทึกความร่วมมือ</a></li>
                                     @endcan
                                     @can('PRO')
-                                        <li><a class="dropdown-item" href="{{ route('projTable') }}">Project</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('projTable') }}">โครงการ</a></li>
                                     @endcan
                                     @can('POL')
-                                        <li><a class="dropdown-item" href="{{ route('policyTable') }}">Policy</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('policyTable') }}">นโยบาย</a></li>
                                     @endcan
                                     @can('SOP')
-                                        <li><a class="dropdown-item" href="{{ route('sopTable') }}">SOP</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('sopTable') }}">ระเบียบการปฏิบัติงาน</a></li>
                                     @endcan
                                     @can('WI')
-                                        <li><a class="dropdown-item" href="{{ route('wiTable') }}">WI</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('wiTable') }}">ขั้นตอนการปฏิบัติงาน</a></li>
                                     @endcan
                                     @can('ANNO')
-                                        <li><a class="dropdown-item" href="{{ route('annoTable') }}">Announce</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('annoTable') }}">ประกาศ</a></li>
                                     @endcan
                                 </div>
                             </ul>
