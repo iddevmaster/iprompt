@@ -86,7 +86,7 @@
         <nav class="navbar navbar-expand-md nav-light shadow-sm" id="navb">
             <div class="container">
                 <a id="brand" class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img src="{{ asset('dist/img/logoiddrives.png') }}" height="50">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

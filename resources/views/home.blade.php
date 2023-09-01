@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 mb-5 d-flex justify-content-center">
                 <div class="head-name my-5">
-                    <p>Saraban</p>
+                    <p>ระบบสารบรรณอิเล็กทรอนิกส์</p>
                 </div>
             </div>
 
@@ -32,7 +32,7 @@
                                     <a class="a-tag" href="{{ route('mouForm') }}">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/MOU.png') }}" alt="" height="50px">
-                                            <p class="icon-title">MOU</p>
+                                            <p class="icon-title">บันทึกความร่วมมือ</p>
                                         </div>
                                     </a>
                                 </div>
@@ -43,7 +43,7 @@
                                     <a class="a-tag" href="{{ route('policyForm') }}">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/Policy.png') }}" alt="" height="50px">
-                                            <p class="icon-title">Policy</p>
+                                            <p class="icon-title">นโยบาย</p>
                                         </div>
                                     </a>
                                 </div>
@@ -80,7 +80,7 @@
                                     <a class="a-tag" href="{{ route('sopForm') }}">
                                         <div class="w-100 h-100">
                                             <i class="bi bi-check-lg"></i>
-                                            <p class="icon-title">SOP</p>
+                                            <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
                                         </div>
                                     </a>
                                 </div>
@@ -91,7 +91,7 @@
                                     <a class="a-tag" href="{{ route('wiForm') }}">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/WI.png') }}" alt="" height="50px">
-                                            <p class="icon-title">WI</p>
+                                            <p class="icon-title">ขั้นตอนการปฏิบัติงาน</p>
                                         </div>
                                     </a>
                                 </div>
@@ -103,7 +103,7 @@
                                     <a class="a-tag" href="{{ route('jdForm') }}">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
-                                            <p class="icon-title">JD</p>
+                                            <p class="icon-title">รายละเอียดงาน</p>
                                         </div>
                                     </a>
                                 </div>
@@ -192,7 +192,7 @@
                                 <a class="a-tag" href="{{ route('mouTable') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/MOU.png') }}" alt="" height="50px">
-                                        <p class="icon-title">MOU</p>
+                                        <p class="icon-title">บันทึกความร่วมมือ</p>
                                     </div>
                                 </a>
                             </div>
@@ -203,7 +203,7 @@
                                 <a class="a-tag" href="/tables/policyTable">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Policy.png') }}" alt="" height="50px">
-                                        <p class="icon-title">Policy</p>
+                                        <p class="icon-title">นโยบาย</p>
                                     </div>
                                 </a>
                             </div>
@@ -239,7 +239,7 @@
                                 <a class="a-tag" href="/tables/sopTable">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-check-lg"></i>
-                                        <p class="icon-title">SOP</p>
+                                        <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
                                     </div>
                                 </a>
                             </div>
@@ -250,7 +250,7 @@
                                 <a class="a-tag" href="/tables/wiTable">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/WI.png') }}" alt="" height="50px">
-                                        <p class="icon-title">WI</p>
+                                        <p class="icon-title">ขั้นตอนการปฏิบัติงาน</p>
                                     </div>
                                 </a>
                             </div>
