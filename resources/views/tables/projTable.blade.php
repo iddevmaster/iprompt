@@ -403,6 +403,7 @@
         pdfButtons.forEach((pdfbtn) => {
             const fileNameValue = pdfbtn.value;
             const formId = pdfbtn.getAttribute('fileId');
+            const fileType = document.querySelector('.uploadBtn').getAttribute('fileType');
             pdfbtn.addEventListener('click', function () {
                 const pdfUrl = this.getAttribute('data-file-path');
                 Swal.fire({
@@ -425,6 +426,7 @@
                             body: JSON.stringify({
                                 fileName: fileNameValue,
                                 id: formId,
+                                type: fileType,
                             }),
                         })
                         .then((response) => response.json())

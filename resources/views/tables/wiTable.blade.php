@@ -29,6 +29,7 @@
                         <th scope="col">สถานะ</th>
                         <th scope="col">แก้ไข</th>
                         <th scope="col">Download</th>
+                        <th scope="col">แนบไฟล์</th>
                     </tr>
                 </thead>
 
@@ -62,24 +63,24 @@
                                     <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}">{{$row->stat}}</button>
                                 @elseif ($row->stat === 'ผ่านการอนุมัติ')
                                     <button class="btn btn-success"
-                                            name="{{$row->stat}}" 
-                                            docType="{{$row->type}}" 
+                                            name="{{$row->stat}}"
+                                            docType="{{$row->type}}"
                                             id="passbtn"
                                             note="{{$note}}"
                                             insnote="{{$insnote}}"
-                                            appName="{{$appName->name}}" 
-                                            insName="{{$insName->name}}" 
+                                            appName="{{$appName->name}}"
+                                            insName="{{$insName->name}}"
                                             value="{{$row->id}}">{{$row->stat}}</button>
                                 @elseif ($row->stat === 'ไม่ผ่านการตรวจสอบ' || $row->stat === 'ไม่ผ่านการอนุมัติ')
-                                   
-                                    <button class="btn btn-danger" 
-                                            name="{{$row->stat}}" 
-                                            id="notpass" 
-                                            note="{{$note}}" 
+
+                                    <button class="btn btn-danger"
+                                            name="{{$row->stat}}"
+                                            id="notpass"
+                                            note="{{$note}}"
                                             insnote="{{$insnote}}"
-                                            appName="{{$appName->name}}" 
-                                            insName="{{$insName->name}}"  
-                                            docType="{{$row->type}}" 
+                                            appName="{{$appName->name}}"
+                                            insName="{{$insName->name}}"
+                                            docType="{{$row->type}}"
                                             value="{{$row->id}}">{{$row->stat}}</button>
                                 @else
                                     <button class="btn btn-secondary" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button>
@@ -105,7 +106,20 @@
                                     <a href="{{url('/form/downloadwi/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                 </td>
                             @endcan
-                            
+
+                            <td class="text-center">
+                                @if ($row->files != null)
+                                    @php
+                                        $fileList = $row->files;
+                                    @endphp
+                                    @foreach (json_decode($fileList) as $file)
+                                        <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$file}}</button>
+                                    @endforeach
+                                @else
+
+                                @endif
+                                <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="policy">upload</button>
+                            </td>
                         </tr>
                         <?php $counter++ ?>
                     @endforeach
@@ -148,7 +162,7 @@
                         if (!insValue || !appValue) {
                             return Promise.reject('Please select both inspector and approver.');
                         }
-                        
+
                         return [insValue, appValue];
                     }
                 }).then((result) => {
@@ -231,7 +245,7 @@
                                 if (!insValue || !appValue) {
                                     return Promise.reject('Please select both inspector and approver.');
                                 }
-                                
+
                                 return [insValue, appValue];
                             }
                         }).then((result) => {
@@ -293,6 +307,101 @@
                     });
             });
         });
+
+        const pdfButtons = document.querySelectorAll('.viewFilebtn');
+        pdfButtons.forEach((pdfbtn) => {
+            const fileNameValue = pdfbtn.value;
+            const formId = pdfbtn.getAttribute('fileId');
+            const fileType = document.querySelector('.uploadBtn').getAttribute('fileType');
+            pdfbtn.addEventListener('click', function () {
+                const pdfUrl = this.getAttribute('data-file-path');
+                Swal.fire({
+                    showConfirmButton: false,
+                    width: '70%',
+                    html: '<div style="height: 600px;">' +
+                        '<iframe src="' + pdfUrl + '" style="width: 100%; height: 100%;" frameborder="0"></iframe>' +
+                        '</div>',
+                    showDenyButton: true,
+                    denyButtonText: 'Delete',
+                }).then((result) => {
+                    if (result.isDenied) {
+                        console.log(result + fileNameValue + formId);
+                        fetch('/table/deleteFile', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                            },
+                            body: JSON.stringify({
+                                fileName: fileNameValue,
+                                id: formId,
+                                type: fileType,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Handle the response if needed
+                            console.log(data);
+                            // You can also reload the page to see the changes, if required
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            // Handle errors if any
+                            Swal.fire('Error!', 'An error occurred while saving the data.', 'error');
+                        });
+                    }
+                });
+            });
+        });
+
+        const checkbtn = document.querySelectorAll('.uploadBtn');
+        let statusValue;
+        checkbtn.forEach((ckbtn) => {
+            const type = ckbtn.getAttribute('fileType');
+            ckbtn.addEventListener('click', function () {
+                Swal.fire({
+                    title: 'Select file',
+                    input: 'file',
+                    inputAttributes: {
+                        'accept': 'pdf/*',
+                        'aria-label': 'Upload your profile picture'
+                    }
+                }).then((result) => {
+                    const file = result.value; // Get the selected file from the result object
+                    statusValue = ckbtn.value;
+                    if (file) {
+                        saveData(file,type);
+                    }
+                });
+            });
+        });
+
+        function saveData(file, type) {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('type', type);
+            formData.append('valueid', statusValue);
+
+            // Send data to Laravel controller using fetch API
+            fetch('/table/uploadFile', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                },
+                body: formData,
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                // Handle the response if needed
+                console.log(data);
+                // You can also reload the page to see the changes, if required
+                window.location.reload();
+            })
+            .catch((error) => {
+                // Handle errors if any
+                Swal.fire('Error!', 'An error occurred while saving the data.', 'error');
+            });
+        }
     </script>
 </body>
 @endsection
