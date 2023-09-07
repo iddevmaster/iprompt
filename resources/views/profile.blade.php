@@ -84,7 +84,7 @@
                     </div>
                 </div>
 
-            
+
                 <div class="col border card p-4" id="permCard">
                     <div class="text-center fs-5 fw-bold mb-3"><p>Permissions</p></div>
                     <div class="d-flex border-bottom">
@@ -132,7 +132,7 @@
                             document.getElementById('create_no').checked = true;
                         </script>
                     @endif
-                
+
 
                     <div class="d-flex mt-4 border-bottom">
                         <p class="ms-3 fw-bold">Confirmable : </p>
@@ -207,7 +207,7 @@
                             </div>
                         </div>
                     </div>
-                    @foreach ($permissions as $perm) 
+                    @foreach ($permissions as $perm)
                         @if($user->can($perm->name))
                             <script>document.getElementById('{{ $perm->name }}').checked = true;</script>
                         @else
@@ -241,7 +241,7 @@
                         const role = document.getElementById('role');
                         let userRole = "{{ Auth::user()->role }}";
 
-                        
+
                         const permCard = document.querySelector('#permCard');
                         if (!(userRole === 'admin' || userRole === 'ceo')) {
                             permCard.style.cssText += 'display: none';
@@ -251,14 +251,14 @@
                             if (editbtn.textContent === 'Edit') {
                                 name.disabled = false;
                                 username.disabled = false;
-                                dpm.disabled = false;
-                                agn.disabled = false;
-                                brn.disabled = false;
                                 phone.disabled = false;
 
-                                if ( userRole === 'admin') {
+                                if ( userRole == 'admin') {
                                     role.disabled = false;
-                                
+                                    dpm.disabled = false;
+                                    agn.disabled = false;
+                                    brn.disabled = false;
+
                                 // Download
                                 down_yes.disabled = false;
                                 down_no.disabled = false;
@@ -270,7 +270,7 @@
                                 // Confirmable
                                 approver.disabled = false;
                                 inspector.disabled = false;
-                        
+
 
                                 // Access
                                 wi.disabled = false;
@@ -358,7 +358,7 @@
                                 // Confirmable
                                 approver.disabled = true;
                                 inspector.disabled = true;
-                        
+
 
                                 // Access
                                 wi.disabled = true;
@@ -371,9 +371,9 @@
 
                                 editbtn.textContent = 'Edit';
 
-                                
+
                             }
-                            
+
                         });
                 </script>
             </div>
@@ -381,7 +381,7 @@
     </div>
     @vite(['resources/css/profile.css'])
     <script>
-        
+
     </script>
 </body>
 @endsection
