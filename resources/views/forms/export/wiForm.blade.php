@@ -22,7 +22,7 @@
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
         />
 
-        
+
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
         <!-- (Optional) html2canvas library to convert HTML content to canvas -->
@@ -166,7 +166,7 @@
                         </div>
                     </div>
                     <div class="col pt-2">
-                        <?php 
+                        <?php
                             $datetime = (json_decode($form->app))->date ?? date('Y-m-d');
                             $dated = new DateTime($datetime);
                          ?>
@@ -227,7 +227,7 @@
             <!-- end header -->
 
             <!-- content -->
-            <div class="content py-3">
+            <div class="content pt-3">
                 <div class="editorContent" style="">
                     {!! $editorContent !!}
                 </div>
@@ -252,7 +252,7 @@
             <!-- end footer -->
         </div>
         <!-- end paper page -->
-        
+
         @if ($dorv !== 'verify' && auth()->user()->can('download'))
         <div class="d-flex justify-content-center downloadbtn">
             <button class="btn btn-success ms-2" onclick="printDiv()">
