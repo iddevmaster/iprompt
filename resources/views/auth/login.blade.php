@@ -22,13 +22,13 @@
 <body>
     <div class="container">
         <h2 class="text-light text-center">Welcome to Saraban</h2>
-        <h4 class="text-light">Please Login</h4>
+        <h4 class="text-light">กรุณาเข้าสู่ระบบ</h4>
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
             <!-- Email input -->
             <div class="text-start mb-2">
-                <label for="inputEmail" class="text-light">E-mail</label>
+                <label for="inputEmail" class="text-light">ชื่อผู้ใช้งาน</label>
                 <div>
                     <input id="email" placeholder="Input your E-mail" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
@@ -42,7 +42,7 @@
 
             <!-- Password input -->
             <div class="text-start mb-3">
-                <label for="inputPassword5" class="text-light">Password</label>
+                <label for="inputPassword5" class="text-light">รหัสผ่าน</label>
                 <div class="input-group">
                     <input id="password" placeholder="Input your password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                     <button type="button" class="btn" id="togglePasswordBtn">Show</button>
@@ -60,7 +60,7 @@
                     {{ __('Login') }}
                 </button>
             </div>
-            
+
         </form>
     </div>
 </body>
