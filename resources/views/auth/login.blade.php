@@ -30,7 +30,7 @@
             <div class="text-start mb-2">
                 <label for="inputEmail" class="text-light">ชื่อผู้ใช้งาน</label>
                 <div>
-                    <input id="email" placeholder="Input your E-mail" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    <input id="email" placeholder="Username" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                     @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -44,7 +44,7 @@
             <div class="text-start mb-3">
                 <label for="inputPassword5" class="text-light">รหัสผ่าน</label>
                 <div class="input-group">
-                    <input id="password" placeholder="Input your password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                    <input id="password" placeholder="Password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                     <button type="button" class="btn" id="togglePasswordBtn">Show</button>
                 </div>
                 @error('password')
