@@ -175,7 +175,7 @@
 
         <!-- content -->
         <div class="content py-5 w-100 h-100">
-                <div style="padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
+                <div style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
         </div><!-- end content -->
 
         <!-- footer -->

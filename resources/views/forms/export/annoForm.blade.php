@@ -108,7 +108,7 @@
                 <br>
             </div>
 
-            <div style="padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
+            <div style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
 
             <div class="mt-auto w-100 ">
                 <div class="ms-5 mt-4">

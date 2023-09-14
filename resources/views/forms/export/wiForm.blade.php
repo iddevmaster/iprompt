@@ -105,8 +105,8 @@
                 width: 100%;
                 display: flex;
                 justify-content: start;
-                padding-left:1.5cm;
-                padding-right:1cm;
+                padding-left:1cm;
+                padding-right:.5cm;
 
             }
 

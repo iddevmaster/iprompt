@@ -115,7 +115,7 @@
 
 <!-- content -->
 <div class="content my-4 w-100 h-100 d-flex flex-column">
-        <div style="padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
+        <div style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
         <input type="hidden" name="editorContent" value="{{$editorContent}}">
 </div><!-- end content -->
 
