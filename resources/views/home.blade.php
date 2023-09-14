@@ -79,7 +79,7 @@
                                 <div class="col">
                                     <a class="a-tag" href="{{ route('sopForm') }}">
                                         <div class="w-100 h-100">
-                                            <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
+                                            <i class="bi bi-arrow-return-right"></i>
                                             <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
                                         </div>
                                     </a>
@@ -98,37 +98,43 @@
                                 @endcan
                             </div>
 
-                            {{-- <div class="row ">
+                            <div class="row ">
+                                @can('checklist')
                                 <div class="col">
-                                    <a class="a-tag" href="{{ route('jdForm') }}">
+                                    <a class="a-tag" href="{{ route('checkForm')}}">
                                         <div class="w-100 h-100">
-                                            <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
-                                            <p class="icon-title">รายละเอียดงาน</p>
+                                            <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
+                                            <p class="icon-title">CheckList</p>
                                         </div>
                                     </a>
                                 </div>
+                                @endcan
 
-
+                                @can('course')
                                 <div class="col">
-                                    <a class="a-tag" href="">
+                                    <a class="a-tag" href="{{ route('courseForm')}}">
                                         <div class="w-100 h-100">
-                                            <img src="{{ asset('dist/logo/manual.png') }}" alt="" height="50px">
-                                            <p class="icon-title">คู่มือพนักงาน</p>
+                                            <i class="bi bi-book"></i>
+                                            <p class="icon-title">Course</p>
                                         </div>
                                     </a>
                                 </div>
+                                @endcan
 
+                                @can('media')
                                 <div class="col">
-                                    <a class="a-tag" href="">
+                                    <a class="a-tag" href="{{ route('mediaForm') }}">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/Brochure.png') }}" alt="" height="50px">
                                             <p class="icon-title">Brochure</p>
                                         </div>
                                     </a>
                                 </div>
+                                @endcan
                             </div>
-                            <div class="row ">
 
+                            @role('admin')
+                            <div class="row ">
                                 <div class="col">
                                     <a class="a-tag" href="">
                                         <div class="w-100 h-100">
@@ -156,8 +162,10 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="row ">
+                            @endrole
 
+                            @role('admin')
+                            <div class="row ">
                                 <div class="col">
                                     <a class="a-tag" href="">
                                         <div class="w-100 h-100">
@@ -166,7 +174,26 @@
                                         </div>
                                     </a>
                                 </div>
-                            </div> --}}
+
+                                <div class="col">
+                                    <a class="a-tag" href="{{ route('jdForm') }}">
+                                        <div class="w-100 h-100">
+                                            <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
+                                            <p class="icon-title">รายละเอียดงาน</p>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col">
+                                    <a class="a-tag" href="">
+                                        <div class="w-100 h-100">
+                                            <img src="{{ asset('dist/logo/manual.png') }}" alt="" height="50px">
+                                            <p class="icon-title">คู่มือพนักงาน</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            @endrole
                         </div>
                     </div>
                 </div>
@@ -238,7 +265,7 @@
                             <div class="col">
                                 <a class="a-tag" href="/tables/sopTable">
                                     <div class="w-100 h-100">
-                                        <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
+                                        <i class="bi bi-arrow-return-right"></i>
                                         <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
                                     </div>
                                 </a>
@@ -251,6 +278,40 @@
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/WI.png') }}" alt="" height="50px">
                                         <p class="icon-title">ขั้นตอนการปฏิบัติงาน</p>
+                                    </div>
+                                </a>
+                            </div>
+                            @endcan
+                        </div>
+                        <div class="row">
+                            @can('media')
+                            <div class="col">
+                                <a class="a-tag" href="{{ route('mediaTable')}}">
+                                    <div class="w-100 h-100">
+                                        <img src="{{ asset('dist/logo/Brochure.png') }}" alt="" height="50px">
+                                        <p class="icon-title">Brochure</p>
+                                    </div>
+                                </a>
+                            </div>
+                            @endcan
+
+                            @can('course')
+                            <div class="col">
+                                <a class="a-tag" href="{{ route('courseTable')}}">
+                                    <div class="w-100 h-100">
+                                        <i class="bi bi-book"></i>
+                                        <p class="icon-title">Course</p>
+                                    </div>
+                                </a>
+                            </div>
+                            @endcan
+
+                            @can('checklist')
+                            <div class="col">
+                                <a class="a-tag" href="{{ route('checkTable')}}">
+                                    <div class="w-100 h-100">
+                                        <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
+                                        <p class="icon-title">CheckList</p>
                                     </div>
                                 </a>
                             </div>

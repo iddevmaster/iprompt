@@ -8,12 +8,13 @@ use App\Models\agencie;
 use App\Models\branche;
 use App\Models\department;
 use App\Models\User;
+use App\Models\type;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 Use Alert;
-
+use PhpParser\Node\Stmt\Catch_;
 
 class HomeController extends Controller
 {
@@ -52,6 +53,11 @@ class HomeController extends Controller
         return view('profile', compact('role','user', 'permissions', 'agn', 'brn', 'dpm'));
     }
 
+    public function management() {
+        $permis = Permission::all();
+        return view('management', compact('permis'));
+    }
+
     public function alluser() {
         $user = User::orderBy('id', 'desc')->paginate(10);
         $agn = agencie::all();
@@ -61,7 +67,7 @@ class HomeController extends Controller
     }
 
     public function userProfile(Request $request, $id) {
-        
+
         $user = User::firstWhere('id', $id);
         $permissions = Permission::all();
         $agn = agencie::all();
@@ -91,7 +97,7 @@ class HomeController extends Controller
         if ($user && $role) {
             $user->assignRole($role);
             $user->save();
-        
+
             // Role 'admin' has been assigned to the user
         } else {
             // User or role not found, handle the error accordingly
@@ -100,7 +106,7 @@ class HomeController extends Controller
         return redirect()->route('alluser');
     }
 
-    public function updateUser(Request $request) 
+    public function updateUser(Request $request)
     {
         $data = $request->all();
         $user = User::find($data['id']);
@@ -160,6 +166,21 @@ class HomeController extends Controller
             } else {
                 $user->revokePermissionTo('create');
             }
+            if ($data['check']){
+                $user->givePermissionTo('checklist');
+            } else {
+                $user->revokePermissionTo('checklist');
+            }
+            if ($data['course']){
+                $user->givePermissionTo('course');
+            } else {
+                $user->revokePermissionTo('course');
+            }
+            if ($data['media']){
+                $user->givePermissionTo('media');
+            } else {
+                $user->revokePermissionTo('media');
+            }
 
             $user->name = $data['name'];
             $user->email = $data['username'];
@@ -171,10 +192,53 @@ class HomeController extends Controller
             $user->role = $data['role'];
 
             $user->save();
-            
+
             return response()->json(['data' => $data, 'user' => $user]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json(['message' => "Changes are not saved!"]);
+        }
+    }
+
+    public function addPermis (Request $request) {
+        try {
+            Permission::create(['name' => $request->value]);
+            Alert::toast('User added successfully!','success');
+            return response()->json(['success' => 'success']);
+        } catch (\Exception $e) {
+            Alert::toast('error!','error');
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function delPermis (Request $request) {
+        try {
+            $permission = Permission::findByName($request->value);
+            if ($permission->roles()->count() === 0) {
+                $permission->delete();
+                Alert::toast('User added successfully!','success');
+                return response()->json(['success' => 'success']);
+            } else {
+                Alert::toast('Permission has role!','error');
+                return response()->json(['success' => 'permission has role']);
+            }
+
+        } catch (\Exception $e) {
+            Alert::toast('error!','error');
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function delType (Request $request) {
+        try {
+            $deltype = type::find($request->value);
+            if ($deltype) {
+                $deltype->delete();
+            }
+            Alert::toast('Type has Del!','success');
+            return response()->json(['success' => 'type has del']);
+        } catch (\Exception $e) {
+            Alert::toast('error!','error');
+            return response()->json(['error' => $e]);
         }
     }
 }

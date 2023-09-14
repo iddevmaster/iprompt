@@ -140,6 +140,15 @@
                                     @can('ANNO')
                                         <li><a class="dropdown-item" href="{{ route('annoForm') }}">ประกาศ</a></li>
                                     @endcan
+                                    @can('course')
+                                        <li><a class="dropdown-item" href="{{ route('courseForm') }}">Course</a></li>
+                                    @endcan
+                                    @can('checklist')
+                                        <li><a class="dropdown-item" href="{{ route('checkForm') }}">Check List</a></li>
+                                    @endcan
+                                    @can('media')
+                                        <li><a class="dropdown-item" href="{{ route('mediaForm') }}">Media</a></li>
+                                    @endcan
                                 </div>
                             </ul>
                         </li>
@@ -169,6 +178,15 @@
                                     @endcan
                                     @can('ANNO')
                                         <li><a class="dropdown-item" href="{{ route('annoTable') }}">ประกาศ</a></li>
+                                    @endcan
+                                    @can('course')
+                                        <li><a class="dropdown-item" href="{{ route('courseTable') }}">course</a></li>
+                                    @endcan
+                                    @can('checklist')
+                                        <li><a class="dropdown-item" href="{{ route('checkTable') }}">Check List</a></li>
+                                    @endcan
+                                    @can('media')
+                                        <li><a class="dropdown-item" href="{{ route('mediaTable') }}">Media</a></li>
                                     @endcan
                                 </div>
                             </ul>
@@ -205,6 +223,9 @@
                                 <ul class="dropdown-menu dropdown-menu-end " aria-labelledby="navbarDropdown">
                                     <div class="d-flex flex-column justify-content-center">
                                         <li class="text-center"><a class="dropdown-item" href="{{ route('profile') }}">ตั้งค่าบัญชี</a></li>
+                                        @role('admin')
+                                        <li class="text-center"><a class="dropdown-item" href="{{ route('management') }}">จัดการข้อมูล</a></li>
+                                        @endrole
                                         <li>
                                             <a class="dropdown-item text-center" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();

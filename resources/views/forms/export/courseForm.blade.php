@@ -131,8 +131,7 @@
                     <p class="mt-1">บริษัท ไอดีไดรฟ์ จำกัด</p>
                 </div>
                 <div class="col-5 border border-black border-top-0 border-bottom-0">
-                    <h5 class="mt-3 fw-bold">ระเบียบการปฏิบัติงาน</h5>
-                    <h5 class="fw-bold">Standard Operating Procedure (SOP)</h5>
+                    <h5 class="mt-3 fw-bold">Course</h5>
                     <div class="d-flex ">
                         <h5 class="text-start mt-3 fw-bold">เรื่อง</h5>
                             <h5 class="text-start mt-3 ms-2 " id="subject">{{$subject}}</h5>

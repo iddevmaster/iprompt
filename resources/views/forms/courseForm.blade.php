@@ -5,7 +5,7 @@
 @section('content')
 <body>
     <div class="text-center my-4">
-        <h2>ระเบียบการปฏิบัติงาน</h2>
+        <h2>Course</h2>
     </div>
     <form id="myForm" class="overflow-x-auto" action="{{ route('preview') }}" method="POST" >
         @csrf
@@ -20,8 +20,7 @@
                         <p class="mt-1">บริษัท ไอดีไดรฟ์ จำกัด</p>
                     </div>
                     <div class="col-5 border border-black border-top-0 border-bottom-0">
-                        <h5 class="mt-3 fw-bold">ระเบียบการปฏิบัติงาน</h5>
-                        <h5 class="fw-bold">Standard Operating Procedure (SOP)</h5>
+                        <h5 class="mt-3 fw-bold">Course</h5>
                         <div class="d-flex ">
                             <h5 class="text-start mt-3 fw-bold">เรื่อง</h5>
                             @if ($class)
@@ -47,12 +46,15 @@
                             <p class="text-start mb-0">วันที่บังคับใช้ </p>
                             <p class="text-start">หน้าที่ 1/1</p>
 
+                            @php
+                                $formattedLen = str_pad($len, 2, '0', STR_PAD_LEFT);
+                            @endphp
                             <script>
                                 // Get the current date
                                 var currentDate = new Date();
                                 var currentYear = currentDate.getFullYear()+543;
-                                document.getElementById("currentYear").innerText = "SOP0{{$len}}/"+currentYear;
-                                document.getElementsByName('bookNo')[0].value = "SOP0{{$len}}/"+currentYear;
+                                document.getElementById("currentYear").innerText = "COS-ID-{{$formattedLen}}";
+                                document.getElementsByName('bookNo')[0].value = "COS-ID-{{$formattedLen}}";
                             </script>
                         @endif
                     </div>
@@ -119,9 +121,26 @@
             </div> <!-- end footer -->
 
             <!-- send form type for preview -->
-            <input type="hidden" name="formtype" id="formtype" value="sopForm">
+            <input type="hidden" name="formtype" id="formtype" value="courseForm">
 
         </div>
+
+        @if ($class)
+            @php
+                $types = App\Models\type::where('type', 'course')->get();
+            @endphp
+            <div class="my-2 d-flex justify-content-center">
+                <div >
+                    <select class="form-select" aria-label="Default select example" name="subtype">
+                        <option selected disabled>All</option>
+                        @foreach ($types as $type)
+                            <option value="{{$type->subtype}}">{{$type->subtype}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+        @endif
+
         <div class="d-flex justify-content-center ">
             @if ($class)
                 <button type="button" class="btn btn-secondary" id="backButton">Back</button>

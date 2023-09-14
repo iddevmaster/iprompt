@@ -150,9 +150,8 @@
                     </div>
                     <div class="col-5 border border-black border-top-0 border-bottom-0">
                         <h5 class="mt-3 fw-bold">
-                            มาตรฐานขั้นตอนการปฏิบัติงาน
+                            สื่อการตลาด
                         </h5>
-                        <h5 class="fw-bold">Work instruction (WI)</h5>
                         <div class="d-flex">
                             <h5 class="text-start mt-2 fw-bold">เรื่อง</h5>
                             <h5 class="text-start mt-2 ms-2" id="subject">

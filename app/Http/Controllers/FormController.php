@@ -41,6 +41,30 @@ class FormController extends Controller
         return view('/forms/wiForm', compact('class','len'));
     }
 
+    public function checkForm()
+    {
+        // หน้า wi form
+        $len = gendoc::where('type', 'LIKE' , 'checkForm%')->count()+1;
+        $class = 0;
+        return view('/forms/checkForm', compact('class','len'));
+    }
+
+    public function courseForm()
+    {
+        // หน้า wi form
+        $len = gendoc::where('type', 'LIKE' , 'courseForm%')->count()+1;
+        $class = 0;
+        return view('/forms/courseForm', compact('class','len'));
+    }
+
+    public function mediaForm()
+    {
+        // หน้า wi form
+        $len = gendoc::where('type', 'LIKE' , 'mediaForm%')->count()+1;
+        $class = 0;
+        return view('/forms/mediaForm', compact('class','len'));
+    }
+
     public function jdForm()
     {
         // หน้า jd form
@@ -223,7 +247,7 @@ class FormController extends Controller
             $gendoc->book_num = $request->bookNo;
             $gendoc->submit_by = $request->user()->id;
             $gendoc->created_date = date('Y-m-d');
-            $gendoc->type = $request->formtype;
+            $gendoc->type = $request->formtype. ($request->subtype? ".".$request->subtype : '');
             $gendoc->title = $request->subject;
             $gendoc->bcreater = $request->creater;
             $gendoc->binspector = $request->inspector;
@@ -258,6 +282,84 @@ class FormController extends Controller
             $approver = $form->bapprover;
         }
         return view('/forms/export/wiForm', compact('form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+
+    }
+
+    // Function for edit form
+    public function editFormmedia(Request $request,$id){
+        // แก้ไข wi form
+        $form = gendoc::find($id);
+        // dd($form->title);
+        return view('/editForms/mediaForm', compact('form'));
+    }
+
+    // Function for download form
+    public function downloadFormmedia(Request $request,$dorv,$id){
+        $form = gendoc::find($id);
+        // dd($form);
+        if ($form) {
+            $formtype = $form->type;
+            $class = 1;
+            $editorContent = $form->detail;
+            $bookNo = $form->book_num;
+            $subject = $form->title;
+            $creater = $form->bcreater;
+            $inspector = $form->binspector;
+            $approver = $form->bapprover;
+        }
+        return view('/forms/export/mediaForm', compact('form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+
+    }
+
+    // Function for edit form
+    public function editFormcourse(Request $request,$id){
+        // แก้ไข wi form
+        $form = gendoc::find($id);
+        // dd($form->title);
+        return view('/editForms/courseForm', compact('form'));
+    }
+
+    // Function for download form
+    public function downloadFormcourse(Request $request,$dorv,$id){
+        $form = gendoc::find($id);
+        // dd($form);
+        if ($form) {
+            $formtype = $form->type;
+            $class = 1;
+            $editorContent = $form->detail;
+            $bookNo = $form->book_num;
+            $subject = $form->title;
+            $creater = $form->bcreater;
+            $inspector = $form->binspector;
+            $approver = $form->bapprover;
+        }
+        return view('/forms/export/courseForm', compact('form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+
+    }
+
+    // Function for edit form
+    public function editFormcheck(Request $request,$id){
+        // แก้ไข wi form
+        $form = gendoc::find($id);
+        // dd($form->title);
+        return view('/editForms/checkForm', compact('form'));
+    }
+
+    // Function for download form
+    public function downloadFormcheck(Request $request,$dorv,$id){
+        $form = gendoc::find($id);
+        // dd($form);
+        if ($form) {
+            $formtype = $form->type;
+            $class = 1;
+            $editorContent = $form->detail;
+            $bookNo = $form->book_num;
+            $subject = $form->title;
+            $creater = $form->bcreater;
+            $inspector = $form->binspector;
+            $approver = $form->bapprover;
+        }
+        return view('/forms/export/checkForm', compact('form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
 
     }
 
@@ -456,6 +558,7 @@ class FormController extends Controller
                 $form->binspector = $request->inspector;
                 $form->bapprover = $request->approver;
                 $form->detail = $request->myInput;
+                $form->type = $request->formtype. ($request->subtype? ".".$request->subtype : '');
                 $form->save();
             }
             Alert::toast('Your Form as been Updated!','success');
@@ -463,13 +566,12 @@ class FormController extends Controller
                 return redirect('/tables/wiTable');
             } elseif ($request->formtype === "sopForm") {
                 return redirect('/tables/sopTable');
-            } else {
+            } elseif ($request->formtype === "policyForm") {
                 return redirect('/tables/policyTable');
-            }
-
+            } else {
+                return redirect('home');
+            };
         }
-
-
     }
 
 }

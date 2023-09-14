@@ -37,11 +37,11 @@
             <!-- content -->
             <div class="content py-3 w-100 ">
                 @if ($class)
-                    <?php 
+                    <?php
                         session_start();
                         $_SESSION['data'] = $editorContent;
                     ?>
-                    <div style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
+                    <div style="padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
                     <input type="hidden" name="editorContent" value="{{$editorContent}}">
                 @else
                     <textarea id="editor" name="myInput" >
@@ -101,7 +101,7 @@
         </div>
         <div class="d-flex justify-content-center ">
             @if ($class)
-                <a href="javascript:void(0);" onclick="goBack();"><button type="button" class="btn btn-secondary">Back</button></a>
+                <button type="button" class="btn btn-secondary" id="backButton">Back</button>
                 <button type="submit" class="btn btn-success ms-2" name="submit" value="save">Save</button>
             @else
                 <a href="{{ route('home') }}"><button type="button" class="btn btn-secondary">cancle</button></a>
@@ -109,9 +109,9 @@
             @endif
             <script>
                 function goBack() {
-                    window.history.go(-1);
-                    window.scrollTo(0, 0);
-                }
+                    window.history.back();
+                };
+                document.getElementById('backButton').addEventListener('click', goBack);
             </script>
         </div>
     </form>

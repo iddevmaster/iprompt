@@ -84,7 +84,7 @@
             .a4-container {
                 visibility: visible;
             }
-            
+
         }
     </style>
 </head>
@@ -95,7 +95,7 @@
         <div class="header border-bottom d-flex flex-column justify-content-center text-center align-items-center">
             <div class="mb-2"><img style="" src="{{ asset('dist/img/logoiddrives.png') }}" height="80"></div>
             <h4 class="fw-bold">บริษัท ไอดีไดรฟ์ จำกัด (สำนักงานใหญ่)</h4>
-            <p>200/222 หมู่2 ถนนชัยพฤกษ์ อำเภอเมืองขอนแก่น จังหวัดขอนแก่น Tel:043-228-899 <br>    
+            <p>200/222 หมู่2 ถนนชัยพฤกษ์ อำเภอเมืองขอนแก่น จังหวัดขอนแก่น Tel:043-228-899 <br>
                 เลขที่ผู้เสียภาษี 0 4055 36000 53 1  Email: idofficer@iddrives.co.th</p>
         </div> <!-- end header -->
 
@@ -108,18 +108,18 @@
                 <br>
             </div>
 
-            <div style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
+            <div style="padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
 
             <div class="mt-auto w-100 ">
                 <div class="ms-5 mt-4">
                         <p class="ms-5">มีผลบังคับใช้ตั้งแต่วันที่ {{ $useDate }}</p>
-                        <p class="ms-5">ประกาศ ณ วันที่ {{ $annoDate }}</p>                    
+                        <p class="ms-5">ประกาศ ณ วันที่ {{ $annoDate }}</p>
                 </div>
                 <div class="mt-5 text-center d-flex flex-column align-items-center">
                     <p>จึงประกาศมาเพื่อทราบโดยทั่วกัน</p>
                     <div class="mb-1" id=""> <br>....................................</div>
                         <p class="mb-0">( {{ $signName }} )</p>
-                        <p>{{ $signPosition }}</p>            
+                        <p>{{ $signPosition }}</p>
                     <p class="mb-0">บริษัท ไอดีไดรฟ์ จำกัด</p>
                 </div>
             </div>
@@ -131,7 +131,7 @@
                 ในรูปสื่อกระดาษให้ตรวจสอบความทันสมัยกับฉบับทางการในระบบเครือข่ายสารสนเทศ ก่อนใช้อ้างอิง และทำลายทิ้งทันที หากพบว่าเป็นฉบับไม่ทันสมัย <br>
                 เอกสารนี้ เป็น สมบัติของบริษัท ไอดีไดรฟ์ จำกัดห้ามแจกจ่ายไปยังภายนอก โดยไม่ได้รับอนุญาตจาก กรรมการผู้จัดการ บริษัท ไอดีไดรฟ์ จำกัด
                 <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: ระบบสารบัญ <?php date_default_timezone_set('Asia/Bangkok');
-                                                                                                                        $now = time(); 
+                                                                                                                        $now = time();
                                                                                                                         $thaiYear = intval(date('Y', $now)) + 543;
                                                                                                                         echo date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s', $now) . " +543 years")); ?>
                 </p>

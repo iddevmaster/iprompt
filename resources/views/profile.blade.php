@@ -165,47 +165,65 @@
 
                     <p class="mt-4 ms-3 fw-bold">Accessability :</p>
                     <div class="d-flex ms-4">
-                        <div>
-                            <div class="form-check mx-3">
+                        <div class="row">
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="WI" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     WI
                                 </label>
                             </div>
-                            <div class="form-check mx-3">
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="SOP" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     SOP
                                 </label>
                             </div>
-                            <div class="form-check mx-3">
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="POL" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Policy
                                 </label>
                             </div>
-                            <div class="form-check mx-3">
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="PRO" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Project
                                 </label>
                             </div>
-                            <div class="form-check mx-3">
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="MOU" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     MOU
                                 </label>
                             </div>
-                            <div class="form-check mx-3">
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="ANNO" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Announcement
                                 </label>
                             </div>
-                            <div class="form-check mx-3">
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="CONT" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Contract
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="checklist" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    CheckList
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="course" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Course
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="media" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Media
                                 </label>
                             </div>
                         </div>
@@ -235,6 +253,9 @@
                         const inspector = document.getElementById('inspector');
                         const wi = document.getElementById('WI');
                         const sop = document.getElementById('SOP');
+                        const check = document.getElementById('checklist');
+                        const course = document.getElementById('course');
+                        const media = document.getElementById('media');
                         const pol = document.getElementById('POL');
                         const pro = document.getElementById('PRO');
                         const mou = document.getElementById('MOU');
@@ -262,27 +283,30 @@
                                     agn.disabled = false;
                                     brn.disabled = false;
 
-                                // Download
-                                down_yes.disabled = false;
-                                down_no.disabled = false;
+                                    // Download
+                                    down_yes.disabled = false;
+                                    down_no.disabled = false;
 
-                                // Create
-                                create_yes.disabled = false;
-                                create_no.disabled = false;
+                                    // Create
+                                    create_yes.disabled = false;
+                                    create_no.disabled = false;
 
-                                // Confirmable
-                                approver.disabled = false;
-                                inspector.disabled = false;
+                                    // Confirmable
+                                    approver.disabled = false;
+                                    inspector.disabled = false;
 
 
-                                // Access
-                                wi.disabled = false;
-                                sop.disabled = false;
-                                pol.disabled = false;
-                                pro.disabled = false;
-                                mou.disabled = false;
-                                anno.disabled = false;
-                                cont.disabled = false;
+                                    // Access
+                                    wi.disabled = false;
+                                    sop.disabled = false;
+                                    pol.disabled = false;
+                                    pro.disabled = false;
+                                    mou.disabled = false;
+                                    anno.disabled = false;
+                                    cont.disabled = false;
+                                    check.disabled = false;
+                                    course.disabled = false;
+                                    media.disabled = false;
                                 };
                                 editbtn.textContent = 'Save';
                             } else {
@@ -314,6 +338,9 @@
                                         anno: anno.checked,
                                         cont: cont.checked,
                                         role: role.value,
+                                        check: check.checked,
+                                        course: course.checked,
+                                        media: media.checked,
                                     }),
                                 })
                                 .then((response) => {
@@ -371,6 +398,9 @@
                                 mou.disabled = true;
                                 anno.disabled = true;
                                 cont.disabled = true;
+                                check.disabled = true;
+                                course.disabled = true;
+                                media.disabled = true;
 
                                 editbtn.textContent = 'Edit';
 

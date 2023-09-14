@@ -17,7 +17,7 @@
             <div class="header border-bottom d-flex flex-column justify-content-center text-center align-items-center">
                 <div class="mb-2"><img style="" src="{{ asset('dist/img/logoiddrives.png') }}" height="100"></div>
                 <h4 class="fw-bold">บริษัท ไอดีไดรฟ์ จำกัด (สำนักงานใหญ่)</h4>
-                <p>200/222 หมู่2 ถนนชัยพฤกษ์ อำเภอเมืองขอนแก่น จังหวัดขอนแก่น Tel:043-228-899 <br>    
+                <p>200/222 หมู่2 ถนนชัยพฤกษ์ อำเภอเมืองขอนแก่น จังหวัดขอนแก่น Tel:043-228-899 <br>
                     เลขที่ผู้เสียภาษี 0 4055 36000 53 1  Email: idofficer@iddrives.co.th</p>
             </div> <!-- end header -->
 
@@ -37,8 +37,8 @@
                             document.getElementsByName('annNo')[0].value = "AN0{{$len}}/"+currentYear;
                         </script>
                     @endif
-                        
-                    
+
+
                     @if ($class)
                         <h5 class="text-start mt-3 ms-2 " id="subject"><b>เรื่อง</b> {{$subject}}</h5>
                         <input type="hidden" name="subject" value="{{$subject}}">
@@ -46,14 +46,14 @@
                         <h5 class="fw-bold">เรื่อง <input type="text" name="subject" required></h5>
                     @endif
                     <br>
-                </div>  
+                </div>
 
                 @if ($class)
-                    <?php 
+                    <?php
                         session_start();
                         $_SESSION['data'] = $editorContent;
                     ?>
-                    <div style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
+                    <div style="padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
                     <input type="hidden" name="editorContent" value="{{$editorContent}}">
                 @else
                     <textarea id="editor" name="myInput">
@@ -67,7 +67,7 @@
 
                 <div class="mt-auto w-100 ">
                     <div class="ms-5 mt-4">
-                        
+
                         @if ($class)
                             <p class="ms-5">มีผลบังคับใช้ตั้งแต่วันที่ {{ $useDate }}</p>
                             <p class="ms-5">ประกาศ ณ วันที่ {{ $annoDate }}</p>
@@ -77,7 +77,7 @@
                             <p class="ms-5">มีผลบังคับใช้ตั้งแต่วันที่  <input class="ms-2" type="text" name="useDate" required></p>
                             <p class="ms-5">ประกาศ ณ วันที่  <input class="ms-2" type="text" name="annoDate" required></p>
                         @endif
-                        
+
                     </div>
                     <div class="mt-5 text-center d-flex flex-column align-items-center">
                         <p>จึงประกาศมาเพื่อทราบโดยทั่วกัน</p>
@@ -91,7 +91,7 @@
                             <p>( <input name="signName" type="text" placeholder="กรุณากรอกชื่อ" required> )</p>
                             <input class="w-50 mb-2" name="signPosition" type="text" placeholder="กรุณากรอกตำแหน่ง" required>
                         @endif
-                        
+
                         <p class="mb-0">บริษัท ไอดีไดรฟ์ จำกัด</p>
                     </div>
                 </div>
@@ -111,7 +111,7 @@
 
         <div class="d-flex justify-content-center ">
             @if ($class)
-                <a href="javascript:void(0);"><button type="button" class="btn btn-secondary">Back</button></a>
+                <button type="button" class="btn btn-secondary" id="backButton">Back</button>
                 <button type="submit" class="btn btn-success ms-2" name="submit" value="save">Save</button>
             @else
                 <a href="{{ route('home') }}"><button type="button" class="btn btn-secondary">cancle</button></a>
@@ -119,9 +119,9 @@
             @endif
             <script>
                 function goBack() {
-                    window.history.go(-1);
-                    window.scrollTo(0, 0);
-                }
+                    window.history.back();
+                };
+                document.getElementById('backButton').addEventListener('click', goBack);
             </script>
         </div>
     </form>

@@ -38,12 +38,13 @@
                         @php
                             $app = json_decode($row->app);
                             $ins = json_decode($row->ins);
+                            $type = explode('.', $row->type);
                         @endphp
                         @if (($row->stat === 'รออนุมัติ' && $app->appId == Auth::user()->id) || ($row->stat === 'รอตรวจสอบ' && $ins->appId == Auth::user()->id))
                             <tr>
                                 <td>{{$counter}}</td>
                                 <td>{{ $row->book_num}}</td>
-                                <td>{{ $row->type}}</td>
+                                <td>{{ $type ? $type[0] : $row->type}}</td>
                                 <td class="truncate">{{ $row->title}}</td>
                                 <td>{{ $row->created_date}}</td>
                                 <td>
@@ -70,6 +71,12 @@
                                         <a href="{{url('/form/downloadmou/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @elseif ($row->type === 'projForm')
                                         <a href="{{url('/form/downloadproj/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                    @elseif ($type[0] === 'courseForm')
+                                        <a href="{{url('/form/downloadcourse/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                    @elseif ($type[0] === 'mediaForm')
+                                        <a href="{{url('/form/downloadmedia/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                    @elseif ($type[0] === 'checkForm')
+                                        <a href="{{url('/form/downloadcheck/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @endif
                                 </td>
                             </tr>
@@ -96,7 +103,7 @@
                 confirmButtonText: 'ผ่าน',
                 denyButtonText: 'ไม่ผ่าน',
                 cancelButtonText: 'Cancel'
-                }).then((result) => { 
+                }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire({
                     input: 'textarea',
@@ -196,7 +203,7 @@
                 confirmButtonText: 'ผ่าน',
                 denyButtonText: 'ไม่ผ่าน',
                 cancelButtonText: 'Cancel'
-                }).then((result) => { 
+                }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire({
                     input: 'textarea',

@@ -17,7 +17,7 @@
             <div class="header d-flex flex-column justify-content-center text-center align-items-center">
                 <img src="{{ asset('dist/img/logoiddrives.png') }}" height="60">
                 <p class="mb-1 fw-bold">บันทึกข้อตกลงความร่วมมือ</p>
-                
+
                 @if ($class)
                 <p class="text-end w-100">เลขที่ {{$book_num}}</p>
                 <input type="hidden" name="book_num" value="{{$book_num}}">
@@ -47,7 +47,7 @@
                     <button type="button" class="my-2 btn btn-info" id="addInputButton">เพิ่มข้อมูล</button>
                     <p class="text-danger">*สามารถเพิ่มได้ไม่เกิน 3 ฝ่าย</p>
                 @endif
-                
+
                 @if ($class)
                     <p class="my-2 w-100 text-center">บันทึกข้อตกลงฉบับนี้จัดทำขึ้น ณ {{$location}}</p>
                     <input type="hidden" name="location" value="{{$location}}">
@@ -59,11 +59,11 @@
             <!-- content -->
             <div class="content my-4 w-100 h-100 d-flex flex-column">
                 @if ($class)
-                    <?php 
+                    <?php
                         session_start();
                         $_SESSION['data'] = $editorContent;
                     ?>
-                    <div style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
+                    <div style="padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
                     <input type="hidden" name="editorContent" value="{{$editorContent}}">
                 @else
                     <textarea id="editor" name="myInput" >
@@ -103,7 +103,7 @@
         <!-- Button -->
         <div class="d-flex justify-content-center ">
             @if ($class)
-                <a href="javascript:void(0);"><button type="button" class="btn btn-secondary">Back</button></a>
+                <button type="button" class="btn btn-secondary" onclick="goBack()">Back</button>
                 <button type="submit" class="btn btn-success ms-2" name="submit" value="save">Save</button>
             @else
                 <a href="{{ route('home') }}"><button type="button" class="btn btn-secondary">cancle</button></a>
@@ -111,9 +111,8 @@
             @endif
             <script>
                 function goBack() {
-                    window.history.go(-1);
-                    window.scrollTo(0, 0);
-                }
+                    window.history.back();
+                };
 
                 // Get references to the button and container elements
                 const addButton = document.getElementById('addsignButton');

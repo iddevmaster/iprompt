@@ -9,6 +9,7 @@ use App\Models\project_doc;
 use App\Models\announce_doc;
 use App\Models\mou_doc;
 use App\Models\imported;
+use App\Models\type;
 use PDF;
 Use Alert;
 use App\Models\department;
@@ -58,6 +59,72 @@ class TablesController extends Controller
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         return view('/tables/wiTable', compact('inspectors','approvers','gendoc', 'user'));
+    }
+
+    public function checkTable() {
+        if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
+            $gendoc = gendoc::where('type', 'LIKE', 'checkForm%')->where('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->paginate(10);
+        } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
+            $gendoc = gendoc::where('type', 'LIKE', 'checkForm%')->whereIn('dpm', json_decode((department::find((Auth::user())->dpm))->prefix))->orderBy('id', 'desc')->paginate(10);
+        }
+        else {
+            $gendoc = gendoc::where('type', 'LIKE', 'checkForm%')->orderBy('id', 'desc')->paginate(10);
+        };
+        foreach($gendoc as $doc) {
+            if ($doc->dpm == '-'){
+                $doc->dpm = (department::find((User::find($doc->submit_by))->dpm))->prefix;
+                $doc->save();
+            }
+        };
+        $user = User::all();
+        $approvers = User::permission('approve')->get();
+        $inspectors = User::permission('inspect')->get();
+        $type = type::where('type', 'check')->get();
+        return view('/tables/checkTable', compact('inspectors','approvers','gendoc', 'user', 'type'));
+    }
+
+    public function courseTable() {
+        if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
+            $gendoc = gendoc::where('type', 'LIKE', 'courseForm%')->where('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->paginate(10);
+        } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
+            $gendoc = gendoc::where('type', 'LIKE', 'courseForm%')->whereIn('dpm', json_decode((department::find((Auth::user())->dpm))->prefix))->orderBy('id', 'desc')->paginate(10);
+        }
+        else {
+            $gendoc = gendoc::where('type', 'LIKE', 'courseForm%')->orderBy('id', 'desc')->paginate(10);
+        };
+        foreach($gendoc as $doc) {
+            if ($doc->dpm == '-'){
+                $doc->dpm = (department::find((User::find($doc->submit_by))->dpm))->prefix;
+                $doc->save();
+            }
+        };
+        $user = User::all();
+        $approvers = User::permission('approve')->get();
+        $inspectors = User::permission('inspect')->get();
+        $type = type::where('type', 'course')->get();
+        return view('/tables/courseTable', compact('inspectors','approvers','gendoc', 'user', 'type'));
+    }
+
+    public function mediaTable() {
+        if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
+            $gendoc = gendoc::where('type', 'LIKE', 'mediaForm%')->where('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->paginate(10);
+        } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
+            $gendoc = gendoc::where('type', 'LIKE', 'mediaForm%')->whereIn('dpm', json_decode((department::find((Auth::user())->dpm))->prefix))->orderBy('id', 'desc')->paginate(10);
+        }
+        else {
+            $gendoc = gendoc::where('type', 'LIKE', 'mediaForm%')->orderBy('id', 'desc')->paginate(10);
+        };
+        foreach($gendoc as $doc) {
+            if ($doc->dpm == '-'){
+                $doc->dpm = (department::find((User::find($doc->submit_by))->dpm))->prefix;
+                $doc->save();
+            }
+        };
+        $user = User::all();
+        $approvers = User::permission('approve')->get();
+        $inspectors = User::permission('inspect')->get();
+        $type = type::where('type', 'media')->get();
+        return view('/tables/mediaTable', compact('inspectors','approvers','gendoc', 'user', 'type'));
     }
 
     // query all sop form from database to sop table page
@@ -523,6 +590,20 @@ class TablesController extends Controller
             $yourModel->save();
 
             return response()->json(['success' => $fileList]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function saveSubtype (Request $request) {
+        try {
+            $type = $request->type;
+            $subtype = $request->subtype;
+            $type = type::create([
+                'type' => $type,
+                'subtype' => $subtype,
+            ]);
+            return response()->json(['saveSubtype' => "Success"]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e]);
         }

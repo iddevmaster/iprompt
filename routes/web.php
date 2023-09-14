@@ -31,6 +31,13 @@ Route::get('/users/create', [App\Http\Controllers\HomeController::class, 'create
 Route::post('/users/store', [App\Http\Controllers\HomeController::class, 'storeUser'])->name('users.store');
 Route::post('/users/update', [App\Http\Controllers\HomeController::class, 'updateUser']);
 
+// manage data
+Route::get('/management', [App\Http\Controllers\HomeController::class, 'management'])->name('management');
+Route::post('permission/add', [App\Http\Controllers\HomeController::class, 'addPermis']);
+Route::post('permission/del', [App\Http\Controllers\HomeController::class, 'delPermis']);
+
+Route::post('type/del', [App\Http\Controllers\HomeController::class, 'delType']);
+
 
 // change password
 Route::get('/change-password/{id}', [App\Http\Controllers\ChangePasswordController::class,'showChangePasswordForm'])->name('changepassword');
@@ -48,6 +55,9 @@ Route::get('/form/annoForm', [App\Http\Controllers\FormController::class, 'annoF
 Route::get('/form/projForm', [App\Http\Controllers\FormController::class, 'projForm'])->name('projForm');
 Route::get('/form/mouForm', [App\Http\Controllers\FormController::class, 'mouForm'])->name('mouForm');
 Route::post('/form/preview', [App\Http\Controllers\FormController::class, 'preview'])->name('preview');
+Route::get('/form/checklist', [App\Http\Controllers\FormController::class, 'checkForm'])->name('checkForm');
+Route::get('/form/course', [App\Http\Controllers\FormController::class, 'courseForm'])->name('courseForm');
+Route::get('/form/media', [App\Http\Controllers\FormController::class, 'mediaForm'])->name('mediaForm');
 
 
 // Table
@@ -60,6 +70,9 @@ Route::get('/tables/mouTable', [App\Http\Controllers\TablesController::class, 'm
 Route::get('/tables/createPDF', [App\Http\Controllers\TablesController::class, 'createPDF'])->name('createPDF');
 Route::get('/tables/imported', [App\Http\Controllers\ImportController::class, 'imported'])->name('importedTable');
 Route::get('/tables/verify', [App\Http\Controllers\TablesController::class, 'verifyDoc'])->name('verifyDoc');
+Route::get('/tables/checkTable', [App\Http\Controllers\TablesController::class, 'checkTable'])->name('checkTable');
+Route::get('/tables/courseTable', [App\Http\Controllers\TablesController::class, 'courseTable'])->name('courseTable');
+Route::get('/tables/mediaTable', [App\Http\Controllers\TablesController::class, 'mediaTable'])->name('mediaTable');
 
 Route::post('/table/form/verify', [App\Http\Controllers\TablesController::class, 'setVerify']);
 Route::post('/table/form/addTeam', [App\Http\Controllers\TablesController::class, 'addTeam']);
@@ -87,6 +100,15 @@ Route::get('/form/downloadmou/{dorv}/{id}',[App\Http\Controllers\FormController:
 Route::get('/form/editanno/{id}',[App\Http\Controllers\FormController::class,'editFormanno']);
 Route::get('/form/downloadanno/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormanno']);
 
+Route::get('/form/editmedia/{id}',[App\Http\Controllers\FormController::class,'editFormmedia']);
+Route::get('/form/downloadmedia/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormmedia']);
+
+Route::get('/form/editcourse/{id}',[App\Http\Controllers\FormController::class,'editFormcourse']);
+Route::get('/form/downloadcourse/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormcourse']);
+
+Route::get('/form/editcheck/{id}',[App\Http\Controllers\FormController::class,'editFormcheck']);
+Route::get('/form/downloadcheck/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormcheck']);
+
 Route::get('/export/table/{type}',[App\Http\Controllers\TablesController::class,'exTable']);
 
 
@@ -105,3 +127,4 @@ Route::get('/form/viewmou/{id}',[App\Http\Controllers\TablesController::class,'v
 Route::post('/form/import/store',[App\Http\Controllers\ImportController::class,'storeImported'])->name('storeImported');
 
 Route::post('/form/import/upStatus',[App\Http\Controllers\ImportController::class,'updateStatus']);
+Route::post('/saveSubtype',[App\Http\Controllers\TablesController::class,'saveSubtype']);

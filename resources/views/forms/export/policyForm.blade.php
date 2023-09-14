@@ -84,7 +84,7 @@
             .a4-container {
                 visibility: visible;
             }
-            
+
         }
     </style>
 </head>
@@ -106,7 +106,7 @@
                 </div>
 
                 <div class="col pt-2">
-                        <?php 
+                        <?php
                             $datetime = (json_decode($form->app))->date ?? date('Y-m-d');
                             $dated = new DateTime($datetime);
                          ?>
@@ -140,7 +140,7 @@
 
         <!-- content -->
         <div class="content py-5 w-100 h-100">
-                <div style="text-indent: 2.5em;padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
+                <div style="padding-left:1.5cm;padding-right:1cm"> {!! $editorContent !!} </div>
                 <input type="hidden" name="editorContent" value="{{ $editorContent }}">
         </div><!-- end content -->
 
