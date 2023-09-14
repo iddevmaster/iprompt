@@ -24,7 +24,7 @@
                             <option value="{{$per->name}}">{{$per->name}}</option>
                         @endforeach
                     </select>
-                    <button class="btn btn-danger" onclick="deleteBtn()" id="delPer"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-danger" onclick="deleteBtn()" id="delPer"><i class="bi bi-trash"></i></button>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
                             <option value="{{$per->id}}">{{$per->type}} / {{$per->subtype}}</option>
                         @endforeach
                     </select>
-                    <button class="btn btn-danger" onclick="deleteType()" id="delType"><i class="bi bi-x-lg"></i></button>
+                    <button class="btn btn-danger" onclick="deleteType()" id="delType"><i class="bi bi-trash"></i></button>
                 </div>
             </div>
         </div>
