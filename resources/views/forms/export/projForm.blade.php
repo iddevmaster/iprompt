@@ -87,6 +87,12 @@
             }
 
         }
+.editorContent2 > .image > img {
+    width: -webkit-fill-available;
+}
+.editorContent2 > .image {
+    margin: auto;
+}
     </style>
 </head>
 <body>
@@ -99,7 +105,7 @@
 
         <!-- content -->
         <div class="content py-3 w-100 h-100 d-flex flex-column">
-                <div style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
+                <div class="editorContent2"  style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
                 <input type="hidden" name="editorContent" value="{{$editorContent}}">
         </div><!-- end content -->
 

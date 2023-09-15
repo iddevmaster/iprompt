@@ -96,8 +96,14 @@ p{
   display: flex;
   justify-content: center;
 }
-.editorContent img{
+.editorContent > img{
   width: inherit;
+}
+.editorContent2 > .image > img {
+    width: -webkit-fill-available;
+}
+.editorContent2 > .image {
+    margin: auto;
 }
 .editorContent ul, ol{
   text-indent: unset;

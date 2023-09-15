@@ -95,7 +95,7 @@
                         session_start();
                         $_SESSION['data'] = $editorContent;
                     ?>
-                    <div style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
+                    <div class="editorContent2" style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
                     <input type="hidden" name="editorContent" value="{!! $editorContent !!}">
                 @else
                     <textarea id="editor" name="myInput">

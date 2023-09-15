@@ -86,6 +86,12 @@
             }
 
         }
+.editorContent2 > .image > img {
+    width: -webkit-fill-available;
+}
+.editorContent2 > .image {
+    margin: auto;
+}
     </style>
 </head>
 <body>
@@ -108,7 +114,7 @@
                 <br>
             </div>
 
-            <div style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
+            <div class="editorContent2" style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
 
             <div class="mt-auto w-100 ">
                 <div class="ms-5 mt-4">

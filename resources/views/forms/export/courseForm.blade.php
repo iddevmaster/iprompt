@@ -86,38 +86,12 @@
             }
 
         }
-        .editorContent {
-                display: flex;
-                justify-content: center;
-                flex-direction: column;
-                align-items: center;
-            }
-            .editorContent p{
-                width: 100%;
-                display: flex;
-                justify-content: start;
-                padding-left:1.5cm;
-                padding-right:1cm;
-
-            }
-
-            .editorContent table{
-                width:fit-content;
-                text-align: center;
-                min-width: 30%;
-            }
-            .editorContent figure{
-                display: flex;
-                justify-content: center;
-            }
-            .editorContent img{
-                width: inherit;
-            }
-            .editorContent ul, ol{
-                text-indent: unset;
-                text-align: start;
-                width: 100%;
-            }
+.editorContent2 > .image > img {
+    width: -webkit-fill-available;
+}
+.editorContent2 > .image {
+    margin: auto;
+}
     </style>
 </head>
 <body>
@@ -174,7 +148,7 @@
 
         <!-- content -->
         <div class="content py-5 w-100 h-100">
-                <div style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
+                <div class="editorContent2" style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
         </div><!-- end content -->
 
         <!-- footer -->
