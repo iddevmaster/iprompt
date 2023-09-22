@@ -211,6 +211,7 @@ class TablesController extends Controller
 
         foreach($gendoc as $doc) {
             if ($doc->dpm === '-'){
+                dd(User::find($doc->submit_by));
                 $doc->dpm = (department::find((User::find($doc->submit_by))->dpm))->prefix;
                 $doc->save();
             }
