@@ -212,7 +212,6 @@ class TablesController extends Controller
         foreach($gendoc as $doc) {
             if ($doc->dpm === '-'){
                 $usersub = json_decode($doc->submit_by);
-                dd((is_array($usersub) ? $usersub[0] : $doc->submit_by));
                 $doc->dpm = (department::find((User::find(is_array($usersub) ? $usersub[0] : $doc->submit_by))->dpm))->prefix;
                 $doc->save();
             }
