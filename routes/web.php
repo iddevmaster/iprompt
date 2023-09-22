@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
+    Auth::logout();
     return view('auth/login');
 });
 
