@@ -19,6 +19,7 @@ class project_doc extends Model
         'detail',
         'sign',
         'created_date',
-        
+        'shares'
+
     ];
 }

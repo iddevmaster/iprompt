@@ -9,7 +9,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8 mb-5 d-flex justify-content-center">
                 <div class="head-name my-5">
-                    <p>ระบบสารบรรณอิเล็กทรอนิกส์</p>
+                    <p>I-Prompt</p>
                 </div>
             </div>
 

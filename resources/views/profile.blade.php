@@ -226,6 +226,12 @@
                                     Media
                                 </label>
                             </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="staff" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Staff
+                                </label>
+                            </div>
                         </div>
                     </div>
                     @foreach ($permissions as $perm)
@@ -256,6 +262,7 @@
                         const check = document.getElementById('checklist');
                         const course = document.getElementById('course');
                         const media = document.getElementById('media');
+                        const staff = document.getElementById('staff');
                         const pol = document.getElementById('POL');
                         const pro = document.getElementById('PRO');
                         const mou = document.getElementById('MOU');
@@ -307,6 +314,7 @@
                                     check.disabled = false;
                                     course.disabled = false;
                                     media.disabled = false;
+                                    staff.disabled = false;
                                 };
                                 editbtn.textContent = 'Save';
                             } else {
@@ -341,6 +349,7 @@
                                         check: check.checked,
                                         course: course.checked,
                                         media: media.checked,
+                                        staff: staff.checked,
                                     }),
                                 })
                                 .then((response) => {
@@ -401,6 +410,7 @@
                                 check.disabled = true;
                                 course.disabled = true;
                                 media.disabled = true;
+                                staff.disabled = true;
 
                                 editbtn.textContent = 'Edit';
 

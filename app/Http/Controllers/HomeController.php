@@ -181,6 +181,11 @@ class HomeController extends Controller
             } else {
                 $user->revokePermissionTo('media');
             }
+            if ($data['staff']){
+                $user->givePermissionTo('staff');
+            } else {
+                $user->revokePermissionTo('staff');
+            }
 
             $user->name = $data['name'];
             $user->email = $data['username'];

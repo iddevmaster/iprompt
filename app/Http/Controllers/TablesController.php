@@ -59,7 +59,8 @@ class TablesController extends Controller
         $user = User::all();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
-        return view('/tables/wiTable', compact('inspectors','approvers','gendoc', 'user'));
+        $dpms = department::all();
+        return view('/tables/wiTable', compact('inspectors','approvers','gendoc', 'user', 'dpms'));
     }
 
     public function checkTable() {
@@ -82,7 +83,8 @@ class TablesController extends Controller
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         $type = type::where('type', 'check')->get();
-        return view('/tables/checkTable', compact('inspectors','approvers','gendoc', 'user', 'type'));
+        $dpms = department::all();
+        return view('/tables/checkTable', compact('inspectors','approvers','gendoc', 'user', 'type', 'dpms'));
     }
 
     public function courseTable() {
@@ -105,7 +107,8 @@ class TablesController extends Controller
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         $type = type::where('type', 'course')->get();
-        return view('/tables/courseTable', compact('inspectors','approvers','gendoc', 'user', 'type'));
+        $dpms = department::all();
+        return view('/tables/courseTable', compact('inspectors','approvers','gendoc', 'user', 'type', 'dpms'));
     }
 
     public function mediaTable() {
@@ -128,7 +131,8 @@ class TablesController extends Controller
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         $type = type::where('type', 'media')->get();
-        return view('/tables/mediaTable', compact('inspectors','approvers','gendoc', 'user', 'type'));
+        $dpms = department::all();
+        return view('/tables/mediaTable', compact('inspectors','approvers','gendoc', 'user', 'type', 'dpms'));
     }
 
     // query all sop form from database to sop table page
@@ -152,7 +156,8 @@ class TablesController extends Controller
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
-        return view('/tables/sopTable', compact('inspectors','approvers','gendoc', 'user'));
+        $dpms = department::all();
+        return view('/tables/sopTable', compact('inspectors','approvers','gendoc', 'user', 'dpms'));
     }
 
     // query all policy form from database to policy table page
@@ -176,7 +181,8 @@ class TablesController extends Controller
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
-        return view('/tables/policyTable', compact('inspectors','approvers','gendoc', 'user'));
+        $dpms = department::all();
+        return view('/tables/policyTable', compact('inspectors','approvers','gendoc', 'user', 'dpms'));
     }
 
     // query all mou form from database to mou table page
@@ -201,7 +207,8 @@ class TablesController extends Controller
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
-        return view('/tables/mouTable', compact('inspectors','approvers','gendoc', 'user'));
+        $dpms = department::all();
+        return view('/tables/mouTable', compact('inspectors','approvers','gendoc', 'user', 'dpms'));
     }
 
     // query all project form from database to project table page
@@ -226,8 +233,9 @@ class TablesController extends Controller
         $user = User::all();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
+        $dpms = department::all();
         // dd($gendoc);
-        return view('/tables/projTable', compact('inspectors','approvers','gendoc', 'user'));
+        return view('/tables/projTable', compact('inspectors','approvers','gendoc', 'user','dpms'));
     }
 
     // query all anno form from database to anno table page
@@ -252,7 +260,8 @@ class TablesController extends Controller
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
-        return view('/tables/annoTable', compact('inspectors','approvers','gendoc', 'user'));
+        $dpms = department::all();
+        return view('/tables/annoTable', compact('inspectors','approvers','gendoc', 'user', 'dpms'));
     }
 
     public function createPDF() {
@@ -535,14 +544,14 @@ class TablesController extends Controller
         try {
             // Validate the request
             $request->validate([
-                'file' => 'required|mimes:pdf,jpg,jpeg,png', // Adjust the validation rules for PDF files
+                'file' => 'required|mimes:pdf,jpg,jpeg,png,docx,doc',
                 'valueid' => 'required',
             ]);
             $destinationPath = 'files/';
             // Handle file upload
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                $fileName = $file->getClientOriginalName();
+                $fileName = $request->type.str_replace(' ', '', $file->getClientOriginalName());
                 $file->move($destinationPath, $fileName);
             } else {
                 return response()->json(['error' => 'File not found'], 400);
@@ -578,6 +587,7 @@ class TablesController extends Controller
                 Storage::disk('files')->delete($filePath);
             }
             $fileList = [];
+            $finallist = [];
             if ($request->type == 'proj') {
                 $yourModel = project_doc::find($request->input('id'));
             } elseif ($request->type == 'announce') {
@@ -589,16 +599,15 @@ class TablesController extends Controller
             }
             $fileData = $yourModel->files;
             $fileList = json_decode($fileData);
-            foreach ($fileList as $index => $item) {
-                if ($fileList[$index] == $request->fileName) {
-                    unset($fileList[$index]); // Remove the object from the array
-                    break; // No need to continue searching
+            foreach ($fileList as $item) {
+                if ($item !== $request->fileName) {
+                    $finallist[] = $item;
                 }
             }
-            $yourModel->files = $fileList;
+            $yourModel->files = $finallist;
             $yourModel->save();
 
-            return response()->json(['success' => $fileList]);
+            return response()->json(['success' => $finallist]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e]);
         }
@@ -613,6 +622,33 @@ class TablesController extends Controller
                 'subtype' => $subtype,
             ]);
             return response()->json(['saveSubtype' => "Success"]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function addShare (Request $request) {
+        try {
+            $fileList = [];
+            if ($request->type == 'proj') {
+                $yourModel = project_doc::find($request->input('bid'));
+            } elseif ($request->type == 'announce') {
+                $yourModel = announce_doc::find($request->input('bid'));
+            } elseif ($request->type == 'mou') {
+                $yourModel = mou_doc::find($request->input('bid'));
+            } else {
+                $yourModel = gendoc::find($request->input('bid'));
+            }
+
+            $share = $yourModel->shares;
+            if ($share) {
+                $fileList = json_decode($share);
+            }
+            $fileList[] = $request->memb;
+            $yourModel->shares = $fileList;
+            $yourModel->save();
+
+            return response()->json($fileList);
         } catch (\Exception $e) {
             return response()->json(['error' => $e]);
         }

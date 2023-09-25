@@ -22,5 +22,6 @@ class mou_doc extends Model
         'sign',
         'created_date',
         'book_num',
+        'shares'
     ];
 }

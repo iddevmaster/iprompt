@@ -23,5 +23,6 @@ class announce_doc extends Model
         'sign',
         'sign_name',
         'sign_position',
+        'shares'
     ];
 }

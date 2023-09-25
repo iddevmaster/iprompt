@@ -21,5 +21,6 @@ class gendoc extends Model
         'binspector',
         'bapprover',
         'detail',
+        'shares'
     ];
 }
