@@ -120,22 +120,24 @@
                                 @endif
                                 <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="sop">upload</button>
                             </td>
-                            <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="sop">
-                                @php
-                                    $share = $row->shares;
-                                    $teamArr = json_decode($share);
-                                    if (is_array($teamArr)) {
-                                        foreach ($teamArr as $memb) {
-                                            echo ($memb ? (App\Models\department::find($memb))->name : '') . " / ";
+                            @can('staff')
+                                <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="sop">
+                                    @php
+                                        $share = $row->shares;
+                                        $teamArr = json_decode($share);
+                                        if (is_array($teamArr)) {
+                                            foreach ($teamArr as $memb) {
+                                                echo ($memb ? (App\Models\department::find($memb))->name : '') . " / ";
+                                            }
+                                        } else {
+                                            echo "add";
                                         }
-                                    } else {
-                                        echo "share";
-                                    }
-                                    $permis = Auth::user()->role ;
-                                    $dpm = Auth::user()->dpm;
-                                @endphp
-                                </button>
-                            </td>
+                                        $permis = Auth::user()->role ;
+                                        $dpm = Auth::user()->dpm;
+                                    @endphp
+                                    </button>
+                                </td>
+                            @endcan
                         </tr>
                         <?php $counter++ ?>
                     @endforeach
@@ -476,7 +478,7 @@
                         });
                     } else if (result.isDenied) {
                         console.log(result);
-                        fetch('/table/form/clearTeam', {
+                        fetch('/table/form/clearShare', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -484,7 +486,7 @@
                             },
                             body: JSON.stringify({
                                 bid: bookid,
-                                oldT: team,
+                                type: type,
                             }),
                         })
                         .then((response) => response.json())

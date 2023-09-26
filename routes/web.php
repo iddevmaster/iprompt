@@ -79,6 +79,7 @@ Route::post('/table/form/verify', [App\Http\Controllers\TablesController::class,
 Route::post('/table/form/addTeam', [App\Http\Controllers\TablesController::class, 'addTeam']);
 Route::post('/table/form/clearTeam', [App\Http\Controllers\TablesController::class, 'clearTeam']);
 Route::post('/table/form/addShare', [App\Http\Controllers\TablesController::class, 'addShare']);
+Route::post('/table/form/clearShare', [App\Http\Controllers\TablesController::class, 'clearShare']);
 Route::post('/table/uploadFile', [App\Http\Controllers\TablesController::class, 'uploadFile']);
 Route::post('/table/deleteFile', [App\Http\Controllers\TablesController::class, 'deleteFile']);
 

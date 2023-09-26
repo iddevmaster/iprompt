@@ -21,7 +21,7 @@
 
 <body>
     <div class="container">
-        <h2 class="text-light text-center">Welcome to Saraban</h2>
+        <h2 class="text-light text-center">Welcome to I-Prompt</h2>
         <h4 class="text-light">กรุณาเข้าสู่ระบบ</h4>
         <form method="POST" action="{{ route('login') }}">
             @csrf

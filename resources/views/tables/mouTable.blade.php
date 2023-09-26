@@ -27,6 +27,9 @@
                         <th scope="col">แก้ไข</th>
                         <th scope="col">Download</th>
                         <th scope="col">แนบไฟล์</th>
+                        @can('staff')
+                            <th scope="col">Share</th>
+                        @endcan
                     </tr>
                 </thead>
 
@@ -115,6 +118,25 @@
                                 @endif
                                 <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="mou">upload</button>
                             </td>
+
+                            @can('staff')
+                                <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="mou">
+                                    @php
+                                        $share = $row->shares;
+                                        $teamArr = json_decode($share);
+                                        if (is_array($teamArr)) {
+                                            foreach ($teamArr as $memb) {
+                                                echo ($memb ? (App\Models\department::find($memb))->name : '') . " / ";
+                                            }
+                                        } else {
+                                            echo "share";
+                                        }
+                                        $permis = Auth::user()->role ;
+                                        $dpm = Auth::user()->dpm;
+                                    @endphp
+                                    </button>
+                                </td>
+                            @endcan
                         </tr>
                         <?php $counter++ ?>
                     @endforeach
@@ -397,6 +419,93 @@
                 Swal.fire('Error!', 'An error occurred while saving the data.', 'error');
             });
         }
+
+        const ptbtns = document.querySelectorAll('#shareBtn');
+        ptbtns.forEach((ckbtn) => {
+            const bookid = ckbtn.getAttribute('bookid');
+            const type = ckbtn.getAttribute('fileType');
+            const team = ckbtn.value;
+            ckbtn.addEventListener('click', function () {
+                Swal.fire({
+                    title: 'เพิ่มฝ่ายที่เข้าถึงเอกสาร',
+                    html: `
+                        <select class="form-select mb-2" id="usrt" >
+                            <option value="" selected disabled>กรุณาเลือกฝ่ายที่สามารถเข้าถึงเอกสารนี้ได้</option>
+                            @foreach ($dpms as $dpm)
+                                <option value="{{$dpm->id}}">{{$dpm->name}}</option>
+                            @endforeach
+                        </select>
+                        `,
+                    showCancelButton: true,
+                    showDenyButton: true,
+                    denyButtonText: 'ล้างรายชื่อทั้งหมด',
+                    confirmButtonText: 'บันทึก',
+                    cancelButtonText: 'ยกเลิก',
+                    preConfirm: () => {
+                        const usrtValue = document.getElementById('usrt').value;
+                        if (!usrtValue) {
+                            return Promise.reject('โปรดเลือกฝ่าย');
+                        }
+
+                        return [usrtValue];
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log(result);
+                        fetch('/table/form/addShare', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                            },
+                            body: JSON.stringify({
+                                memb: result.value[0],
+                                bid: bookid,
+                                oldT: team,
+                                type: type,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Handle the response if needed
+                            console.log(data);
+                            // You can also reload the page to see the changes,
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            // Handle errors if any
+                            Swal.fire('Error!', error.message, 'error');
+                        });
+                    } else if (result.isDenied) {
+                        console.log(result);
+                        fetch('/table/form/clearShare', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                            },
+                            body: JSON.stringify({
+                                bid: bookid,
+                                type: type,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Handle the response if needed
+                            console.log("res= " + data);
+                            // You can also reload the page to see the changes,
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            // Handle errors if any
+                            Swal.fire('Error!', error.message, 'error');
+                        });
+                    }
+                }).catch((error) => {
+                    Swal.fire('Error!', error, 'error'); // Display error to user
+                });
+            });
+        });
     </script>
 </body>
 @endsection
