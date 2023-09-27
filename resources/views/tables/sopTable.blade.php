@@ -110,13 +110,12 @@
                             <td class="text-center">
                                 @if ($row->files != null)
                                     @php
+                                        dd($row->files);
                                         $fileList = $row->files;
                                     @endphp
-                                    @if ($fileList)
-                                        @foreach (json_decode($fileList) as $file)
-                                            <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$file}}</button>
-                                        @endforeach
-                                    @endif
+                                    @foreach (json_decode($fileList) as $file)
+                                        <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$file}}</button>
+                                    @endforeach
                                 @else
 
                                 @endif
