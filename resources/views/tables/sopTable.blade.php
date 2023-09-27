@@ -110,7 +110,6 @@
                             <td class="text-center">
                                 @if ($row->files != null)
                                     @php
-                                        dd($row->files);
                                         $fileList = $row->files;
                                     @endphp
                                     @foreach (json_decode($fileList) as $file)
