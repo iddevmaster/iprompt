@@ -115,7 +115,7 @@
                 <div class="p-2 border border-black">
                     <p>ผู้จัดทำ/ผู้เสนอโครงการ</p>
                     <br>
-                    @if ($sign->proj_subm ?? '' === '')
+                    @if ( ($sign->proj_subm ?? '' ) === '')
                         <p>(&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;)</p>
                     @else
                         <p>( {{$sign->proj_subm}} )</p>
@@ -124,7 +124,7 @@
                 <div class="p-2 border border-black">
                     <p>ผู้ตรวจสอบโครงการ</p>
                     <br>
-                    @if ($sign->proj_ins ?? '' === '')
+                    @if ( ( $sign->proj_ins ?? '' ) === '')
                         <p>(&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;)</p>
                     @else
                         <p>( {{$sign->proj_ins}} )</p>
@@ -133,7 +133,7 @@
                 <div class="p-2 border border-black">
                     <p>ผู้อนุมัติโครงการ</p>
                     <br>
-                    @if ($sign->proj_app ?? '' === '')
+                    @if ( ($sign->proj_app ?? '' ) === '')
                         <p>(&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;)</p>
                     @else
                         <p>( {{$sign->proj_app}} )</p>
