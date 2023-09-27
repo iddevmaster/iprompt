@@ -5,6 +5,10 @@
 @vite(['resources/css/form.css' , 'resources/js/form.js'])
 
 @section('content')
+<head>
+    <!-- Import your CSS file here -->
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+</head>
 <body>
     <div class="text-center my-4">
         <h2>บันทึกข้อตกลงความร่วมมือ</h2>

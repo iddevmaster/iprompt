@@ -8,6 +8,10 @@
 </style>
 
 @section('content')
+<head>
+    <!-- Import your CSS file here -->
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+</head>
 <body>
     <?php $regData = \App\CoreFunction\Helper::regData();?>
     <div class="container">

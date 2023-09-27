@@ -202,6 +202,7 @@ class FormController extends Controller
             $project_doc->sign = json_encode($data);
             $project_doc->dpm = (department::find($request->user()->dpm))->prefix;
             $project_doc->created_date = date('Y-m-d');
+            $project_doc->stat = '-';
             $project_doc->save();
             Alert::toast('Your Form as been Saved!','success');
 
@@ -220,6 +221,7 @@ class FormController extends Controller
             $mou_doc->sign = $request->allSigns;
             $mou_doc->dpm = (department::find($request->user()->dpm))->prefix;
             $mou_doc->created_date = date('Y-m-d');
+            $mou_doc->stat = '-';
             $mou_doc->save();
             Alert::toast('Your Form as been Saved!','success');
 
@@ -239,6 +241,7 @@ class FormController extends Controller
             $announce_doc->dpm = (department::find($request->user()->dpm))->prefix;
             $announce_doc->sign_name = $request->signName;
             $announce_doc->sign_position = $request->signPosition;
+            $announce_doc->stat = '-';
             $announce_doc->save();
             Alert::toast('Your Form as been Saved!','success');
         }
@@ -254,6 +257,7 @@ class FormController extends Controller
             $gendoc->bapprover = $request->approver;
             $gendoc->detail = $request->editorContent;
             $gendoc->dpm = (department::find($request->user()->dpm))->prefix;
+            $gendoc->stat = '-';
             $gendoc->save();
             Alert::toast('Your Form as been Saved!','success');
         }
