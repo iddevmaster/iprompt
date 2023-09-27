@@ -203,6 +203,10 @@ class FormController extends Controller
             $project_doc->dpm = (department::find($request->user()->dpm))->prefix;
             $project_doc->created_date = date('Y-m-d');
             $project_doc->stat = '-';
+            $project_doc->app = '-';
+            $project_doc->ins = '-';
+            $project_doc->files = '-';
+            $project_doc->shares = '-';
             $project_doc->save();
             Alert::toast('Your Form as been Saved!','success');
 
@@ -222,6 +226,10 @@ class FormController extends Controller
             $mou_doc->dpm = (department::find($request->user()->dpm))->prefix;
             $mou_doc->created_date = date('Y-m-d');
             $mou_doc->stat = '-';
+            $mou_doc->app = '-';
+            $mou_doc->ins = '-';
+            $mou_doc->files = '-';
+            $mou_doc->shares = '-';
             $mou_doc->save();
             Alert::toast('Your Form as been Saved!','success');
 
@@ -242,6 +250,10 @@ class FormController extends Controller
             $announce_doc->sign_name = $request->signName;
             $announce_doc->sign_position = $request->signPosition;
             $announce_doc->stat = '-';
+            $announce_doc->app = '-';
+            $announce_doc->ins = '-';
+            $announce_doc->files = '-';
+            $announce_doc->shares = '-';
             $announce_doc->save();
             Alert::toast('Your Form as been Saved!','success');
         }
@@ -258,6 +270,10 @@ class FormController extends Controller
             $gendoc->detail = $request->editorContent;
             $gendoc->dpm = (department::find($request->user()->dpm))->prefix;
             $gendoc->stat = '-';
+            $gendoc->app = '-';
+            $gendoc->ins = '-';
+            $gendoc->files = '-';
+            $gendoc->shares = '-';
             $gendoc->save();
             Alert::toast('Your Form as been Saved!','success');
         }
