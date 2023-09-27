@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-
-
 @section('content')
+<head>
+    <!-- Import your CSS file here -->
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
+</head>
 <body>
     <div class="text-center my-4">
         <h2>ระเบียบการปฏิบัติงาน</h2>
