@@ -26,6 +26,8 @@ Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])-
 Route::get('/imported', [App\Http\Controllers\ImportController::class, 'index'])->name('imported');
 Route::post('/imported/addtype', [App\Http\Controllers\ImportController::class, 'addType']);
 Route::get('/userProfile/{id}',[App\Http\Controllers\HomeController::class,'userProfile']);
+Route::post('/issue/report',[App\Http\Controllers\HomeController::class,'saveIssue']);
+Route::post('/issue/report/fixed',[App\Http\Controllers\HomeController::class,'issueFixed']);
 
 // manage User
 Route::get('/users/create', [App\Http\Controllers\HomeController::class, 'createUser'])->name('users.create');
@@ -36,6 +38,7 @@ Route::post('/users/update', [App\Http\Controllers\HomeController::class, 'updat
 Route::get('/management', [App\Http\Controllers\HomeController::class, 'management'])->name('management');
 Route::post('permission/add', [App\Http\Controllers\HomeController::class, 'addPermis']);
 Route::post('permission/del', [App\Http\Controllers\HomeController::class, 'delPermis']);
+Route::get('/issue/report', [App\Http\Controllers\HomeController::class, 'issueReport'])->name('issue-report');
 
 Route::post('type/del', [App\Http\Controllers\HomeController::class, 'delType']);
 

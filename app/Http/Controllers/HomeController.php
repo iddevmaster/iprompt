@@ -13,6 +13,7 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
+use App\Models\user_problem;
 Use Alert;
 use PhpParser\Node\Stmt\Catch_;
 
@@ -243,6 +244,37 @@ class HomeController extends Controller
             return response()->json(['success' => 'type has del']);
         } catch (\Exception $e) {
             Alert::toast('error!','error');
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function saveIssue (Request $request) {
+        try {
+            user_problem::create([
+                'user_id' => Auth::user()->id,
+                'prob_datail' => $request->value,
+                'user_contact' => '-',
+            ]);
+            return response()->json(['success' => $request->value]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function issueReport (Request $request) {
+        $wait_issues = user_problem::where('status', 'waiting')->get();
+        $success_issue = user_problem::where('status', 'Successed')->get();
+        return view('issue', compact('wait_issues', 'success_issue'));
+    }
+
+    public function issueFixed (Request $request) {
+        try {
+            $issue = user_problem::find($request->value);
+            $issue->status = "Successed";
+            $issue->save();
+            Alert::toast('Issue is clear!','success');
+            return response()->json(['success' => $request->value]);
+        } catch (\Exception $e) {
             return response()->json(['error' => $e]);
         }
     }

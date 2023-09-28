@@ -12,28 +12,28 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('gendocs', function (Blueprint $table) {
-            $table->string('app')->default('-');
+            $table->longText('app')->default('-');
         });
         Schema::table('announce_docs', function (Blueprint $table) {
-            $table->string('app')->default('-');
+            $table->longText('app')->default('-');
         });
         Schema::table('mou_docs', function (Blueprint $table) {
-            $table->string('app')->default('-');
+            $table->longText('app')->default('-');
         });
         Schema::table('project_docs', function (Blueprint $table) {
-            $table->string('app')->default('-');
+            $table->longText('app')->default('-');
         });
         Schema::table('gendocs', function (Blueprint $table) {
-            $table->string('ins')->default('-');
+            $table->longText('ins')->default('-');
         });
         Schema::table('announce_docs', function (Blueprint $table) {
-            $table->string('ins')->default('-');
+            $table->longText('ins')->default('-');
         });
         Schema::table('mou_docs', function (Blueprint $table) {
-            $table->string('ins')->default('-');
+            $table->longText('ins')->default('-');
         });
         Schema::table('project_docs', function (Blueprint $table) {
-            $table->string('ins')->default('-');
+            $table->longText('ins')->default('-');
         });
     }
 

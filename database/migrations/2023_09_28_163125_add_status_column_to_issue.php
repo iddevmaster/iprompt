@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->longText('dpm');
+        Schema::table('user_problems', function (Blueprint $table) {
+            $table->string('status')->default('waiting');
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('issue', function (Blueprint $table) {
             //
         });
     }

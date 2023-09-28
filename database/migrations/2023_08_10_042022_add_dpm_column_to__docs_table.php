@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('gendocs', function (Blueprint $table) {
-            $table->string('dpm')->default('-');
+            $table->longText('dpm')->default('-');
         });
         Schema::table('announce_docs', function (Blueprint $table) {
-            $table->string('dpm')->default('-');
+            $table->longText('dpm')->default('-');
         });
         Schema::table('mou_docs', function (Blueprint $table) {
-            $table->string('dpm')->default('-');
+            $table->longText('dpm')->default('-');
         });
         Schema::table('project_docs', function (Blueprint $table) {
-            $table->string('dpm')->default('-');
+            $table->longText('dpm')->default('-');
         });
     }
 

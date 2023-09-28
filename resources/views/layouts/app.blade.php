@@ -83,6 +83,35 @@
     top: 0;
     z-index: 1;
   }
+  .issue-box {
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    position: fixed;
+    bottom: 110px;
+    left: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+  }
+  #issue-cover {
+    text-wrap: nowrap;
+    position: absolute;
+    margin-bottom: 0px;
+    left: 0px;
+    visibility: hidden;
+  }
+  .issue-box:hover {
+    width: 200px;
+    background-color: pink;
+    color: white;
+    justify-content: start;
+  }
+  .issue-box:hover > #issue-cover {
+    visibility: visible;
+    left: 50px;
+  }
     </style>
 </head>
 <body>
@@ -205,7 +234,6 @@
                         <li class="nav-item "><a href="{{ route('alluser') }}" class="nav-link navbarMenu">จัดการบัญชีผู้ใช้</a></li>
                         @endrole
                     </ul>
-
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
@@ -231,7 +259,8 @@
                                     <div class="d-flex flex-column justify-content-center">
                                         <li class="text-center"><a class="dropdown-item" href="{{ route('profile') }}">ตั้งค่าบัญชี</a></li>
                                         @role('admin')
-                                        <li class="text-center"><a class="dropdown-item" href="{{ route('management') }}">จัดการข้อมูล</a></li>
+                                            <li class="text-center"><a class="dropdown-item" href="{{ route('management') }}">จัดการข้อมูล</a></li>
+                                            <li class="text-center"><a class="dropdown-item" href="{{ route('issue-report') }}">ปัญหาการใช้งาน</a></li>
                                         @endrole
                                         <li>
                                             <a class="dropdown-item text-center" href="{{ route('logout') }}"
@@ -257,15 +286,19 @@
             @yield('content')
         </main>
         <h5 class="fixed-bottom m-5">
+            <div class="issue-box btn" id="issue-btn">
+                <i class="bi bi-mailbox"></i>
+                <p id="issue-cover">แจ้งปัญหาการใช้งาน</p>
+            </div>
             <div class="theme-container shadow-light" >
                 <i class="bi bi-sun" id="theme-icon"></i>
             </div>
         </h5>
     </div>
     @include('sweetalert::alert')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.body.style="background-color: var(--bs-dark);transition: 0.5s;"
 const sun = "bi-sun";
@@ -321,5 +354,54 @@ function setDark() {
     navb.classList.add("nav-dark");
     themeIcon.classList.add(moon);
 }
+
+    const issuebtns = document.getElementById('issue-btn');
+    issuebtns.addEventListener('click', function () {
+        Swal.fire({
+            title: 'I-Prompt',
+            input: 'textarea',
+            inputLabel: 'แจ้งปัญหาการใช้งานระบบ',
+            showCancelButton: true,
+            inputPlaceholder: 'กรุณาระบุปัญหาที่พบ',
+            inputValidator: (value) => {
+                if (!value) {
+                return 'กรุณาระบุปัญหาที่พบ'
+                }
+            }
+        }).then((result) => {
+            const issue = result.value; // Get the selected file from the result object
+            if (issue) {
+                saveData(issue);
+            }
+        });
+
+        const saveData = (data) => {
+            fetch('/issue/report', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                },
+                body: JSON.stringify({
+                    value: data
+                }),
+            }).then((response) => response.json())
+            .then((data) => {
+                // Handle the response if needed
+                console.log(data);
+                // You can also reload the page to see the changes,
+                // window.location.reload();
+                Swal.fire(
+                    'สำเร็จ!',
+                    'ขอบคุณที่แจ้งปัญหาการใช้งาน',
+                    'success'
+                )
+            })
+            .catch((error) => {
+                // Handle errors if any
+                Swal.fire('Error!', error.message, 'error');
+            });
+        }
+    });
 </script>
 </html>

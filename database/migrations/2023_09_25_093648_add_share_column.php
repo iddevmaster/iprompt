@@ -12,16 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('gendocs', function (Blueprint $table) {
-            $table->string('shares')->nullable();
+            $table->longText('shares')->nullable();
         });
         Schema::table('announce_docs', function (Blueprint $table) {
-            $table->string('shares')->nullable();
+            $table->longText('shares')->nullable();
         });
         Schema::table('mou_docs', function (Blueprint $table) {
-            $table->string('shares')->nullable();
+            $table->longText('shares')->nullable();
         });
         Schema::table('project_docs', function (Blueprint $table) {
-            $table->string('shares')->nullable();
+            $table->longText('shares')->nullable();
         });
     }
 

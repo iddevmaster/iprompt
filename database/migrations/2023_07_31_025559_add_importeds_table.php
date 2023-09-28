@@ -21,13 +21,13 @@ return new class extends Migration
             $table->string('receiver_dpm');
             $table->string('receiver_agn');
             $table->string('receiver_brn');
-            $table->string('from');
+            $table->text('from');
             $table->string('book_subj')->nullable();
             $table->string('respondent')->nullable();
             $table->date('resp_date')->nullable();
             $table->string('resp_time')->nullable();
             $table->string('status')->nullable();
-            $table->string('note')->nullable();
+            $table->text('note')->nullable();
             $table->string('file')->nullable();
             $table->timestamps();
             $table->softDeletes();

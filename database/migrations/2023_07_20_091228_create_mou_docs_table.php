@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('submit_by');
             $table->string('type');
-            $table->string('title');
-            $table->string('party1');
-            $table->string('parties');
-            $table->string('place');
-            $table->string('detail');
-            $table->string('sign')->nullable();
+            $table->text('title');
+            $table->text('party1');
+            $table->longText('parties');
+            $table->text('place');
+            $table->longText('detail');
+            $table->longText('sign')->nullable();
             $table->date('created_date');
             $table->timestamps();
             $table->softDeletes();

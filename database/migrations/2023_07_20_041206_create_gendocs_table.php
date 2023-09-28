@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('submit_by');
             $table->string('created_date');
             $table->string('type');
-            $table->string('title');
-            $table->string('bcreater');
-            $table->string('binspector');
-            $table->string('bapprover');
-            $table->string('detail');
+            $table->text('title');
+            $table->text('bcreater');
+            $table->text('binspector');
+            $table->text('bapprover');
+            $table->text('detail');
             $table->timestamps();
             $table->softDeletes();
         });

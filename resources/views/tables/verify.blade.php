@@ -94,6 +94,9 @@
                 "pageLength": 10,
                 "searching": true,
                 "bLengthChange": false,
+                language: {
+                    search: "ค้นหา:"
+                }
             });
         });
         const statbtns = document.querySelectorAll('#รอตรวจสอบ');

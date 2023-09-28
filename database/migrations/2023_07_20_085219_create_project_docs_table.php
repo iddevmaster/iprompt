@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('proj_code');
             $table->string('submit_by');
             $table->string('type');
-            $table->string('title');
-            $table->string('detail');
-            $table->string('sign')->nullable();
+            $table->text('title');
+            $table->longText('detail');
+            $table->longText('sign')->nullable();
             $table->string('created_date');
             $table->timestamps();
             $table->softDeletes();
