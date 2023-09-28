@@ -84,6 +84,7 @@
     z-index: 1;
   }
   .issue-box {
+    background-color: rgb(242, 255, 255);
     width: 40px;
     height: 40px;
     border-radius: 50px;
