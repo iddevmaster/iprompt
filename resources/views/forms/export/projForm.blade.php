@@ -140,7 +140,7 @@
                     @endif
                 </div>
             </div>
-            <p class="mb-0 mt-1" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: ระบบสารบัญ <?php echo date('Y-m-d H:i:s') ?></p>
+            <p class="mb-0 mt-1" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: I-Prompt <?php echo date('Y-m-d H:i:s') ?></p>
         </div> <!-- end footer -->
     </div>
     @if ($dorv !== 'verify' && auth()->user()->can('download'))

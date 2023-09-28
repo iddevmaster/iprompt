@@ -88,7 +88,7 @@
             .a4-container {
                 visibility: visible;
             }
-            
+
         }
 </style>
 </head>
@@ -99,7 +99,7 @@
         <div class="header border-bottom d-flex flex-column justify-content-center text-center align-items-center">
             <div class="mb-2"><img style="" src="{{ asset('dist/img/logoiddrives.png') }}" height="80"></div>
             <h4 class="fw-bold">บริษัท ไอดีไดรฟ์ จำกัด (สำนักงานใหญ่)</h4>
-            <p>200/222 หมู่2 ถนนชัยพฤกษ์ อำเภอเมืองขอนแก่น จังหวัดขอนแก่น Tel:043-228-899 <br>    
+            <p>200/222 หมู่2 ถนนชัยพฤกษ์ อำเภอเมืองขอนแก่น จังหวัดขอนแก่น Tel:043-228-899 <br>
                 เลขที่ผู้เสียภาษี 0 4055 36000 53 1  Email: idofficer@iddrives.co.th</p>
         </div> <!-- end header -->
 
@@ -148,8 +148,8 @@
 
         <!-- footer -->
         <div class="footer">
-                <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: ระบบสารบัญ <?php date_default_timezone_set('Asia/Bangkok');
-                                                                                                                        $now = time(); 
+                <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: I-Prompt <?php date_default_timezone_set('Asia/Bangkok');
+                                                                                                                        $now = time();
                                                                                                                         $thaiYear = intval(date('Y', $now)) + 543;
                                                                                                                         echo date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s', $now) . " +543 years")); ?>
                 </p>

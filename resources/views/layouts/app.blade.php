@@ -18,6 +18,8 @@
     <!-- Icon -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/css/app.css' , 'resources/js/app.js'])
 
@@ -261,8 +263,9 @@
         </h5>
     </div>
     @include('sweetalert::alert')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 </body>
-
 <script>
     document.body.style="background-color: var(--bs-dark);transition: 0.5s;"
 const sun = "bi-sun";

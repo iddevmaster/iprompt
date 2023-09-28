@@ -9,7 +9,7 @@
     <!-- Import your CSS file here -->
     <link rel="stylesheet" href="{{ asset('css/form.css') }}">
 </head>
-<body>
+<body onbeforeunload="return myFunction()">
     <div class="text-center my-4">
         <h2>บันทึกข้อตกลงความร่วมมือ</h2>
     </div>
@@ -140,6 +140,9 @@
                 // Add a click event listener to the button
                 addButton.addEventListener('click', addContent);
 
+                function myFunction() {
+                    return "Changes you made may not be saved.";
+                }
             </script>
         </div>
     </form>

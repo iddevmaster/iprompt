@@ -9,10 +9,6 @@
 ?>
     <div class="container">
         <div class="text-center mb-4"><h2>ทะเบียน สื่อการตลาด</h2></div>
-        <div class="d-flex">
-            <div class="flex-grow-1"><input type="text" id="searchInput" class="form-control mb-2" placeholder="Search..."></div>
-            <div class="p-1 ms-2 export"><a class="a-tag" href="/export/table/wiTable"><i class="bi bi-file-earmark-arrow-down"></i></a></div>
-        </div>
         <!-- Table -->
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -24,9 +20,9 @@
             </div>
         </nav>
 
-        <div class="tab-content" id="nav-tabContent">
+        <div class="tab-content pt-3" id="nav-tabContent">
             <div class="tab-pane table-responsive fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab" tabindex="0">
-                <table class="table table-hover ">
+                <table class="table table-hover listTable">
 
                     <!-- Table Header -->
                     <thead class="table-dark">
@@ -157,17 +153,13 @@
                         @endforeach
                     </tbody>
                 </table>
-                <!-- Pagination Links -->
-                <div class="d-flex justify-content-end pagination">
-                    {{ $gendoc->links('vendor.pagination.bootstrap-5') }}
-                </div>
             </div>
 
             @foreach ($type as $item)
 
                 <div class="tab-pane fade table-responsive" id="nav-{{ $item->subtype }}" role="tabpanel" aria-labelledby="nav-{{ $item->subtype }}-tab" tabindex="0">
                     <!-- Contract imported table -->
-                    <table class="table table-hover ">
+                    <table class="table table-hover listTable">
 
                         <!-- Table Header -->
                         <thead class="table-dark">
@@ -286,7 +278,17 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('.listTable').DataTable({
+                "paging": true,
+                "pageLength": 10,
+                "searching": true,
+                "bLengthChange": false,
+            });
+        });
         const statbtns = document.querySelectorAll('#status');
         statbtns.forEach((ckbtn) => {
             let status = ckbtn.getAttribute('name');

@@ -143,7 +143,7 @@
 
         <!-- footer -->
         <div class="footer">
-                <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: ระบบสารบัญ <?php date_default_timezone_set('Asia/Bangkok');
+                <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: I-Prompt <?php date_default_timezone_set('Asia/Bangkok');
                                                                                                                         $now = time();
                                                                                                                         $thaiYear = intval(date('Y', $now)) + 543;
                                                                                                                         echo date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s', $now) . " +543 years")); ?>

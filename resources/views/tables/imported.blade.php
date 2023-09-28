@@ -8,10 +8,6 @@
 <?php $regData = \App\CoreFunction\Helper::regData();?>
     <div class="container">
         <div class="text-center mb-4"><h2>ทะเบียนหนังสือรับเข้า</h2></div>
-        <div class="d-flex">
-            <div class="flex-grow-1"><input type="text" id="searchInput" class="form-control mb-2" placeholder="Search..."></div>
-            <div class="p-1 ms-2 export"><a class="a-tag" href="/export/table/imported"><i class="bi bi-file-earmark-arrow-down"></i></a></div>
-        </div>
 
         <!-- Table -->
         <div class="mt-3">
@@ -25,11 +21,11 @@
                 </div>
             </nav>
 
-            <div class="tab-content" id="nav-tabContent">
+            <div class="tab-content pt-3" id="nav-tabContent">
                 <div class="tab-pane table-responsive fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab" tabindex="0">
 
                     <!-- All imported table -->
-                    <table class="table table-hover mt-2">
+                    <table class="table table-hover mt-2 listTable">
                         <!-- Table Header -->
                         <thead class="table-dark">
                             <tr>
@@ -86,16 +82,12 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <!-- Pagination Links -->
-                    <div class="d-flex justify-content-end pagination">
-                        {{ $imported->links('vendor.pagination.bootstrap-5') }}
-                    </div>
                 </div>
 
 
                 <div class="tab-pane fade table-responsive" id="nav-cont" role="tabpanel" aria-labelledby="nav-cont-tab" tabindex="0">
                     <!-- Contract imported table -->
-                    <table class="table table-hover mt-2">
+                    <table class="table table-hover mt-2 listTable">
                         <!-- Table Header -->
                         <thead class="table-dark">
                             <tr>
@@ -152,16 +144,12 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <!-- Pagination Links -->
-                    <div class="d-flex justify-content-end pagination">
-                        {{ $imp_cont->links('vendor.pagination.bootstrap-5') }}
-                    </div>
                 </div>
 
 
                 <div class="tab-pane fade table-responsive" id="nav-mou" role="tabpanel" aria-labelledby="nav-mou-tab" tabindex="0">
                     <!-- MOU imported table -->
-                    <table class="table table-hover mt-2">
+                    <table class="table table-hover mt-2 listTable">
                         <!-- Table Header -->
                         <thead class="table-dark">
                             <tr>
@@ -218,16 +206,12 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <!-- Pagination Links -->
-                    <div class="d-flex justify-content-end pagination">
-                        {{ $imp_mou->links('vendor.pagination.bootstrap-5') }}
-                    </div>
                 </div>
 
 
                 <div class="tab-pane fade table-responsive" id="nav-anno" role="tabpanel" aria-labelledby="nav-anno-tab" tabindex="0">
                     <!-- Announce imported table -->
-                    <table class="table table-hover mt-2">
+                    <table class="table table-hover mt-2 listTable">
                         <!-- Table Header -->
                         <thead class="table-dark">
                             <tr>
@@ -284,16 +268,12 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <!-- Pagination Links -->
-                    <div class="d-flex justify-content-end pagination">
-                        {{ $imp_anno->links('vendor.pagination.bootstrap-5') }}
-                    </div>
                 </div>
 
 
                 <div class="tab-pane fade table-responsive" id="nav-proj" role="tabpanel" aria-labelledby="nav-proj-tab" tabindex="0">
                     <!-- project imported table -->
-                    <table class="table table-hover mt-2">
+                    <table class="table table-hover mt-2 listTable">
                         <!-- Table Header -->
                         <thead class="table-dark">
                             <tr>
@@ -350,10 +330,6 @@
                             @endforeach
                         </tbody>
                     </table>
-                    <!-- Pagination Links -->
-                    <div class="d-flex justify-content-end pagination">
-                        {{ $imp_proj->links('vendor.pagination.bootstrap-5') }}
-                    </div>
                 </div>
 
 
@@ -362,7 +338,17 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('.listTable').DataTable({
+                "paging": true,
+                "pageLength": 10,
+                "searching": true,
+                "bLengthChange": false,
+            });
+        });
         const pdfButtons = document.querySelectorAll('.viewPdfBtn');
         pdfButtons.forEach((pdfbtn) => {
             pdfbtn.addEventListener('click', function () {

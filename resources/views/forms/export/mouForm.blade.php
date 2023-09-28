@@ -138,7 +138,7 @@
             @endforeach
         @endif
     </div>
-    <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: ระบบสารบัญ <?php echo date('Y-m-d H:i:s') ?></p>
+    <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: I-Prompt <?php echo date('Y-m-d H:i:s') ?></p>
 </div> <!-- end footer -->
 </div> <!-- end page -->
     @if ($dorv !== 'verify' && auth()->user()->can('download'))
