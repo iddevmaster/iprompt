@@ -155,7 +155,7 @@ class TablesController extends Controller
         };
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
-        // dd($gendoc);
+        dd($gendoc);
         $dpms = department::all();
         return view('/tables/sopTable', compact('inspectors','approvers','gendoc', 'user', 'dpms'));
     }
