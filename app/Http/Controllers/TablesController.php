@@ -138,7 +138,7 @@ class TablesController extends Controller
     // query all sop form from database to sop table page
     public function sopTable() {
         if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
-            $gendoc = gendoc::where('type', 'sopForm')->where('dpm', (department::find((Auth::user())->dpm))->prefix)->where('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orderBy('id', 'desc')->get();
+            $gendoc = gendoc::where('type', 'sopForm')->where('dpm', (department::find((Auth::user())->dpm))->prefix)->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orderBy('id', 'desc')->get();
         } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
             $gendoc = gendoc::where('type', 'sopForm')->whereIn('dpm', json_decode((department::find((Auth::user())->dpm))->prefix))->where('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orderBy('id', 'desc')->get();
         }
@@ -155,7 +155,7 @@ class TablesController extends Controller
         };
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
-        dd($gendoc);
+        // dd($gendoc);
         $dpms = department::all();
         return view('/tables/sopTable', compact('inspectors','approvers','gendoc', 'user', 'dpms'));
     }
