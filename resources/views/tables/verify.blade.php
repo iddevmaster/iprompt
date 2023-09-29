@@ -37,7 +37,7 @@
                             $ins = json_decode($row->ins);
                             $type = explode('.', $row->type);
                         @endphp
-                        @if (($row->stat === 'รออนุมัติ' && $app->appId == Auth::user()->id) || ($row->stat === 'รอตรวจสอบ' && $ins->appId == Auth::user()->id))
+                        @if (($row->stat === 'รออนุมัติ' && $app->appId == Auth::user()->id) || ($row->stat === 'รอตรวจสอบ' && $ins->appId == Auth::user()->id) || (Auth::user()->role  === 'admin'))
                             <tr>
                                 <td>{{$counter}}</td>
                                 <td>{{ $row->book_num}}</td>
