@@ -201,7 +201,7 @@ class HomeController extends Controller
 
             return response()->json(['data' => $data, 'user' => $user]);
         } catch (\Exception $e) {
-            return response()->json(['message' => "Changes are not saved!"]);
+            return response()->json(['message' => "Changes are not saved!" + $e]);
         }
     }
 
