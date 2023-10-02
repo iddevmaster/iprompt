@@ -270,9 +270,7 @@
                         const cont = document.getElementById('CONT');
                         const userid = document.getElementById('userid');
                         const role = document.getElementById('role');
-                        let userRole = {{ Auth::user()->role }};
-
-
+                        let userRole = "{{ Auth::user()->role }}";
                         const permCard = document.querySelector('#permCard');
                         if (!(userRole === 'admin' || userRole === 'ceo')) {
                             permCard.style.cssText += 'display: none';
