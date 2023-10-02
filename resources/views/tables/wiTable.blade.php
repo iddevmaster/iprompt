@@ -63,7 +63,7 @@
                                         @if (!(Auth::user()->id == $row->submit_by) || !(Auth::user()->hasRole(['admin', 'ceo'])))
                                             disabled
                                         @endif
-                                        >{{$row->stat}}</button>
+                                        >{{$row->stat}} {{Auth::user()->hasRole(['admin', 'ceo'])}}</button>
                                 @elseif ($row->stat === 'ผ่านการอนุมัติ')
                                     <button class="btn btn-success"
                                             name="{{$row->stat}}"
