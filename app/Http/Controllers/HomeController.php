@@ -197,7 +197,7 @@ class HomeController extends Controller
             $user->syncRoles([$data['role']]);
             $user->role = $data['role'];
 
-            // $user->save();
+            $user->save();
 
             return response()->json(['data' => $data, 'user' => $user]);
         } catch (\Exception $e) {
