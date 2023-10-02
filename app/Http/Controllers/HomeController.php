@@ -188,16 +188,16 @@ class HomeController extends Controller
                 $user->revokePermissionTo('staff');
             }
 
-            $user->name = $data['name'];
-            $user->email = $data['username'];
-            $user->agency = $data['agn'];
-            $user->branch = $data['brn'];
-            $user->phone = $data['phone'];
-            $user->dpm = $data['dpm'];
-            $user->syncRoles([$data['role']]);
-            $user->role = $data['role'];
+            // $user->name = $data['name'];
+            // $user->email = $data['username'];
+            // $user->agency = $data['agn'];
+            // $user->branch = $data['brn'];
+            // $user->phone = $data['phone'];
+            // $user->dpm = $data['dpm'];
+            // $user->syncRoles([$data['role']]);
+            // $user->role = $data['role'];
 
-            $user->save();
+            // $user->save();
 
             return response()->json(['data' => $data, 'user' => $user]);
         } catch (\Exception $e) {
