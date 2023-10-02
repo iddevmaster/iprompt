@@ -158,47 +158,47 @@ class HomeController extends Controller
             } else {
                 $user->revokePermissionTo('CONT');
             }
-            // if ($data['download'] === '1'){
-            //     $user->givePermissionTo('download');
-            // } else {
-            //     $user->revokePermissionTo('download');
-            // }
-            // if ($data['create'] === '1'){
-            //     $user->givePermissionTo('create');
-            // } else {
-            //     $user->revokePermissionTo('create');
-            // }
-            // if ($data['check']){
-            //     $user->givePermissionTo('checklist');
-            // } else {
-            //     $user->revokePermissionTo('checklist');
-            // }
-            // if ($data['course']){
-            //     $user->givePermissionTo('course');
-            // } else {
-            //     $user->revokePermissionTo('course');
-            // }
-            // if ($data['media']){
-            //     $user->givePermissionTo('media');
-            // } else {
-            //     $user->revokePermissionTo('media');
-            // }
-            // if ($data['staff']){
-            //     $user->givePermissionTo('staff');
-            // } else {
-            //     $user->revokePermissionTo('staff');
-            // }
+            if ($data['download'] === '1'){
+                $user->givePermissionTo('download');
+            } else {
+                $user->revokePermissionTo('download');
+            }
+            if ($data['create'] === '1'){
+                $user->givePermissionTo('create');
+            } else {
+                $user->revokePermissionTo('create');
+            }
+            if ($data['check']){
+                $user->givePermissionTo('checklist');
+            } else {
+                $user->revokePermissionTo('checklist');
+            }
+            if ($data['course']){
+                $user->givePermissionTo('course');
+            } else {
+                $user->revokePermissionTo('course');
+            }
+            if ($data['media']){
+                $user->givePermissionTo('media');
+            } else {
+                $user->revokePermissionTo('media');
+            }
+            if ($data['staff']){
+                $user->givePermissionTo('staff');
+            } else {
+                $user->revokePermissionTo('staff');
+            }
 
-            // $user->name = $data['name'];
-            // $user->email = $data['username'];
-            // $user->agency = $data['agn'];
-            // $user->branch = $data['brn'];
-            // $user->phone = $data['phone'];
-            // $user->dpm = $data['dpm'];
-            // $user->syncRoles([$data['role']]);
-            // $user->role = $data['role'];
+            $user->name = $data['name'];
+            $user->email = $data['username'];
+            $user->agency = $data['agn'];
+            $user->branch = $data['brn'];
+            $user->phone = $data['phone'];
+            $user->dpm = $data['dpm'];
+            $user->syncRoles([$data['role']]);
+            $user->role = $data['role'];
 
-            // $user->save();
+            $user->save();
             Alert::toast('User update successfully!','success');
             return response()->json(['data' => $data, 'user' => $user]);
         } catch (\Exception $e) {
