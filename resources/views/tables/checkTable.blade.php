@@ -72,7 +72,7 @@
                                     @endphp
                                     @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
                                         <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}"
-                                            @if (!(Auth::user()->id == $row->submit_by) || Auth::user()->hasRole(['admin', 'ceo']))
+                                            @if (!(Auth::user()->id == $row->submit_by) || !(Auth::user()->hasRole(['admin', 'ceo'])))
                                                 disabled
                                             @endif
                                         >{{$row->stat}}</button>
@@ -215,7 +215,10 @@
                                                 $insnote = $ins->note ?? '-';
                                             @endphp
                                             @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
-                                                <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}">{{$row->stat}}</button>
+                                                <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}"
+                                                    @if (!(Auth::user()->id == $row->submit_by) || !(Auth::user()->hasRole(['admin', 'ceo'])))
+                                                        disabled
+                                                    @endif>{{$row->stat}}</button>
                                             @elseif ($row->stat === 'ผ่านการอนุมัติ')
                                                 <button class="btn btn-success"
                                                         name="{{$row->stat}}"

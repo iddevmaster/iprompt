@@ -60,7 +60,7 @@
                                 @endphp
                                 @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
                                     <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}"
-                                        @if (!(Auth::user()->id == $row->submit_by))
+                                        @if (!(Auth::user()->id == $row->submit_by) || !(Auth::user()->hasRole(['admin', 'ceo'])))
                                             disabled
                                         @endif
                                         >{{$row->stat}}</button>
