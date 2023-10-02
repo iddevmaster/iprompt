@@ -198,7 +198,7 @@ class HomeController extends Controller
             // $user->role = $data['role'];
 
             // $user->save();
-
+            Alert::toast('User update successfully!','success');
             return response()->json(['data' => $data, 'user' => $user]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'data is not save']);

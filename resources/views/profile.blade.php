@@ -358,13 +358,6 @@
                                 })
                                 .then((data) => {
                                     console.log(data);
-                                    Swal.fire({
-                                        position: 'top-end',
-                                        icon: 'success',
-                                        title: 'Your work has been saved',
-                                        showConfirmButton: false,
-                                        timer: 1500
-                                    })
                                 })
                                 .catch((error) => {
                                     console.error('Error:', error);
