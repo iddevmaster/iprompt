@@ -72,7 +72,11 @@
                                         $insnote = $ins->note ?? '-';
                                     @endphp
                                     @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
-                                        <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}">{{$row->stat}}</button>
+                                        <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}"
+                                            @if (!(Auth::user()->id == $row->submit_by))
+                                            disabled
+                                        @endif
+                                        >{{$row->stat}}</button>
                                     @elseif ($row->stat === 'ผ่านการอนุมัติ')
                                         <button class="btn btn-success"
                                                 name="{{$row->stat}}"
@@ -101,15 +105,18 @@
 
 
                                 @can('create')
+                                @if ((Auth::user()->id == $row->submit_by) || !(auth()->user()->can('staff')))
                                     <td>
                                         <a href="{{url('/form/editcourse/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
                                     </td>
                                 @else
                                     <td></td>
+                                @endif
                                 @endcan
 
 
                                 @can('download')
+                                @if ((Auth::user()->id == $row->submit_by) || !(auth()->user()->can('staff')))
                                     <td>
                                         <a href="{{url('/form/downloadcourse/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
                                     </td>
@@ -117,6 +124,7 @@
                                     <td>
                                         <a href="{{url('/form/downloadcourse/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     </td>
+                                @endif
                                 @endcan
 
                                 <td class="text-center">
@@ -207,7 +215,11 @@
                                                 $insnote = $ins->note ?? '-';
                                             @endphp
                                             @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
-                                                <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}">{{$row->stat}}</button>
+                                                <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}"
+                                                    @if (!(Auth::user()->id == $row->submit_by))
+                                                        disabled
+                                                    @endif
+                                                >{{$row->stat}}</button>
                                             @elseif ($row->stat === 'ผ่านการอนุมัติ')
                                                 <button class="btn btn-success"
                                                         name="{{$row->stat}}"
@@ -236,15 +248,18 @@
 
 
                                         @can('create')
+                                        @if ((Auth::user()->id == $row->submit_by) || !(auth()->user()->can('staff')))
                                             <td>
                                                 <a href="{{url('/form/editcourse/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
                                             </td>
                                         @else
                                             <td></td>
+                                        @endif
                                         @endcan
 
 
                                         @can('download')
+                                        @if ((Auth::user()->id == $row->submit_by) || !(auth()->user()->can('staff')))
                                             <td>
                                                 <a href="{{url('/form/downloadcourse/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
                                             </td>
@@ -252,6 +267,7 @@
                                             <td>
                                                 <a href="{{url('/form/downloadcourse/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                             </td>
+                                        @endif
                                         @endcan
 
                                         <td class="text-center">

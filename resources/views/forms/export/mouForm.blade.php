@@ -142,9 +142,11 @@
 </div> <!-- end footer -->
 </div> <!-- end page -->
     @if ($dorv !== 'verify' && auth()->user()->can('download'))
-    <div class="d-flex justify-content-center downloadbtn">
-        <button class="btn btn-success ms-2" onclick="printDiv()">Print</button>
-    </div>
+        @if ((Auth::user()->id == $submitb) || !(auth()->user()->can('staff')))
+        <div class="d-flex justify-content-center downloadbtn">
+            <button class="btn btn-success ms-2" onclick="printDiv()">Print</button>
+        </div>
+        @endif
     @endif
     <script>
     function printDiv() {

@@ -284,8 +284,9 @@ class FormController extends Controller
             $creater = $form->bcreater;
             $inspector = $form->binspector;
             $approver = $form->bapprover;
+            $submitb = $form->submit_by;
         }
-        return view('/forms/export/wiForm', compact('form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+        return view('/forms/export/wiForm', compact('submitb','form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
 
     }
 
@@ -310,8 +311,9 @@ class FormController extends Controller
             $creater = $form->bcreater;
             $inspector = $form->binspector;
             $approver = $form->bapprover;
+            $submitb = $form->submit_by;
         }
-        return view('/forms/export/mediaForm', compact('form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+        return view('/forms/export/mediaForm', compact('submitb','form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
 
     }
 
@@ -336,8 +338,9 @@ class FormController extends Controller
             $creater = $form->bcreater;
             $inspector = $form->binspector;
             $approver = $form->bapprover;
+            $submitb = $form->submit_by;
         }
-        return view('/forms/export/courseForm', compact('form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+        return view('/forms/export/courseForm', compact('submitb', 'form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
 
     }
 
@@ -362,8 +365,9 @@ class FormController extends Controller
             $creater = $form->bcreater;
             $inspector = $form->binspector;
             $approver = $form->bapprover;
+            $submitb = $form->submit_by;
         }
-        return view('/forms/export/checkForm', compact('form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+        return view('/forms/export/checkForm', compact('submitb', 'form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
 
     }
 
@@ -386,7 +390,8 @@ class FormController extends Controller
         $creater = $form->bcreater;
         $inspector = $form->binspector;
         $approver = $form->bapprover;
-        return view('/forms/export/sopForm', compact( 'form','dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+        $submitb = $form->submit_by;
+        return view('/forms/export/sopForm', compact('submitb', 'form','dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
     }
 
     // Function for edit form
@@ -410,7 +415,8 @@ class FormController extends Controller
         $projName = $form->title;
         $projNo = $form->proj_code;
         $sign = json_decode($form->sign ?? json_encode($data));
-        return view('/forms/export/projForm', compact('sign' ,'dorv' ,'book_num','projName','class', 'projNo','editorContent'));
+        $submitb = $form->submit_by;
+        return view('/forms/export/projForm', compact('submitb', 'sign' ,'dorv' ,'book_num','projName','class', 'projNo','editorContent'));
     }
 
     // Function for edit form
@@ -432,7 +438,8 @@ class FormController extends Controller
         $creater = $form->bcreater;
         $inspector = $form->binspector;
         $approver = $form->bapprover;
-        return view('/forms/export/policyForm', compact( 'form','dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+        $submitb = $form->submit_by;
+        return view('/forms/export/policyForm', compact('submitb', 'form','dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
     }
 
     // Function for edit form
@@ -454,7 +461,8 @@ class FormController extends Controller
         $location = $form->place;
         $book_num = $form->book_num;
         $parties = json_decode($form->parties, true);
-        return view('/forms/export/mouForm', compact('allSigns' ,'dorv' ,'book_num','parties', 'location', 'subject', 'party1','class','editorContent'));
+        $submitb = $form->submit_by;
+        return view('/forms/export/mouForm', compact('submitb', 'allSigns' ,'dorv' ,'book_num','parties', 'location', 'subject', 'party1','class','editorContent'));
     }
 
     // Function for edit form
@@ -476,7 +484,8 @@ class FormController extends Controller
         $useDate = $form->use_date;
         $signName = $form->sign_name;
         $signPosition = $form->sign_position;
-        return view('/forms/export/annoForm', compact('dorv' ,'annNo','signName', 'signPosition','annoDate', 'useDate', 'editorContent','subject','class'));
+        $submitb = $form->submit_by;
+        return view('/forms/export/annoForm', compact('submitb', 'dorv' ,'annNo','signName', 'signPosition','annoDate', 'useDate', 'editorContent','subject','class'));
     }
 
     public function update(Request $request) {
