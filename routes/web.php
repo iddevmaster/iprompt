@@ -38,6 +38,8 @@ Route::post('/users/update', [App\Http\Controllers\HomeController::class, 'updat
 Route::get('/management', [App\Http\Controllers\HomeController::class, 'management'])->name('management');
 Route::post('permission/add', [App\Http\Controllers\HomeController::class, 'addPermis']);
 Route::post('permission/del', [App\Http\Controllers\HomeController::class, 'delPermis']);
+Route::post('role/add', [App\Http\Controllers\HomeController::class, 'addRole']);
+Route::post('role/del', [App\Http\Controllers\HomeController::class, 'delRole']);
 Route::get('/issue/report', [App\Http\Controllers\HomeController::class, 'issueReport'])->name('issue-report');
 
 Route::post('type/del', [App\Http\Controllers\HomeController::class, 'delType']);

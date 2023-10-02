@@ -278,4 +278,33 @@ class HomeController extends Controller
             return response()->json(['error' => $e]);
         }
     }
+
+    public function addRole (Request $request) {
+        try {
+            Role::create(['name' => $request->value]);
+            Alert::toast('User added successfully!','success');
+            return response()->json(['success' => 'success']);
+        } catch (\Exception $e) {
+            Alert::toast('error!','error');
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function delRole (Request $request) {
+        try {
+            $role = Role::findByName($request->value);
+            if ($role->permissions()->count() === 0) {
+                $role->delete();
+                Alert::toast('User added successfully!','success');
+                return response()->json(['success' => 'success']);
+            } else {
+                Alert::toast('Permission has role!','error');
+                return response()->json(['success' => 'permission has role']);
+            }
+
+        } catch (\Exception $e) {
+            Alert::toast('error!','error');
+            return response()->json(['error' => $e]);
+        }
+    }
 }
