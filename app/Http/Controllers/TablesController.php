@@ -113,7 +113,7 @@ class TablesController extends Controller
 
     public function mediaTable() {
         if (Auth::user()->hasAnyRole('employee', 'leader_dpm')) {
-            $gendoc = gendoc::where('type', 'LIKE', 'mediaForm%')->where('dpm', (department::find((Auth::user())->dpm))->prefix)->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orderBy('id', 'desc')->get();
+            $gendoc = gendoc::where('type', 'LIKE', 'mediaForm%')->where('dpm', (department::find((Auth::user())->dpm))->prefix)->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orWhere('submit_by', 'LIKE', '%' . Auth::user()->id . '%')->orderBy('id', 'desc')->get();
         } elseif (Auth::user()->hasAnyRole('director', 'coo/cfo')) {
             $gendoc = gendoc::where('type', 'LIKE', 'mediaForm%')->whereIn('dpm', json_decode((department::find((Auth::user())->dpm))->prefix))->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orderBy('id', 'desc')->get();
         }
@@ -511,7 +511,11 @@ class TablesController extends Controller
             }
 
             $data[] = $request->memb;
-            $gendoc = project_doc::find($request->bid);
+            if ($request->type === 'media') {
+                $gendoc = gendoc::find($request->bid);
+            } else {
+                $gendoc = project_doc::find($request->bid);
+            }
             $gendoc->submit_by = $data;
             $gendoc->save();
             return response()->json($data);
@@ -530,7 +534,11 @@ class TablesController extends Controller
             } else {
                 $data[] = $oldt;
             }
-            $gendoc = project_doc::find($request->bid);
+            if ($request->type === 'media') {
+                $gendoc = gendoc::find($request->bid);
+            } else {
+                $gendoc = project_doc::find($request->bid);
+            }
             $gendoc->submit_by = $data;
             $gendoc->save();
             return response()->json($data);
