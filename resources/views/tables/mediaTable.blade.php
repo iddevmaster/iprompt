@@ -196,6 +196,7 @@
                                 <th scope="col">ผู้สร้าง</th>
                                 <th scope="col">เรื่อง</th>
                                 <th scope="col">วันที่สร้าง</th>
+                                <th scope="col">คณะผู้จัดทำ</th>
                                 <th scope="col">ผู้บันทึก</th>
                                 <th scope="col">สถานะ</th>
                                 <th scope="col">แก้ไข</th>
@@ -216,6 +217,24 @@
                                         <td>{{ $row->bcreater}}</td>
                                         <td class="truncate">{{ $row->title}}</td>
                                         <td>{{ $row->created_date}}</td>
+                                        <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="media">
+                                            @php
+                                                $team = $row->submit_by;
+                                                $teamArr = json_decode($team);
+                                                if (is_array($teamArr)) {
+                                                    foreach ($teamArr as $memb) {
+                                                        $submitUser = $user->firstWhere('id', $memb);
+                                                        echo ($submitUser ? $submitUser->name : 'Unknow') . " / ";
+                                                    }
+                                                } else {
+                                                    $submitUser = $user->firstWhere('id', $row->submit_by);
+                                                    echo $submitUser ? $submitUser->name : 'Unknow';
+                                                }
+                                                $permis = Auth::user()->role ;
+                                                $dpm = Auth::user()->dpm;
+                                            @endphp
+                                            </button>
+                                        </td>
                                         <td>
                                             @php
                                                 $submitUser = $user->firstWhere('id', $row->submit_by);
