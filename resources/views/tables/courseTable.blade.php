@@ -70,10 +70,11 @@
                                         $insName = $user->firstWhere('id', $ins->appId ?? '') ?? '-';
                                         $note = $app->note ?? '-';
                                         $insnote = $ins->note ?? '-';
+                                        $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
                                     @endphp
                                     @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
                                         <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}"
-                                            @if (!(Auth::user()->id == $row->submit_by || Auth::user()->hasRole(['admin', 'ceo'])))
+                                            @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                                 disabled
                                             @endif
                                         >{{$row->stat}}</button>
@@ -103,43 +104,44 @@
                                     @endif
                                 </td>
 
-
-                                @can('create')
-                                @if ((Auth::user()->id == $row->submit_by) || !(auth()->user()->can('staff')))
+                                @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)))
                                     <td>
                                         <a href="{{url('/form/editcourse/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
                                     </td>
                                 @else
                                     <td></td>
                                 @endif
-                                @endcan
 
 
-                                @can('download')
-                                @if ((Auth::user()->id == $row->submit_by) || !(auth()->user()->can('staff')))
+                                @if ((((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo'])) || (auth()->user()->can('download')) || (in_array((Auth::user())->dpm, $shares)))
                                     <td>
                                         <a href="{{url('/form/downloadcourse/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
                                     </td>
                                 @else
                                     <td>
-                                        <a href="{{url('/form/downloadcourse/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                        <a href="{{url('/form/downloadcourse/view/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     </td>
                                 @endif
-                                @endcan
 
-                                <td class="text-center">
-                                    @if ($row->files != null)
-                                        @php
-                                            $fileList = $row->files;
-                                        @endphp
-                                        @foreach (json_decode($fileList) as $file)
-                                            <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$file}}</button>
-                                        @endforeach
-                                    @else
 
-                                    @endif
-                                    <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="policy">upload</button>
-                                </td>
+                                @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)))
+                                    <td class="text-center">
+                                        @if ($row->files != null)
+                                            @php
+                                                $fileList = $row->files;
+                                            @endphp
+                                            @foreach (json_decode($fileList) as $file)
+                                                <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$file}}</button>
+                                            @endforeach
+                                        @else
+
+                                        @endif
+                                        <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="policy">upload</button>
+                                    </td>
+                                @else
+                                    <td></td>
+                                @endif
+
                                 @can('staff')
                                     <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="course">
                                         @php
@@ -184,6 +186,9 @@
                                 <th scope="col">แก้ไข</th>
                                 <th scope="col">Download</th>
                                 <th scope="col">แนบไฟล์</th>
+                                @can('staff')
+                                    <th scope="col">Share</th>
+                                @endcan
                             </tr>
                         </thead>
 
@@ -213,10 +218,11 @@
                                                 $insName = $user->firstWhere('id', $ins->appId ?? '') ?? '-';
                                                 $note = $app->note ?? '-';
                                                 $insnote = $ins->note ?? '-';
+                                                $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
                                             @endphp
                                             @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
                                                 <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}"
-                                                    @if (!(Auth::user()->id == $row->submit_by || Auth::user()->hasRole(['admin', 'ceo'])))
+                                                    @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                                         disabled
                                                     @endif
                                                 >{{$row->stat}}</button>
@@ -247,42 +253,62 @@
                                         </td>
 
 
-                                        @can('create')
-                                        @if ((Auth::user()->id == $row->submit_by) || !(auth()->user()->can('staff')))
+                                        @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)))
                                             <td>
                                                 <a href="{{url('/form/editcourse/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
                                             </td>
                                         @else
                                             <td></td>
                                         @endif
-                                        @endcan
 
 
-                                        @can('download')
-                                        @if ((Auth::user()->id == $row->submit_by) || !(auth()->user()->can('staff')))
+                                        @if ((((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo'])) || (auth()->user()->can('download')) || (in_array((Auth::user())->dpm, $shares)))
                                             <td>
                                                 <a href="{{url('/form/downloadcourse/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
                                             </td>
                                         @else
                                             <td>
-                                                <a href="{{url('/form/downloadcourse/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                                <a href="{{url('/form/downloadcourse/view/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                             </td>
                                         @endif
-                                        @endcan
 
-                                        <td class="text-center">
-                                            @if ($row->files != null)
+
+                                        @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)))
+                                            <td class="text-center">
+                                                @if ($row->files != null)
+                                                    @php
+                                                        $fileList = $row->files;
+                                                    @endphp
+                                                    @foreach (json_decode($fileList) as $file)
+                                                        <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$file}}</button>
+                                                    @endforeach
+                                                @else
+
+                                                @endif
+                                                <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="policy">upload</button>
+                                            </td>
+                                        @else
+                                            <td></td>
+                                        @endif
+
+                                        @can('staff')
+                                            <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="wi">
                                                 @php
-                                                    $fileList = $row->files;
+                                                    $share = $row->shares;
+                                                    $teamArr = json_decode($share);
+                                                    if (is_array($teamArr)) {
+                                                        foreach ($teamArr as $memb) {
+                                                            echo ($memb ? (App\Models\department::find($memb))->name : '') . " / ";
+                                                        }
+                                                    } else {
+                                                        echo "share";
+                                                    }
+                                                    $permis = Auth::user()->role ;
+                                                    $dpm = Auth::user()->dpm;
                                                 @endphp
-                                                @foreach (json_decode($fileList) as $file)
-                                                    <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$file}}</button>
-                                                @endforeach
-                                            @else
-
-                                            @endif
-                                            <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="policy">upload</button>
-                                        </td>
+                                                </button>
+                                            </td>
+                                        @endcan
                                     </tr>
                                 @endif
                                 <?php $counter++ ?>

@@ -110,83 +110,17 @@ class HomeController extends Controller
     public function updateUser(Request $request)
     {
         $data = $request->all();
+        $log = [];
         $user = User::find($data['id']);
         try {
-            if ($data['approver']){
-                $user->givePermissionTo('approve');
-            } else {
-                $user->revokePermissionTo('approve');
-            }
-            if ($data['inspector']){
-                $user->givePermissionTo('inspect');
-            } else {
-                $user->revokePermissionTo('inspect');
-            }
-            if ($data['wi']){
-                $user->givePermissionTo('WI');
-            } else {
-                $user->revokePermissionTo('WI');
-            }
-
-            if ($data['sop']){
-                $user->givePermissionTo('SOP');
-            } else {
-                $user->revokePermissionTo('SOP');
-            }
-            if ($data['pol']){
-                $user->givePermissionTo('POL');
-            } else {
-                $user->revokePermissionTo('POL');
-            }
-            if ($data['proj']){
-                $user->givePermissionTo('PRO');
-            } else {
-                $user->revokePermissionTo('PRO');
-            }
-            if ($data['mou']){
-                $user->givePermissionTo('MOU');
-            } else {
-                $user->revokePermissionTo('MOU');
-            }
-            if ($data['anno']){
-                $user->givePermissionTo('ANNO');
-            } else {
-                $user->revokePermissionTo('ANNO');
-            }
-            if ($data['cont']){
-                $user->givePermissionTo('CONT');
-            } else {
-                $user->revokePermissionTo('CONT');
-            }
-            if ($data['download'] === '1'){
-                $user->givePermissionTo('download');
-            } else {
-                $user->revokePermissionTo('download');
-            }
-            if ($data['create'] === '1'){
-                $user->givePermissionTo('create');
-            } else {
-                $user->revokePermissionTo('create');
-            }
-            if ($data['check']){
-                $user->givePermissionTo('checklist');
-            } else {
-                $user->revokePermissionTo('checklist');
-            }
-            if ($data['course']){
-                $user->givePermissionTo('course');
-            } else {
-                $user->revokePermissionTo('course');
-            }
-            if ($data['media']){
-                $user->givePermissionTo('media');
-            } else {
-                $user->revokePermissionTo('media');
-            }
-            if ($data['staff']){
-                $user->givePermissionTo('staff');
-            } else {
-                $user->revokePermissionTo('staff');
+            foreach ($data['permiss'] as $key => $value) {
+                if ($value){
+                    $log[] = 'if ' . $key;
+                    $user->givePermissionTo($key);
+                } else {
+                    $log[] = 'else ' . $key;
+                    $user->revokePermissionTo($key);
+                }
             }
 
             $user->name = $data['name'];
@@ -200,7 +134,7 @@ class HomeController extends Controller
 
             $user->save();
             Alert::toast('User update successfully!','success');
-            return response()->json(['data' => $data, 'user' => $user]);
+            return response()->json(['data' => $data, 'user' => $user, 'log' => $log]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'data is not save']);
         }

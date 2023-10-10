@@ -113,29 +113,6 @@
                         </script>
                     @endif
 
-                    <div class="d-flex border-bottom mt-3">
-                        <p class="ms-3 fw-bold">Create : </p>
-                        <div class="form-check mx-3">
-                            <input class="form-check-input" type="radio" name="create" value="1" id="create_yes" disabled>
-                            <label class="form-check-label" for="create_yes">Yes</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="create" value="0" id="create_no" disabled>
-                            <label class="form-check-label" for="create_no">No</label>
-                        </div>
-                    </div>
-                    @if($user->can('create'))
-                        <script>
-                            document.getElementById('create_yes').checked = true;
-                            document.getElementById('create_no').checked = false;
-                        </script>
-                    @else
-                        <script>
-                            document.getElementById('create_yes').checked = false;
-                            document.getElementById('create_no').checked = true;
-                        </script>
-                    @endif
-
 
                     <div class="d-flex mt-4 border-bottom">
                         <p class="ms-3 fw-bold">Confirmable : </p>
@@ -163,7 +140,9 @@
                         <script>document.getElementById('inspector').checked = false;</script>
                     @endif
 
-                    <p class="mt-4 ms-3 fw-bold">Accessability :</p>
+                    <p class="mt-4 ms-3 fw-bold text-center">Accessability</p>
+
+                    <p class="mt-4 ms-3 fw-bold">Table :</p>
                     <div class="d-flex ms-4">
                         <div class="row">
                             <div class="form-check mx-3 col-lg-3 col-md-6">
@@ -226,6 +205,78 @@
                                     Media
                                 </label>
                             </div>
+                        </div>
+                    </div>
+
+                    <p class="mt-4 ms-3 fw-bold">Create :</p>
+                    <div class="d-flex ms-4">
+                        <div class="row">
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="cWI" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    WI
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="cSOP" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    SOP
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="cPOL" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Policy
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="cPRO" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Project
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="cMOU" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    MOU
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="cANNO" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Announcement
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="cCONT" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Contract
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="ccheck" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    CheckList
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="ccourse" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Course
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="cmedia" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    Media
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="mt-4 ms-3 fw-bold">Other :</p>
+                    <div class="d-flex ms-4">
+                        <div class="row">
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="staff" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
@@ -253,21 +304,35 @@
                         const phone = document.getElementById('phone');
                         const  down_yes = document.getElementById('down_yes');
                         const down_no = document.getElementById('down_no');
-                        const create_yes = document.getElementById('create_yes');
-                        const create_no = document.getElementById('create_no');
+                        // const create_yes = document.getElementById('create_yes');
+                        // const create_no = document.getElementById('create_no');
                         const approver = document.getElementById('approver');
                         const inspector = document.getElementById('inspector');
+
                         const wi = document.getElementById('WI');
                         const sop = document.getElementById('SOP');
                         const check = document.getElementById('checklist');
                         const course = document.getElementById('course');
                         const media = document.getElementById('media');
-                        const staff = document.getElementById('staff');
                         const pol = document.getElementById('POL');
                         const pro = document.getElementById('PRO');
                         const mou = document.getElementById('MOU');
                         const anno = document.getElementById('ANNO');
                         const cont = document.getElementById('CONT');
+
+                        const cwi = document.getElementById('cWI');
+                        const csop = document.getElementById('cSOP');
+                        const ccheck = document.getElementById('ccheck');
+                        const ccourse = document.getElementById('ccourse');
+                        const cmedia = document.getElementById('cmedia');
+                        const cpol = document.getElementById('cPOL');
+                        const cpro = document.getElementById('cPRO');
+                        const cmou = document.getElementById('cMOU');
+                        const canno = document.getElementById('cANNO');
+                        const ccont = document.getElementById('cCONT');
+
+                        const staff = document.getElementById('staff');
+
                         const userid = document.getElementById('userid');
                         const role = document.getElementById('role');
                         let userRole = "{{ Auth::user()->role }}";
@@ -293,8 +358,8 @@
                                     down_no.disabled = false;
 
                                     // Create
-                                    create_yes.disabled = false;
-                                    create_no.disabled = false;
+                                    // create_yes.disabled = false;
+                                    // create_no.disabled = false;
 
                                     // Confirmable
                                     approver.disabled = false;
@@ -312,12 +377,24 @@
                                     check.disabled = false;
                                     course.disabled = false;
                                     media.disabled = false;
+
+                                    cwi.disabled = false;
+                                    csop.disabled = false;
+                                    cpol.disabled = false;
+                                    cpro.disabled = false;
+                                    cmou.disabled = false;
+                                    canno.disabled = false;
+                                    ccont.disabled = false;
+                                    ccheck.disabled = false;
+                                    ccourse.disabled = false;
+                                    cmedia.disabled = false;
+
                                     staff.disabled = false;
                                 };
                                 editbtn.textContent = 'Save';
                             } else {
                                 const download = document.querySelector('input[name="download"]:checked').value;
-                                const create = document.querySelector('input[name="create"]:checked').value;
+                                // const create = document.querySelector('input[name="create"]:checked').value;
                                 const response = fetch('/users/update', {
                                     method: "POST",
                                     headers: {
@@ -332,22 +409,37 @@
                                         agn: agn.value,
                                         brn: brn.value,
                                         phone: phone.value,
-                                        download: download,
-                                        create: create,
-                                        approver: approver.checked,
-                                        inspector: inspector.checked,
-                                        wi: wi.checked,
-                                        sop: sop.checked,
-                                        pol: pol.checked,
-                                        proj: pro.checked,
-                                        mou: mou.checked,
-                                        anno: anno.checked,
-                                        cont: cont.checked,
                                         role: role.value,
-                                        check: check.checked,
-                                        course: course.checked,
-                                        media: media.checked,
-                                        staff: staff.checked,
+                                        permiss: {
+                                            // permission,
+                                            download: (download == 1 ? true : false),
+                                            approve: approver.checked,
+                                            inspect: inspector.checked,
+
+                                            WI: wi.checked,
+                                            SOP: sop.checked,
+                                            POL: pol.checked,
+                                            PRO: pro.checked,
+                                            MOU: mou.checked,
+                                            ANNO: anno.checked,
+                                            CONT: cont.checked,
+                                            checklist: check.checked,
+                                            course: course.checked,
+                                            media: media.checked,
+
+                                            cWI: cwi.checked,
+                                            cSOP: csop.checked,
+                                            cPOL: cpol.checked,
+                                            cPRO: cpro.checked,
+                                            cMOU: cmou.checked,
+                                            cANNO: canno.checked,
+                                            cCONT: ccont.checked,
+                                            ccheck: ccheck.checked,
+                                            ccourse: ccourse.checked,
+                                            cmedia: cmedia.checked,
+
+                                            staff: staff.checked,
+                                        }
                                     }),
                                 })
                                 .then((response) => {
@@ -358,6 +450,7 @@
                                 })
                                 .then((data) => {
                                     console.log(data);
+                                    window.location.reload();
                                 })
                                 .catch((error) => {
                                     console.error('Error:', error);
@@ -382,8 +475,8 @@
                                 down_no.disabled = true;
 
                                 // Create
-                                create_yes.disabled = true;
-                                create_no.disabled = true;
+                                // create_yes.disabled = true;
+                                // create_no.disabled = true;
 
                                 // Confirmable
                                 approver.disabled = true;
@@ -401,6 +494,18 @@
                                 check.disabled = true;
                                 course.disabled = true;
                                 media.disabled = true;
+
+                                cwi.disabled = true;
+                                csop.disabled = true;
+                                cpol.disabled = true;
+                                cpro.disabled = true;
+                                cmou.disabled = true;
+                                canno.disabled = true;
+                                ccont.disabled = true;
+                                ccheck.disabled = true;
+                                ccourse.disabled = true;
+                                cmedia.disabled = true;
+
                                 staff.disabled = true;
 
                                 editbtn.textContent = 'Edit';
