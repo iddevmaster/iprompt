@@ -81,7 +81,7 @@
                             <label class="col-md-4 col-form-label text-md-end">{{ __('สาขา') }}</label>
 
                             <div class="col-md-6">
-                                <select class="form-select" aria-label="Default select example" name="branch">
+                                <select class="form-select" aria-label="Default select example" name="branch" id="usrBrn">
                                     <option disabled selected>กรุณาเลือกสาขา</option>
                                     @foreach ($regData['branche'] as $data)
                                         <option value="{{$data->id}}">{{$data->name}}</option>
@@ -94,14 +94,33 @@
                             <label class="col-md-4 col-form-label text-md-end">{{ __('ฝ่าย') }}</label>
 
                             <div class="col-md-6">
-                                <select class="form-select" aria-label="Default select example" name="dpm">
+                                <select class="form-select" aria-label="Default select example" id="usrDpm" name="dpm" disabled>
                                     <option disabled selected>กรุณาเลือกฝ่าย</option>
                                     @foreach ($regData['department'] as $data)
-                                        <option value="{{$data->id}}">{{$data->name}}</option>
+                                        <option value="{{$data->id}}" bid="{{ $data->branch_id }}">{{$data->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
+
+                        <script>
+                            const usrBrn = document.getElementById('usrBrn');
+                            const usrDpm = document.getElementById('usrDpm');
+                            usrBrn.addEventListener('change', () => {
+                                usrDpm.disabled = false;
+                                const selectedBranch = usrBrn.value;
+                                const options = document.querySelectorAll('#usrDpm option');
+                                options.forEach((option) => {
+                                    if (option.getAttribute('bid') == selectedBranch) {
+                                        option.style.display = 'block';
+                                    } else {
+                                        option.style.display = 'none';
+                                    }
+                                });
+                            });
+
+
+                        </script>
 
                         <div class="row mb-3">
                             <label class="col-md-4 col-form-label text-md-end">{{ __('เบอร์โทรศัพท์') }}</label>

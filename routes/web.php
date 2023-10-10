@@ -39,6 +39,16 @@ Route::get('/management', [App\Http\Controllers\HomeController::class, 'manageme
 Route::post('permission/add', [App\Http\Controllers\HomeController::class, 'addPermis']);
 Route::post('permission/del', [App\Http\Controllers\HomeController::class, 'delPermis']);
 Route::post('role/add', [App\Http\Controllers\HomeController::class, 'addRole']);
+
+Route::post('agn/add', [App\Http\Controllers\HomeController::class, 'addAgn']);
+Route::post('agn/del', [App\Http\Controllers\HomeController::class, 'delAgn']);
+
+Route::post('brn/add', [App\Http\Controllers\HomeController::class, 'addBrn']);
+Route::post('brn/del', [App\Http\Controllers\HomeController::class, 'delBrn']);
+
+Route::post('dpm/add', [App\Http\Controllers\HomeController::class, 'addDpm']);
+Route::post('dpm/del', [App\Http\Controllers\HomeController::class, 'delDpm']);
+
 Route::post('role/del', [App\Http\Controllers\HomeController::class, 'delRole']);
 Route::get('/issue/report', [App\Http\Controllers\HomeController::class, 'issueReport'])->name('issue-report');
 

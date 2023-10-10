@@ -56,7 +56,11 @@ class HomeController extends Controller
 
     public function management() {
         $permis = Permission::all();
-        return view('management', compact('permis'));
+        $roles = Role::all();
+        $agen = agencie::all();
+        $branch = branche::all();
+        $dpms = department::all();
+        return view('management', compact('permis', 'roles', 'agen', 'branch', 'dpms'));
     }
 
     public function alluser() {
@@ -217,7 +221,73 @@ class HomeController extends Controller
     public function addRole (Request $request) {
         try {
             Role::create(['name' => $request->value]);
-            Alert::toast('User added successfully!','success');
+            Alert::toast('Added role successfully!','success');
+            return response()->json(['success' => 'success']);
+        } catch (\Exception $e) {
+            Alert::toast('error!','error');
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function addAgn (Request $request) {
+        try {
+            agencie::create(['name' => $request->value]);
+            Alert::toast('Added agencie successfully!','success');
+            return response()->json(['success' => 'success']);
+        } catch (\Exception $e) {
+            Alert::toast('error!','error');
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function delAgn (Request $request) {
+        try {
+            agencie::where('name', $request->value)->delete();
+            Alert::toast('Deleted agencie successfully!','success');
+            return response()->json(['success' => 'success']);
+        } catch (\Exception $e) {
+            Alert::toast('error!','error');
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function addBrn (Request $request) {
+        try {
+            branche::create(['name' => $request->value, 'agency_id' => $request->brnagn]);
+            Alert::toast('Added agencie successfully!','success');
+            return response()->json(['success' => 'success']);
+        } catch (\Exception $e) {
+            Alert::toast('error!','error');
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function delBrn (Request $request) {
+        try {
+            branche::where('name', $request->value)->delete();
+            Alert::toast('Deleted agencie successfully!','success');
+            return response()->json(['success' => 'success']);
+        } catch (\Exception $e) {
+            Alert::toast('error!','error');
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function addDpm (Request $request) {
+        try {
+            department::create(['name' => $request->value, 'branch_id' => $request->brnagn, 'prefix' => $request->prefix]);
+            Alert::toast('Added agencie successfully!','success');
+            return response()->json(['success' => 'success']);
+        } catch (\Exception $e) {
+            Alert::toast('error!','error');
+            return response()->json(['error' => $e]);
+        }
+    }
+
+    public function delDpm (Request $request) {
+        try {
+            department::where('name', $request->value)->delete();
+            Alert::toast('Deleted agencie successfully!','success');
             return response()->json(['success' => 'success']);
         } catch (\Exception $e) {
             Alert::toast('error!','error');
@@ -230,7 +300,7 @@ class HomeController extends Controller
             $role = Role::findByName($request->value);
             if ($role->permissions()->count() === 0) {
                 $role->delete();
-                Alert::toast('User added successfully!','success');
+                Alert::toast('Delete role successfully!','success');
                 return response()->json(['success' => 'success']);
             } else {
                 Alert::toast('Permission has role!','error');
