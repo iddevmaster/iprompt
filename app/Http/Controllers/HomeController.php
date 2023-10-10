@@ -60,7 +60,7 @@ class HomeController extends Controller
     }
 
     public function alluser() {
-        $user = User::orderBy('id', 'desc')->paginate(10);
+        $user = User::orderBy('id', 'desc')->get();
         $agn = agencie::all();
         $brn = branche::all();
         $dpm = department::all();
