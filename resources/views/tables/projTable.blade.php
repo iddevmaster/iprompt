@@ -37,11 +37,18 @@
                         @php
                             $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
                             $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : [];
-                            if ($row->id == 2) {
-
-                                // dd(is_array($team) ? $team : []);
-
-                            };
+                            $team = $row->submit_by;
+                            $teamArr = json_decode($team);
+                            $teamlist = [];
+                            $permis = Auth::user()->role ;
+                            $dpm = Auth::user()->dpm;
+                            if (is_array($teamArr)) {
+                                foreach ($teamArr as $index => $memb) {
+                                    if ($index == 0) continue;
+                                    $submitUser = $user->firstWhere('id', $memb);
+                                    $teamlist[] = ($submitUser ? $submitUser->name : 'Unknow');
+                                }
+                            }
                         @endphp
                         <tr>
                             <td>{{$counter}}</td>
@@ -49,24 +56,18 @@
                             <td>{{ $row->proj_code}}</td>
                             <td class="truncate">{{ $row->title}}</td>
                             <td>{{ $row->created_date}} / {{ $row->created_at->toDateString() }}</td>
-                            <td><button class="btn btn-success" id="projtBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}"
+                            <td><button class="btn btn-success" id="projtBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" teamlist="{{json_encode($teamlist)}}"
                                 @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                     disabled
                                 @endif>
                                 @php
-                                    $team = $row->submit_by;
-                                    $teamArr = json_decode($team);
                                     if (is_array($teamArr)) {
-                                        foreach ($teamArr as $memb) {
-                                            $submitUser = $user->firstWhere('id', $memb);
-                                            echo ($submitUser ? $submitUser->name : 'Unknow') . " / ";
-                                        }
+                                            $submitUser = $user->firstWhere('id', $teamArr[0]);
+                                            echo ($submitUser ? $submitUser->name : 'Unknow');
                                     } else {
                                         $submitUser = $user->firstWhere('id', $row->submit_by);
                                         echo $submitUser ? $submitUser->name : 'Unknow';
                                     }
-                                    $permis = Auth::user()->role ;
-                                    $dpm = Auth::user()->dpm;
                                 @endphp
                                 </button>
                             </td>
@@ -367,11 +368,15 @@
         const ptbtns = document.querySelectorAll('#projtBtn');
         ptbtns.forEach((ckbtn) => {
             const bookid = ckbtn.getAttribute('bookid');
+            // const teamlist = ckbtn.getAttribute('teamlist');
+            const teamlistData = JSON.parse(ckbtn.getAttribute('teamlist'));
+            const displayTeamlist = teamlistData.join(', ');
             const team = ckbtn.value;
             ckbtn.addEventListener('click', function () {
                 Swal.fire({
                     title: 'เพิ่มผู้ร่วมโครงการ',
-                    html: `
+                    html: `<div ><b>รายชื่อทีม:</b> ${displayTeamlist}</div>
+                        <hr>
                         <select class="form-select mb-2" id="usrt" >
                             <option value="" selected disabled>กรุณาเลือกผู้ร่วมโครงการ</option>
                             @foreach ($user as $usr)
