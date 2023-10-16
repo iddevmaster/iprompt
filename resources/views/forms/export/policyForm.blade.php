@@ -170,6 +170,12 @@
     function printDiv() {
                 window.print();
             }
+        if (document.querySelector("table")) {
+            const tables = document.querySelectorAll("table");
+            tables.forEach(table => {
+                table.classList.add("table-bordered");
+            })
+        }
     </script>
 </body>
 </html>
