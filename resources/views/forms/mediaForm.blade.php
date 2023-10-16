@@ -122,10 +122,15 @@
                         <?php session_destroy();?>
                     </textarea>
                 @endif
-
-
             </div><!-- end content -->
-
+            <script>
+                if (document.querySelector("table")) {
+                    const tables = document.querySelectorAll("table");
+                    tables.forEach(table => {
+                        table.classList.add("table-bordered");
+                    })
+                }
+            </script>
             <!-- footer -->
             <div class="footer mt-auto">
                 <p id="footertext">เอกสารนี้ ฉบับทางการ จะอยู่ในรูปไฟล์อิเล็กทรอนิกส์ อยู่ในระบบเครือข่ายสารสนเทศ เท่านั้น หากปรากฎเอกสารนี้ส่วนหนึ่งส่วนใด หรือทั้งฉบับ
@@ -171,7 +176,7 @@
                 document.getElementById('backButton').addEventListener('click', goBack);
 
                 function myFunction() {
-                    return "Changes you made may not be saved.";
+                    return "ตรวจสอบให้แน่ใจว่าคุณต้องการออกจากหน้านี้";
                 }
             </script>
         </div>

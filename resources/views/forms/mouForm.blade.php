@@ -79,7 +79,14 @@
                     </textarea>
                 @endif
             </div><!-- end content -->
-
+            <script>
+                if (document.querySelector("table")) {
+                    const tables = document.querySelectorAll("table");
+                    tables.forEach(table => {
+                        table.classList.add("table-bordered");
+                    })
+                }
+            </script>
             <!-- footer -->
             <div class="footer mt-auto">
             @if ($class)
@@ -141,7 +148,7 @@
                 addButton.addEventListener('click', addContent);
 
                 function myFunction() {
-                    return "Changes you made may not be saved.";
+                    return "ตรวจสอบให้แน่ใจว่าคุณต้องการออกจากหน้านี้";
                 }
             </script>
         </div>

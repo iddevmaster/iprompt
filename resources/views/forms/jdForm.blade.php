@@ -138,7 +138,7 @@
                 document.getElementById('backButton').addEventListener('click', goBack);
 
                 function myFunction() {
-                    return "Changes you made may not be saved.";
+                    return "ตรวจสอบให้แน่ใจว่าคุณต้องการออกจากหน้านี้";
                 }
             </script>
         </div>
