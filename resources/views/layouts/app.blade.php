@@ -151,7 +151,7 @@
 
                         </li>
 
-                        @canany('cWI|cSOP|cPOL|cPRO|cMOU|cANNO|cCONT|ccheck|ccourse|cmedia')
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle navbarMenu" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 สร้างหนังสือ
@@ -189,7 +189,7 @@
                                 </div>
                             </ul>
                         </li>
-                        @endcanany
+
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle navbarMenu" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -219,7 +219,7 @@
                                     @can('course')
                                         <li><a class="dropdown-item" href="{{ route('courseTable') }}">course</a></li>
                                     @endcan
-                                    @can('checklist')
+                                    @can('check')
                                         <li><a class="dropdown-item" href="{{ route('checkTable') }}">Check List</a></li>
                                     @endcan
                                     @can('media')
