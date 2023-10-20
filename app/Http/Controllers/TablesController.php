@@ -614,7 +614,7 @@ class TablesController extends Controller
         try {
             // Validate the request
             $request->validate([
-                'file' => 'required|mimes:pdf,jpg,jpeg,png,docx,doc',
+                'file' => 'required|mimes:pdf,jpg,jpeg,png,docx,doc,mp4',
                 'valueid' => 'required',
             ]);
             $destinationPath = 'files/';
