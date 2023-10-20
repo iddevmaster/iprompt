@@ -151,7 +151,7 @@
 
                         </li>
 
-                        @can('create')
+                        @canany('cWI|cSOP|cPOL|cPRO|cMOU|cANNO|cCONT|ccheck|ccourse|cmedia')
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle navbarMenu" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 สร้างหนังสือ
@@ -159,37 +159,37 @@
 
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
-                                    @can('MOU')
+                                    @can('cMOU')
                                         <li><a class="dropdown-item" href="{{ route('mouForm') }}">บันทึกความร่วมมือ</a></li>
                                     @endcan
-                                    @can('PRO')
+                                    @can('cPRO')
                                         <li><a class="dropdown-item" href="{{ route('projForm') }}">โครงการ</a></li>
                                     @endcan
-                                    @can('POL')
+                                    @can('cPOL')
                                         <li><a class="dropdown-item" href="{{ route('policyForm') }}">นโยบาย</a></li>
                                     @endcan
-                                    @can('SOP')
+                                    @can('cSOP')
                                         <li><a class="dropdown-item" href="{{ route('sopForm') }}">ระเบียบการปฏิบัติงาน</a></li>
                                     @endcan
-                                    @can('WI')
+                                    @can('cWI')
                                         <li><a class="dropdown-item" href="{{ route('wiForm') }}">ขั้นตอนการปฏิบัติงาน</a></li>
                                     @endcan
-                                    @can('ANNO')
+                                    @can('cANNO')
                                         <li><a class="dropdown-item" href="{{ route('annoForm') }}">ประกาศ</a></li>
                                     @endcan
-                                    @can('course')
+                                    @can('ccourse')
                                         <li><a class="dropdown-item" href="{{ route('courseForm') }}">Course</a></li>
                                     @endcan
-                                    @can('checklist')
+                                    @can('ccheck')
                                         <li><a class="dropdown-item" href="{{ route('checkForm') }}">Check List</a></li>
                                     @endcan
-                                    @can('media')
+                                    @can('cmedia')
                                         <li><a class="dropdown-item" href="{{ route('mediaForm') }}">Media</a></li>
                                     @endcan
                                 </div>
                             </ul>
                         </li>
-                        @endcan
+                        @endcanany
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle navbarMenu" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
