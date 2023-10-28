@@ -191,13 +191,13 @@
                 "bLengthChange": false,
                 language: {
                     search: "ค้นหา:"
+                },
+                drawCallback: function() {
+                    $('[data-bs-toggle="tooltip"]').tooltip();
                 }
             });
         });
 
-        $(document).ready(function() {
-            $('[data-bs-toggle="tooltip"]').tooltip();
-        });
         const statbtns = document.querySelectorAll('#status');
         statbtns.forEach((ckbtn) => {
             let status = ckbtn.getAttribute('name');

@@ -337,6 +337,9 @@
                 "bLengthChange": false,
                 language: {
                     search: "ค้นหา:"
+                },
+                drawCallback: function() {
+                    $('[data-bs-toggle="tooltip"]').tooltip();
                 }
             });
         });
