@@ -10,6 +10,9 @@
     position: relative; /* Required for footer positioning */
     padding: 1cm;
 }
+.editorContent > figure > img {
+    width: -webkit-fill-available;
+}
 </style>
 @section('content')
 <head>
