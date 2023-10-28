@@ -53,7 +53,7 @@
                                 <td>{{$counter}}</td>
                                 <td>{{ $row->book_num}}</td>
                                 <td>{{ $row->bcreater}}</td>
-                                <td class="truncate" data-toggle="tooltip" title="{{ $row->title }}" data-placement="top">
+                                <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                     {{ $row->title }}
                                 </td>
                                 <td>{{ $row->created_date}}</td>
@@ -204,7 +204,7 @@
                                         <td>{{$counter}}</td>
                                         <td>{{ $row->book_num}}</td>
                                         <td>{{ $row->bcreater}}</td>
-                                        <td class="truncate" data-toggle="tooltip" title="{{ $row->title }}" data-placement="top">
+                                        <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                             {{ $row->title }}
                                         </td>
                                         <td>{{ $row->created_date}}</td>
@@ -341,7 +341,7 @@
         });
 
         $(document).ready(function() {
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-bs-toggle="tooltip"]').tooltip();
         });
         const statbtns = document.querySelectorAll('#status');
         statbtns.forEach((ckbtn) => {
