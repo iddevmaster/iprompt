@@ -32,7 +32,7 @@
                             <th scope="col">ผู้สร้าง</th>
                             <th scope="col">เรื่อง</th>
                             <th scope="col">วันที่สร้าง</th>
-                            <th scope="col">คณะผู้จัดทำ</th>
+                            {{-- <th scope="col">คณะผู้จัดทำ</th> --}}
                             <th scope="col">สถานะ</th>
                             <th scope="col">แก้ไข</th>
                             <th scope="col">Download</th>
@@ -72,7 +72,7 @@
                                     {{ $row->title }}
                                 </td>
                                 <td>{{ $row->created_date}}</td>
-                                <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="media" teamlist="{{json_encode($teamlist)}}"
+                                {{-- <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="media" teamlist="{{json_encode($teamlist)}}"
                                     @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                         disabled
                                     @endif>
@@ -86,7 +86,7 @@
                                         }
                                     @endphp
                                     </button>
-                                </td>
+                                </td> --}}
                                 {{-- <td>
                                     @php
                                         $submitUser = $user->firstWhere('id', $row->submit_by);
