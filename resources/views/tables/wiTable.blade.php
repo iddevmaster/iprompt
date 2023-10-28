@@ -41,7 +41,9 @@
                             <td>{{$counter}}</td>
                             <td>{{ $row->book_num}}</td>
                             <td>{{ $row->bcreater}}</td>
-                            <td class="truncate">{{ $row->title}}</td>
+                            <td class="truncate" data-toggle="tooltip" title="{{ $row->title }}" data-placement="top">
+                                    {{ $row->title }}
+                                </td>
                             <td>{{ $row->created_date}}</td>
                             <td>
                                 @php
@@ -171,6 +173,10 @@
                     search: "ค้นหา:"
                 }
             });
+        });
+
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
         });
         const statbtns = document.querySelectorAll('#status');
         statbtns.forEach((ckbtn) => {

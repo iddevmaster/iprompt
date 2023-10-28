@@ -68,7 +68,9 @@
                                 <td>{{$counter}}</td>
                                 <td>{{ $row->book_num}}</td>
                                 <td>{{ $row->bcreater}}</td>
-                                <td class="truncate">{{ $row->title}}</td>
+                                <td class="truncate" data-toggle="tooltip" title="{{ $row->title }}" data-placement="top">
+                                    {{ $row->title }}
+                                </td>
                                 <td>{{ $row->created_date}}</td>
                                 <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="media" teamlist="{{json_encode($teamlist)}}"
                                     @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
@@ -248,7 +250,9 @@
                                         <td>{{$counter}}</td>
                                         <td>{{ $row->book_num}}</td>
                                         <td>{{ $row->bcreater}}</td>
-                                        <td class="truncate">{{ $row->title}}</td>
+                                        <td class="truncate" data-toggle="tooltip" title="{{ $row->title }}" data-placement="top">
+                                            {{ $row->title }}
+                                        </td>
                                         <td>{{ $row->created_date}}</td>
                                         <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="media"  teamlist="{{json_encode($teamlist)}}"
                                             @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
@@ -396,6 +400,11 @@
                 }
             });
         });
+
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+
         const statbtns = document.querySelectorAll('#status');
         statbtns.forEach((ckbtn) => {
             let status = ckbtn.getAttribute('name');
