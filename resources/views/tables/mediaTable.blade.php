@@ -135,9 +135,9 @@
                                 </td>
 
 
-                                @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)) || (in_array(((Auth::user())->id), (is_array($teams)? $teams : []))))
+                                @if (((App\Models\department::find((Auth::user())->dpm))->prefix !== $row->dpm) || Auth::user()->hasRole(['admin', 'ceo']))
                                     <td>
-                                        <a href="{{url('/form/editmedia/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
+                                        <a href="{{url('/form/editmedia/'.$row->id)}}"><button type="button" class="btn btn-warning" >Edit</button></a>
                                     </td>
                                 @else
                                     <td></td>
@@ -164,10 +164,10 @@
                                             @foreach (json_decode($fileList) as $file)
                                                 <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$file}}</button>
                                             @endforeach
-                                        @else
-
                                         @endif
-                                        <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="policy">upload</button>
+                                        @if (((App\Models\department::find((Auth::user())->dpm))->prefix !== $row->dpm) || Auth::user()->hasRole(['admin', 'ceo']))
+                                            <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="policy">upload</button>
+                                        @endif
                                     </td>
                                 @else
                                     <td></td>
