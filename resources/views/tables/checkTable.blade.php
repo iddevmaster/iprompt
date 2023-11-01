@@ -426,7 +426,9 @@
             ckbtn.addEventListener('click', function () {
                 Swal.fire({
                     title: status,
-                    html: `ผู้ตรวจสอบ: ${insName}<br>Note: ${insnote}<br>
+                    html: `ผู้ตรวจสอบ: ${insName}<br>Note: ${insnote}
+                            <br>
+                            <br>
                             ผู้อนุมัติ: ${appName}<br>Note: ${appnote}
                             `,
                     showCancelButton: true,
@@ -511,7 +513,9 @@
             ckbtn.addEventListener('click', function () {
                 Swal.fire({
                     title: status,
-                    html: `ผู้ตรวจสอบ: ${insName}<br>Note: ${insnote}<br>
+                    html: `ผู้ตรวจสอบ: ${insName}<br>Note: ${insnote}
+                            <br>
+                            <br>
                             ผู้อนุมัติ: ${appName}<br>Note: ${appnote}
                             `,
                     showCancelButton: false,
