@@ -154,7 +154,8 @@ class TablesController extends Controller
             $gendoc = gendoc::where('type', 'LIKE', 'mediaForm%')
                 ->where(function ($query) {
                     $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
-                        ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
+                        ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')
+                        ->orWhere('stat', 'ผ่านการอนุมัติ');
                 })->orderBy('id', 'desc')->get();
         }
         else {
