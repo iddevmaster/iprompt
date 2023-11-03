@@ -198,31 +198,31 @@
 
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
-                                    @can('MOU')
+                                    @can('cMOU')
                                         <li><a class="dropdown-item" href="{{ route('mouTable') }}">บันทึกความร่วมมือ</a></li>
                                     @endcan
-                                    @can('PRO')
+                                    @can('cPRO')
                                         <li><a class="dropdown-item" href="{{ route('projTable') }}">โครงการ</a></li>
                                     @endcan
-                                    @can('POL')
+                                    @can('cPOL')
                                         <li><a class="dropdown-item" href="{{ route('policyTable') }}">นโยบาย</a></li>
                                     @endcan
-                                    @can('SOP')
+                                    @can('cSOP')
                                         <li><a class="dropdown-item" href="{{ route('sopTable') }}">ระเบียบการปฏิบัติงาน</a></li>
                                     @endcan
-                                    @can('WI')
+                                    @can('cWI')
                                         <li><a class="dropdown-item" href="{{ route('wiTable') }}">ขั้นตอนการปฏิบัติงาน</a></li>
                                     @endcan
-                                    @can('ANNO')
+                                    @can('cANNO')
                                         <li><a class="dropdown-item" href="{{ route('annoTable') }}">ประกาศ</a></li>
                                     @endcan
-                                    @can('course')
+                                    @can('ccourse')
                                         <li><a class="dropdown-item" href="{{ route('courseTable') }}">course</a></li>
                                     @endcan
-                                    @can('check')
+                                    @can('ccheck')
                                         <li><a class="dropdown-item" href="{{ route('checkTable') }}">Check List</a></li>
                                     @endcan
-                                    @can('media')
+                                    @can('cmedia')
                                         <li><a class="dropdown-item" href="{{ route('mediaTable') }}">Media</a></li>
                                     @endcan
                                 </div>
