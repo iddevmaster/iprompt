@@ -65,6 +65,11 @@
             <!-- content -->
             <div class="content py-5 w-100 h-100">
                     <textarea id="editor" name="myInput">{!! $form->detail !!}</textarea>
+                    <div class="my-2 d-flex flex-column align-items-center" >
+                        <div id="frameContainer"></div>
+                        <input type="hidden" id="iframeInput" name="iframeElement">
+                        <button type="button" class="btn btn-info my-2" id="addFrame">Iframe</button>
+                    </div>
             </div><!-- end content -->
 
             <!-- footer -->
@@ -117,6 +122,40 @@
     <!-- Scripts -->
     <script src="https://cdn.ckeditor.com/ckeditor5/38.1.1/super-build/ckeditor.js"></script>
     @vite(['resources/css/form.css' , 'resources/js/form.js'])
+    <script>
+        const addFrameBtn = document.getElementById('addFrame');
+        const framContainer = document.getElementById('frameContainer');
+        const iframeInput = document.getElementById('iframeInput');
+        addFrameBtn.addEventListener('click', () => {
+            Swal.fire({
+                input: "textarea",
+                inputLabel: "Add iframe",
+                inputPlaceholder: "Type your iframe here...",
+                inputAttributes: {
+                    "aria-label": "Type your iframe here"
+                },
+                showCancelButton: true,
+                preConfirm: (inputValue) => {
+                    // Perform your validation or processing here
+                    if (!inputValue.trim()) {
+                        // If validation fails, throw an error message
+                        Swal.showValidationMessage('Please entry your iframe!');
+                    } else {
+                        // If validation passes, you can return the value or do something with it
+                        return inputValue; // The resolved value will be passed to the `.then()` chained call
+                    }
+                }
+            }).then((result) => {
+                if (result.value) {
+                    console.log('Textarea content:', result.value);
+                    framContainer.innerHTML += result.value;
+                    iframeInput.value += result.value;
 
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    console.log('Textarea input was cancelled');
+                }
+            });
+        })
+    </script>
 </body>
 @endsection

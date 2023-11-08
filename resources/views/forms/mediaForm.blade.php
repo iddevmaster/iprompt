@@ -126,6 +126,13 @@
                     </textarea>
                 @endif
             </div><!-- end content -->
+            <div class="mb-2" >
+                @if (!$class)
+                    <div id="frameContainer"></div>
+                    <input type="hidden" id="iframeInput" name="iframeElement">
+                    <button type="button" class="btn btn-info" id="addFrame">Iframe</button>
+                @endif
+            </div>
             <script>
                 if (document.querySelector("table")) {
                     const tables = document.querySelectorAll("table");
@@ -184,8 +191,42 @@
             </script>
         </div>
     </form>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const addFrameBtn = document.getElementById('addFrame');
+        const framContainer = document.getElementById('frameContainer');
+        const iframeInput = document.getElementById('iframeInput');
+        addFrameBtn.addEventListener('click', () => {
+            Swal.fire({
+                input: "textarea",
+                inputLabel: "Add iframe",
+                inputPlaceholder: "Type your iframe here...",
+                inputAttributes: {
+                    "aria-label": "Type your iframe here"
+                },
+                showCancelButton: true,
+                preConfirm: (inputValue) => {
+                    // Perform your validation or processing here
+                    if (!inputValue.trim()) {
+                        // If validation fails, throw an error message
+                        Swal.showValidationMessage('Please entry your iframe!');
+                    } else {
+                        // If validation passes, you can return the value or do something with it
+                        return inputValue; // The resolved value will be passed to the `.then()` chained call
+                    }
+                }
+            }).then((result) => {
+                if (result.value) {
+                    console.log('Textarea content:', result.value);
+                    framContainer.innerHTML += result.value;
+                    iframeInput.value += result.value;
+
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    console.log('Textarea input was cancelled');
+                }
+            });
+        })
+    </script>
 </body>
 <!-- Scripts -->
-
-
 @endsection

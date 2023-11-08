@@ -116,6 +116,9 @@ class FormController extends Controller
             $formtype = $request->input('formtype');
             $class = 1;
             $editorContent = $request->input('myInput');
+            if ($request->input('iframeElement')) {
+                $editorContent = $editorContent.$request->input('iframeElement');
+            }
             $parties = [];
 
             if ($formtype === "projForm") {
@@ -294,7 +297,6 @@ class FormController extends Controller
     public function editFormmedia(Request $request,$id){
         // แก้ไข wi form
         $form = gendoc::find($id);
-        // dd($form->title);
         return view('/editForms/mediaForm', compact('form'));
     }
 
@@ -565,12 +567,16 @@ class FormController extends Controller
         else {
             $form = gendoc::find($request->formid);
             if ($form) {
+                $editorContent = $request->myInput;
+                if ($request->input('iframeElement')) {
+                    $editorContent = $editorContent.$request->input('iframeElement');
+                }
                 // Row with id found, update data
                 $form->title = $request->subject;
                 $form->bcreater = $request->creater;
                 $form->binspector = $request->inspector;
                 $form->bapprover = $request->approver;
-                $form->detail = $request->myInput;
+                $form->detail = $editorContent;
                 $form->type = $request->formtype. ($request->subtype? ".".$request->subtype : '');
                 $form->save();
             }
