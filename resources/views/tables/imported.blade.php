@@ -71,13 +71,14 @@
                                     <td>
                                         <button type="button" data-file-path="{{ asset('storage/uploads/' . $row->file) }}" class="btn btn-info viewPdfBtn">Book</button>
                                     </td>
-                                    @if ($row->status === '1')
-                                        @hasanyrole('employee|leader_dpm|ceo|admin')
-                                            <td>
-                                                <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
-                                            </td>
-                                        @endhasanyrole
-                                    @endif
+                                    <td>
+                                        @if ($row->status === '1')
+                                            @hasanyrole('employee|leader_dpm|ceo|admin')
+
+                                                    <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
+                                            @endhasanyrole
+                                        @endif
+                                    </td>
                                 </tr>
                                 <?php $counter++ ?>
                             @endforeach
@@ -102,6 +103,7 @@
                                 <th scope="col">วันที่รับ</th>
                                 <th scope="col">สถานะ</th>
                                 <th scope="col">หนังสือ</th>
+                                <th scope="col">ดำเนินการ</th>
                             </tr>
                         </thead>
 
@@ -133,13 +135,13 @@
                                     <td>
                                         <button type="button" data-file-path="{{ asset('storage/uploads/' . $row->file) }}" class="btn btn-info viewPdfBtn">Book</button>
                                     </td>
-                                    @if ($row->status === '1')
-                                        @hasanyrole('employee|leader_dpm|ceo|admin')
-                                            <td>
+                                    <td>
+                                        @if ($row->status === '1')
+                                            @hasanyrole('employee|leader_dpm|ceo|admin')
                                                 <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
-                                            </td>
-                                        @endhasanyrole
-                                    @endif
+                                            @endhasanyrole
+                                        @endif
+                                    </td>
                                 </tr>
                                 <?php $counter++ ?>
                             @endforeach
@@ -164,6 +166,7 @@
                                 <th scope="col">วันที่รับ</th>
                                 <th scope="col">สถานะ</th>
                                 <th scope="col">หนังสือ</th>
+                                <th scope="col">ดำเนินการ</th>
                             </tr>
                         </thead>
 
@@ -195,13 +198,13 @@
                                     <td>
                                         <button type="button" data-file-path="{{ asset('storage/uploads/' . $row->file) }}" class="btn btn-info viewPdfBtn">Book</button>
                                     </td>
-                                    @if ($row->status === '1')
-                                        @hasanyrole('employee|leader_dpm|ceo|admin')
-                                            <td>
+                                    <td>
+                                        @if ($row->status === '1')
+                                            @hasanyrole('employee|leader_dpm|ceo|admin')
                                                 <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
-                                            </td>
-                                        @endhasanyrole
-                                    @endif
+                                            @endhasanyrole
+                                        @endif
+                                    </td>
                                 </tr>
                                 <?php $counter++ ?>
                             @endforeach
@@ -226,6 +229,7 @@
                                 <th scope="col">วันที่รับ</th>
                                 <th scope="col">สถานะ</th>
                                 <th scope="col">หนังสือ</th>
+                                <th scope="col">ดำเนินการ</th>
                             </tr>
                         </thead>
 
@@ -257,13 +261,13 @@
                                     <td>
                                         <button type="button" data-file-path="{{ asset('storage/uploads/' . $row->file) }}" class="btn btn-info viewPdfBtn">Book</button>
                                     </td>
-                                    @if ($row->status === '1')
-                                        @hasanyrole('employee|leader_dpm|ceo|admin')
-                                            <td>
+                                    <td>
+                                        @if ($row->status === '1')
+                                            @hasanyrole('employee|leader_dpm|ceo|admin')
                                                 <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
-                                            </td>
-                                        @endhasanyrole
-                                    @endif
+                                            @endhasanyrole
+                                        @endif
+                                    </td>
                                 </tr>
                                 <?php $counter++ ?>
                             @endforeach
@@ -288,6 +292,7 @@
                                 <th scope="col">วันที่รับ</th>
                                 <th scope="col">สถานะ</th>
                                 <th scope="col">หนังสือ</th>
+                                <th scope="col">ดำเนินการ</th>
                             </tr>
                         </thead>
 
@@ -319,13 +324,13 @@
                                     <td>
                                         <button type="button" data-file-path="{{ asset('storage/uploads/' . $row->file) }}" class="btn btn-info viewPdfBtn">Book</button>
                                     </td>
-                                    @if ($row->status === '1')
-                                        @hasanyrole('employee|leader_dpm|ceo|admin')
-                                            <td>
+                                    <td>
+                                        @if ($row->status === '1')
+                                            @hasanyrole('employee|leader_dpm|ceo|admin')
                                                 <button type="button" class="btn btn-secondary" id="checkbtn" value="{{$row->id}}"><i class="bi bi-check2-square"></i></button>
-                                            </td>
-                                        @endhasanyrole
-                                    @endif
+                                            @endhasanyrole
+                                        @endif
+                                    </td>
                                 </tr>
                                 <?php $counter++ ?>
                             @endforeach
