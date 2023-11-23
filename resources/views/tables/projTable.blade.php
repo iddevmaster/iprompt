@@ -58,7 +58,7 @@
                                 {{ $row->title }}
                             </td>
                             <td>{{ $row->created_date}} / {{ $row->created_at->toDateString() }}</td>
-                            <td><button class="btn btn-success" id="projtBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" teamlist="{{json_encode($teamlist)}}"
+                            <td><button class="btn btn-success" id="projtBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" teamlist="{{json_encode($teamlist)}}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="รายชื่อทีม: {{implode(" , ", $teamlist)}}"
                                 @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                     disabled
                                 @endif>
