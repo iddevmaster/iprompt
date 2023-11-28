@@ -140,7 +140,7 @@
                                             @php
                                                 $fileList = $row->files;
                                             @endphp
-                                            @foreach (json_decode($fileList) as $file)
+                                            @foreach (json_decode($fileList) as $index => $file)
                                                 <button type="button" data-file-path="{{ asset('files/' . $file) }}" fileType="media" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}"
                                                     candel=
                                                     @if (((App\Models\department::find((Auth::user())->dpm))->prefix == $row->dpm) || Auth::user()->hasRole(['admin', 'ceo']))
@@ -148,7 +148,9 @@
                                                     @else
                                                        "0"
                                                     @endif
-                                                    >{{$file}}</button>
+
+                                                    data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{$file}}"
+                                                    >{{$index +1 }}</button>
                                             @endforeach
                                         @endif
                                         @if (((App\Models\department::find((Auth::user())->dpm))->prefix == $row->dpm) || Auth::user()->hasRole(['admin', 'ceo']))
@@ -606,7 +608,7 @@
             const fileNameValue = pdfbtn.value;
             const formId = pdfbtn.getAttribute('fileId');
             const fileType = pdfbtn.getAttribute('fileType');
-            const canDel = pdfbtn.getAttribute('candel')
+            const canDel = pdfbtn.getAttribute('candel');
             console.log('candel: ',canDel);
             pdfbtn.addEventListener('click', function () {
                 const pdfUrl = this.getAttribute('data-file-path');
@@ -743,11 +745,11 @@
             const bookty = ckbtn.getAttribute('bookType');
             ckbtn.addEventListener('click', function () {
                 Swal.fire({
-                    title: 'เพิ่มผู้ร่วมโครงการ',
-                    html: `<div ><b>รายชื่อทีม:</b> ${displayTeamlist}</div>
+                    title: 'สิทธ์การเข้าถึงเอกสาร',
+                    html: `<div ><b>รายชื่อ:</b> ${displayTeamlist}</div>
                         <hr>
                         <select class="form-select mb-2" id="usrt" >
-                            <option value="" selected disabled>กรุณาเลือกผู้ร่วมโครงการ</option>
+                            <option value="" selected disabled>กรุณาเลือกผู้มีสิทธ์เข้าถึงเอกสาร</option>
                             @foreach ($user as $usr)
                                 <option value="{{$usr->id}}">{{$usr->name}}</option>
                             @endforeach

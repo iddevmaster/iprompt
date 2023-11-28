@@ -574,13 +574,15 @@ class TablesController extends Controller
             }
 
             $data[] = $request->memb;
-            if ($request->type === 'media') {
-                $gendoc = gendoc::find($request->bid);
-            } else {
+            if ($request->type === 'proj') {
                 $gendoc = project_doc::find($request->bid);
+            } else {
+                $gendoc = gendoc::find($request->bid);
             }
             $gendoc->submit_by = $data;
             $gendoc->save();
+
+            Alert::toast('team has been saved!','success');
             return response()->json($data);
         } catch (\Exception $e) {
             return response()->json(['error' => $e]);
@@ -597,13 +599,15 @@ class TablesController extends Controller
             } else {
                 $data[] = $oldt;
             }
-            if ($request->type === 'media') {
-                $gendoc = gendoc::find($request->bid);
-            } else {
+            if ($request->type === 'proj') {
                 $gendoc = project_doc::find($request->bid);
+            } else {
+                $gendoc = gendoc::find($request->bid);
             }
             $gendoc->submit_by = $data;
             $gendoc->save();
+
+            Alert::toast('Team has been cleared!','success');
             return response()->json($data);
         } catch (\Exception $e) {
             return response()->json(['error' => $e]);
@@ -615,7 +619,7 @@ class TablesController extends Controller
         try {
             // Validate the request
             $request->validate([
-                'file' => 'required|mimes:pdf,jpg,jpeg,png,docx,doc,mp4',
+                'file' => 'required|mimes:pdf,jpg,jpeg,png,docx,doc,mp4,xlsx',
                 'valueid' => 'required',
             ]);
             $destinationPath = 'files/';

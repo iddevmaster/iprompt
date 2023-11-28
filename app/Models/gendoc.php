@@ -28,4 +28,9 @@ class gendoc extends Model
     {
         return json_decode($value, true);
     }
+
+    public function getSubmit_byAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 }
