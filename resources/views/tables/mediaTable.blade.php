@@ -227,6 +227,7 @@
                                 <th scope="col">แก้ไข</th>
                                 <th scope="col">Download</th>
                                 <th scope="col">แนบไฟล์</th>
+                                <th scope="col">Share</th>
                                 @can('staff')
                                     <th scope="col">Share</th>
                                 @endcan
@@ -370,6 +371,22 @@
                                         @else
                                             <td></td>
                                         @endif
+
+                                        <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="media" teamlist="{{json_encode($teamlist)}}"
+                                            @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
+                                                disabled
+                                            @endif>
+                                            @php
+                                                if (is_array($teamArr)) {
+                                                        $submitUser = $user->firstWhere('id', $teamArr[0]);
+                                                        echo ($submitUser ? $submitUser->name : 'Unknow');
+                                                } else {
+                                                    $submitUser = $user->firstWhere('id', $row->submit_by);
+                                                    echo $submitUser ? $submitUser->name : 'Unknow';
+                                                }
+                                            @endphp
+                                            </button>
+                                        </td>
 
                                         @can('staff')
                                         <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="media">

@@ -153,7 +153,7 @@
                                             @foreach (json_decode($fileList) as $index => $file)
                                                 <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}"
                                                     candel=
-                                                    @if ( (in_array((Auth::user())->id, [$teams, $teams[0]])) || Auth::user()->hasRole(['admin', 'ceo']))
+                                                    @if ( ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']))
                                                         "1"
                                                     @else
                                                         "0"
@@ -231,8 +231,9 @@
                                 <th scope="col">แก้ไข</th>
                                 <th scope="col">Download</th>
                                 <th scope="col">แนบไฟล์</th>
+                                <th scope="col">Share</th>
                                 @can('staff')
-                                    <th scope="col">Share</th>
+                                    <th scope="col">ShareDpm</th>
                                 @endcan
                             </tr>
                         </thead>
@@ -343,6 +344,22 @@
                                         @else
                                             <td></td>
                                         @endif
+
+                                        <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="check" teamlist="{{json_encode($teamlist)}}"
+                                            @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
+                                                disabled
+                                            @endif>
+                                            @php
+                                                if (is_array($teamArr)) {
+                                                        $submitUser = $user->firstWhere('id', $teamArr[0]);
+                                                        echo ($submitUser ? $submitUser->name : 'Unknow');
+                                                } else {
+                                                    $submitUser = $user->firstWhere('id', $row->submit_by);
+                                                    echo $submitUser ? $submitUser->name : 'Unknow';
+                                                }
+                                            @endphp
+                                            </button>
+                                        </td>
 
                                         @can('staff')
                                             <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="wi">
