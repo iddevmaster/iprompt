@@ -24,4 +24,9 @@ class mou_doc extends Model
         'book_num',
         'shares'
     ];
+
+    public function getSharesAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 }

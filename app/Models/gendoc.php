@@ -23,4 +23,9 @@ class gendoc extends Model
         'detail',
         'shares'
     ];
+
+    public function getSharesAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 }

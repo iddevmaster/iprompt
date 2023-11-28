@@ -25,4 +25,9 @@ class announce_doc extends Model
         'sign_position',
         'shares'
     ];
+
+    public function getSharesAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 }

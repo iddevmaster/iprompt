@@ -32,13 +32,13 @@
                             <th scope="col">ผู้สร้าง</th>
                             <th scope="col">เรื่อง</th>
                             <th scope="col">วันที่สร้าง</th>
-                            {{-- <th scope="col">คณะผู้จัดทำ</th> --}}
                             <th scope="col">สถานะ</th>
                             <th scope="col">แก้ไข</th>
                             <th scope="col">Download</th>
                             <th scope="col">แนบไฟล์</th>
-                            @can('staff')
                             <th scope="col">Share</th>
+                            @can('staff')
+                            <th scope="col">ShareDpm</th>
                             @endcan
                         </tr>
                     </thead>
@@ -72,27 +72,6 @@
                                     {{ $row->title }}
                                 </td>
                                 <td>{{ $row->created_date}}</td>
-                                {{-- <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="media" teamlist="{{json_encode($teamlist)}}"
-                                    @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
-                                        disabled
-                                    @endif>
-                                    @php
-                                        if (is_array($teamArr)) {
-                                                $submitUser = $user->firstWhere('id', $teamArr[0]);
-                                                echo ($submitUser ? $submitUser->name : 'Unknow');
-                                        } else {
-                                            $submitUser = $user->firstWhere('id', $row->submit_by);
-                                            echo $submitUser ? $submitUser->name : 'Unknow';
-                                        }
-                                    @endphp
-                                    </button>
-                                </td> --}}
-                                {{-- <td>
-                                    @php
-                                        $submitUser = $user->firstWhere('id', $row->submit_by);
-                                        echo $submitUser ? $submitUser->name : 'Unknown';
-                                    @endphp
-                                </td> --}}
                                 <td>
                                     @php
                                         $app = json_decode($row->app);
@@ -162,17 +141,45 @@
                                                 $fileList = $row->files;
                                             @endphp
                                             @foreach (json_decode($fileList) as $file)
-                                                <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$file}}</button>
+                                                <button type="button" data-file-path="{{ asset('files/' . $file) }}" fileType="media" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}"
+                                                    candel=
+                                                    @if (((App\Models\department::find((Auth::user())->dpm))->prefix == $row->dpm) || Auth::user()->hasRole(['admin', 'ceo']))
+                                                        "1"
+                                                    @else
+                                                       "0"
+                                                    @endif
+                                                    >{{$file}}</button>
                                             @endforeach
                                         @endif
                                         @if (((App\Models\department::find((Auth::user())->dpm))->prefix == $row->dpm) || Auth::user()->hasRole(['admin', 'ceo']))
-                                            <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="policy">upload</button>
+                                            <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="media">upload</button>
                                         @endif
                                     </td>
                                 @else
                                     <td></td>
                                 @endif
 
+                                <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="media" teamlist="{{json_encode($teamlist)}}"
+                                    @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
+                                        disabled
+                                    @endif>
+                                    @php
+                                        if (is_array($teamArr)) {
+                                                $submitUser = $user->firstWhere('id', $teamArr[0]);
+                                                echo ($submitUser ? $submitUser->name : 'Unknow');
+                                        } else {
+                                            $submitUser = $user->firstWhere('id', $row->submit_by);
+                                            echo $submitUser ? $submitUser->name : 'Unknow';
+                                        }
+                                    @endphp
+                                    </button>
+                                </td>
+                                {{-- <td>
+                                    @php
+                                        $submitUser = $user->firstWhere('id', $row->submit_by);
+                                        echo $submitUser ? $submitUser->name : 'Unknown';
+                                    @endphp
+                                </td> --}}
 
                                 @can('staff')
                                 <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="media">
@@ -344,12 +351,19 @@
                                                         $fileList = $row->files;
                                                     @endphp
                                                     @foreach (json_decode($fileList) as $file)
-                                                        <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$file}}</button>
+                                                        <button type="button" data-file-path="{{ asset('files/' . $file) }}" fileType="media" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}"
+                                                            candel=
+                                                            @if (((App\Models\department::find((Auth::user())->dpm))->prefix == $row->dpm) || Auth::user()->hasRole(['admin', 'ceo']))
+                                                                "1"
+                                                            @else
+                                                            "0"
+                                                            @endif
+                                                            >{{$file}}</button>
                                                     @endforeach
-                                                @else
-
                                                 @endif
-                                                <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="policy">upload</button>
+                                                @if (((App\Models\department::find((Auth::user())->dpm))->prefix == $row->dpm) || Auth::user()->hasRole(['admin', 'ceo']))
+                                                    <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="media">upload</button>
+                                                @endif
                                             </td>
                                         @else
                                             <td></td>
@@ -591,7 +605,9 @@
         pdfButtons.forEach((pdfbtn) => {
             const fileNameValue = pdfbtn.value;
             const formId = pdfbtn.getAttribute('fileId');
-            const fileType = document.querySelector('.uploadBtn').getAttribute('fileType');
+            const fileType = pdfbtn.getAttribute('fileType');
+            const canDel = pdfbtn.getAttribute('candel')
+            console.log('candel: ',canDel);
             pdfbtn.addEventListener('click', function () {
                 const pdfUrl = this.getAttribute('data-file-path');
                 Swal.fire({
@@ -600,7 +616,7 @@
                     html: '<div style="height: 600px;">' +
                         '<iframe src="' + pdfUrl + '" style="width: 100%; height: 100%;" frameborder="0"></iframe>' +
                         '</div>',
-                    showDenyButton: true,
+                    showDenyButton: (canDel != 0 ? true : false),
                     denyButtonText: 'Delete',
                 }).then((result) => {
                     if (result.isDenied) {
