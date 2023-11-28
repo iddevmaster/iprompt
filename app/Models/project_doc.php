@@ -23,8 +23,5 @@ class project_doc extends Model
 
     ];
 
-    public function getSharesAttribute($value)
-    {
-        return json_decode($value, true);
-    }
+
 }

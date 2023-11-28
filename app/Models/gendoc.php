@@ -24,13 +24,4 @@ class gendoc extends Model
         'shares'
     ];
 
-    public function getSharesAttribute($value)
-    {
-        return json_decode($value, true);
-    }
-
-    public function getSubmit_byAttribute($value)
-    {
-        return json_decode($value, true);
-    }
 }

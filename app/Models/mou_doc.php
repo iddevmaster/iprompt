@@ -25,8 +25,4 @@ class mou_doc extends Model
         'shares'
     ];
 
-    public function getSharesAttribute($value)
-    {
-        return json_decode($value, true);
-    }
 }
