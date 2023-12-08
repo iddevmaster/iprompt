@@ -101,7 +101,6 @@ class TablesController extends Controller
             }
         };
 
-        dd($gendoc);
         $user = User::all();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
