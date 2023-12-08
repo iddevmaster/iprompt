@@ -74,16 +74,16 @@ class TablesController extends Controller
     }
 
     public function checkTable() {
-        // if ((Auth::user()->hasRole('employee')) && (((department::find((Auth::user())->dpm))->prefix == 'IDD') || ((department::find((Auth::user())->dpm))->prefix == 'INS'))) {
-        //     $gendoc = gendoc::where('type', 'LIKE', 'checkForm%')
-        //         ->where(function ($query) {
-        //             $query->where('dpm', (department::find((Auth::user())->dpm))->prefix)
-        //                 ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
-        //                 ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
-        //         })->orderBy('id', 'desc')->get();
-        // }
-        // else
-        if ((Auth::user()->hasRole('employee'))) {
+        if ((Auth::user()->hasRole('employee')) && (((department::find((Auth::user())->dpm))->prefix == 'IDD') || ((department::find((Auth::user())->dpm))->prefix == 'INS'))) {
+            $gendoc = gendoc::where('type', 'LIKE', 'checkForm%')
+                ->where(function ($query) {
+                    $query->where('dpm', (department::find((Auth::user())->dpm))->prefix)
+                        ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
+                        ->orWhere('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                        ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
+                })->orderBy('id', 'desc')->get();
+        }
+        elseif ((Auth::user()->hasRole('employee'))) {
             $gendoc = gendoc::where('type', 'LIKE', 'checkForm%')
                 ->where(function ($query) {
                     $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
