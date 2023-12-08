@@ -99,6 +99,8 @@ class TablesController extends Controller
                 $doc->save();
             }
         };
+
+        dd($gendoc);
         $user = User::all();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
