@@ -499,7 +499,7 @@
                             // Handle the response if needed
                             console.log(data);
                             // You can also reload the page to see the changes, if required
-                            window.location.reload();
+                            Swal.fire('Success!', 'ลบไฟล์สำเร็จ.', 'success');
                         })
                         .catch((error) => {
                             // Handle errors if any
@@ -552,6 +552,7 @@
                 console.log(data);
                 // You can also reload the page to see the changes, if required
                 // window.location.reload();
+                Swal.fire('Success!',  'อัพโหลดไฟล์สำเร็จ', 'success');
             })
             .catch((error) => {
                 // Handle errors if any
