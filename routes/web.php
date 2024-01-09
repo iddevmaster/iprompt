@@ -18,9 +18,9 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-Route::get('/phpinfo', function () {
-    phpinfo();
-});
+// Route::get('/phpinfo', function () {
+//     phpinfo();
+// });
 
 Auth::routes();
 
