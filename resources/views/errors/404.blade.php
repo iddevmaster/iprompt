@@ -307,7 +307,7 @@
     <div class="stars">
         <div class="custom-navbar">
             <div class="brand-logo">
-                <img src="/dist/img/logoiddrives.png" width="150px">
+                <img src="/dist/img/logoiddrives.png" width="100px">
             </div>
         </div>
         <div class="central-body">
