@@ -39,6 +39,7 @@
                             <th scope="col">แก้ไข</th>
                             <th scope="col">Download</th>
                             <th scope="col">แนบไฟล์</th>
+                            <th scope="col">Share</th>
                             @can('staff')
                                 <th scope="col">Share</th>
                             @endcan
@@ -50,6 +51,22 @@
                         <!-- Table rows will be dynamically added here -->
                         <?php  $counter = 1 ?>
                         @foreach ($gendoc as $row)
+                            @php
+                                $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
+                                $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : [];
+                                $team = $row->submit_by;
+                                $teamArr = json_decode($team);
+                                $teamlist = [];
+                                $permis = Auth::user()->role ;
+                                $dpm = Auth::user()->dpm;
+                                if (is_array($teamArr)) {
+                                    foreach ($teamArr as $index => $memb) {
+                                        if ($index == 0) continue;
+                                        $submitUser = $user->firstWhere('id', $memb);
+                                        $teamlist[] = ($submitUser ? $submitUser->name : 'Unknow');
+                                    }
+                                }
+                            @endphp
                             <tr>
                                 <td>{{$counter}}</td>
                                 <td>{{ $row->book_num}}</td>
@@ -72,7 +89,6 @@
                                         $insName = $user->firstWhere('id', $ins->appId ?? '') ?? '-';
                                         $note = $app->note ?? '-';
                                         $insnote = $ins->note ?? '-';
-                                        $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
                                     @endphp
                                     @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
                                         <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}"
@@ -144,6 +160,23 @@
                                     <td></td>
                                 @endif
 
+                                {{-- Share Btn --}}
+                                <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="course" teamlist="{{json_encode($teamlist)}}"
+                                    @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
+                                        disabled
+                                    @endif>
+                                    @php
+                                        if (is_array($teamArr)) {
+                                                $submitUser = $user->firstWhere('id', $teamArr[0]);
+                                                echo ($submitUser ? $submitUser->name : 'Unknow');
+                                        } else {
+                                            $submitUser = $user->firstWhere('id', $row->submit_by);
+                                            echo $submitUser ? $submitUser->name : 'Unknow';
+                                        }
+                                    @endphp
+                                    </button>
+                                </td>
+
                                 @can('staff')
                                     <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="course">
                                         @php
@@ -188,6 +221,7 @@
                                 <th scope="col">แก้ไข</th>
                                 <th scope="col">Download</th>
                                 <th scope="col">แนบไฟล์</th>
+                                <th scope="col">Share</th>
                                 @can('staff')
                                     <th scope="col">Share</th>
                                 @endcan
@@ -199,6 +233,22 @@
                             <!-- Table rows will be dynamically added here -->
                             <?php  $counter = 1 ?>
                             @foreach ($gendoc as $row)
+                                @php
+                                    $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
+                                    $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : [];
+                                    $team = $row->submit_by;
+                                    $teamArr = json_decode($team);
+                                    $teamlist = [];
+                                    $permis = Auth::user()->role ;
+                                    $dpm = Auth::user()->dpm;
+                                    if (is_array($teamArr)) {
+                                        foreach ($teamArr as $index => $memb) {
+                                            if ($index == 0) continue;
+                                            $submitUser = $user->firstWhere('id', $memb);
+                                            $teamlist[] = ($submitUser ? $submitUser->name : 'Unknow');
+                                        }
+                                    }
+                                @endphp
                                 @if (strpos($row->type, $item->subtype) !== false)
                                     <tr>
                                         <td>{{$counter}}</td>
@@ -222,7 +272,6 @@
                                                 $insName = $user->firstWhere('id', $ins->appId ?? '') ?? '-';
                                                 $note = $app->note ?? '-';
                                                 $insnote = $ins->note ?? '-';
-                                                $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
                                             @endphp
                                             @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
                                                 <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}"
@@ -294,6 +343,23 @@
                                         @else
                                             <td></td>
                                         @endif
+
+                                        {{-- Share Btn --}}
+                                        <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="course" teamlist="{{json_encode($teamlist)}}"
+                                            @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
+                                                disabled
+                                            @endif>
+                                            @php
+                                                if (is_array($teamArr)) {
+                                                        $submitUser = $user->firstWhere('id', $teamArr[0]);
+                                                        echo ($submitUser ? $submitUser->name : 'Unknow');
+                                                } else {
+                                                    $submitUser = $user->firstWhere('id', $row->submit_by);
+                                                    echo $submitUser ? $submitUser->name : 'Unknow';
+                                                }
+                                            @endphp
+                                            </button>
+                                        </td>
 
                                         @can('staff')
                                             <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="wi">
@@ -723,6 +789,98 @@
                             body: JSON.stringify({
                                 bid: bookid,
                                 type: type,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Handle the response if needed
+                            console.log("res= " + data);
+                            // You can also reload the page to see the changes,
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            // Handle errors if any
+                            Swal.fire('Error!', error.message, 'error');
+                        });
+                    }
+                }).catch((error) => {
+                    Swal.fire('Error!', error, 'error'); // Display error to user
+                });
+            });
+        });
+
+
+        const teambtns = document.querySelectorAll('#teamBtn');
+        teambtns.forEach((ckbtn) => {
+            const bookid = ckbtn.getAttribute('bookid');
+            const team = ckbtn.value;
+            const teamlistData = JSON.parse(ckbtn.getAttribute('teamlist'));
+            const displayTeamlist = teamlistData.join(', ');
+            const bookty = ckbtn.getAttribute('bookType');
+            ckbtn.addEventListener('click', function () {
+                Swal.fire({
+                    title: 'สิทธ์การเข้าถึงเอกสาร',
+                    html: `<div ><b>รายชื่อ:</b> ${displayTeamlist}</div>
+                        <hr>
+                        <select class="form-select mb-2" id="usrt" >
+                            <option value="" selected disabled>กรุณาเลือกผู้มีสิทธ์เข้าถึงเอกสาร</option>
+                            @foreach ($user as $usr)
+                                <option value="{{$usr->id}}">{{$usr->name}}</option>
+                            @endforeach
+                        </select>
+                        `,
+                    showCancelButton: true,
+                    showDenyButton: true,
+                    denyButtonText: 'ล้างรายชื่อทั้งหมด',
+                    confirmButtonText: 'บันทึก',
+                    cancelButtonText: 'ยกเลิก',
+                    preConfirm: () => {
+                        const usrtValue = document.getElementById('usrt').value;
+                        if (!usrtValue) {
+                            return Promise.reject('โปรดเลือกรายชื่อ');
+                        }
+
+                        return [usrtValue];
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log(result);
+                        fetch('/table/form/addTeam', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                            },
+                            body: JSON.stringify({
+                                memb: result.value[0],
+                                bid: bookid,
+                                oldT: team,
+                                type: bookty,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Handle the response if needed
+                            console.log("res= " + data);
+                            // You can also reload the page to see the changes,
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            // Handle errors if any
+                            Swal.fire('Error!', error.message, 'error');
+                        });
+                    } else if (result.isDenied) {
+                        console.log(result);
+                        fetch('/table/form/clearTeam', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                            },
+                            body: JSON.stringify({
+                                bid: bookid,
+                                oldT: team,
+                                type: bookty,
                             }),
                         })
                         .then((response) => response.json())
