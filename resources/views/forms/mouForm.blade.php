@@ -31,7 +31,7 @@
                         <input type="hidden" name="subject" value="{{$subject}}">
                     </div>
                 @else
-                    <p class="text-end w-100">เลขที่ <input class="" type="text" value="MOU0{{$len ?? 0}}/2566" name="book_num" readonly></p>
+                    <p class="text-end w-100">เลขที่ <input class="" type="text" value="MOU0{{$len ?? 0}}/{{ now()->format('Y') + 543 }}" name="book_num" readonly></p>
                     <p class="no-wrap w-100">เรื่อง <input class="ms-2" type="text" name="subject" id="" required></p>
                 @endif
 

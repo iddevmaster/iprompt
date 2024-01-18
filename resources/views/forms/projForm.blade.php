@@ -25,7 +25,7 @@
                         <p class="text-end">Project Code: {{$projNo}}</p>
                         <input type="hidden" name="projNo" value="{{$projNo}}">
                     @else
-                        <p class="text-end">เอกสารโครงการเลขที่ <input type="text" value="PRO0{{$len ?? 0}}/2566" name="book_num" readonly></p>
+                        <p class="text-end">เอกสารโครงการเลขที่ <input type="text" value="PRO0{{$len ?? 0}}/{{ now()->format('Y') + 543 }}" name="book_num" readonly></p>
                         <p class="mb-0 text-end">Project Code: <input class="ms-2" id="projNo" type="text" name="projNo" required></p>
                         <p class="fs-6 text-warning text-end">#กรุณาขอเลข project code จากฝ่ายบัญชี</p>
                     @endif
