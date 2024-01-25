@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 use App\Models\user_problem;
 Use Alert;
+use App\Models\Contract;
 use PhpParser\Node\Stmt\Catch_;
 
 class HomeController extends Controller
@@ -311,5 +312,12 @@ class HomeController extends Controller
             Alert::toast('error!','error');
             return response()->json(['error' => $e]);
         }
+    }
+
+    public function contract() {
+        $ctcre_count = Contract::where('type', 'creditor')->count();
+        $ctdeb_count = Contract::where('type', 'debtor')->count();
+        $ctotd_count = Contract::where('type', 'outdoor')->count();
+        return view('forms.contract', compact('ctcre_count', 'ctdeb_count', 'ctotd_count'));
     }
 }

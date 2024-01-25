@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -12,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('agencies', function (Blueprint $table) {
+        Schema::create('contracts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('by');
+            $table->text('title');
+            $table->text('party');
+            $table->string('time_range');
+            $table->text('note')->nullable();
+            $table->longText('files')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
-
-        DB::table('agencies')->insert([
-            'name' => 'บริษัท ไอดีไดรฟ์ จำกัด (สำนักงานใหญ่)'
-        ]);
     }
 
     /**
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('agencies');
+        Schema::dropIfExists('contracts');
     }
 };

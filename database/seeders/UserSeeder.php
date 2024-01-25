@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        if (!(User::find('email', 'admin'))) {
+        if (!User::where('email', 'admin')->exists()) {
             $user = User::create([
                 'name' => 'admin',
                 'email' => 'admin',
@@ -29,8 +29,9 @@ class UserSeeder extends Seeder
 
             $user->assignRole('admin');
         } else {
-            $user = User::find('email', 'admin');
+            $user = User::where('email', 'admin')->first();
             $user->assignRole('admin');
         }
+
     }
 }

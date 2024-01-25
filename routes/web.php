@@ -82,6 +82,7 @@ Route::get('/form/media', [App\Http\Controllers\FormController::class, 'mediaFor
 
 // Table
 Route::get('/tables/wiTable', [App\Http\Controllers\TablesController::class, 'wiTable'])->name('wiTable');
+Route::get('/tables/contract-table', [App\Http\Controllers\TablesController::class, 'contTable'])->name('contTable');
 Route::get('/tables/sopTable', [App\Http\Controllers\TablesController::class, 'sopTable'])->name('sopTable');
 Route::get('/tables/policyTable', [App\Http\Controllers\TablesController::class, 'policyTable'])->name('policyTable');
 Route::get('/tables/annoTable', [App\Http\Controllers\TablesController::class, 'annoTable'])->name('annoTable');
@@ -150,3 +151,12 @@ Route::post('/form/import/store',[App\Http\Controllers\ImportController::class,'
 
 Route::post('/form/import/upStatus',[App\Http\Controllers\ImportController::class,'updateStatus']);
 Route::post('/saveSubtype',[App\Http\Controllers\TablesController::class,'saveSubtype']);
+
+// Contact
+Route::get('/contract',[App\Http\Controllers\HomeController::class,'contract'])->name('contract');
+Route::post('/contract/store',[App\Http\Controllers\ContractController::class,'storeContract'])->name('contract-store');
+Route::get('/contract/calendar',[App\Http\Controllers\ContractController::class,'contractCalendar'])->name('contract-calendar');
+
+// Filepond
+Route::post('/contract/file-upload',[App\Http\Controllers\ContractController::class,'filepondUpload']);
+Route::delete('/contract/file-delete',[App\Http\Controllers\ContractController::class,'filepondDelete']);

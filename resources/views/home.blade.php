@@ -152,10 +152,10 @@
                             </div>
 
                             <div class="col">
-                                <a class="a-tag" href="">
+                                <a class="a-tag" href="{{ route('contract') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
-                                        <p class="icon-title">Contract</p>
+                                        <p class="icon-title">สัญญา</p>
                                     </div>
                                 </a>
                             </div>
@@ -313,6 +313,17 @@
                                 </a>
                             </div>
                             @endcan
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <a class="a-tag" href="{{ route('contTable') }}">
+                                    <div class="w-100 h-100">
+                                        <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
+                                        <p class="icon-title">สัญญา</p>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

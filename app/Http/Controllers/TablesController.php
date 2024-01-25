@@ -12,6 +12,7 @@ use App\Models\imported;
 use App\Models\type;
 use PDF;
 Use Alert;
+use App\Models\Contract;
 use App\Models\department;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -37,6 +38,13 @@ class TablesController extends Controller
     public function index(Request $request)
     {
 
+    }
+
+    public function contTable () {
+        $contracts = Contract::orderBy('id', 'desc')->get();
+        $user = User::all();
+        $dpms = department::all();
+        return view('/tables/contTable', compact('contracts', 'user', 'dpms'));
     }
 
     // query all wi form from database to wi table page
@@ -578,6 +586,8 @@ class TablesController extends Controller
             $data[] = $request->memb;
             if ($request->type === 'proj') {
                 $gendoc = project_doc::find($request->bid);
+            } elseif ($request->type === 'cont') {
+                $gendoc = Contract::find($request->bid);
             } else {
                 $gendoc = gendoc::find($request->bid);
             }
@@ -603,6 +613,8 @@ class TablesController extends Controller
             }
             if ($request->type === 'proj') {
                 $gendoc = project_doc::find($request->bid);
+            } elseif ($request->type === 'cont') {
+                $gendoc = Contract::find($request->bid);
             } else {
                 $gendoc = gendoc::find($request->bid);
             }
@@ -640,11 +652,13 @@ class TablesController extends Controller
                 $yourModel = announce_doc::find($request->input('valueid'));
             } elseif ($request->type == 'mou') {
                 $yourModel = mou_doc::find($request->input('valueid'));
+            } elseif ($request->type == 'cont') {
+                $yourModel = Contract::find($request->input('valueid'));
             } else {
                 $yourModel = gendoc::find($request->input('valueid'));
             }
             $fileData = $yourModel->files;
-            $fileList = json_decode($fileData);
+            $fileList = $fileData;
             $fileList[] = $fileName;
             $yourModel->files = $fileList;
             $yourModel->save();
@@ -662,20 +676,28 @@ class TablesController extends Controller
 
             if (Storage::disk('files')->exists($filePath)) {
                 Storage::disk('files')->delete($filePath);
+            } elseif (Storage::disk('files')->exists('contract/'.$filePath)) {
+                Storage::disk('files')->delete('contract/'. $filePath);
             }
             $fileList = [];
             $finallist = [];
             if ($request->type == 'proj') {
                 $yourModel = project_doc::find($request->input('id'));
+                $fileData = json_decode($yourModel->files);
             } elseif ($request->type == 'announce') {
                 $yourModel = announce_doc::find($request->input('id'));
+                $fileData = json_decode($yourModel->files);
             } elseif ($request->type == 'mou') {
                 $yourModel = mou_doc::find($request->input('id'));
+                $fileData = json_decode($yourModel->files);
+            } elseif ($request->type == 'cont') {
+                $yourModel = Contract::find($request->input('id'));
+                $fileData = $yourModel->files;
             } else {
                 $yourModel = gendoc::find($request->input('id'));
+                $fileData = json_decode($yourModel->files);
             }
-            $fileData = $yourModel->files;
-            $fileList = json_decode($fileData);
+            $fileList = $fileData;
             foreach ($fileList as $item) {
                 if ($item !== $request->fileName) {
                     $finallist[] = $item;
@@ -684,9 +706,9 @@ class TablesController extends Controller
             $yourModel->files = $finallist;
             $yourModel->save();
 
-            return response()->json(['success' => $finallist]);
+            return response()->json(['success' => $request->all()]);
         } catch (\Exception $e) {
-            return response()->json(['error' => $e]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
