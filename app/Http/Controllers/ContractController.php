@@ -6,11 +6,14 @@ use App\Models\Contract;
 use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
+use Illuminate\Support\Arr;
 
 class ContractController extends Controller
 {
 
     public function storeContract (Request $request) {
+
         try {
             // if ($request->contact_type == 'creditor') {
             //     # code...
@@ -20,7 +23,7 @@ class ContractController extends Controller
             //     # code...
             // }
 
-            Contract::create([
+            $cont = Contract::create([
                 'by' => $request->user()->id,
                 'book_num' => $request->cont_bnum,
                 'title' => $request->cont_title,
@@ -31,6 +34,16 @@ class ContractController extends Controller
                 'type' => $request->contact_type,
                 'submit_by' => json_encode([$request->user()->id]),
             ]);
+
+            if ($request->recur ?? 0) {
+                $cont->recurring = json_encode([
+                    'enable' => $request->recur,
+                    'recur_date' => json_encode($request->recurring),
+                ]);
+
+                $cont->save();
+            }
+
 
             return redirect()->back()->with(['success' => "Success!"]);
         } catch (\Throwable $th) {
@@ -67,7 +80,54 @@ class ContractController extends Controller
         return response()->noContent();
     }
 
-    public function contractCalendar() {
-        return view('tables.contCalendar');
+    public function contractCalendar(Request $request) {
+        if ($request->user()->hasRole('admin')) {
+            $contracts = Contract::all();
+        } else {
+            $contracts = Contract::where('by', $request->user()->id);
+        }
+
+        $events = [];
+
+        $eventColor = [
+            'creditor' => '#6633C6',
+            'debtor' => '#0063FF',
+            'outdoor' => '#5AA136',
+        ];
+
+        foreach ($contracts as $index => $contract) {
+            $dateArray = explode(' - ', $contract->time_range);
+            $startDate = Carbon::createFromFormat('d/m/Y', $dateArray[0]);
+            $endDate = Carbon::createFromFormat('d/m/Y', $dateArray[1]);
+
+            if ($contract->recurring) {
+                $event = [
+                    'id' => $contract->book_num,
+                    'groupId' => $contract->type,
+                    'title' => $contract->title,
+                    'startRecur' => $startDate->format('Y-m-d'),
+                    'endRecur' => $endDate->format('Y-m-d'),
+                    'description' => $contract->note ?? '',
+                    'party' => $contract->party ?? '',
+                    'color' => $eventColor[$contract->type],
+                    'daysOfWeek' => json_decode($contract->recurring['recur_date']),
+                ];
+            } else {
+                $event = [
+                    'id' => $contract->book_num,
+                    'groupId' => $contract->type,
+                    'title' => $contract->title,
+                    'start' => $startDate->format('Y-m-d'),
+                    'end' => $endDate->format('Y-m-d'),
+                    'description' => $contract->note ?? '',
+                    'party' => $contract->party ?? '',
+                    'color' => $eventColor[$contract->type],
+                ];
+            }
+
+
+            $events = Arr::add($events, $index, $event);
+        }
+        return view('tables.contCalendar', compact('events'));
     }
 }

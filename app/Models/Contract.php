@@ -21,6 +21,7 @@ class Contract extends Model
         'book_num',
         'shares',
         'submit_by',
+        'recurring',
     ];
 
     public function getUser() {
@@ -28,6 +29,11 @@ class Contract extends Model
     }
 
     public function getFilesAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+
+    public function getRecurringAttribute($value)
     {
         return json_decode($value, true);
     }

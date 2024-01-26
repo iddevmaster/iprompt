@@ -75,6 +75,64 @@
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
+                                    <label for="recurring" class="col-form-label">การเกิดซ้ำ</label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="d-flex">
+                                        <div class="form-check text-start mx-4">
+                                            <input class="form-check-input enableCheck" type="checkbox" name="recur" value="1" id="check1">
+                                            <label class="form-check-label" for="check1">
+                                                เปิด
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="0" id="check2" disabled>
+                                            <label class="form-check-label" for="check8">
+                                                อา
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="1" id="check3" disabled>
+                                            <label class="form-check-label" for="check2">
+                                                จ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="2" id="check4" disabled>
+                                            <label class="form-check-label" for="check3">
+                                                อ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="3" id="check5" disabled>
+                                            <label class="form-check-label" for="check4">
+                                                พ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="4" id="check6" disabled>
+                                            <label class="form-check-label" for="check5">
+                                                พฤ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="5" id="check7" disabled>
+                                            <label class="form-check-label" for="check6">
+                                                ศ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="6" id="check8" disabled>
+                                            <label class="form-check-label" for="check7">
+                                                ส
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-3 d-flex justify-content-center">
+                                <div class="col-auto">
                                     <label for="cont_note" class="col-form-label">หมายเหตุ</label>
                                 </div>
                                 <div class="col-8">
@@ -102,7 +160,7 @@
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
                         <p class="fs-2">สัญญา-ลูกหนี้</p>
 
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('contract-store') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
                             <input type="hidden" name="contact_type" value="debtor">
@@ -145,6 +203,64 @@
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
+                                    <label for="recurring" class="col-form-label">การเกิดซ้ำ</label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="d-flex">
+                                        <div class="form-check text-start mx-4">
+                                            <input class="form-check-input enableCheck" type="checkbox" name="recur" value="1" id="check1">
+                                            <label class="form-check-label" for="check1">
+                                                เปิด
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="0" id="check2" disabled>
+                                            <label class="form-check-label" for="check8">
+                                                อา
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="1" id="check3" disabled>
+                                            <label class="form-check-label" for="check2">
+                                                จ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="2" id="check4" disabled>
+                                            <label class="form-check-label" for="check3">
+                                                อ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="3" id="check5" disabled>
+                                            <label class="form-check-label" for="check4">
+                                                พ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="4" id="check6" disabled>
+                                            <label class="form-check-label" for="check5">
+                                                พฤ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="5" id="check7" disabled>
+                                            <label class="form-check-label" for="check6">
+                                                ศ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="6" id="check8" disabled>
+                                            <label class="form-check-label" for="check7">
+                                                ส
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-3 d-flex justify-content-center">
+                                <div class="col-auto">
                                     <label for="cont_note" class="col-form-label">หมายเหตุ</label>
                                 </div>
                                 <div class="col-8">
@@ -173,7 +289,7 @@
 
                         <p class="fs-2">Out Door</p>
 
-                        <form action="" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('contract-store') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
                             <input type="hidden" name="contact_type" value="outdoor">
@@ -211,6 +327,64 @@
                                 </div>
                                 <div class="col-8">
                                 <input type="text" name="dateRange" id="dateRange3" class="form-control dateRangePicker" value="" required>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-3 d-flex justify-content-center">
+                                <div class="col-auto">
+                                    <label for="recurring" class="col-form-label">การเกิดซ้ำ</label>
+                                </div>
+                                <div class="col-8">
+                                    <div class="d-flex">
+                                        <div class="form-check text-start mx-4">
+                                            <input class="form-check-input enableCheck" type="checkbox" name="recur" value="1" id="check1">
+                                            <label class="form-check-label" for="check1">
+                                                เปิด
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="0" id="check2" disabled>
+                                            <label class="form-check-label" for="check8">
+                                                อา
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="1" id="check3" disabled>
+                                            <label class="form-check-label" for="check2">
+                                                จ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="2" id="check4" disabled>
+                                            <label class="form-check-label" for="check3">
+                                                อ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="3" id="check5" disabled>
+                                            <label class="form-check-label" for="check4">
+                                                พ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="4" id="check6" disabled>
+                                            <label class="form-check-label" for="check5">
+                                                พฤ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="5" id="check7" disabled>
+                                            <label class="form-check-label" for="check6">
+                                                ศ
+                                            </label>
+                                        </div>
+                                        <div class="form-check text-start mx-2">
+                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="6" id="check8" disabled>
+                                            <label class="form-check-label" for="check7">
+                                                ส
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -354,6 +528,14 @@
         });
     });
 
+    // Use jQuery for simplicity
+    $(document).ready(function() {
+        // Add change event listener to check1
+        $('.enableCheck').change(function() {
+            // Enable or disable checkboxes with class checkdate based on the checked status of check1
+            $('.checkdate').prop('disabled', !$(this).prop('checked'));
+        });
+    });
 </script>
 </body>
 
