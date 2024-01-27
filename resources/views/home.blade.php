@@ -5,20 +5,20 @@
 ?>
 @section('content')
 <body>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">การแจ้งเตือน</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                @php
-                    $total = count($contracts->filter(function ($contract) {
-                        return $contract->alert == 1;
-                    }));
-                @endphp
-                @if ($total)
+    @php
+        $total = count($contracts->filter(function ($contract) {
+            return $contract->alert == 1;
+        }));
+    @endphp
+    @if ($total)
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">การแจ้งเตือน</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
                     <div class="modal-body">
                         <p>คุณมีสัญญา <span class="badge text-bg-danger">{{ $total }}</span> ฉบับที่กำลังจะหมดอายุ</p>
                         @foreach ($contracts->filter(function ($contract) {
@@ -37,10 +37,10 @@
                             </div>
                         @endforeach
                     </div>
-                @endif
+                </div>
             </div>
         </div>
-    </div>
+    @endif
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 mb-5 d-flex justify-content-center">
