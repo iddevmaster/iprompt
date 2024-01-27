@@ -381,7 +381,12 @@
     @vite(['resources/css/home.css' , 'resources/js/home.js'])
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
     <script>
-
+        // @if ($total ?? 0)
+        //     document.addEventListener('DOMContentLoaded', function () {
+        //         var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        //         myModal.show();
+        //     });
+        // @endif
     </script>
 </body>
 @endsection
