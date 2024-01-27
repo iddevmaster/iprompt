@@ -13,29 +13,31 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">การแจ้งเตือน</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    @php
-                        $total = count($contracts->filter(function ($contract) {
-                            return $contract->alert == 1;
-                        }));
-                    @endphp
-                    <p>คุณมีสัญญา <span class="badge text-bg-danger">{{ $total }}</span> ฉบับที่กำลังจะหมดอายุ</p>
-                    @foreach ($contracts->filter(function ($contract) {
+                @php
+                    $total = count($contracts->filter(function ($contract) {
                         return $contract->alert == 1;
-                    }) as $index => $contract)
-                        @php
-                            $dateArray = explode(' - ', $contract->time_range);
-                            $endDate = Carbon\Carbon::createFromFormat('d/m/Y', $dateArray[1]);
-                            $currentDate = Carbon\Carbon::now();
+                    }));
+                @endphp
+                @if ($total)
+                    <div class="modal-body">
+                        <p>คุณมีสัญญา <span class="badge text-bg-danger">{{ $total }}</span> ฉบับที่กำลังจะหมดอายุ</p>
+                        @foreach ($contracts->filter(function ($contract) {
+                            return $contract->alert == 1;
+                        }) as $index => $contract)
+                            @php
+                                $dateArray = explode(' - ', $contract->time_range);
+                                $endDate = Carbon\Carbon::createFromFormat('d/m/Y', $dateArray[1]);
+                                $currentDate = Carbon\Carbon::now();
 
-                            $daysDifference = $currentDate->diffInDays($endDate);
-                        @endphp
-                        <div class="d-flex justify-content-between alert alert-warning" role="alert">
-                            <p class="mb-0 text-wrap text-break border-end px-2 flex-fill border-black">{{ $contract->book_num }} :: {{ $contract->title }}</p>
-                            <p class="mb-0 text-nowrap align-self-center px-2"><i class="bi bi-hourglass-split" style="font-size: 20px"></i> {{ $daysDifference }} วัน</p>
-                        </div>
-                    @endforeach
-                </div>
+                                $daysDifference = $currentDate->diffInDays($endDate);
+                            @endphp
+                            <div class="d-flex justify-content-between alert alert-warning" role="alert">
+                                <p class="mb-0 text-wrap text-break border-end px-2 flex-fill border-black">{{ $contract->book_num }} :: {{ $contract->title }}</p>
+                                <p class="mb-0 text-nowrap align-self-center px-2"><i class="bi bi-hourglass-split" style="font-size: 20px"></i> {{ $daysDifference }} วัน</p>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
             </div>
         </div>
     </div>
