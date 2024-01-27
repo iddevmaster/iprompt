@@ -187,14 +187,16 @@
                                 </a>
                             </div>
 
-                            <div class="col col-4">
-                                <a class="a-tag" href="{{ route('contract') }}">
-                                    <div class="w-100 h-100">
-                                        <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
-                                        <p class="icon-title">สัญญา</p>
-                                    </div>
-                                </a>
-                            </div>
+                            @can('cCONT')
+                                <div class="col col-4">
+                                    <a class="a-tag" href="{{ route('contract') }}">
+                                        <div class="w-100 h-100">
+                                            <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
+                                            <p class="icon-title">สัญญา</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
                         </div>
                         @endrole
 
@@ -352,19 +354,21 @@
                         </div>
 
                         <div class="row">
-                            <div class="col col-4">
-                                <a class="a-tag" href="{{ route('contTable') }}">
-                                    <div class="w-100 h-100">
-                                        <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
-                                        <p class="icon-title">
-                                            สัญญา
-                                            @if ($total ?? 0)
-                                                <span class="badge text-bg-danger">{{ $total }}</span>
-                                            @endif
-                                        </p>
-                                    </div>
-                                </a>
-                            </div>
+                            @can('CONT')
+                                <div class="col col-4">
+                                    <a class="a-tag" href="{{ route('contTable') }}">
+                                        <div class="w-100 h-100">
+                                            <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
+                                            <p class="icon-title">
+                                                สัญญา
+                                                @if ($total ?? 0)
+                                                    <span class="badge text-bg-danger">{{ $total }}</span>
+                                                @endif
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -377,10 +381,12 @@
     @vite(['resources/css/home.css' , 'resources/js/home.js'])
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-            myModal.show();
-        });
+        @if ($total ?? 0)
+            document.addEventListener('DOMContentLoaded', function () {
+                var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+                myModal.show();
+            });
+        @endif
     </script>
 </body>
 @endsection
