@@ -356,7 +356,12 @@
                                 <a class="a-tag" href="{{ route('contTable') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
-                                        <p class="icon-title">สัญญา <span class="badge text-bg-danger">{{ $total }}</span></p>
+                                        <p class="icon-title">
+                                            สัญญา
+                                            @if ($total)
+                                                <span class="badge text-bg-danger">{{ $total }}</span>
+                                            @endif
+                                        </p>
                                     </div>
                                 </a>
                             </div>
