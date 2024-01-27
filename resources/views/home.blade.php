@@ -358,7 +358,7 @@
                                         <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
                                         <p class="icon-title">
                                             สัญญา
-                                            @if ($total)
+                                            @if ($total ?? 0)
                                                 <span class="badge text-bg-danger">{{ $total }}</span>
                                             @endif
                                         </p>
