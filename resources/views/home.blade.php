@@ -5,6 +5,40 @@
 ?>
 @section('content')
 <body>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">การแจ้งเตือน</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @php
+                        $total = count($contracts->filter(function ($contract) {
+                            return $contract->alert == 1;
+                        }));
+                    @endphp
+                    <p>คุณมีสัญญา <span class="badge text-bg-danger">{{ $total }}</span> ฉบับที่กำลังจะหมดอายุ</p>
+                    @foreach ($contracts->filter(function ($contract) {
+                        return $contract->alert == 1;
+                    }) as $index => $contract)
+                        @php
+                            $dateArray = explode(' - ', $contract->time_range);
+                            $endDate = Carbon\Carbon::createFromFormat('d/m/Y', $dateArray[1]);
+                            $currentDate = Carbon\Carbon::now();
+
+                            $daysDifference = $currentDate->diffInDays($endDate);
+                        @endphp
+                        <div class="d-flex justify-content-between alert alert-warning" role="alert">
+                            <p class="mb-0 text-wrap text-break border-end px-2 flex-fill border-black">{{ $contract->book_num }} :: {{ $contract->title }}</p>
+                            <p class="mb-0 text-nowrap align-self-center px-2"><i class="bi bi-hourglass-split" style="font-size: 20px"></i> {{ $daysDifference }} วัน</p>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 mb-5 d-flex justify-content-center">
@@ -26,7 +60,7 @@
 
                         <div class="row mb-2 justify-content-around border-bottom">
                             @can('cMOU')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('mouForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/MOU.png') }}" alt="" height="50px">
@@ -37,7 +71,7 @@
                             @endcan
 
                             @can('cPOL')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('policyForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Policy.png') }}" alt="" height="50px">
@@ -48,7 +82,7 @@
                             @endcan
 
                             @can('cANNO')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('annoForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Announce.png') }}" alt="" height="50px">
@@ -63,7 +97,7 @@
                         <div class="row border-bottom">
 
                             @can('cPRO')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('projForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Project.png') }}" alt="" height="50px">
@@ -74,7 +108,7 @@
                             @endcan
 
                             @can('cSOP')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('sopForm') }}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-arrow-return-right"></i>
@@ -85,7 +119,7 @@
                             @endcan
 
                             @can('cWI')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('wiForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/WI.png') }}" alt="" height="50px">
@@ -98,7 +132,7 @@
 
                         <div class="row ">
                             @can('ccheck')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('checkForm')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
@@ -109,7 +143,7 @@
                             @endcan
 
                             @can('ccourse')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('courseForm')}}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-book"></i>
@@ -120,7 +154,7 @@
                             @endcan
 
                             @can('cmedia')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('mediaForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Brochure.png') }}" alt="" height="50px">
@@ -133,7 +167,7 @@
 
                         @role('admin')
                         <div class="row ">
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/card.png') }}" alt="" height="50px">
@@ -142,7 +176,7 @@
                                 </a>
                             </div>
 
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/member.png') }}" alt="" height="50px">
@@ -151,7 +185,7 @@
                                 </a>
                             </div>
 
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('contract') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
@@ -164,7 +198,7 @@
 
                         @role('admin')
                         <div class="row ">
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/iso.png') }}" alt="" height="50px">
@@ -173,7 +207,7 @@
                                 </a>
                             </div>
 
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('jdForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
@@ -182,7 +216,7 @@
                                 </a>
                             </div>
 
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/manual.png') }}" alt="" height="50px">
@@ -212,7 +246,7 @@
 
                         <div class="row mb-2 justify-content-around border-bottom">
                             @can('MOU')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('mouTable') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/MOU.png') }}" alt="" height="50px">
@@ -223,7 +257,7 @@
                             @endcan
 
                             @can('POL')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="/tables/policyTable">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Policy.png') }}" alt="" height="50px">
@@ -234,7 +268,7 @@
                             @endcan
 
                             @can('ANNO')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('annoTable') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Announce.png') }}" alt="" height="50px">
@@ -248,7 +282,7 @@
                         <div class="row">
 
                             @can('PRO')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('projTable') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Project.png') }}" alt="" height="50px">
@@ -259,7 +293,7 @@
                             @endcan
 
                             @can('SOP')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="/tables/sopTable">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-arrow-return-right"></i>
@@ -270,7 +304,7 @@
                             @endcan
 
                             @can('WI')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="/tables/wiTable">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/WI.png') }}" alt="" height="50px">
@@ -282,7 +316,7 @@
                         </div>
                         <div class="row">
                             @can('media')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('mediaTable')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Brochure.png') }}" alt="" height="50px">
@@ -293,7 +327,7 @@
                             @endcan
 
                             @can('course')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('courseTable')}}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-book"></i>
@@ -304,7 +338,7 @@
                             @endcan
 
                             @can('checklist')
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('checkTable')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
@@ -316,11 +350,11 @@
                         </div>
 
                         <div class="row">
-                            <div class="col">
+                            <div class="col col-4">
                                 <a class="a-tag" href="{{ route('contTable') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
-                                        <p class="icon-title">สัญญา</p>
+                                        <p class="icon-title">สัญญา <span class="badge text-bg-danger">{{ $total }}</span></p>
                                     </div>
                                 </a>
                             </div>
@@ -331,7 +365,15 @@
             <!-- end Table card -->
         </div>
     </div>
+
     <!-- Scripts -->
-@vite(['resources/css/home.css' , 'resources/js/home.js'])
+    @vite(['resources/css/home.css' , 'resources/js/home.js'])
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+            myModal.show();
+        });
+    </script>
 </body>
 @endsection

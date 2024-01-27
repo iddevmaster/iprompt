@@ -36,31 +36,35 @@ class FormController extends Controller
     public function wiForm()
     {
         // หน้า wi form
-        $len = gendoc::where('type', 'wiForm')->count()+1;
+        $currentYear = now()->year;
+        $len = gendoc::where('type', 'wiForm')->whereYear('created_at', $currentYear)->count() + 1;
         $class = 0;
         return view('/forms/wiForm', compact('class','len'));
     }
 
     public function checkForm()
     {
-        // หน้า wi form
-        $len = gendoc::where('type', 'LIKE' , 'checkForm%')->count()+1;
+        // หน้า checklist form
+        $currentYear = now()->year;
+        $len = gendoc::where('type', 'LIKE' , 'checkForm%')->whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/checkForm', compact('class','len'));
     }
 
     public function courseForm()
     {
-        // หน้า wi form
-        $len = gendoc::where('type', 'LIKE' , 'courseForm%')->count()+1;
+        // หน้า course form
+        $currentYear = now()->year;
+        $len = gendoc::where('type', 'LIKE' , 'courseForm%')->whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/courseForm', compact('class','len'));
     }
 
     public function mediaForm()
     {
-        // หน้า wi form
-        $len = gendoc::where('type', 'LIKE' , 'mediaForm%')->count()+1;
+        // หน้า media form
+        $currentYear = now()->year;
+        $len = gendoc::where('type', 'LIKE' , 'mediaForm%')->whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/mediaForm', compact('class','len'));
     }
@@ -74,35 +78,40 @@ class FormController extends Controller
     public function sopForm()
     {
         // หน้า sop form
-        $len = gendoc::where('type', 'sopForm')->count()+1;
+        $currentYear = now()->year;
+        $len = gendoc::where('type', 'sopForm')->whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/sopForm', compact('class', 'len'));
     }
     public function policyForm()
     {
         // หน้า policy form
-        $len = gendoc::where('type', 'policyForm')->count()+1;
+        $currentYear = now()->year;
+        $len = gendoc::where('type', 'policyForm')->whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/policyForm', compact('class', 'len'));
     }
     public function annoForm()
     {
         // หน้า ประกาศ form
-        $len = announce_doc::all()->count()+1;
+        $currentYear = now()->year;
+        $len = announce_doc::whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/annoForm', compact('class', 'len'));
     }
     public function projForm()
     {
         // หน้า โครงการ form
-        $len = project_doc::all()->count()+1;
+        $currentYear = now()->year;
+        $len = project_doc::whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/projForm', compact('class', 'len'));
     }
     public function mouForm()
     {
         // หน้า mou form
-        $len = mou_doc::all()->count()+1;
+        $currentYear = now()->year;
+        $len = mou_doc::whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/mouForm', compact('class', 'len'));
     }

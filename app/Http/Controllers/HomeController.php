@@ -16,6 +16,7 @@ use Spatie\Permission\Models\Role;
 use App\Models\user_problem;
 Use Alert;
 use App\Models\Contract;
+use Carbon\Carbon;
 use PhpParser\Node\Stmt\Catch_;
 
 class HomeController extends Controller
@@ -37,7 +38,27 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $contracts = Contract::where('by', auth()->user()->id)->orderBy('id', 'desc')->get();
+
+        foreach ($contracts as $index => $contract) {
+            $dateArray = explode(' - ', $contract->time_range);
+            $endDate = Carbon::createFromFormat('d/m/Y', $dateArray[1]);
+            $currentDate = Carbon::now();
+
+            // Calculate 7 days before the end date
+            $sevenDaysBeforeEndDate = $endDate->copy()->subDays(7);
+
+            if ($currentDate->isBetween($sevenDaysBeforeEndDate, $endDate)) {
+                $contract->alert = 1;
+            } else {
+                $contract->alert = 0;
+            }
+
+            $contract->save();
+
+        }
+
+        return view('home', compact('contracts'));
     }
 
     public function createUser()
@@ -315,9 +336,10 @@ class HomeController extends Controller
     }
 
     public function contract() {
-        $ctcre_count = Contract::where('type', 'creditor')->count();
-        $ctdeb_count = Contract::where('type', 'debtor')->count();
-        $ctotd_count = Contract::where('type', 'outdoor')->count();
+        $currentYear = now()->year;
+        $ctcre_count = Contract::where('type', 'creditor')->whereYear('created_at', $currentYear)->count();
+        $ctdeb_count = Contract::where('type', 'debtor')->whereYear('created_at', $currentYear)->count();
+        $ctotd_count = Contract::where('type', 'outdoor')->whereYear('created_at', $currentYear)->count();
         return view('forms.contract', compact('ctcre_count', 'ctdeb_count', 'ctotd_count'));
     }
 }
