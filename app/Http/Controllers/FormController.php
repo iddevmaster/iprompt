@@ -36,8 +36,9 @@ class FormController extends Controller
     public function wiForm()
     {
         // หน้า wi form
-        $currentYear = now()->year;
-        $len = gendoc::where('type', 'wiForm')->whereYear('created_at', $currentYear)->count() + 1;
+        // $currentYear = now()->year;
+        // $len = gendoc::where('type', 'wiForm')->whereYear('created_at', $currentYear)->count() + 1;
+        $len = gendoc::where('type', 'wiForm')->count() + 1;
         $class = 0;
         return view('/forms/wiForm', compact('class','len'));
     }
@@ -45,8 +46,9 @@ class FormController extends Controller
     public function checkForm()
     {
         // หน้า checklist form
-        $currentYear = now()->year;
-        $len = gendoc::where('type', 'LIKE' , 'checkForm%')->whereYear('created_at', $currentYear)->count()+1;
+        // $currentYear = now()->year;
+        // $len = gendoc::where('type', 'LIKE' , 'checkForm%')->whereYear('created_at', $currentYear)->count()+1;
+        $len = gendoc::where('type', 'LIKE' , 'checkForm%')->count()+1;
         $class = 0;
         return view('/forms/checkForm', compact('class','len'));
     }
@@ -54,8 +56,9 @@ class FormController extends Controller
     public function courseForm()
     {
         // หน้า course form
-        $currentYear = now()->year;
-        $len = gendoc::where('type', 'LIKE' , 'courseForm%')->whereYear('created_at', $currentYear)->count()+1;
+        // $currentYear = now()->year;
+        // $len = gendoc::where('type', 'LIKE' , 'courseForm%')->whereYear('created_at', $currentYear)->count()+1;
+        $len = gendoc::where('type', 'LIKE' , 'courseForm%')->count()+1;
         $class = 0;
         return view('/forms/courseForm', compact('class','len'));
     }
@@ -63,8 +66,9 @@ class FormController extends Controller
     public function mediaForm()
     {
         // หน้า media form
-        $currentYear = now()->year;
-        $len = gendoc::where('type', 'LIKE' , 'mediaForm%')->whereYear('created_at', $currentYear)->count()+1;
+        // $currentYear = now()->year;
+        // $len = gendoc::where('type', 'LIKE' , 'mediaForm%')->whereYear('created_at', $currentYear)->count()+1;
+        $len = gendoc::where('type', 'LIKE' , 'mediaForm%')->count()+1;
         $class = 0;
         return view('/forms/mediaForm', compact('class','len'));
     }
