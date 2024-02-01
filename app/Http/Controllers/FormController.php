@@ -38,7 +38,7 @@ class FormController extends Controller
         // หน้า wi form
         // $currentYear = now()->year;
         // $len = gendoc::where('type', 'wiForm')->whereYear('created_at', $currentYear)->count() + 1;
-        $len = gendoc::where('type', 'wiForm')->count() + 1;
+        $len = gendoc::withTrashed()->where('type', 'wiForm')->count() + 1;
         $class = 0;
         return view('/forms/wiForm', compact('class','len'));
     }
@@ -48,7 +48,7 @@ class FormController extends Controller
         // หน้า checklist form
         // $currentYear = now()->year;
         // $len = gendoc::where('type', 'LIKE' , 'checkForm%')->whereYear('created_at', $currentYear)->count()+1;
-        $len = gendoc::where('type', 'LIKE' , 'checkForm%')->count()+1;
+        $len = gendoc::withTrashed()->where('type', 'LIKE' , 'checkForm%')->count()+1;
         $class = 0;
         return view('/forms/checkForm', compact('class','len'));
     }
@@ -58,7 +58,7 @@ class FormController extends Controller
         // หน้า course form
         // $currentYear = now()->year;
         // $len = gendoc::where('type', 'LIKE' , 'courseForm%')->whereYear('created_at', $currentYear)->count()+1;
-        $len = gendoc::where('type', 'LIKE' , 'courseForm%')->count()+1;
+        $len = gendoc::withTrashed()->where('type', 'LIKE' , 'courseForm%')->count()+1;
         $class = 0;
         return view('/forms/courseForm', compact('class','len'));
     }
@@ -68,7 +68,7 @@ class FormController extends Controller
         // หน้า media form
         // $currentYear = now()->year;
         // $len = gendoc::where('type', 'LIKE' , 'mediaForm%')->whereYear('created_at', $currentYear)->count()+1;
-        $len = gendoc::where('type', 'LIKE' , 'mediaForm%')->count()+1;
+        $len = gendoc::withTrashed()->where('type', 'LIKE' , 'mediaForm%')->count()+1;
         $class = 0;
         return view('/forms/mediaForm', compact('class','len'));
     }
@@ -83,7 +83,7 @@ class FormController extends Controller
     {
         // หน้า sop form
         $currentYear = now()->year;
-        $len = gendoc::where('type', 'sopForm')->whereYear('created_at', $currentYear)->count()+1;
+        $len = gendoc::withTrashed()->where('type', 'sopForm')->whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/sopForm', compact('class', 'len'));
     }
@@ -91,7 +91,7 @@ class FormController extends Controller
     {
         // หน้า policy form
         $currentYear = now()->year;
-        $len = gendoc::where('type', 'policyForm')->whereYear('created_at', $currentYear)->count()+1;
+        $len = gendoc::withTrashed()->where('type', 'policyForm')->whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/policyForm', compact('class', 'len'));
     }
@@ -99,7 +99,7 @@ class FormController extends Controller
     {
         // หน้า ประกาศ form
         $currentYear = now()->year;
-        $len = announce_doc::whereYear('created_at', $currentYear)->count()+1;
+        $len = announce_doc::withTrashed()->whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/annoForm', compact('class', 'len'));
     }
@@ -107,7 +107,7 @@ class FormController extends Controller
     {
         // หน้า โครงการ form
         $currentYear = now()->year;
-        $len = project_doc::whereYear('created_at', $currentYear)->count()+1;
+        $len = project_doc::withTrashed()->whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/projForm', compact('class', 'len'));
     }
@@ -115,7 +115,7 @@ class FormController extends Controller
     {
         // หน้า mou form
         $currentYear = now()->year;
-        $len = mou_doc::whereYear('created_at', $currentYear)->count()+1;
+        $len = mou_doc::withTrashed()->whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
         return view('/forms/mouForm', compact('class', 'len'));
     }
