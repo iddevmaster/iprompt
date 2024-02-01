@@ -116,7 +116,7 @@
                             </td>
 
 
-                            @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
+                            @if ((((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                 <td>
                                     <a href="{{url('/form/editproj/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button>
                                 </td>
