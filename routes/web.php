@@ -154,6 +154,8 @@ Route::post('/saveSubtype',[App\Http\Controllers\TablesController::class,'saveSu
 
 // Contact
 Route::get('/contract',[App\Http\Controllers\HomeController::class,'contract'])->name('contract');
+Route::get('/contract/edit/{cid}',[App\Http\Controllers\HomeController::class,'editContract'])->name('edit-contract');
+Route::post('/contract/update/{cid}',[App\Http\Controllers\ContractController::class,'updateContract'])->name('update-contract');
 Route::post('/contract/store',[App\Http\Controllers\ContractController::class,'storeContract'])->name('contract-store');
 Route::get('/contract/calendar',[App\Http\Controllers\ContractController::class,'contractCalendar'])->name('contract-calendar');
 

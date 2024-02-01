@@ -52,6 +52,33 @@ class ContractController extends Controller
         }
     }
 
+    public function updateContract($cid, Request $request) {
+        $contract = Contract::find($cid);
+        try {
+            $contract->update([
+                'title' => $request->cont_title,
+                'party' => $request->cont_party,
+                'time_range' => $request->dateRange,
+                'note' => $request->cont_note,
+            ]);
+
+            if ($request->recur ?? 0) {
+                $contract->recurring = json_encode([
+                    'enable' => $request->recur,
+                    'recur_date' => json_encode($request->recurring),
+                ]);
+
+                $contract->save();
+            }
+
+
+            return redirect()->route('contTable');
+        } catch (\Throwable $th) {
+            //throw $th;
+            return redirect()->back()->with(['error' => $th->getMessage()]);
+        }
+    }
+
     public function filepondUpload (Request $request) {
         if ($request->hasFile('cont_files')) {
             $file = $request->file('cont_files');

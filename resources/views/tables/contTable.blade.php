@@ -80,7 +80,7 @@
                                 {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))) --}}
                                 @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
                                     <td>
-                                        <a href=""><button type="button" class="btn btn-warning">Edit</button></a>
+                                        <a href="{{ route('edit-contract', ['cid' => $row->id]) }}"><button type="button" class="btn btn-warning">Edit</button></a>
                                     </td>
                                 @else
                                     <td></td>

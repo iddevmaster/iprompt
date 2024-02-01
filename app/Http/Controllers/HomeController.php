@@ -342,4 +342,9 @@ class HomeController extends Controller
         $ctotd_count = Contract::where('type', 'outdoor')->whereYear('created_at', $currentYear)->count();
         return view('forms.contract', compact('ctcre_count', 'ctdeb_count', 'ctotd_count'));
     }
+
+    public function editContract($cid) {
+        $contract = Contract::find($cid);
+        return view('forms.edit-contract', compact('contract'));
+    }
 }

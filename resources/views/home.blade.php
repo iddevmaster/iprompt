@@ -5,42 +5,46 @@
 ?>
 @section('content')
 <body>
-    @php
-        $total = count($contracts->filter(function ($contract) {
-            return $contract->alert == 1;
-        }));
-    @endphp
-    @if ($total ?? 0)
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">การแจ้งเตือน</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>คุณมีสัญญา <span class="badge text-bg-danger">{{ $total }}</span> ฉบับที่กำลังจะหมดอายุ</p>
-                        @foreach ($contracts->filter(function ($contract) {
-                            return $contract->alert == 1;
-                        }) as $index => $contract)
-                            @php
-                                $dateArray = explode(' - ', $contract->time_range);
-                                $endDate = Carbon\Carbon::createFromFormat('d/m/Y', $dateArray[1]);
-                                $currentDate = Carbon\Carbon::now();
+    @can('CONT')
+        @php
+            $total = count($contracts->filter(function ($contract) {
+                return $contract->alert == 1;
+            }));
+        @endphp
+        @if ($total ?? 0)
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">การแจ้งเตือน</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>คุณมีสัญญา <span class="badge text-bg-danger">{{ $total }}</span> ฉบับที่กำลังจะหมดอายุ</p>
+                            @foreach ($contracts->filter(function ($contract) {
+                                return $contract->alert == 1;
+                            }) as $index => $contract)
+                                @php
+                                    $dateArray = explode(' - ', $contract->time_range);
+                                    $endDate = Carbon\Carbon::createFromFormat('d/m/Y', $dateArray[1]);
+                                    $currentDate = Carbon\Carbon::now();
 
-                                $daysDifference = $currentDate->diffInDays($endDate);
-                            @endphp
-                            <div class="d-flex justify-content-between alert alert-warning" role="alert">
-                                <p class="mb-0 text-wrap text-break border-end px-2 flex-fill border-black">{{ $contract->book_num }} :: {{ $contract->title }}</p>
-                                <p class="mb-0 text-nowrap align-self-center px-2"><i class="bi bi-hourglass-split" style="font-size: 20px"></i> {{ $daysDifference }} วัน</p>
-                            </div>
-                        @endforeach
+                                    $daysDifference = $currentDate->diffInDays($endDate);
+                                @endphp
+                                <div class="d-flex justify-content-between alert alert-warning" role="alert">
+                                    <p class="mb-0 text-wrap text-break border-end px-2 flex-fill border-black">{{ $contract->book_num }} :: {{ $contract->title }}</p>
+                                    <p class="mb-0 text-nowrap align-self-center px-2"><i class="bi bi-hourglass-split" style="font-size: 20px"></i> {{ $daysDifference }} วัน</p>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    @endif
+        @endif
+    @endcan
+
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8 mb-5 d-flex justify-content-center">
@@ -167,8 +171,8 @@
                             @endcan
                         </div>
 
-                        @role('admin')
                         <div class="row ">
+                            @role('admin')
                             <div class="col col-4">
                                 <a class="a-tag" href="">
                                     <div class="w-100 h-100">
@@ -186,6 +190,7 @@
                                     </div>
                                 </a>
                             </div>
+                            @endrole
 
                             @can('cCONT')
                                 <div class="col col-4">
@@ -198,7 +203,6 @@
                                 </div>
                             @endcan
                         </div>
-                        @endrole
 
                         @role('admin')
                         <div class="row ">
@@ -379,14 +383,14 @@
 
     <!-- Scripts -->
     @vite(['resources/css/home.css' , 'resources/js/home.js'])
+    <!-- Include jQuery before Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
-    <script>
-        // @if ($total ?? 0)
-        //     document.addEventListener('DOMContentLoaded', function () {
-        //         var myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
-        //         myModal.show();
-        //     });
-        // @endif
+    <script type="text/javascript">
+        $(window).on('load', function() {
+            $('#myModal').modal('show');
+        });
     </script>
 </body>
 @endsection
