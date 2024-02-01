@@ -692,7 +692,8 @@
             const { value: email } = await Swal.fire({
                 title: 'เพิ่มหมวดหมู่',
                 input: 'text',
-                inputPlaceholder: 'Enter your type',
+                inputLabel: '#กรุณาอย่าใส่ตัวอักษรพิเศษ เช่น / @ " (สามารถใส่ - และ _ ได้)',
+                inputPlaceholder: "ห้ามเว้นวรรคข้อความ",
                 confirmButtonText: 'บันทึก',
             });
 
