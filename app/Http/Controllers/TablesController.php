@@ -291,6 +291,9 @@ class TablesController extends Controller
         elseif (Auth::user()->hasRole('employee')) {
             $gendoc = project_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orderBy('id', 'desc')->get();
         }
+        elseif (Auth::user()->hasRole('leader_dpm')) {
+            $gendoc = project_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orWhere('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->get();
+        }
         else {
             $gendoc = project_doc::orderBy('id', 'desc')->get();
         };
