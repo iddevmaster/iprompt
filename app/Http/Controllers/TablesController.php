@@ -64,6 +64,14 @@ class TablesController extends Controller
                         ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
                 })->orderBy('id', 'desc')->get();
         }
+        elseif (Auth::user()->hasRole('leader_dpm')) {
+            $gendoc = gendoc::where('type', 'wiForm')
+                ->where(function ($query) {
+                    $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                        ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
+                        ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
+                })->orderBy('id', 'desc')->get();
+        }
         else {
             $gendoc = gendoc::where('type', 'wiForm')->orderBy('id', 'desc')->get();
         };
@@ -95,6 +103,14 @@ class TablesController extends Controller
             $gendoc = gendoc::where('type', 'LIKE', 'checkForm%')
                 ->where(function ($query) {
                     $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                        ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
+                })->orderBy('id', 'desc')->get();
+        }
+        elseif (Auth::user()->hasRole('leader_dpm')) {
+            $gendoc = gendoc::where('type', 'LIKE', 'checkForm%')
+                ->where(function ($query) {
+                    $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                    ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
                         ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
                 })->orderBy('id', 'desc')->get();
         }
@@ -133,6 +149,14 @@ class TablesController extends Controller
                         ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
                 })->orderBy('id', 'desc')->get();
         }
+        elseif (Auth::user()->hasRole('leader_dpm')) {
+            $gendoc = gendoc::where('type', 'LIKE', 'courseForm%')
+                ->where(function ($query) {
+                    $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                        ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
+                        ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
+                })->orderBy('id', 'desc')->get();
+        }
         else {
             $gendoc = gendoc::where('type', 'LIKE', 'courseForm%')->orderBy('id', 'desc')->get();
         };
@@ -165,6 +189,15 @@ class TablesController extends Controller
                 ->where(function ($query) {
                     $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
                         ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')
+                        ->orWhere('stat', 'ผ่านการอนุมัติ');
+                })->orderBy('id', 'desc')->get();
+        }
+        elseif (Auth::user()->hasRole('leader_dpm')) {
+            $gendoc = gendoc::where('type', 'LIKE', 'mediaForm%')
+                ->where(function ($query) {
+                    $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                        ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')
+                        ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
                         ->orWhere('stat', 'ผ่านการอนุมัติ');
                 })->orderBy('id', 'desc')->get();
         }
@@ -203,6 +236,14 @@ class TablesController extends Controller
                         ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
                 })->orderBy('id', 'desc')->get();
         }
+        elseif (Auth::user()->hasRole('leader_dpm')) {
+            $gendoc = gendoc::where('type', 'sopForm')
+                ->where(function ($query) {
+                    $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                        ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
+                        ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
+                })->orderBy('id', 'desc')->get();
+        }
         else {
             $gendoc = gendoc::where('type', 'sopForm')->orderBy('id', 'desc')->get();
         };
@@ -232,11 +273,17 @@ class TablesController extends Controller
                 })->orderBy('id', 'desc')->get();
         }
         elseif ((Auth::user()->hasRole('employee'))) {
-            $gendoc = gendoc::where('type', 'policyForm')
-                ->where(function ($query) {
+            $gendoc = gendoc::where('type', 'policyForm')->where(function ($query) {
                     $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
                         ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
                 })->orderBy('id', 'desc')->get();
+        }
+        elseif (Auth::user()->hasRole('leader_dpm')) {
+            $gendoc = gendoc::where('type', 'policyForm')->where(function ($query) {
+                $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                    ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
+                    ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
+            })->orderBy('id', 'desc')->get();
         }
          else {
             $gendoc = gendoc::where('type', 'policyForm')->orderBy('id', 'desc')->get();
@@ -263,6 +310,9 @@ class TablesController extends Controller
         }
         elseif (Auth::user()->hasRole('employee')) {
             $gendoc = mou_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orderBy('id', 'desc')->get();
+        }
+        elseif (Auth::user()->hasRole('leader_dpm')) {
+            $gendoc = mou_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')->orderBy('id', 'desc')->get();
         }
         else {
             $gendoc = mou_doc::orderBy('id', 'desc')->get();
@@ -292,7 +342,7 @@ class TablesController extends Controller
             $gendoc = project_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orderBy('id', 'desc')->get();
         }
         elseif (Auth::user()->hasRole('leader_dpm')) {
-            $gendoc = project_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orWhere('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->get();
+            $gendoc = project_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')->orderBy('id', 'desc')->get();
         }
         else {
             $gendoc = project_doc::orderBy('id', 'desc')->get();
@@ -320,6 +370,9 @@ class TablesController extends Controller
         }
         elseif (Auth::user()->hasRole('employee')) {
             $gendoc = announce_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orderBy('id', 'desc')->get();
+        }
+        elseif (Auth::user()->hasRole('leader_dpm')) {
+            $gendoc = project_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orWhere('dpm', (department::find((Auth::user())->dpm))->prefix)->orderBy('id', 'desc')->get();
         }
         else {
             $gendoc = announce_doc::orderBy('id', 'desc')->get();
