@@ -704,16 +704,20 @@ class TablesController extends Controller
             $fileList = [];
             if ($request->type == 'proj') {
                 $yourModel = project_doc::find($request->input('valueid'));
+                $fileData = json_decode($yourModel->files);
             } elseif ($request->type == 'announce') {
                 $yourModel = announce_doc::find($request->input('valueid'));
+                $fileData = json_decode($yourModel->files);
             } elseif ($request->type == 'mou') {
                 $yourModel = mou_doc::find($request->input('valueid'));
+                $fileData = json_decode($yourModel->files);
             } elseif ($request->type == 'cont') {
                 $yourModel = Contract::find($request->input('valueid'));
+                $fileData = $yourModel->files;
             } else {
                 $yourModel = gendoc::find($request->input('valueid'));
+                $fileData = json_decode($yourModel->files);
             }
-            $fileData = json_decode($yourModel->files);
             $fileList = $fileData;
             $fileList[] = $fileName;
             $yourModel->files = $fileList;
