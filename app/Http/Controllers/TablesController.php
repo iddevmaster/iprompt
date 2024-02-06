@@ -713,7 +713,7 @@ class TablesController extends Controller
             } else {
                 $yourModel = gendoc::find($request->input('valueid'));
             }
-            $fileData = $yourModel->files;
+            $fileData = json_decode($yourModel->files);
             $fileList = $fileData;
             $fileList[] = $fileName;
             $yourModel->files = $fileList;

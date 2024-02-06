@@ -24,10 +24,4 @@ class project_doc extends Model
 
     ];
 
-    public function getFilesAttribute($value)
-    {
-        return json_decode($value, true);
-    }
-
-
 }

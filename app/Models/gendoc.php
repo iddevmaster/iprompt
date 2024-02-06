@@ -25,9 +25,6 @@ class gendoc extends Model
         'files'
     ];
 
-    public function getFilesAttribute($value)
-    {
-        return json_decode($value, true);
-    }
+
 
 }
