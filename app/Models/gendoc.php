@@ -21,7 +21,13 @@ class gendoc extends Model
         'binspector',
         'bapprover',
         'detail',
-        'shares'
+        'shares',
+        'files'
     ];
+
+    public function getFilesAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 
 }

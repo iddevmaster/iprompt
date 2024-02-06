@@ -19,9 +19,15 @@ class project_doc extends Model
         'detail',
         'sign',
         'created_date',
-        'shares'
+        'shares',
+        'files'
 
     ];
+
+    public function getFilesAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 
 
 }

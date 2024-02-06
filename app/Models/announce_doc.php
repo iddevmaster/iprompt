@@ -23,7 +23,13 @@ class announce_doc extends Model
         'sign',
         'sign_name',
         'sign_position',
-        'shares'
+        'shares',
+        'files'
     ];
+
+    public function getFilesAttribute($value)
+    {
+        return json_decode($value, true);
+    }
 
 }
