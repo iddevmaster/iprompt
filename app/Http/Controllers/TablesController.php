@@ -523,7 +523,7 @@ class TablesController extends Controller
                     ->union($mouDocQuery)
                     ->union($projectDocQuery)
                     ->union($announceDocQuery)
-                    ->get();
+                    ->orderBy('id', 'desc')->get();
         $user = User::all();
         return view('/tables/verify', compact('form','user'));
     }
