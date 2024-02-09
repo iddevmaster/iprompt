@@ -47,8 +47,14 @@
                             <td>{{ $row->created_date}}</td>
                             <td>
                                 @php
-                                    $submitUser = $user->firstWhere('id', $row->submit_by);
-                                    echo $submitUser ? $submitUser->name : 'Unknown';
+                                    $usarr = json_decode($row->submit_by);
+                                    if (is_array($usarr)) {
+                                        $submitUser = $user->firstWhere('id', $usarr[0]);
+                                        echo $submitUser ? $submitUser->name : 'Unknown';
+                                    } else {
+                                        $submitUser = $user->firstWhere('id', $row->submit_by);
+                                        echo $submitUser ? $submitUser->name : 'Unknown';
+                                    }
                                 @endphp
                             </td>
                             <td>
