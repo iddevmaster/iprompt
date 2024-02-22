@@ -118,6 +118,7 @@
             .editorContent figure{
                 display: flex;
                 justify-content: center;
+                width: -webkit-fill-available;
             }
             .editorContent img{
                 width: inherit;
