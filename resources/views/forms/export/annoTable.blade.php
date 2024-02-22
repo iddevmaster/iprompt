@@ -157,9 +157,9 @@
         </div> <!-- end footer -->
     </div>
     @if (auth()->user()->can('download'))
-    <div class="d-flex justify-content-center downloadbtn">
-        <button class="btn btn-success ms-2" onclick="printDiv()">Print</button>
-    </div>
+        <div class="d-flex justify-content-center downloadbtn">
+            <button class="btn btn-success ms-2" onclick="printDiv()">Print</button>
+        </div>
     @endif
     <script>
         function printDiv() {
