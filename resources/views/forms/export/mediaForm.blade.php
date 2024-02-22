@@ -261,8 +261,7 @@
             @endif
         @endif
         <!-- Scripts -->
-        @vite(['resources/sass/app.scss', 'resources/css/app.css' ,
-        'resources/js/app.js', 'resources/css/form.css'])
+
         <script>
             function printDiv() {
                 window.print();
