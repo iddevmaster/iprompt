@@ -103,7 +103,7 @@
             }
             .editorContent p{
                 width: 100%;
-                display: block;
+                display: block !important;
                 padding-left:1cm;
                 padding-right:.5cm;
 
