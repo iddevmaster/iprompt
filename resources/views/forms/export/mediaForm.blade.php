@@ -103,8 +103,6 @@
             }
             .editorContent p{
                 width: 100%;
-                display: flex;
-                justify-content: start;
                 padding-left:1cm;
                 padding-right:.5cm;
 
