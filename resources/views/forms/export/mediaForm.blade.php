@@ -227,7 +227,7 @@
             <!-- end header -->
 
             <!-- content -->
-            <div class="content pt-3">
+            <div class="content pt-3 w-100">
                 <div class="editorContent" style="">
                     {!! $editorContent !!}
                 </div>
