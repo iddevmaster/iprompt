@@ -127,8 +127,8 @@
                                         @php
                                             $fileList = $row->files;
                                         @endphp
-                                        @foreach (json_decode($fileList) as $file)
-                                            <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$file}}</button>
+                                        @foreach (json_decode($fileList) as $index => $file)
+                                            <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$index + 1}}</button>
                                         @endforeach
                                     @else
 
