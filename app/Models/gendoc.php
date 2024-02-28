@@ -22,7 +22,12 @@ class gendoc extends Model
         'bapprover',
         'detail',
         'shares',
-        'files'
+        'files',
+        'edit_count',
+        'stat',
+        'app',
+        'ins',
+        'dpm',
     ];
 
 

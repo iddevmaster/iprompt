@@ -67,7 +67,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -88,7 +93,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -110,7 +120,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -128,7 +143,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         };
@@ -166,7 +186,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -187,7 +212,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -209,7 +239,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -226,7 +261,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         };
@@ -265,7 +305,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -286,7 +331,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -308,7 +358,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -325,7 +380,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         };
@@ -363,7 +423,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -385,7 +450,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -408,7 +478,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -425,7 +500,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         };
@@ -464,7 +544,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -485,7 +570,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -507,7 +597,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -524,7 +619,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         };
@@ -563,7 +663,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -583,7 +688,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -604,7 +714,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         }
@@ -621,7 +736,12 @@ class TablesController extends Controller
                     'binspector',
                     'bapprover',
                     'shares',
-                    'files'
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
                 ])
                 ->get();
         };

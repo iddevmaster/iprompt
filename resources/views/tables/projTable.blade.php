@@ -13,16 +13,16 @@
                 <!-- Table Header -->
                 <thead class="table-dark">
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">เลขที่หนังสือ</th>
-                        <th scope="col">Project_code</th>
-                        <th scope="col">เรื่อง</th>
-                        <th scope="col">อัพเดทล่าสุด / วันที่สร้าง</th>
-                        <th scope="col">คณะผู้จัดทำ</th>
-                        <th scope="col">สถานะ</th>
-                        <th scope="col">แก้ไข</th>
-                        <th scope="col">Download</th>
-                        <th scope="col">แนบไฟล์</th>
+                        <th scope="col">#</th> {{-- 1 --}}
+                        <th scope="col">เลขที่หนังสือ</th> {{-- 2 --}}
+                        <th scope="col">Project_code</th> {{-- 3 --}}
+                        <th scope="col">เรื่อง</th> {{-- 4 --}}
+                        <th scope="col">อัพเดทล่าสุด / วันที่สร้าง</th> {{-- 5 --}}
+                        <th scope="col">คณะผู้จัดทำ</th> {{-- 6 --}}
+                        <th scope="col">สถานะ</th> {{-- 7 --}}
+                        <th scope="col">แก้ไข</th> {{-- 8 --}}
+                        <th scope="col">Download</th> {{-- 9 --}}
+                        <th scope="col">แนบไฟล์</th> {{-- 10 --}}
                         @can('staff')
                             <th scope="col">Share</th>
                         @endcan
@@ -51,13 +51,24 @@
                             }
                         @endphp
                         <tr>
+                            {{-- 1 --}}
                             <td>{{$counter}}</td>
+
+                            {{-- 2 --}}
                             <td>{{ $row->book_num}}</td>
+
+                            {{-- 3 --}}
                             <td>{{ $row->proj_code}}</td>
+
+                            {{-- 4 --}}
                             <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                 {{ $row->title }}
                             </td>
+
+                            {{-- 5 --}}
                             <td>{{ $row->created_date}} / {{ $row->created_at->toDateString() }}</td>
+
+                            {{-- 6 --}}
                             <td><button class="btn btn-success" id="projtBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" teamlist="{{json_encode($teamlist)}}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="รายชื่อทีม: {{implode(" , ", $teamlist)}}"
                                 @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                     disabled
@@ -74,6 +85,7 @@
                                 </button>
                             </td>
 
+                            {{-- 7 --}}
                             <td>
                                 @php
                                     $app = json_decode($row->app);
@@ -115,7 +127,7 @@
                                 @endif
                             </td>
 
-
+                            {{-- 8 --}}
                             @if ((((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                 <td>
                                     <a href="{{url('/form/editproj/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button>
@@ -124,7 +136,7 @@
                                 <td></td>
                             @endif
 
-
+                            {{-- 9 --}}
                             @if ((((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo'])) || (auth()->user()->can('download')) || (in_array((Auth::user())->dpm, $shares)) || (in_array(((Auth::user())->id), (is_array($teams)? $teams : []))))
                                 <td>
                                     <a href="{{url('/form/downloadproj/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
@@ -135,7 +147,7 @@
                                 </td>
                             @endif
 
-
+                            {{-- 10 --}}
                             @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)) || (in_array(((Auth::user())->id), (is_array($teams)? $teams : []))))
                                 <td class="text-center">
                                     @if ($row->files != null)

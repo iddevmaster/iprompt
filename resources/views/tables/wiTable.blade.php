@@ -70,6 +70,7 @@
                                     //     dd(in_array("9", $shares));
                                     // }
                                 @endphp
+                                {{ $row->stat }}
                                 @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
                                     <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}"
                                         @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
