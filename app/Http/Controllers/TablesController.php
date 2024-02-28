@@ -55,14 +55,42 @@ class TablesController extends Controller
                     $query->where('dpm', (department::find((Auth::user())->dpm))->prefix)
                         ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
                         ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
-                })->orderBy('id', 'desc')->get();
+                })->orderBy('id', 'desc')
+                ->select([
+                    'id',
+                    'book_num',
+                    'submit_by',
+                    'created_date',
+                    'type',
+                    'title',
+                    'bcreater',
+                    'binspector',
+                    'bapprover',
+                    'shares',
+                    'files'
+                ])
+                ->get();
         }
         elseif ((Auth::user()->hasRole('employee'))) {
             $gendoc = gendoc::where('type', 'wiForm')
                 ->where(function ($query) {
                     $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
                         ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
-                })->orderBy('id', 'desc')->get();
+                })->orderBy('id', 'desc')
+                ->select([
+                    'id',
+                    'book_num',
+                    'submit_by',
+                    'created_date',
+                    'type',
+                    'title',
+                    'bcreater',
+                    'binspector',
+                    'bapprover',
+                    'shares',
+                    'files'
+                ])
+                ->get();
         }
         elseif (Auth::user()->hasRole('leader_dpm')) {
             $gendoc = gendoc::where('type', 'wiForm')
@@ -70,10 +98,39 @@ class TablesController extends Controller
                     $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
                         ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
                         ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
-                })->orderBy('id', 'desc')->get();
+                })->orderBy('id', 'desc')
+                ->select([
+                    'id',
+                    'book_num',
+                    'submit_by',
+                    'created_date',
+                    'type',
+                    'title',
+                    'bcreater',
+                    'binspector',
+                    'bapprover',
+                    'shares',
+                    'files'
+                ])
+                ->get();
         }
         else {
-            $gendoc = gendoc::where('type', 'wiForm')->orderBy('id', 'desc')->get();
+            $gendoc = gendoc::where('type', 'wiForm')
+                ->orderBy('id', 'desc')
+                ->select([
+                    'id',
+                    'book_num',
+                    'submit_by',
+                    'created_date',
+                    'type',
+                    'title',
+                    'bcreater',
+                    'binspector',
+                    'bapprover',
+                    'shares',
+                    'files'
+                ])
+                ->get();
         };
         foreach($gendoc as $doc) {
             if ($doc->dpm === '-'){
