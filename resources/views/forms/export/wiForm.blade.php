@@ -254,7 +254,7 @@
         <!-- end paper page -->
 
         @if ($dorv == 'download')
-            @if ((Auth::user()->id == $submitb) || !(auth()->user()->can('staff')) || Auth::user()->hasRole(['admin', 'ceo'])
+            @if ((Auth::user()->id == $submitb) || !(auth()->user()->can('staff')) || Auth::user()->hasRole(['admin', 'ceo']))
             <div class="d-flex justify-content-center downloadbtn">
                 <button class="btn btn-success ms-2" onclick="printDiv()">
                     Print
