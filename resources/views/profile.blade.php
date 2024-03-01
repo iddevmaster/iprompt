@@ -63,20 +63,18 @@
                         </select>
                     </div>
 
-                    @hasrole('admin')
-                        <div class="d-flex mb-3">
-                            <label for="role" class="form-label">Role:</label>
-                            <select class="form-select ms-2" aria-label="role" id="role" disabled>
-                                @foreach ($role as $role)
-                                    @if ($role->name === $user->role)
-                                        <option value="{{$role->name}}" selected>{{$role->name}}</option>
-                                    @else
-                                        <option value="{{$role->name}}">{{$role->name}}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
-                    @endhasrole
+                    <div class="d-flex mb-3">
+                        <label for="role" class="form-label">Role:</label>
+                        <select class="form-select ms-2" aria-label="role" id="role" disabled>
+                            @foreach ($role as $role)
+                                @if ($role->name === $user->role)
+                                    <option value="{{$role->name}}" selected>{{$role->name}}</option>
+                                @else
+                                    <option value="{{$role->name}}">{{$role->name}}</option>
+                                @endif
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="d-flex mb-4">
                         <label for="phone" class="form-label">Phone:</label>
                         <input class="form-control ms-2" id="phone" type="text" value="{{$user->phone ?? '-Unknow-'}}" disabled>

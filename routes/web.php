@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SSO\SSOController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -13,18 +14,23 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    Auth::logout();
-    return view('auth/login');
-});
+// Route::get('/', function () {
+//     Auth::logout();
+//     return view('auth/login');
+// });
 
 // Route::get('/phpinfo', function () {
 //     phpinfo();
 // });
 
-Auth::routes();
+Route::get("/sso/login", [SSOController::class, "getLogin"])->name('sso.login');
+Route::get("/callback", [SSOController::class, "getCallback"])->name('sso.callback');
+Route::get("/sso/connect", [SSOController::class, "connectUser"])->name('sso.connect');
+
+Auth::routes(['register' => false, 'reset' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 Route::get('/alluser', [App\Http\Controllers\HomeController::class, 'alluser'])->name('alluser');
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 Route::get('/imported', [App\Http\Controllers\ImportController::class, 'index'])->name('imported');
