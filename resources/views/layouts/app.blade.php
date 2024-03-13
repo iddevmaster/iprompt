@@ -118,9 +118,9 @@
     </style>
 </head>
 <body>
-<?php $permis = Auth::user()->role ?? '' ;
-      $dpm = Auth::user()->dpm ?? '';
-?>
+    <?php $permis = Auth::user()->role ?? '' ;
+        $dpm = Auth::user()->dpm ?? '';
+    ?>
     <div id="app">
         <nav class="navbar navbar-expand-md nav-light shadow-sm" id="navb">
             <div class="container">
@@ -188,6 +188,9 @@
                                     @can('cmedia')
                                         <li><a class="dropdown-item" href="{{ route('mediaForm') }}">Media</a></li>
                                     @endcan
+                                    @can('cCONT')
+                                        <li><a class="dropdown-item" href="{{ route('contract') }}">สัญญา</a></li>
+                                    @endcan
                                 </div>
                             </ul>
                         </li>
@@ -226,6 +229,9 @@
                                     @endcan
                                     @can('cmedia')
                                         <li><a class="dropdown-item" href="{{ route('mediaTable') }}">Media</a></li>
+                                    @endcan
+                                    @can('CONT')
+                                        <li><a class="dropdown-item" href="{{ route('contTable') }}">สัญญา</a></li>
                                     @endcan
                                 </div>
                             </ul>
