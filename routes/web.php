@@ -158,6 +158,7 @@ Route::get('/contract/edit/{cid}',[App\Http\Controllers\HomeController::class,'e
 Route::post('/contract/update/{cid}',[App\Http\Controllers\ContractController::class,'updateContract'])->name('update-contract');
 Route::post('/contract/store',[App\Http\Controllers\ContractController::class,'storeContract'])->name('contract-store');
 Route::get('/contract/calendar',[App\Http\Controllers\ContractController::class,'contractCalendar'])->name('contract-calendar');
+Route::post('/contract/projcode/add',[App\Http\Controllers\ContractController::class,'addProjCode'])->name('add-projcode');
 
 // Filepond
 Route::post('/contract/file-upload',[App\Http\Controllers\ContractController::class,'filepondUpload']);

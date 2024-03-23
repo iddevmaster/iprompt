@@ -16,6 +16,7 @@ use Spatie\Permission\Models\Role;
 use App\Models\user_problem;
 Use Alert;
 use App\Models\Contract;
+use App\Models\ProjectCode;
 use Carbon\Carbon;
 use PhpParser\Node\Stmt\Catch_;
 
@@ -340,7 +341,8 @@ class HomeController extends Controller
         $ctcre_count = Contract::where('type', 'creditor')->whereYear('created_at', $currentYear)->count();
         $ctdeb_count = Contract::where('type', 'debtor')->whereYear('created_at', $currentYear)->count();
         $ctotd_count = Contract::where('type', 'outdoor')->whereYear('created_at', $currentYear)->count();
-        return view('forms.contract', compact('ctcre_count', 'ctdeb_count', 'ctotd_count'));
+        $projCodes = ProjectCode::orderBy('id', 'desc')->get();
+        return view('forms.contract', compact('ctcre_count', 'ctdeb_count', 'ctotd_count', 'projCodes'));
     }
 
     public function editContract($cid) {

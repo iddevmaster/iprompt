@@ -283,6 +283,12 @@
                                     Staff
                                 </label>
                             </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="addProjCode" disabled>
+                                <label class="form-check-label" for="addProjCode">
+                                    AddProjectcode
+                                </label>
+                            </div>
                         </div>
                     </div>
                     @foreach ($permissions as $perm)
@@ -332,6 +338,7 @@
                         const ccont = document.getElementById('cCONT');
 
                         const staff = document.getElementById('staff');
+                        const addProjCode = document.getElementById('addProjCode');
 
                         const userid = document.getElementById('userid');
                         const role = document.getElementById('role');
@@ -390,6 +397,7 @@
                                     cmedia.disabled = false;
 
                                     staff.disabled = false;
+                                    addProjCode.disabled = false;
                                 };
                                 editbtn.textContent = 'Save';
                             } else {
@@ -439,6 +447,7 @@
                                             cmedia: cmedia.checked,
 
                                             staff: staff.checked,
+                                            addProjCode: addProjCode.checked,
                                         }
                                     }),
                                 })
@@ -507,6 +516,7 @@
                                 cmedia.disabled = true;
 
                                 staff.disabled = true;
+                                addProjCode.disabled = true;
 
                                 editbtn.textContent = 'Edit';
 

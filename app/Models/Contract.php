@@ -22,7 +22,9 @@ class Contract extends Model
         'shares',
         'submit_by',
         'recurring',
-        'alert'
+        'alert',
+        'budget',
+        'project_code'
     ];
 
     public function getUser() {

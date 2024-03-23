@@ -171,8 +171,8 @@
 
     document.getElementById('cancel').addEventListener('click', function () {
         Swal.fire({
-            title: 'ยกเลิกการบันทึกข้อมูล?',
-            text: "ข้อมูลของคุณจะถูกลบ!",
+            title: 'ยกเลิกการแก้ไขข้อมูล?',
+            text: "ข้อมูลของคุณจะไม่ถูกแก้ไข!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -181,7 +181,7 @@
             cancelButtonText: 'ย้อนกลับ'
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = '{{ route('home') }}';
+                window.location.href = '{{ route('contTable') }}';
             }
         })
     });

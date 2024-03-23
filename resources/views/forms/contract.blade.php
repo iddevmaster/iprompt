@@ -37,39 +37,85 @@
 
                             <input type="hidden" name="contact_type" value="creditor">
 
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    @foreach ($errors->all() as $error)
+                                        <p class="mb-0">{{ $error }}</p>
+                                    @endforeach
+                                </div>
+                            @endif
+
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="cont_bnum" class="col-form-label">เลขที่หนังสือ</label>
+                                    <label for="cont_bnum" class="col-form-label"><span class="text-danger">*</span>เลขที่หนังสือ</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" name="cont_bnum" id="cont_bnum" value="{{ 'CT-CRE' . str_pad($ctcre_count + 1 , 3, '0', STR_PAD_LEFT) . "/" . (now()->year + 543)}}" class="form-control" readonly required>
+                                    <input type="text" name="cont_bnum" id="cont_bnum" value="{{ 'CT-CRE' . str_pad($ctcre_count + 1 , 3, '0', STR_PAD_LEFT) . "/" . (now()->year + 543)}}" class="form-control bg-white" readonly required>
                                 </div>
                             </div>
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="cont_title" class="col-form-label">เรื่อง</label>
+                                    <label for="proj_code" class="col-form-label">เลขโครงการ</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" name="cont_title" id="cont_title" class="form-control" required>
+
+                                    <!-- Options -->
+                                    <select id="selectprojc" name="proj_code" required>
+                                        @foreach ($projCodes as $projCode)
+                                            <option value="{{ $projCode->project_code }}">{{ $projCode->project_code }} : {{ $projCode->project_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <script>
+                                        new SlimSelect({
+                                            select: '#selectprojc',
+                                            settings: {
+                                                closeOnSelect: true,
+                                            },
+                                        })
+                                    </script>
+                                </div>
+                                @can('addProjCode')
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-success" id="addProjCodebtn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus"></i></button>
+
+                                    </div>
+                                @endcan
+                            </div>
+
+                            <div class="row g-3 mb-3 d-flex justify-content-center">
+                                <div class="col-auto">
+                                    <label for="cont_title" class="col-form-label"><span class="text-danger">*</span>เรื่อง</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" name="cont_title" id="cont_title" class="form-control bg-white" required>
                                 </div>
                             </div>
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="cont_party" class="col-form-label">คู่สัญญา</label>
+                                    <label for="cont_party" class="col-form-label"><span class="text-danger">*</span>คู่สัญญา</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" name="cont_party" id="cont_party" class="form-control" required>
+                                    <input type="text" name="cont_party" id="cont_party" class="form-control bg-white" required>
                                 </div>
                             </div>
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="dateRange" class="col-form-label">ระยะเวลาสัญญา</label>
+                                    <label for="cont_budget" class="col-form-label">จำนวนเงิน</label>
                                 </div>
                                 <div class="col-8">
-                                <input type="text" name="dateRange" id="dateRange" class="form-control dateRangePicker" value="" required>
+                                    <input type="text" name="cont_budget" id="cont_budget" oninput="formatNumber(this)" value="0" maxlength="11" class="form-control bg-white" required>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-3 d-flex justify-content-center">
+                                <div class="col-auto">
+                                    <label for="dateRange" class="col-form-label"><span class="text-danger">*</span>ระยะเวลาสัญญา</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" name="dateRange" id="dateRange" class="form-control dateRangePicker bg-white" value="" required>
                                 </div>
                             </div>
 
@@ -78,54 +124,83 @@
                                     <label for="recurring" class="col-form-label">การเกิดซ้ำ</label>
                                 </div>
                                 <div class="col-8">
-                                    <div class="d-flex">
-                                        <div class="form-check text-start mx-4">
-                                            <input class="form-check-input enableCheck" type="checkbox" name="recur" value="1" id="check1">
-                                            <label class="form-check-label" for="check1">
-                                                เปิด
-                                            </label>
+                                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                                        <div class="col-auto">
+                                            <label for="selectday" class="col-form-label"><span class="text-danger">*</span>วันที่</label>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="0" id="check2" disabled>
-                                            <label class="form-check-label" for="check8">
-                                                อา
-                                            </label>
+                                        <div class="col-8">
+                                            <!-- Options -->
+                                            <select id="selectday" name="recur_d[]" multiple required>
+                                                @for ($i = 1; $i <= 31; $i++)
+                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                @endfor
+                                            </select>
+                                            <script>
+                                                new SlimSelect({
+                                                    select: '#selectday',
+                                                    settings: {
+                                                        minSelected: 0,
+                                                        maxSelected: 31,
+                                                        hideSelected: true,
+                                                        closeOnSelect: false,
+                                                        placeholderText: 'เลือกวันที่',
+                                                    },
+                                                })
+                                            </script>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="1" id="check3" disabled>
-                                            <label class="form-check-label" for="check2">
-                                                จ
-                                            </label>
+                                    </div>
+
+                                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                                        <div class="col-auto">
+                                            <label for="selectmonth" class="col-form-label"><span class="text-danger">*</span>เดือน</label>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="2" id="check4" disabled>
-                                            <label class="form-check-label" for="check3">
-                                                อ
-                                            </label>
+                                        <div class="col-8">
+                                            <!-- Options -->
+                                            <select id="selectmonth" name="recur_m[]" multiple required>
+                                                @for ($i = 1; $i <= 12; $i++)
+                                                    @php
+                                                        $date = \Carbon\Carbon::create()->day(1)->month($i)->year(2022); // Replace 2022 with the desired year
+                                                        $thaiMonth = $date->locale('th')->monthName;
+                                                    @endphp
+                                                    <option value="{{ $i }}">{{ $thaiMonth }}</option>
+                                                @endfor
+                                            </select>
+                                            <script>
+                                                new SlimSelect({
+                                                    select: '#selectmonth',
+                                                    settings: {
+                                                        minSelected: 0,
+                                                        maxSelected: 31,
+                                                        hideSelected: true,
+                                                        closeOnSelect: false,
+                                                        placeholderText: 'เลือกเดือน',
+                                                    },
+                                                })
+                                            </script>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="3" id="check5" disabled>
-                                            <label class="form-check-label" for="check4">
-                                                พ
-                                            </label>
+                                    </div>
+
+                                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                                        <div class="col-auto">
+                                            <label for="recur_y" class="col-form-label">ทุก</label>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="4" id="check6" disabled>
-                                            <label class="form-check-label" for="check5">
-                                                พฤ
-                                            </label>
+                                        <div class="col-8">
+                                            <input type="number" name="recur_y" id="recur_y" value="1" min="1" max="100" class="form-control bg-white" required>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="5" id="check7" disabled>
-                                            <label class="form-check-label" for="check6">
-                                                ศ
-                                            </label>
+                                        <div class="col-auto">
+                                            <p>ปี</p>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="6" id="check8" disabled>
-                                            <label class="form-check-label" for="check7">
-                                                ส
-                                            </label>
+                                    </div>
+
+                                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                                        <div class="col-auto">
+                                            <label for="recur_count" class="col-form-label">จำนวน</label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="number" name="recur_count" id="recur_count" value="-" min="1" max="100" class="form-control bg-white">
+                                        </div>
+                                        <div class="col-auto">
+                                            <p>ครั้ง , งวด</p>
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +211,7 @@
                                     <label for="cont_note" class="col-form-label">หมายเหตุ</label>
                                 </div>
                                 <div class="col-8">
-                                    <textarea class="form-control" name="cont_note" id="cont_note" rows="3"></textarea>
+                                    <textarea class="form-control bg-white" name="cont_note" id="cont_note" rows="3"></textarea>
                                 </div>
                             </div>
 
@@ -157,6 +232,7 @@
                             </div>
                         </form>
                     </div>
+
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab" tabindex="0">
                         <p class="fs-2">สัญญา-ลูกหนี้</p>
 
@@ -167,7 +243,7 @@
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="cont_bnum" class="col-form-label">เลขที่หนังสือ</label>
+                                    <label for="cont_bnum" class="col-form-label"><span class="text-danger">*</span>เลขที่หนังสือ</label>
                                 </div>
                                 <div class="col-8">
                                     <input type="text" name="cont_bnum" id="cont_bnum" value="{{ 'CT-DEB' . str_pad($ctdeb_count + 1, 3, '0', STR_PAD_LEFT) . "/" . (now()->year + 543)}}" class="form-control" readonly required>
@@ -176,7 +252,36 @@
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="cont_title" class="col-form-label">เรื่อง</label>
+                                    <label for="proj_code" class="col-form-label">เลขโครงการ</label>
+                                </div>
+                                <div class="col-8">
+
+                                    <!-- Options -->
+                                    <select id="selectprojc2" name="proj_code" required>
+                                        @foreach ($projCodes as $projCode)
+                                            <option value="{{ $projCode->project_code }}">{{ $projCode->project_code }}</option>
+                                        @endforeach
+                                    </select>
+                                    <script>
+                                        new SlimSelect({
+                                            select: '#selectprojc2',
+                                            settings: {
+                                                closeOnSelect: true,
+                                            },
+                                        })
+                                    </script>
+                                </div>
+                                @can('addProjCode')
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-success" id="addProjCodebtn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus"></i></button>
+
+                                    </div>
+                                @endcan
+                            </div>
+
+                            <div class="row g-3 mb-3 d-flex justify-content-center">
+                                <div class="col-auto">
+                                    <label for="cont_title" class="col-form-label"><span class="text-danger">*</span>เรื่อง</label>
                                 </div>
                                 <div class="col-8">
                                     <input type="text" name="cont_title" id="cont_title" class="form-control" required>
@@ -185,7 +290,7 @@
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="cont_party" class="col-form-label">คู่สัญญา</label>
+                                    <label for="cont_party" class="col-form-label"><span class="text-danger">*</span>คู่สัญญา</label>
                                 </div>
                                 <div class="col-8">
                                     <input type="text" name="cont_party" id="cont_party" class="form-control" required>
@@ -194,7 +299,16 @@
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="dateRange" class="col-form-label">ระยะเวลาสัญญา</label>
+                                    <label for="cont_budget" class="col-form-label">จำนวนเงิน</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" name="cont_budget" id="cont_budget" oninput="formatNumber(this)" value="0" maxlength="11" class="form-control bg-white" required>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-3 d-flex justify-content-center">
+                                <div class="col-auto">
+                                    <label for="dateRange" class="col-form-label"><span class="text-danger">*</span>ระยะเวลาสัญญา</label>
                                 </div>
                                 <div class="col-8">
                                 <input type="text" name="dateRange" id="dateRange2" class="form-control dateRangePicker" value="" required>
@@ -206,54 +320,83 @@
                                     <label for="recurring" class="col-form-label">การเกิดซ้ำ</label>
                                 </div>
                                 <div class="col-8">
-                                    <div class="d-flex">
-                                        <div class="form-check text-start mx-4">
-                                            <input class="form-check-input enableCheck" type="checkbox" name="recur" value="1" id="check1">
-                                            <label class="form-check-label" for="check1">
-                                                เปิด
-                                            </label>
+                                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                                        <div class="col-auto">
+                                            <label for="selectday2" class="col-form-label"><span class="text-danger">*</span>วันที่</label>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="0" id="check2" disabled>
-                                            <label class="form-check-label" for="check8">
-                                                อา
-                                            </label>
+                                        <div class="col-8">
+                                            <!-- Options -->
+                                            <select id="selectday2" name="recur_d[]" multiple required>
+                                                @for ($i = 1; $i <= 31; $i++)
+                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                @endfor
+                                            </select>
+                                            <script>
+                                                new SlimSelect({
+                                                    select: '#selectday2',
+                                                    settings: {
+                                                        minSelected: 0,
+                                                        maxSelected: 31,
+                                                        hideSelected: true,
+                                                        closeOnSelect: false,
+                                                        placeholderText: 'เลือกวันที่',
+                                                    },
+                                                })
+                                            </script>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="1" id="check3" disabled>
-                                            <label class="form-check-label" for="check2">
-                                                จ
-                                            </label>
+                                    </div>
+
+                                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                                        <div class="col-auto">
+                                            <label for="selectmonth2" class="col-form-label"><span class="text-danger">*</span>เดือน</label>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="2" id="check4" disabled>
-                                            <label class="form-check-label" for="check3">
-                                                อ
-                                            </label>
+                                        <div class="col-8">
+                                            <!-- Options -->
+                                            <select id="selectmonth2" name="recur_m[]" multiple required>
+                                                @for ($i = 1; $i <= 12; $i++)
+                                                    @php
+                                                        $date = \Carbon\Carbon::create()->day(1)->month($i)->year(2022); // Replace 2022 with the desired year
+                                                        $thaiMonth = $date->locale('th')->monthName;
+                                                    @endphp
+                                                    <option value="{{ $i }}">{{ $thaiMonth }}</option>
+                                                @endfor
+                                            </select>
+                                            <script>
+                                                new SlimSelect({
+                                                    select: '#selectmonth2',
+                                                    settings: {
+                                                        minSelected: 0,
+                                                        maxSelected: 31,
+                                                        hideSelected: true,
+                                                        closeOnSelect: false,
+                                                        placeholderText: 'เลือกเดือน',
+                                                    },
+                                                })
+                                            </script>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="3" id="check5" disabled>
-                                            <label class="form-check-label" for="check4">
-                                                พ
-                                            </label>
+                                    </div>
+
+                                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                                        <div class="col-auto">
+                                            <label for="recur_y" class="col-form-label">ทุก</label>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="4" id="check6" disabled>
-                                            <label class="form-check-label" for="check5">
-                                                พฤ
-                                            </label>
+                                        <div class="col-8">
+                                            <input type="number" name="recur_y" id="recur_y" value="1" min="1" max="100" class="form-control bg-white" required>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="5" id="check7" disabled>
-                                            <label class="form-check-label" for="check6">
-                                                ศ
-                                            </label>
+                                        <div class="col-auto">
+                                            <p>ปี</p>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="6" id="check8" disabled>
-                                            <label class="form-check-label" for="check7">
-                                                ส
-                                            </label>
+                                    </div>
+
+                                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                                        <div class="col-auto">
+                                            <label for="recur_count" class="col-form-label">จำนวน</label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="number" name="recur_count" id="recur_count" value="-" min="1" max="100" class="form-control bg-white">
+                                        </div>
+                                        <div class="col-auto">
+                                            <p>ครั้ง , งวด</p>
                                         </div>
                                     </div>
                                 </div>
@@ -296,7 +439,7 @@
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="cont_bnum" class="col-form-label">เลขที่หนังสือ</label>
+                                    <label for="cont_bnum" class="col-form-label"><span class="text-danger">*</span>เลขที่หนังสือ</label>
                                 </div>
                                 <div class="col-8">
                                     <input type="text" name="cont_bnum" id="cont_bnum" value="{{ 'OTD' . str_pad($ctotd_count + 1, 3, '0', STR_PAD_LEFT) . "/" . (now()->year + 543)}}" class="form-control" readonly required>
@@ -305,7 +448,7 @@
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="cont_title" class="col-form-label">เรื่อง</label>
+                                    <label for="cont_title" class="col-form-label"><span class="text-danger">*</span>เรื่อง</label>
                                 </div>
                                 <div class="col-8">
                                     <input type="text" name="cont_title" id="cont_title" class="form-control" required>
@@ -314,7 +457,7 @@
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="cont_party" class="col-form-label">คู่สัญญา</label>
+                                    <label for="cont_party" class="col-form-label"><span class="text-danger">*</span>คู่สัญญา</label>
                                 </div>
                                 <div class="col-8">
                                     <input type="text" name="cont_party" id="cont_party" class="form-control" required>
@@ -323,7 +466,16 @@
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="dateRange" class="col-form-label">ระยะเวลาสัญญา</label>
+                                    <label for="cont_budget" class="col-form-label">จำนวนเงิน</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" name="cont_budget" id="cont_budget" oninput="formatNumber(this)" value="0" maxlength="11" class="form-control bg-white" required>
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-3 d-flex justify-content-center">
+                                <div class="col-auto">
+                                    <label for="dateRange" class="col-form-label"><span class="text-danger">*</span>ระยะเวลาสัญญา</label>
                                 </div>
                                 <div class="col-8">
                                 <input type="text" name="dateRange" id="dateRange3" class="form-control dateRangePicker" value="" required>
@@ -335,54 +487,83 @@
                                     <label for="recurring" class="col-form-label">การเกิดซ้ำ</label>
                                 </div>
                                 <div class="col-8">
-                                    <div class="d-flex">
-                                        <div class="form-check text-start mx-4">
-                                            <input class="form-check-input enableCheck" type="checkbox" name="recur" value="1" id="check1">
-                                            <label class="form-check-label" for="check1">
-                                                เปิด
-                                            </label>
+                                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                                        <div class="col-auto">
+                                            <label for="selectday3" class="col-form-label"><span class="text-danger">*</span>วันที่</label>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="0" id="check2" disabled>
-                                            <label class="form-check-label" for="check8">
-                                                อา
-                                            </label>
+                                        <div class="col-8">
+                                            <!-- Options -->
+                                            <select id="selectday3" name="recur_d[]" multiple required>
+                                                @for ($i = 1; $i <= 31; $i++)
+                                                    <option value="{{ $i }}">{{ $i }}</option>
+                                                @endfor
+                                            </select>
+                                            <script>
+                                                new SlimSelect({
+                                                    select: '#selectday3',
+                                                    settings: {
+                                                        minSelected: 0,
+                                                        maxSelected: 31,
+                                                        hideSelected: true,
+                                                        closeOnSelect: false,
+                                                        placeholderText: 'เลือกวันที่',
+                                                    },
+                                                })
+                                            </script>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="1" id="check3" disabled>
-                                            <label class="form-check-label" for="check2">
-                                                จ
-                                            </label>
+                                    </div>
+
+                                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                                        <div class="col-auto">
+                                            <label for="selectmonth3" class="col-form-label"><span class="text-danger">*</span>เดือน</label>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="2" id="check4" disabled>
-                                            <label class="form-check-label" for="check3">
-                                                อ
-                                            </label>
+                                        <div class="col-8">
+                                            <!-- Options -->
+                                            <select id="selectmonth3" name="recur_m[]" multiple required>
+                                                @for ($i = 1; $i <= 12; $i++)
+                                                    @php
+                                                        $date = \Carbon\Carbon::create()->day(1)->month($i)->year(2022); // Replace 2022 with the desired year
+                                                        $thaiMonth = $date->locale('th')->monthName;
+                                                    @endphp
+                                                    <option value="{{ $i }}">{{ $thaiMonth }}</option>
+                                                @endfor
+                                            </select>
+                                            <script>
+                                                new SlimSelect({
+                                                    select: '#selectmonth3',
+                                                    settings: {
+                                                        minSelected: 0,
+                                                        maxSelected: 31,
+                                                        hideSelected: true,
+                                                        closeOnSelect: false,
+                                                        placeholderText: 'เลือกเดือน',
+                                                    },
+                                                })
+                                            </script>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="3" id="check5" disabled>
-                                            <label class="form-check-label" for="check4">
-                                                พ
-                                            </label>
+                                    </div>
+
+                                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                                        <div class="col-auto">
+                                            <label for="recur_y" class="col-form-label">ทุก</label>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="4" id="check6" disabled>
-                                            <label class="form-check-label" for="check5">
-                                                พฤ
-                                            </label>
+                                        <div class="col-8">
+                                            <input type="number" name="recur_y" id="recur_y" value="1" min="1" max="100" class="form-control bg-white" required>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="5" id="check7" disabled>
-                                            <label class="form-check-label" for="check6">
-                                                ศ
-                                            </label>
+                                        <div class="col-auto">
+                                            <p>ปี</p>
                                         </div>
-                                        <div class="form-check text-start mx-2">
-                                            <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="6" id="check8" disabled>
-                                            <label class="form-check-label" for="check7">
-                                                ส
-                                            </label>
+                                    </div>
+
+                                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                                        <div class="col-auto">
+                                            <label for="recur_count" class="col-form-label">จำนวน</label>
+                                        </div>
+                                        <div class="col-8">
+                                            <input type="number" name="recur_count" id="recur_count" value="-" min="1" max="100" class="form-control bg-white">
+                                        </div>
+                                        <div class="col-auto">
+                                            <p>ครั้ง , งวด</p>
                                         </div>
                                     </div>
                                 </div>
@@ -414,6 +595,32 @@
                             </div>
                         </form>
                     </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <form action="{{ route('add-projcode') }}" method="POST">
+                                    @csrf
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">เพิ่ม Project Code</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="mb-3">
+                                            <input type="text" name="projcode" class="form-control mb-2" id="projcode" placeholder="กรอก Project Code ที่ต้องการเพิ่ม" required>
+                                            <input type="text" name="projname" class="form-control mb-2" id="projname" placeholder="กรอก Project Name" required>
+                                            <p class="text-warning" style="font-size: 12px">*หลังจากบันทึกแล้ว กรุณา roload หน้าเว็บ</p>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -428,6 +635,23 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script>
+    function formatNumber(input) {
+        // Remove non-numeric characters
+        let cleanedValue = input.value.replace(/[^0-9]/g, '');
+
+        // Convert the cleaned value to a number
+        let value = parseFloat(cleanedValue);
+
+        // Set the default or minimum value if empty or NaN
+        if (isNaN(value) || cleanedValue === '') {
+            value = 0; // Set to default or minimum value
+        }
+
+        // Format the number with commas
+        input.value = value.toLocaleString('en-US');
+    }
+
+
     @if (session('success'))
         Swal.fire({
             title: "Success!",

@@ -22,6 +22,9 @@
 
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar/index.global.min.js'></script>
 
+    <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
+    <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet"></link>
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/css/app.css' , 'resources/js/app.js'])
 

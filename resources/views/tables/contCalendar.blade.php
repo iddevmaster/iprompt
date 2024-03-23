@@ -44,6 +44,15 @@
       </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- rrule lib -->
+    <script src='https://cdn.jsdelivr.net/npm/rrule@2.6.4/dist/es5/rrule.min.js'></script>
+
+    <!-- fullcalendar bundle -->
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+
+    <!-- the rrule-to-fullcalendar connector. must go AFTER the rrule lib -->
+    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/rrule@6.1.11/index.global.min.js'></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const calendarEl = document.getElementById('calendar');
@@ -54,7 +63,23 @@
                     center: 'title',
                     right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay'
                 },
-                events: {!! json_encode($events) !!},
+                // events: {!! json_encode($events) !!},
+                events: [
+                    {
+                        title: {!! json_encode($events[1]['title']) !!},
+                        rrule: {
+                            freq: {!! json_encode($events[1]['rrule']['freq']) !!},
+                            interval: {!! json_encode($events[1]['rrule']['interval']) !!},
+                            // byweekday: [ 'mo', 'fr' ],
+                            // count: 4, // How many occurrences will be generated.
+                            bymonth: {!! json_encode($events[1]['rrule']['bymonth']) !!},  // the months to apply the recurrence to.
+                            bymonthday: {!! json_encode($events[1]['rrule']['bymonthday']) !!}, // the month days to apply the recurrence to.
+                            // byyearday: 100, // the year days to apply the recurrence to.
+                            dtstart: {!! json_encode($events[1]['rrule']['dtstart']) !!}, // will also accept '20120201T103000'
+                            until: {!! json_encode($events[1]['rrule']['until']) !!}, // will also accept '20120201'
+                        }
+                    }
+                ],
                 eventClick: function(info) {
                     // Display event details in a Bootstrap modal
                     $('#eventModalLabel').text(info.event.id);
