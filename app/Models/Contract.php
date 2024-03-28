@@ -31,6 +31,10 @@ class Contract extends Model
         return $this->belongsTo(User::class, 'by');
     }
 
+    public function getProject() {
+        return $this->belongsTo(ProjectCode::class, 'project_code');
+    }
+
     public function getFilesAttribute($value)
     {
         return json_decode($value, true);

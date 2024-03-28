@@ -35,7 +35,7 @@
 
                     <div class="row g-3 mb-3 d-flex justify-content-center">
                         <div class="col-auto">
-                            <label for="cont_bnum" class="col-form-label">เลขที่หนังสือ</label>
+                            <label for="cont_bnum" class="col-form-label"><span class="text-danger">*</span>เลขที่หนังสือ</label>
                         </div>
                         <div class="col-8">
                             <input type="text" name="cont_bnum" id="cont_bnum" value="{{ $contract->book_num }}" class="form-control" readonly required>
@@ -44,86 +44,63 @@
 
                     <div class="row g-3 mb-3 d-flex justify-content-center">
                         <div class="col-auto">
-                            <label for="cont_title" class="col-form-label">เรื่อง</label>
+                            <label for="proj_code" class="col-form-label">โครงการ</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="cont_title" id="cont_title" value="{{ $contract->title }}" class="form-control" required>
+
+                            <!-- Options -->
+                            <select id="selectprojc" name="proj_code" required>
+                                @foreach ($projCodes as $projCode)
+                                    <option value="{{ $projCode->id }}"
+                                        @if ( $projCode->project_code === $contract->project_code )
+                                            selected
+                                        @endif>{{ $projCode->project_code }} : {{ $projCode->project_name }}</option>
+                                @endforeach
+                            </select>
+                            <script>
+                                new SlimSelect({
+                                    select: '#selectprojc',
+                                    settings: {
+                                        closeOnSelect: true,
+                                    },
+                                })
+                            </script>
                         </div>
                     </div>
 
                     <div class="row g-3 mb-3 d-flex justify-content-center">
                         <div class="col-auto">
-                            <label for="cont_party" class="col-form-label">คู่สัญญา</label>
+                            <label for="cont_title" class="col-form-label"><span class="text-danger">*</span>เรื่อง</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="cont_party" id="cont_party" value="{{ $contract->party }}" class="form-control" required>
+                            <input type="text" name="cont_title" id="cont_title" value="{{ $contract->title }}" class="form-control bg-white" required>
                         </div>
                     </div>
 
                     <div class="row g-3 mb-3 d-flex justify-content-center">
                         <div class="col-auto">
-                            <label for="dateRange" class="col-form-label">ระยะเวลาสัญญา</label>
+                            <label for="cont_party" class="col-form-label"><span class="text-danger">*</span>คู่สัญญา</label>
                         </div>
                         <div class="col-8">
-                        <input type="text" name="dateRange" id="dateRange" class="form-control dateRangePicker" value="{{ $contract->time_range }}" required>
+                            <input type="text" name="cont_party" id="cont_party" value="{{ $contract->party }}" class="form-control bg-white" required>
                         </div>
                     </div>
 
                     <div class="row g-3 mb-3 d-flex justify-content-center">
                         <div class="col-auto">
-                            <label for="recurring" class="col-form-label">การเกิดซ้ำ</label>
+                            <label for="cont_budget" class="col-form-label">จำนวนเงิน</label>
                         </div>
                         <div class="col-8">
-                            <div class="d-flex">
-                                <div class="form-check text-start mx-4">
-                                    <input class="form-check-input enableCheck" type="checkbox" name="recur" value="1" id="check1" {{ optional($contract->recurring)['enable'] ? 'checked' : ''}}>
-                                    <label class="form-check-label" for="check1">
-                                        เปิด
-                                    </label>
-                                </div>
-                                <div class="form-check text-start mx-2">
-                                    <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="0" id="check2" {{ str_contains(optional($contract->recurring)['recur_date'], '0') ? 'checked' : ''}} disabled>
-                                    <label class="form-check-label" for="check8">
-                                        อา
-                                    </label>
-                                </div>
-                                <div class="form-check text-start mx-2">
-                                    <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="1" id="check3" {{ str_contains(optional($contract->recurring)['recur_date'], '1') ? 'checked' : ''}} disabled>
-                                    <label class="form-check-label" for="check2">
-                                        จ
-                                    </label>
-                                </div>
-                                <div class="form-check text-start mx-2">
-                                    <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="2" id="check4" {{ str_contains(optional($contract->recurring)['recur_date'], '2') ? 'checked' : ''}} disabled>
-                                    <label class="form-check-label" for="check3">
-                                        อ
-                                    </label>
-                                </div>
-                                <div class="form-check text-start mx-2">
-                                    <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="3" id="check5" {{ str_contains(optional($contract->recurring)['recur_date'], '3') ? 'checked' : ''}} disabled>
-                                    <label class="form-check-label" for="check4">
-                                        พ
-                                    </label>
-                                </div>
-                                <div class="form-check text-start mx-2">
-                                    <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="4" id="check6" {{ str_contains(optional($contract->recurring)['recur_date'], '4') ? 'checked' : ''}} disabled>
-                                    <label class="form-check-label" for="check5">
-                                        พฤ
-                                    </label>
-                                </div>
-                                <div class="form-check text-start mx-2">
-                                    <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="5" id="check7" {{ str_contains(optional($contract->recurring)['recur_date'], '5') ? 'checked' : ''}} disabled>
-                                    <label class="form-check-label" for="check6">
-                                        ศ
-                                    </label>
-                                </div>
-                                <div class="form-check text-start mx-2">
-                                    <input class="form-check-input checkdate" type="checkbox" name="recurring[]" value="6" id="check8" {{ str_contains(optional($contract->recurring)['recur_date'], '6') ? 'checked' : ''}} disabled>
-                                    <label class="form-check-label" for="check7">
-                                        ส
-                                    </label>
-                                </div>
-                            </div>
+                            <input type="text" name="cont_budget" id="cont_budget" oninput="formatNumber(this)" value="{{ $contract->budget }}" maxlength="11" class="form-control bg-white" required>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                        <div class="col-auto">
+                            <label for="dateRange" class="col-form-label"><span class="text-danger">*</span>ระยะเวลาสัญญา</label>
+                        </div>
+                        <div class="col-8">
+                            <input type="text" name="dateRange" id="dateRange" class="form-control dateRangePicker " value="{{ $contract->time_range }}" required disabled>
                         </div>
                     </div>
 

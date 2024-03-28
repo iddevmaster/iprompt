@@ -64,37 +64,30 @@
                     right: 'multiMonthYear,dayGridMonth,timeGridWeek,timeGridDay'
                 },
                 // events: {!! json_encode($events) !!},
-                events: [
-                    {
-                        title: {!! json_encode($events[1]['title']) !!},
-                        rrule: {
-                            freq: {!! json_encode($events[1]['rrule']['freq']) !!},
-                            interval: {!! json_encode($events[1]['rrule']['interval']) !!},
-                            // byweekday: [ 'mo', 'fr' ],
-                            // count: 4, // How many occurrences will be generated.
-                            bymonth: {!! json_encode($events[1]['rrule']['bymonth']) !!},  // the months to apply the recurrence to.
-                            bymonthday: {!! json_encode($events[1]['rrule']['bymonthday']) !!}, // the month days to apply the recurrence to.
-                            // byyearday: 100, // the year days to apply the recurrence to.
-                            dtstart: {!! json_encode($events[1]['rrule']['dtstart']) !!}, // will also accept '20120201T103000'
-                            until: {!! json_encode($events[1]['rrule']['until']) !!}, // will also accept '20120201'
-                        }
-                    }
-                ],
+                events: {!! json_encode($events) !!},
+                // events: [
+                //     {
+                //     title: 'The Title',
+                //     start: '2024-09-01',
+                //     end: '2024-09-02'
+                //     }
+                // ]
                 eventClick: function(info) {
                     // Display event details in a Bootstrap modal
                     $('#eventModalLabel').text(info.event.id);
                     $('#eventModalBody').html(
                     `
-                        <h5 class="text-center fw-bold">${info.event.title}</h5>
+                        <h5 class="text-center fw-bold">${info.event.title} (งวดที่ ${info.event.extendedProps.periot})</h5>
+                        <div class="col">โครงการ: <u>${info.event.extendedProps.proj}</u></div>
                         <div class="row">
-                            <div class="col">Party: ${info.event.extendedProps.party}</div>
-                            <div class="col">Type: ${info.event.groupId}</div>
+                            <div class="col">คู่สัญญา: <u>${info.event.extendedProps.party}</u></div>
+                            <div class="col">ประเภทสัญญา: <u>${info.event.groupId}</u></div>
                         </div>
                         <div class="row">
-                            <div class="col">Start: ${info.event.startStr}</div>
-                            <div class="col">End: ${info.event.endStr ? info.event.endStr : info.event.startStr}</div>
+                            <div class="col">วันที่เริ่ม: <u>${info.event.startStr}</u></div>
+                            <div class="col">วันที่สิ้นสุด: <u>${info.event.endStr ? info.event.endStr : info.event.startStr}</u></div>
                         </div>
-                        <p>Note: ${info.event.extendedProps.description}</p>
+                        <p>หมายเหตุ: ${info.event.extendedProps.description}</p>
                     `
                     );
                     $('#eventModal').modal('show');

@@ -347,6 +347,7 @@ class HomeController extends Controller
 
     public function editContract($cid) {
         $contract = Contract::find($cid);
-        return view('forms.edit-contract', compact('contract'));
+        $projCodes = ProjectCode::orderBy('id', 'desc')->get();
+        return view('forms.edit-contract', compact('contract', 'projCodes'));
     }
 }

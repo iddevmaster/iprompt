@@ -37,7 +37,8 @@
                             <th scope="col" class="text-nowrap">วันที่สร้าง</th>
                             <th scope="col" class="text-nowrap">หมายเหตุ</th>
                             <th scope="col" class="text-nowrap">แก้ไข</th>
-                            <th scope="col" class="text-nowrap">แนบไฟล์</th>
+                            <th scope="col" class="text-nowrap">รายละเอียด</th>
+                            {{-- <th scope="col" class="text-nowrap">แนบไฟล์</th> --}}
                             <th scope="col" class="text-nowrap">Share</th>
                             @can('staff')
                                 <th scope="col">ShareDpm</th>
@@ -72,10 +73,18 @@
                                     {{ $row->title }}
                                 </td>
                                 <td>{{ $row->party}}</td>
-                                <td>{{ $row->time_range}}</td>
+                                @php
+                                    $dates = explode(" - ", $row->time_range);
+
+                                    // Create Carbon instances for the start and end dates
+                                    $startDate = Carbon\Carbon::createFromFormat('d/m/Y', $dates[0]);
+                                    $endDate = Carbon\Carbon::createFromFormat('d/m/Y', $dates[1]);
+                                    $diffDate = $endDate->diff($startDate);
+                                @endphp
+                                <td data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->time_range }}">{{ $diffDate->y ? $diffDate->y . 'ปี' : '' }} {{ $diffDate->m ? $diffDate->m . 'เดือน' : '' }} {{ $diffDate->d ? $diffDate->d . 'วัน' : '' }}</td>
                                 <td>{{ $row->getUser->name ?? ''}}</td>
                                 <td>{{ $row->created_at}}</td>
-                                <td>{{ $row->note}}</td>
+                                <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->note }}">{{ $row->note}}</td>
 
                                 {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))) --}}
                                 @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
@@ -86,8 +95,16 @@
                                     <td></td>
                                 @endif
 
+                                @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
+                                    <td>
+                                        <a href="{{ route('contract-detail', ['cid' => $row->id]) }}"><button type="button" class="btn btn-secondary ">detail</button></a>
+                                    </td>
+                                @else
+                                    <td></td>
+                                @endif
 
-                                @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)) || (in_array(((Auth::user())->id), (is_array($teams)? $teams : []))))
+
+                                {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)) || (in_array(((Auth::user())->id), (is_array($teams)? $teams : []))))
                                     <td class="text-center">
                                         @if ($row->files != null)
                                             @php
@@ -111,7 +128,7 @@
                                     </td>
                                 @else
                                     <td></td>
-                                @endif
+                                @endif --}}
 
                                 {{-- Share Btn --}}
                                 <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="cont" teamlist="{{json_encode($teamlist)}}"

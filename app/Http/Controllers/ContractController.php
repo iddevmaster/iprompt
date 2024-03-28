@@ -8,18 +8,44 @@ use App\Models\TemporaryFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Arr;
 Use Alert;
+use App\Models\Installment;
+use Illuminate\Support\Facades\Validator;
 
 class ContractController extends Controller
 {
+    private function getPeriod($period, $year_arr, $month_arr, $day_arr, $date_range) {
+        $date_arr = [];
+        $dates = explode(" - ", $date_range);
+
+        // Create Carbon instances for the start and end dates
+        $startDate = Carbon::createFromFormat('d/m/Y', $dates[0]);
+        $endDate = Carbon::createFromFormat('d/m/Y', $dates[1]);
+
+        // Loop through the years
+        $startYear = $startDate->year;
+        $endYear = $endDate->year;
+
+        for ($year = $startYear; $year <= $endYear; $year += ($year_arr ?? 1)) {
+            foreach ($month_arr as $month) {
+                foreach ($day_arr as $day) {
+                    $date = Carbon::createFromFormat('d/m/Y', $day . '/' . $month . '/' . $year);
+
+                    // Check if the current date falls within the desired range
+                    if ($date->between($startDate, $endDate, true) && count($date_arr) < ($period ?? 999)) {
+                        $date_arr[] = $day . '/' . $month . '/' . $year;
+                    }
+                }
+            }
+        }
+        return $date_arr;
+    }
 
     public function storeContract (Request $request) {
         try {
-            $dateArray = explode(' - ', $request->dateRange);
-            $startDate = Carbon::createFromFormat('d/m/Y', $dateArray[0]);
-            $endDate = Carbon::createFromFormat('d/m/Y', $dateArray[1]);
-
+            $periodeDates = $this->getPeriod($request->recur_count, $request->recur_y, $request->recur_m, $request->recur_d, $request->dateRange);
             $cont = Contract::create([
                 'by' => $request->user()->id,
                 'book_num' => $request->cont_bnum,
@@ -32,20 +58,20 @@ class ContractController extends Controller
                 'type' => $request->contact_type,
                 'submit_by' => json_encode([$request->user()->id]),
                 'project_code' => $request->proj_code ?? '',
+                'recurring' => json_encode([
+                    'recur_count' => $request->recur_count,
+                    'recur_y' => $request->recur_y,
+                    'recur_m' => $request->recur_m,
+                    'recur_d' => $request->recur_d,
+                ]),
             ]);
 
-            $cont->recurring = json_encode([
-                'freq' => 'yearly',
-                'interval' => $request->recur_y,
-                'count' => $request->recur_count ?? '', // How many occurrences will be generated.
-                'bymonth' => $request->recur_m,  // the months to apply the recurrence to.
-                'bymonthday' => $request->recur_d, // the month days to apply the recurrence to.
-                'dtstart' => $startDate, // will also accept '20120201T103000'
-                'until' => $endDate, // will also accept '20120201'
-            ]);
-
-            $cont->save();
-
+            foreach ($periodeDates as $date) {
+                Installment::create([
+                    'contract' => $cont->id,
+                    'date' => $date,
+                ]);
+            }
 
             return redirect()->back()->with(['success' => "Success!"]);
         } catch (\Throwable $th) {
@@ -57,22 +83,14 @@ class ContractController extends Controller
     public function updateContract($cid, Request $request) {
         $contract = Contract::find($cid);
         try {
+
             $contract->update([
                 'title' => $request->cont_title,
                 'party' => $request->cont_party,
-                'time_range' => $request->dateRange,
                 'note' => $request->cont_note,
+                'budget' => $request->cont_budget ?? 0,
+                'project_code' => $request->proj_code ?? '',
             ]);
-
-            if ($request->recur ?? 0) {
-                $contract->recurring = json_encode([
-                    'enable' => $request->recur,
-                    'recur_date' => json_encode($request->recurring),
-                ]);
-
-                $contract->save();
-            }
-
 
             return redirect()->route('contTable');
         } catch (\Throwable $th) {
@@ -83,83 +101,81 @@ class ContractController extends Controller
 
     public function filepondUpload (Request $request) {
         if ($request->hasFile('cont_files')) {
+            // Manually validate the file size
+
             $file = $request->file('cont_files');
             $file_name = '';
             $file_name = time() . '_' . md5(uniqid(rand(), true)) . '.' . $file[0]->getClientOriginalExtension();
             $folder = 'contract/';
             $file[0]->storeAs($folder , $file_name);
+            $file_name_original = $file[0]->getClientOriginalName();
+            $fileSizeBytes  = $file[0]->getSize();
+            $fileSizeMB  = round($fileSizeBytes / 1048576, 2);
+            $fileEx = $file[0]->getClientOriginalExtension();
 
-            TemporaryFile::create([
+            $saved_file = TemporaryFile::create([
                 'folder' => $folder,
                 'file' => $file_name,
+                'size_mb' => $fileSizeMB,
+                'extension' => $fileEx,
+                'originalName' => $file_name_original
             ]);
 
-            return $file_name;
+            return $saved_file->id;
         }
         return '';
     }
 
     public function filepondDelete (Request $request) {
-        $tmp_file = TemporaryFile::where('folder', $request->getContent())->first();
+        $tmp_file = TemporaryFile::find($request->getContent());
         if ($tmp_file) {
-            Storage::deleteDirectory($tmp_file->folder);
-            $tmp_file->delete();
+            if (Storage::exists($tmp_file->folder . '/' . $tmp_file->file)) {
+                Storage::delete($tmp_file->folder . '/' . $tmp_file->file);
+                $tmp_file->delete();
+            }
         }
 
         return response()->noContent();
     }
 
     public function contractCalendar(Request $request) {
-        if ($request->user()->hasRole('admin')) {
-            $contracts = Contract::all();
-        } else {
-            $contracts = Contract::where('by', $request->user()->id)->get();
-        }
-        $events = [];
+        // if ($request->user()->hasRole('admin')) {
+        //     $contracts = Contract::all();
+        // } else {
+        //     $contracts = Contract::where('by', $request->user()->id)->get();
+        // }
+        $installments = Installment::all();
 
         $eventColor = [
             'creditor' => '#6633C6',
             'debtor' => '#0063FF',
             'outdoor' => '#5AA136',
         ];
-        $num = 1;
-        foreach ($contracts as $index => $contract) {
-            $dateArray = explode(' - ', $contract->time_range);
-            $startDate = Carbon::createFromFormat('d/m/Y', $dateArray[0]);
-            $endDate = Carbon::createFromFormat('d/m/Y', $dateArray[1]);
-            if ($contract->recurring) {
-                // $event = [
-                //     'id' => $contract->book_num,
-                //     'groupId' => $contract->type,
-                //     'title' => $contract->title,
-                //     'description' => $contract->note ?? '',
-                //     'party' => $contract->party ?? '',
-                //     'color' => $eventColor[$contract->type],
-                //     'rrule' =>  [
-                //         'freq' => $contract->recurring['freq'] ?? '',
-                //         'interval' => $contract->recurring['interval'] ?? '',
-                //         'count' => $contract->recurring['count'] ?? '', // How many occurrences will be generated.
-                //         'bymonth' => $contract->recurring['bymonth'] ?? '',  // the months to apply the recurrence to.
-                //         'bymonthday' => $contract->recurring['bymonthday'] ?? '', // the month days to apply the recurrence to.
-                //         'dtstart' => '2024-02-01T10:30:00', // will also accept '20120201T103000'
-                //         'until' => '2028-06-01', // will also accept '20120201'
-                //     ]
-                // ];
-                $event = [
-                    'title' => 'test',
-                    'color' => $eventColor[$contract->type],
-                    'rrule' =>  [
-                        'freq' => 'yearly',
-                        'interval' => 1,
-                        'bymonth' => [1,2,3,4,5,6],  // the months to apply the recurrence to.
-                        'bymonthday' => [1,2,3,4,5,6,7,8], // the month days to apply the recurrence to.
-                        'dtstart' => '2024-02-01T10:30:00', // will also accept '20120201T103000'
-                        'until' => '2028-06-01', // will also accept '20120201'
-                    ]
-                ];
-                $events = Arr::add($events, $num, $event);
-                $num++;
-            }
+
+        $eventType = [
+            'creditor' => 'สัญญา-เจ้าหนี้',
+            'debtor' => 'สัญญา-ลูกหนี้',
+            'outdoor' => 'Out Door',
+        ];
+
+        $events = [];
+        foreach ($installments as $index => $installment) {
+            $start = Carbon::createFromFormat('d/m/Y', $installment->date);
+            $end = $start->copy();
+            $event = [
+                'start' => $start,
+                'end' => $end,
+                'id' => optional($installment->getCont)->book_num,
+                'groupId' => $eventType[optional($installment->getCont)->type],
+                'title' => optional($installment->getCont)->title,
+                'description' => optional($installment->getCont)->note ?? '',
+                'proj' => (optional(optional($installment->getCont)->getProject)->project_code ?? '') . ' : ' . (optional(optional($installment->getCont)->getProject)->project_name ?? ''),
+                'periot' => $index + 1,
+                'party' => optional($installment->getCont)->party ?? '',
+                'color' => $eventColor[optional($installment->getCont)->type],
+                'allDay' => true,
+            ];
+            $events[] = $event;
         }
 
         // dd($events[1]);
@@ -186,6 +202,102 @@ class ContractController extends Controller
         } catch (\Throwable $th) {
             //throw $th;
             Alert::toast('Add project code unsuccessful!','error');
+            return redirect()->back()->with(['error' => $th->getMessage()]);
+        }
+    }
+
+    public function contractDetail ($cid) {
+        $contract = Contract::find($cid);
+        $installments = Installment::where('contract', $contract->id)->get();
+        $project = ProjectCode::where('project_code', $contract->project_code)->get();
+
+        $eventColor = [
+            'creditor' => '#6633C6',
+            'debtor' => '#0063FF',
+            'outdoor' => '#5AA136',
+        ];
+
+        $eventType = [
+            'creditor' => 'สัญญา-เจ้าหนี้',
+            'debtor' => 'สัญญา-ลูกหนี้',
+            'outdoor' => 'Out Door',
+        ];
+
+        $events = [];
+        foreach ($installments as $index => $installment) {
+            $start = Carbon::createFromFormat('d/m/Y', $installment->date);
+            $end = $start->copy();
+            $event = [
+                'start' => $start,
+                'end' => $end,
+                'id' => optional($installment->getCont)->book_num,
+                'groupId' => $eventType[optional($installment->getCont)->type],
+                'title' => optional($installment->getCont)->title,
+                'description' => optional($installment->getCont)->note ?? '',
+                'proj' => (optional(optional($installment->getCont)->getProject)->project_code ?? '') . ' : ' . (optional(optional($installment->getCont)->getProject)->project_name ?? ''),
+                'periot' => $index + 1,
+                'party' => optional($installment->getCont)->party ?? '',
+                'color' => $eventColor[optional($installment->getCont)->type],
+                'allDay' => true,
+            ];
+            $events[] = $event;
+        }
+
+        return view('contract-detail', compact('contract', 'installments', 'project', 'events'));
+    }
+
+    public function uploadFile(Request $request, $cid) {
+        try {
+            $fileList = [];
+            $yourModel = Contract::find($cid);
+            $fileData = $yourModel->files;
+            if ($fileData) {
+                $fileList = $fileData;
+            }
+            foreach ($request->cont_files ?? [] as $fileName) {
+                if ($fileName) {
+                    $fileList[] = $fileName;
+                }
+            }
+            if ($fileList) {
+                $yourModel->files = $fileList;
+                $yourModel->save();
+            }
+
+            Alert::toast('Upload your files successfully!','success');
+            return redirect()->back()->with(['success' => "Success!"]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            Alert::toast('Sorry. Upload your files unsuccessful!','error');
+            return redirect()->back()->with(['error' => $th->getMessage()]);
+        }
+    }
+
+    public function deleteFile($cid, $fid) {
+        try {
+            $tmp_file = TemporaryFile::find($fid);
+            if ($tmp_file) {
+                if (Storage::exists($tmp_file->folder . '/' . $tmp_file->file)) {
+                    Storage::delete($tmp_file->folder . '/' . $tmp_file->file);
+                    $tmp_file->delete();
+                }
+            }
+
+            $cont = Contract::find($cid);
+            if ($cont) {
+                $new_files = [];
+                foreach ($cont->files as $file) {
+                    if ($file !== $fid) {
+                        $new_files[] = $file;
+                    }
+                }
+                $cont->files = json_encode($new_files);
+                $cont->save();
+            }
+            return redirect()->back()->with(['success' => "Success!"]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            Alert::toast('Sorry. Delete your files unsuccessful!','error');
             return redirect()->back()->with(['error' => $th->getMessage()]);
         }
     }

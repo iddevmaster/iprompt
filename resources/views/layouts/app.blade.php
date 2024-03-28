@@ -119,6 +119,7 @@
     left: 50px;
   }
     </style>
+
 </head>
 <body>
 <?php $permis = Auth::user()->role ?? '' ;
@@ -308,6 +309,7 @@
         </h5>
     </div>
     @include('sweetalert::alert')
+
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

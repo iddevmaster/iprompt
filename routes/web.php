@@ -155,10 +155,13 @@ Route::post('/saveSubtype',[App\Http\Controllers\TablesController::class,'saveSu
 // Contact
 Route::get('/contract',[App\Http\Controllers\HomeController::class,'contract'])->name('contract');
 Route::get('/contract/edit/{cid}',[App\Http\Controllers\HomeController::class,'editContract'])->name('edit-contract');
+Route::get('/contract/detail/{cid}',[App\Http\Controllers\ContractController::class,'contractDetail'])->name('contract-detail');
 Route::post('/contract/update/{cid}',[App\Http\Controllers\ContractController::class,'updateContract'])->name('update-contract');
 Route::post('/contract/store',[App\Http\Controllers\ContractController::class,'storeContract'])->name('contract-store');
 Route::get('/contract/calendar',[App\Http\Controllers\ContractController::class,'contractCalendar'])->name('contract-calendar');
 Route::post('/contract/projcode/add',[App\Http\Controllers\ContractController::class,'addProjCode'])->name('add-projcode');
+Route::post('/contract/{cid}/uploadFile', [App\Http\Controllers\ContractController::class, 'uploadFile'])->name('cont-savefile');
+Route::get('/contract/{cid}/deleteFile/{fid}', [App\Http\Controllers\ContractController::class, 'deleteFile'])->name('delContFile');
 
 // Filepond
 Route::post('/contract/file-upload',[App\Http\Controllers\ContractController::class,'filepondUpload']);

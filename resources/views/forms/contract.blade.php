@@ -50,20 +50,20 @@
                                     <label for="cont_bnum" class="col-form-label"><span class="text-danger">*</span>เลขที่หนังสือ</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" name="cont_bnum" id="cont_bnum" value="{{ 'CT-CRE' . str_pad($ctcre_count + 1 , 3, '0', STR_PAD_LEFT) . "/" . (now()->year + 543)}}" class="form-control bg-white" readonly required>
+                                    <input type="text" name="cont_bnum" id="cont_bnum" value="{{ 'CT-CRE' . str_pad($ctcre_count + 1 , 3, '0', STR_PAD_LEFT) . "/" . (now()->year + 543)}}" class="form-control" readonly required>
                                 </div>
                             </div>
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="proj_code" class="col-form-label">เลขโครงการ</label>
+                                    <label for="proj_code" class="col-form-label">โครงการ</label>
                                 </div>
                                 <div class="col-8">
 
                                     <!-- Options -->
                                     <select id="selectprojc" name="proj_code" required>
                                         @foreach ($projCodes as $projCode)
-                                            <option value="{{ $projCode->project_code }}">{{ $projCode->project_code }} : {{ $projCode->project_name }}</option>
+                                            <option value="{{ $projCode->id }}">{{ $projCode->project_code }} : {{ $projCode->project_name }}</option>
                                         @endforeach
                                     </select>
                                     <script>
@@ -197,7 +197,7 @@
                                             <label for="recur_count" class="col-form-label">จำนวน</label>
                                         </div>
                                         <div class="col-8">
-                                            <input type="number" name="recur_count" id="recur_count" value="-" min="1" max="100" class="form-control bg-white">
+                                            <input type="number" name="recur_count" id="recur_count" placeholder="ไม่จำเป็นต้องกรอก"  min="1" max="100" class="form-control bg-white">
                                         </div>
                                         <div class="col-auto">
                                             <p>ครั้ง , งวด</p>
@@ -252,14 +252,14 @@
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
-                                    <label for="proj_code" class="col-form-label">เลขโครงการ</label>
+                                    <label for="proj_code" class="col-form-label">โครงการ</label>
                                 </div>
                                 <div class="col-8">
 
                                     <!-- Options -->
                                     <select id="selectprojc2" name="proj_code" required>
                                         @foreach ($projCodes as $projCode)
-                                            <option value="{{ $projCode->project_code }}">{{ $projCode->project_code }}</option>
+                                            <option value="{{ $projCode->id }}">{{ $projCode->project_code }} : {{ $projCode->project_name }}</option>
                                         @endforeach
                                     </select>
                                     <script>
@@ -284,7 +284,7 @@
                                     <label for="cont_title" class="col-form-label"><span class="text-danger">*</span>เรื่อง</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" name="cont_title" id="cont_title" class="form-control" required>
+                                    <input type="text" name="cont_title" id="cont_title" class="form-control bg-white" required>
                                 </div>
                             </div>
 
@@ -293,7 +293,7 @@
                                     <label for="cont_party" class="col-form-label"><span class="text-danger">*</span>คู่สัญญา</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" name="cont_party" id="cont_party" class="form-control" required>
+                                    <input type="text" name="cont_party" id="cont_party" class="form-control bg-white" required>
                                 </div>
                             </div>
 
@@ -311,7 +311,7 @@
                                     <label for="dateRange" class="col-form-label"><span class="text-danger">*</span>ระยะเวลาสัญญา</label>
                                 </div>
                                 <div class="col-8">
-                                <input type="text" name="dateRange" id="dateRange2" class="form-control dateRangePicker" value="" required>
+                                <input type="text" name="dateRange" id="dateRange2" class="form-control dateRangePicker bg-white" value="" required>
                                 </div>
                             </div>
 
@@ -393,7 +393,7 @@
                                             <label for="recur_count" class="col-form-label">จำนวน</label>
                                         </div>
                                         <div class="col-8">
-                                            <input type="number" name="recur_count" id="recur_count" value="-" min="1" max="100" class="form-control bg-white">
+                                            <input type="number" name="recur_count" id="recur_count" placeholder="ไม่จำเป็นต้องกรอก"  min="1" max="100" class="form-control bg-white">
                                         </div>
                                         <div class="col-auto">
                                             <p>ครั้ง , งวด</p>
@@ -407,7 +407,7 @@
                                     <label for="cont_note" class="col-form-label">หมายเหตุ</label>
                                 </div>
                                 <div class="col-8">
-                                    <textarea class="form-control" name="cont_note" id="cont_note" rows="3"></textarea>
+                                    <textarea class="form-control bg-white" name="cont_note" id="cont_note" rows="3"></textarea>
                                 </div>
                             </div>
 
@@ -428,6 +428,7 @@
                             </div>
                         </form>
                     </div>
+
                     <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab" tabindex="0">
 
                         <p class="fs-2">Out Door</p>
@@ -448,10 +449,39 @@
 
                             <div class="row g-3 mb-3 d-flex justify-content-center">
                                 <div class="col-auto">
+                                    <label for="proj_code" class="col-form-label">โครงการ</label>
+                                </div>
+                                <div class="col-8">
+
+                                    <!-- Options -->
+                                    <select id="selectprojc3" name="proj_code" required>
+                                        @foreach ($projCodes as $projCode)
+                                            <option value="{{ $projCode->id }}">{{ $projCode->project_code }} : {{ $projCode->project_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <script>
+                                        new SlimSelect({
+                                            select: '#selectprojc3',
+                                            settings: {
+                                                closeOnSelect: true,
+                                            },
+                                        })
+                                    </script>
+                                </div>
+                                @can('addProjCode')
+                                    <div class="col-auto">
+                                        <button type="button" class="btn btn-success" id="addProjCodebtn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus"></i></button>
+
+                                    </div>
+                                @endcan
+                            </div>
+
+                            <div class="row g-3 mb-3 d-flex justify-content-center">
+                                <div class="col-auto">
                                     <label for="cont_title" class="col-form-label"><span class="text-danger">*</span>เรื่อง</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" name="cont_title" id="cont_title" class="form-control" required>
+                                    <input type="text" name="cont_title" id="cont_title" class="form-control bg-white" required>
                                 </div>
                             </div>
 
@@ -460,7 +490,7 @@
                                     <label for="cont_party" class="col-form-label"><span class="text-danger">*</span>คู่สัญญา</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" name="cont_party" id="cont_party" class="form-control" required>
+                                    <input type="text" name="cont_party" id="cont_party" class="form-control bg-white" required>
                                 </div>
                             </div>
 
@@ -478,7 +508,7 @@
                                     <label for="dateRange" class="col-form-label"><span class="text-danger">*</span>ระยะเวลาสัญญา</label>
                                 </div>
                                 <div class="col-8">
-                                <input type="text" name="dateRange" id="dateRange3" class="form-control dateRangePicker" value="" required>
+                                <input type="text" name="dateRange" id="dateRange3" class="form-control bg-white dateRangePicker" value="" required>
                                 </div>
                             </div>
 
@@ -560,7 +590,7 @@
                                             <label for="recur_count" class="col-form-label">จำนวน</label>
                                         </div>
                                         <div class="col-8">
-                                            <input type="number" name="recur_count" id="recur_count" value="-" min="1" max="100" class="form-control bg-white">
+                                            <input type="number" name="recur_count" id="recur_count" placeholder="ไม่จำเป็นต้องกรอก"  min="1" max="100" class="form-control bg-white">
                                         </div>
                                         <div class="col-auto">
                                             <p>ครั้ง , งวด</p>
@@ -574,7 +604,7 @@
                                     <label for="cont_note" class="col-form-label">หมายเหตุ</label>
                                 </div>
                                 <div class="col-8">
-                                    <textarea class="form-control" name="cont_note" id="cont_note" rows="3"></textarea>
+                                    <textarea class="form-control bg-white" name="cont_note" id="cont_note" rows="3"></textarea>
                                 </div>
                             </div>
 
@@ -659,6 +689,7 @@
             icon: "success"
         });
     @elseif (session('error'))
+        console.log(session('error'));
         Swal.fire({
                 title: "Error!",
                 text: "Something wrong!",
@@ -749,6 +780,14 @@
                 ],
                 firstDay: 1, // Start with Monday
             },
+        });
+
+        $('.dateRangePicker').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+        });
+
+        $('.dateRangePicker').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
         });
     });
 
