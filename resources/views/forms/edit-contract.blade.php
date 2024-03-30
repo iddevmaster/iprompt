@@ -104,6 +104,95 @@
                         </div>
                     </div>
 
+                    @if ($contract->recurring)
+                        <div class="row g-3 mb-3 d-flex justify-content-center">
+                            <div class="col-auto">
+                                <label for="recurring" class="col-form-label">การเกิดซ้ำ</label>
+                            </div>
+                            <div class="col-8">
+                                <div class="row g-3 mb-3 d-flex justify-content-center">
+                                    <div class="col-auto">
+                                        <label for="selectday" class="col-form-label"><span class="text-danger">*</span>วันที่</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <!-- Options -->
+                                        <select id="selectday" name="recur_d[]" multiple required>
+                                            @for ($i = 1; $i <= 31; $i++)
+                                                <option value="{{ $i }}">{{ $i }}</option>
+                                            @endfor
+                                        </select>
+                                        <script>
+                                            new SlimSelect({
+                                                select: '#selectday',
+                                                settings: {
+                                                    minSelected: 0,
+                                                    maxSelected: 31,
+                                                    hideSelected: true,
+                                                    closeOnSelect: false,
+                                                    placeholderText: 'เลือกวันที่',
+                                                },
+                                            })
+                                        </script>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 mb-3 d-flex justify-content-center">
+                                    <div class="col-auto">
+                                        <label for="selectmonth" class="col-form-label"><span class="text-danger">*</span>เดือน</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <!-- Options -->
+                                        <select id="selectmonth" name="recur_m[]" multiple required>
+                                            @for ($i = 1; $i <= 12; $i++)
+                                                @php
+                                                    $date = \Carbon\Carbon::create()->day(1)->month($i)->year(2022); // Replace 2022 with the desired year
+                                                    $thaiMonth = $date->locale('th')->monthName;
+                                                @endphp
+                                                <option value="{{ $i }}">{{ $thaiMonth }}</option>
+                                            @endfor
+                                        </select>
+                                        <script>
+                                            new SlimSelect({
+                                                select: '#selectmonth',
+                                                settings: {
+                                                    minSelected: 0,
+                                                    maxSelected: 31,
+                                                    hideSelected: true,
+                                                    closeOnSelect: false,
+                                                    placeholderText: 'เลือกเดือน',
+                                                },
+                                            })
+                                        </script>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 mb-3 d-flex justify-content-center">
+                                    <div class="col-auto">
+                                        <label for="recur_y" class="col-form-label">ทุก</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="number" name="recur_y" id="recur_y" value="1" min="1" max="100" class="form-control bg-white" required>
+                                    </div>
+                                    <div class="col-auto">
+                                        <p>ปี</p>
+                                    </div>
+                                </div>
+
+                                <div class="row g-3 mb-3 d-flex justify-content-center">
+                                    <div class="col-auto">
+                                        <label for="recur_count" class="col-form-label">จำนวน</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="number" name="recur_count" id="recur_count" placeholder="ไม่จำเป็นต้องกรอก"  min="1" max="100" class="form-control bg-white">
+                                    </div>
+                                    <div class="col-auto">
+                                        <p>ครั้ง , งวด</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="row g-3 mb-3 d-flex justify-content-center">
                         <div class="col-auto">
                             <label for="cont_note" class="col-form-label">หมายเหตุ</label>

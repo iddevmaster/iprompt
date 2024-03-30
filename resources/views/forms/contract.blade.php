@@ -116,6 +116,7 @@
                                 </div>
                                 <div class="col-8">
                                     <input type="text" name="dateRange" id="dateRange" class="form-control dateRangePicker bg-white" value="" required>
+                                    <p class="text-warning" style="font-size: 15px">*หากบันทึกแล้วจะไม่สามารถแก้ไขได้</p>
                                 </div>
                             </div>
 
@@ -311,7 +312,8 @@
                                     <label for="dateRange" class="col-form-label"><span class="text-danger">*</span>ระยะเวลาสัญญา</label>
                                 </div>
                                 <div class="col-8">
-                                <input type="text" name="dateRange" id="dateRange2" class="form-control dateRangePicker bg-white" value="" required>
+                                    <input type="text" name="dateRange" id="dateRange2" class="form-control dateRangePicker bg-white" value="" required>
+                                    <p class="text-warning" style="font-size: 15px">*หากบันทึกแล้วจะไม่สามารถแก้ไขได้</p>
                                 </div>
                             </div>
 
@@ -508,7 +510,8 @@
                                     <label for="dateRange" class="col-form-label"><span class="text-danger">*</span>ระยะเวลาสัญญา</label>
                                 </div>
                                 <div class="col-8">
-                                <input type="text" name="dateRange" id="dateRange3" class="form-control bg-white dateRangePicker" value="" required>
+                                    <input type="text" name="dateRange" id="dateRange3" class="form-control bg-white dateRangePicker" value="" required>
+                                    <p class="text-warning" style="font-size: 15px">*หากบันทึกแล้วจะไม่สามารถแก้ไขได้</p>
                                 </div>
                             </div>
 

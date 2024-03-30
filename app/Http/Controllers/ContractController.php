@@ -83,6 +83,7 @@ class ContractController extends Controller
     }
 
     public function updateContract($cid, Request $request) {
+        dd($request->all());
         $contract = Contract::find($cid);
         try {
 
@@ -93,6 +94,26 @@ class ContractController extends Controller
                 'budget' => $request->cont_budget ?? 0,
                 'project_code' => $request->proj_code ?? '',
             ]);
+
+            if (!$contract->recurring) {
+                $contract->update([
+                    'recurring' => json_encode([
+                        'recur_count' => $request->recur_count,
+                        'recur_y' => $request->recur_y,
+                        'recur_m' => $request->recur_m,
+                        'recur_d' => $request->recur_d,
+                    ]),
+                ]);
+
+                $periodeDates = $this->getPeriod($request->recur_count, $request->recur_y, $request->recur_m, $request->recur_d, $request->dateRange);
+                foreach ($periodeDates as $index => $date) {
+                    Installment::create([
+                        'contract' => $contract->id,
+                        'date' => $date,
+                        'periot_num' => $index + 1
+                    ]);
+                }
+            }
 
             return redirect()->route('contTable');
         } catch (\Throwable $th) {
