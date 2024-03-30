@@ -102,6 +102,7 @@
         </div>
         <hr>
         <div class="row">
+            <div class="text-center my-3"><h2>รายละเอียดงวดงาน</h2></div>
             <livewire:installment :cont="$contract->id" />
         </div>
         <hr>

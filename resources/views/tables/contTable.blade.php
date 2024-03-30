@@ -50,24 +50,24 @@
                     <tbody class="table-group-divider" id="tableBody">
                         <!-- Table rows will be dynamically added here -->
                         @foreach ($contracts as $index => $row)
-                            @php
-                                $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
-                                $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : [];
-                                $team = $row->submit_by;
-                                $teamArr = json_decode($team);
-                                $teamlist = [];
-                                $permis = Auth::user()->role ;
-                                $dpm = Auth::user()->dpm;
-                                if (is_array($teamArr)) {
-                                    foreach ($teamArr as $index => $memb) {
-                                        if ($index == 0) continue;
-                                        $submitUser = $user->firstWhere('id', $memb);
-                                        $teamlist[] = ($submitUser ? $submitUser->name : 'Unknow');
-                                    }
-                                }
-                            @endphp
                             <tr>
                                 <td>{{ $index + 1 }}</td>
+                                @php
+                                    $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
+                                    $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : [];
+                                    $team = $row->submit_by;
+                                    $teamArr = json_decode($team);
+                                    $teamlist = [];
+                                    $permis = Auth::user()->role ;
+                                    $dpm = Auth::user()->dpm;
+                                    if (is_array($teamArr)) {
+                                        foreach ($teamArr as $index => $memb) {
+                                            if ($index == 0) continue;
+                                            $submitUser = $user->firstWhere('id', $memb);
+                                            $teamlist[] = ($submitUser ? $submitUser->name : 'Unknow');
+                                        }
+                                    }
+                                @endphp
                                 <td class="text-nowrap">{{ $row->book_num}}</td>
                                 <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                     {{ $row->title }}
@@ -201,6 +201,9 @@
                     <!-- Table Body -->
                     <tbody class="table-group-divider" id="tableBody">
                         <!-- Table rows will be dynamically added here -->
+                        @php
+                            $num = 1;
+                        @endphp
                         @foreach ($contracts as $index => $row)
                             @if ($row->type === 'creditor')
                                 @php
@@ -220,7 +223,7 @@
                                     }
                                 @endphp
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $num }}</td>
                                     <td class="text-nowrap">{{ $row->book_num}}</td>
                                     <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                         {{ $row->title }}
@@ -303,6 +306,9 @@
                                     </td>
                                 @endcan
                                 </tr>
+                                @php
+                                    $num += 1;
+                                @endphp
                             @endif
                         @endforeach
                     </tbody>
@@ -335,6 +341,9 @@
                     <!-- Table Body -->
                     <tbody class="table-group-divider" id="tableBody">
                         <!-- Table rows will be dynamically added here -->
+                        @php
+                            $num2 = 1;
+                        @endphp
                         @foreach ($contracts as $index => $row)
                             @if ($row->type === 'debtor')
                                 @php
@@ -354,7 +363,7 @@
                                     }
                                 @endphp
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $num2 }}</td>
                                     <td class="text-nowrap">{{ $row->book_num}}</td>
                                     <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                         {{ $row->title }}
@@ -437,6 +446,9 @@
                                     </td>
                                 @endcan
                                 </tr>
+                                @php
+                                    $num += 1;
+                                @endphp
                             @endif
                         @endforeach
                     </tbody>
@@ -469,6 +481,9 @@
                     <!-- Table Body -->
                     <tbody class="table-group-divider" id="tableBody">
                         <!-- Table rows will be dynamically added here -->
+                        @php
+                            $num3 = 1;
+                        @endphp
                         @foreach ($contracts as $index => $row)
                             @if ($row->type === 'outdoor')
                                 @php
@@ -488,7 +503,7 @@
                                     }
                                 @endphp
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $num3 }}</td>
                                     <td class="text-nowrap">{{ $row->book_num}}</td>
                                     <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                         {{ $row->title }}
@@ -571,6 +586,9 @@
                                     </td>
                                 @endcan
                                 </tr>
+                                @php
+                                    $num3 += 1;
+                                @endphp
                             @endif
                         @endforeach
                     </tbody>

@@ -196,7 +196,7 @@ class ContractController extends Controller
                 'title' => optional($installment->getCont)->title,
                 'description' => optional($installment->getCont)->note ?? '',
                 'proj' => (optional(optional($installment->getCont)->getProject)->project_code ?? '') . ' : ' . (optional(optional($installment->getCont)->getProject)->project_name ?? ''),
-                'periot' => $index + 1,
+                'periot' => $installment->periot_num ? $installment->periot_num : $index,
                 'party' => optional($installment->getCont)->party ?? '',
                 'color' => $eventColor[optional($installment->getCont)->type],
                 'allDay' => true,
