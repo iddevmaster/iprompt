@@ -104,7 +104,7 @@
                         </div>
                     </div>
 
-                    @if ($contract->recurring)
+                    @if (!$contract->recurring)
                         <div class="row g-3 mb-3 d-flex justify-content-center">
                             <div class="col-auto">
                                 <label for="recurring" class="col-form-label">การเกิดซ้ำ</label>

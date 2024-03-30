@@ -83,7 +83,6 @@ class ContractController extends Controller
     }
 
     public function updateContract($cid, Request $request) {
-        dd($request->all());
         $contract = Contract::find($cid);
         try {
 
