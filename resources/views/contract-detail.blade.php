@@ -68,7 +68,7 @@
 
                         <div class="mb-3">
                             @foreach ($contract->files ?? [] as $index => $file)
-                                <p>File is: {{ $file }}</p>
+
                                 @php
                                     $file_saved = App\Models\TemporaryFile::find($file);
                                 @endphp
