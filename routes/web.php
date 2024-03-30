@@ -162,6 +162,7 @@ Route::get('/contract/calendar',[App\Http\Controllers\ContractController::class,
 Route::post('/contract/projcode/add',[App\Http\Controllers\ContractController::class,'addProjCode'])->name('add-projcode');
 Route::post('/contract/{cid}/uploadFile', [App\Http\Controllers\ContractController::class, 'uploadFile'])->name('cont-savefile');
 Route::get('/contract/{cid}/deleteFile/{fid}', [App\Http\Controllers\ContractController::class, 'deleteFile'])->name('delContFile');
+Route::get('/contract/{cid}/deleteFile2/{fname}', [App\Http\Controllers\ContractController::class, 'deleteFile2'])->name('delContFile2');
 
 // Filepond
 Route::post('/contract/file-upload',[App\Http\Controllers\ContractController::class,'filepondUpload']);

@@ -76,6 +76,11 @@
                                         <p class="mb-0">{{ $index + 1 }}. <a href="/files/contract/{{ $file_saved->file }}" target="_BLANK">{{ $file_saved ? $file_saved->originalName : 'Unknow'}} <span style="font-size: 10px">( size: {{ $file_saved ? $file_saved->size_mb : '-' }} MB )</span></a></p>
                                         <a href="{{ route('delContFile', ['cid' => $contract->id, 'fid' => $file]) }}" class="btn btn-sm deleteBtn"><i class="bi bi-x-lg" style="font-size: 10px"></i></a>
                                     </div>
+                                @else
+                                    <div class="d-flex justify-content-between">
+                                        <p class="mb-0">{{ $index + 1 }}. <a href="/files/contract/{{ $file }}" target="_BLANK">{{ $file }} <span style="font-size: 10px">( size: - MB )</span></a></p>
+                                        <a href="{{ route('delContFile2', ['cid' => $contract->id, 'fname' => $file]) }}" class="btn btn-sm deleteBtn"><i class="bi bi-x-lg" style="font-size: 10px"></i></a>
+                                    </div>
                                 @endif
                             @endforeach
                         </div>

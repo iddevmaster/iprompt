@@ -320,6 +320,35 @@ class ContractController extends Controller
                 $cont->files = json_encode($new_files);
                 $cont->save();
             }
+
+            Alert::toast('Deleted your file successfully!','success');
+            return redirect()->back()->with(['success' => "Success!"]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            Alert::toast('Sorry. Delete your files unsuccessful!','error');
+            return redirect()->back()->with(['error' => $th->getMessage()]);
+        }
+    }
+
+    public function deleteFile2($cid, $fname) {
+        try {
+            if (Storage::exists('contract' . '/' . $fname)) {
+                Storage::delete('contract' . '/' . $fname);
+            }
+
+            $cont = Contract::find($cid);
+            if ($cont) {
+                $new_files = [];
+                foreach ($cont->files as $file) {
+                    if ($file !== $fname) {
+                        $new_files[] = $file;
+                    }
+                }
+                $cont->files = json_encode($new_files);
+                $cont->save();
+            }
+
+            Alert::toast('Deleted your file successfully!','success');
             return redirect()->back()->with(['success' => "Success!"]);
         } catch (\Throwable $th) {
             //throw $th;
