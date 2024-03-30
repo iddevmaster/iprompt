@@ -16,7 +16,7 @@ class Installment extends Model
         'files',
         'status',
         'success_log',
-        'periot_num'
+        'periot_num',
     ];
 
     public function getFilesAttribute($value)

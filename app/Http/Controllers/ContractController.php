@@ -95,16 +95,18 @@ class ContractController extends Controller
             ]);
 
             if (!$contract->recurring) {
-                $contract->update([
-                    'recurring' => json_encode([
-                        'recur_count' => $request->recur_count,
-                        'recur_y' => $request->recur_y,
-                        'recur_m' => $request->recur_m,
-                        'recur_d' => $request->recur_d,
-                    ]),
-                ]);
+                $recurr = [
+                    'recur_count' => $request->recur_count ?? '',
+                    'recur_y' => $request->recur_y,
+                    'recur_m' => $request->recur_m,
+                    'recur_d' => $request->recur_d,
+                ];
 
-                $periodeDates = $this->getPeriod($request->recur_count, $request->recur_y, $request->recur_m, $request->recur_d, $request->dateRange);
+                $contract->recurring = json_encode($recurr);
+                $contract->save();
+
+                $periodeDates = $this->getPeriod($request->recur_count, $request->recur_y, $request->recur_m, $request->recur_d, $contract->time_range);
+
                 foreach ($periodeDates as $index => $date) {
                     Installment::create([
                         'contract' => $contract->id,
@@ -114,9 +116,11 @@ class ContractController extends Controller
                 }
             }
 
+            Alert::toast('Save contract successfully!','success');
             return redirect()->route('contTable');
         } catch (\Throwable $th) {
             //throw $th;
+            Alert::toast('Save contract unsuccessful!','error');
             return redirect()->back()->with(['error' => $th->getMessage()]);
         }
     }
