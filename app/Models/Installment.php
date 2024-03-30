@@ -15,9 +15,15 @@ class Installment extends Model
         'value',
         'files',
         'status',
+        'success_log',
+        'periot_num'
     ];
 
     public function getFilesAttribute($value)
+    {
+        return json_decode($value, true);
+    }
+    public function getSuccess_logAttribute($value)
     {
         return json_decode($value, true);
     }

@@ -97,7 +97,11 @@
 
                                 @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
                                     <td>
-                                        <a href="{{ route('contract-detail', ['cid' => $row->id]) }}"><button type="button" class="btn btn-secondary ">detail</button></a>
+                                        @if ($row->recurring)
+                                            <a href="{{ route('contract-detail', ['cid' => $row->id]) }}"><button type="button" class="btn btn-secondary ">detail</button></a>
+                                        @else
+                                            <button type="button" class="btn btn-secondary alertEdit">detail</button>
+                                        @endif
                                     </td>
                                 @else
                                     <td></td>
@@ -662,6 +666,17 @@
                     if (file) {
                         saveData(file,type);
                     }
+                });
+            });
+        });
+
+        const alertEditBtn = document.querySelectorAll('.alertEdit');
+        alertEditBtn.forEach((ckbtn) => {
+            ckbtn.addEventListener('click', function () {
+                Swal.fire({
+                    title: "สัญญาไม่พร้อม!",
+                    text: "กรุณาแก้ไขสัญญาของท่านเพื่ออัพเดทข้อมูล เนื่องจากระบบมีการเปลี่ยนแปลงบางส่วน",
+                    icon: "warning"
                 });
             });
         });

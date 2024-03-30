@@ -7,11 +7,26 @@
 <body>
     @can('CONT')
         @php
-            $total = count($contracts->filter(function ($contract) {
-                return $contract->alert == 1;
-            }));
+            $installments = App\Models\Installment::all();
+            $currentDate = Carbon\Carbon::now();
+            $alert_ins = [];
+            foreach ($installments ?? [] as $install) {
+                $targetDate = Carbon\Carbon::createFromFormat('d/m/Y', $install->date);
+                $diffStatus = $currentDate->diff($targetDate);
+                $diff = $currentDate->diffInDays($targetDate);
+                if ($diff >= 0 && $diff < 30 && $install->status !== 2) {
+                    $alert_ins[] = $install;
+                    if ($diffStatus->invert) {
+                        $install->status = 3;
+                        $install->save();
+                    } else {
+                        $install->status = 1;
+                        $install->save();
+                    }
+                }
+            }
         @endphp
-        @if ($total ?? 0)
+        @if (count($alert_ins ?? []) > 0)
             <!-- Modal -->
             <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
@@ -21,21 +36,36 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>คุณมีสัญญา <span class="badge text-bg-danger">{{ $total }}</span> ฉบับที่กำลังจะหมดอายุ</p>
-                            @foreach ($contracts->filter(function ($contract) {
-                                return $contract->alert == 1;
-                            }) as $index => $contract)
+                            <p>คุณมีสัญญา <span class="badge text-bg-danger">{{ count($alert_ins ?? []) }}</span> ฉบับที่ยังไม่ได้ดำเนินการ</p>
+                            @foreach ($alert_ins as $index => $install)
                                 @php
-                                    $dateArray = explode(' - ', $contract->time_range);
-                                    $endDate = Carbon\Carbon::createFromFormat('d/m/Y', $dateArray[1]);
-                                    $currentDate = Carbon\Carbon::now();
-
-                                    $daysDifference = $currentDate->diffInDays($endDate);
+                                    $targetDate = Carbon\Carbon::createFromFormat('d/m/Y', $install->date);
+                                    $diff = $currentDate->diffInDays($targetDate);
                                 @endphp
-                                <div class="d-flex justify-content-between alert alert-warning" role="alert">
-                                    <p class="mb-0 text-wrap text-break border-end px-2 flex-fill border-black">{{ $contract->book_num }} :: {{ $contract->title }}</p>
-                                    <p class="mb-0 text-nowrap align-self-center px-2"><i class="bi bi-hourglass-split" style="font-size: 20px"></i> {{ $daysDifference }} วัน</p>
-                                </div>
+                                @switch($install->status)
+                                    @case(1)
+                                        <a class="link-underline link-underline-opacity-0" href="{{ route('contract-detail', ['cid' => $install->getCont->id ?? '-']) }}">
+                                            <div class="d-flex justify-content-between alert alert-primary" role="alert">
+                                                <div>
+                                                    <p class="mb-0 text-wrap text-break border-end px-2 flex-fill border-black">{{ optional($install->getCont)->book_num }} : {{ optional($install->getCont)->title }} <span class="badge text-bg-primary"><i class="bi bi-hourglass-split" style="font-size: 14px"></i> รอดำเนินการ</span></p>
+                                                </div>
+                                                <p class="mb-0 text-nowrap align-self-center px-2"><i class="bi bi-hourglass-split" style="font-size: 20px"></i> {{ $diff }} วัน</p>
+                                            </div>
+                                        </a>
+                                        @break
+                                    @case(3)
+                                        <a class="link-underline link-underline-opacity-0" href="{{ route('contract-detail', ['cid' => $install->getCont->id ?? '-']) }}">
+                                            <div class="d-flex justify-content-between alert alert-warning" role="alert">
+                                                <div>
+                                                    <p class="mb-0 text-wrap text-break border-end px-2 flex-fill border-black">{{ optional($install->getCont)->book_num }} : {{ optional($install->getCont)->title }} <span class="badge text-bg-warning"><i class="bi bi-exclamation-circle" style="font-size: 14px"></i> เกินกำหนด</span></p>
+                                                </div>
+                                                <p class="mb-0 text-nowrap align-self-center px-2"><i class="bi bi-hourglass-split" style="font-size: 20px"></i> {{ $diff }} วัน</p>
+                                            </div>
+                                        </a>
+                                        @break
+                                    @default
+                                        -
+                                @endswitch
                             @endforeach
                         </div>
                     </div>
@@ -365,8 +395,8 @@
                                             <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
                                             <p class="icon-title">
                                                 สัญญา
-                                                @if ($total ?? 0)
-                                                    <span class="badge text-bg-danger">{{ $total }}</span>
+                                                @if (count($alert_ins ?? []) > 0)
+                                                    <span class="badge text-bg-danger">{{ count($alert_ins) }}</span>
                                                 @endif
                                             </p>
                                         </div>

@@ -4,7 +4,6 @@ namespace App\Livewire;
 
 use App\Models\Contract;
 use App\Models\Installment as ModelsInstallment;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
@@ -137,17 +136,6 @@ class Installment extends Component
         $this->installment->files = json_encode($files);
         $this->installment->save();
 
-    }
-
-    public function changeStatus($installmentId, $index) {
-        if ($this->installments[$index]->id === $installmentId) {
-            $this->installments[$index]->status = 2;
-            $this->installments[$index]->success_log = json_encode([
-                'by' => auth()->user()->name,
-                'date' => date('d/m/Y'),
-            ]);
-            $this->installments[$index]->save();
-        }
     }
 
     public function periotDetail($installmentId, $index) {

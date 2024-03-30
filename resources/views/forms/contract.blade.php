@@ -681,23 +681,6 @@
         input.value = value.toLocaleString('en-US');
     }
 
-
-    @if (session('success'))
-        Swal.fire({
-            title: "Success!",
-            text: "You form has been save!",
-            icon: "success"
-        });
-    @elseif (session('error'))
-        console.log(session('error'));
-        Swal.fire({
-                title: "Error!",
-                text: "Something wrong!",
-                icon: "error"
-            });
-            console.log("{{ session('error') }}");
-    @endif
-
     document.getElementById('cancel').addEventListener('click', function () {
         Swal.fire({
             title: 'ยกเลิกการบันทึกข้อมูล?',

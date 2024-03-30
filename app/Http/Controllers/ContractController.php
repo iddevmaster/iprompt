@@ -66,17 +66,19 @@ class ContractController extends Controller
                 ]),
             ]);
 
-            foreach ($periodeDates as $date) {
+            foreach ($periodeDates as $index => $date) {
                 Installment::create([
                     'contract' => $cont->id,
                     'date' => $date,
+                    'periot_num' => $index + 1
                 ]);
             }
-
-            return redirect()->back()->with(['success' => "Success!"]);
+            Alert::toast('Save contract successfully!','success');
+            return redirect()->back();
         } catch (\Throwable $th) {
             //throw $th;
-            return redirect()->back()->with(['error' => $th->getMessage()]);
+            Alert::toast('Save contract unsuccessful!','error');
+            return redirect()->back();
         }
     }
 
