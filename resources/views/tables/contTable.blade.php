@@ -489,7 +489,7 @@
                                     @endcan
                                 </tr>
                                 @php
-                                    $num += 1;
+                                    $num2 += 1;
                                 @endphp
                             @endif
                         @endforeach
