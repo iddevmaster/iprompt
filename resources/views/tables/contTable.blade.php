@@ -176,7 +176,7 @@
             </div>
 
             <div class="tab-pane table-responsive" id="nav-cre" role="tabpanel" aria-labelledby="nav-cre-tab" tabindex="0">
-                <table class="table table-hover listTable">
+                <table class="table table-hover listTable-cre">
 
                     <!-- Table Header -->
                     <thead class="table-dark">
@@ -337,7 +337,7 @@
             </div>
 
             <div class="tab-pane table-responsive" id="nav-deb" role="tabpanel" aria-labelledby="nav-deb-tab" tabindex="0">
-                <table class="table table-hover listTable">
+                <table class="table table-hover listTable-deb">
 
                     <!-- Table Header -->
                     <thead class="table-dark">
@@ -498,7 +498,7 @@
             </div>
 
             <div class="tab-pane table-responsive" id="nav-otd" role="tabpanel" aria-labelledby="nav-otd-tab" tabindex="0">
-                <table class="table table-hover listTable">
+                <table class="table table-hover listTable-otd">
 
                     <!-- Table Header -->
                     <thead class="table-dark">
@@ -666,6 +666,48 @@
     <script>
         $(document).ready(function() {
             $('.listTable').DataTable({
+                "paging": true,
+                "pageLength": 10,
+                "searching": true,
+                "bLengthChange": false,
+                language: {
+                    search: "ค้นหา:"
+                },
+                drawCallback: function() {
+                    $('[data-bs-toggle="tooltip"]').tooltip();
+                }
+            });
+        });
+        $(document).ready(function() {
+            $('.listTable-cre').DataTable({
+                "paging": true,
+                "pageLength": 10,
+                "searching": true,
+                "bLengthChange": false,
+                language: {
+                    search: "ค้นหา:"
+                },
+                drawCallback: function() {
+                    $('[data-bs-toggle="tooltip"]').tooltip();
+                }
+            });
+        });
+        $(document).ready(function() {
+            $('.listTable-deb').DataTable({
+                "paging": true,
+                "pageLength": 10,
+                "searching": true,
+                "bLengthChange": false,
+                language: {
+                    search: "ค้นหา:"
+                },
+                drawCallback: function() {
+                    $('[data-bs-toggle="tooltip"]').tooltip();
+                }
+            });
+        });
+        $(document).ready(function() {
+            $('.listTable-otd').DataTable({
                 "paging": true,
                 "pageLength": 10,
                 "searching": true,
