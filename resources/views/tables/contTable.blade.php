@@ -97,42 +97,12 @@
 
                                 @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
                                     <td>
-                                        @if ($row->recurring)
-                                            <a href="{{ route('contract-detail', ['cid' => $row->id]) }}"><button type="button" class="btn btn-secondary ">detail</button></a>
-                                        @else
-                                            <button type="button" class="btn btn-secondary alertEdit">detail</button>
-                                        @endif
+                                        <a href="{{ route('contract-detail', ['cid' => $row->id]) }}"><button type="button" class="btn btn-secondary ">detail</button></a>
                                     </td>
                                 @else
                                     <td></td>
                                 @endif
 
-
-                                {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)) || (in_array(((Auth::user())->id), (is_array($teams)? $teams : []))))
-                                    <td class="text-center">
-                                        @if ($row->files != null)
-                                            @php
-                                                $fileList = $row->files;
-                                            @endphp
-                                            @foreach ($fileList as $index => $file)
-                                                <button type="button" data-file-path="{{ asset('files/contract/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}"
-                                                    candel=
-                                                    @if ( ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']))
-                                                        "1"
-                                                    @else
-                                                        "0"
-                                                    @endif
-                                                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{$file}}"
-                                                >{{$index + 1}}</button>
-                                            @endforeach
-                                        @else
-
-                                        @endif
-                                        <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="cont">upload</button>
-                                    </td>
-                                @else
-                                    <td></td>
-                                @endif --}}
 
                                 {{-- Share Btn --}}
                                 <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="cont" teamlist="{{json_encode($teamlist)}}"
@@ -232,7 +202,7 @@
                                     <td>{{ $row->party}}</td>
                                     @php
                                         $dates = explode(" - ", $row->time_range);
-    
+
                                         // Create Carbon instances for the start and end dates
                                         $startDate = Carbon\Carbon::createFromFormat('d/m/Y', $dates[0]);
                                         $endDate = Carbon\Carbon::createFromFormat('d/m/Y', $dates[1]);
@@ -242,7 +212,7 @@
                                     <td>{{ $row->getUser->name ?? ''}}</td>
                                     <td>{{ $row->created_at}}</td>
                                     <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->note }}">{{ $row->note}}</td>
-    
+
                                     {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))) --}}
                                     @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
                                         <td>
@@ -251,7 +221,7 @@
                                     @else
                                         <td></td>
                                     @endif
-    
+
                                     @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
                                         <td>
                                             @if ($row->recurring)
@@ -263,8 +233,8 @@
                                     @else
                                         <td></td>
                                     @endif
-    
-    
+
+
                                     {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)) || (in_array(((Auth::user())->id), (is_array($teams)? $teams : []))))
                                         <td class="text-center">
                                             @if ($row->files != null)
@@ -283,14 +253,14 @@
                                                     >{{$index + 1}}</button>
                                                 @endforeach
                                             @else
-    
+
                                             @endif
                                             <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="cont">upload</button>
                                         </td>
                                     @else
                                         <td></td>
                                     @endif --}}
-    
+
                                     {{-- Share Btn --}}
                                     <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="cont" teamlist="{{json_encode($teamlist)}}"
                                         @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
@@ -307,7 +277,7 @@
                                         @endphp
                                         </button>
                                     </td>
-    
+
                                     @can('staff')
                                     <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="check">
                                         @php
@@ -393,7 +363,7 @@
                                     <td>{{ $row->party}}</td>
                                     @php
                                         $dates = explode(" - ", $row->time_range);
-    
+
                                         // Create Carbon instances for the start and end dates
                                         $startDate = Carbon\Carbon::createFromFormat('d/m/Y', $dates[0]);
                                         $endDate = Carbon\Carbon::createFromFormat('d/m/Y', $dates[1]);
@@ -403,7 +373,7 @@
                                     <td>{{ $row->getUser->name ?? ''}}</td>
                                     <td>{{ $row->created_at}}</td>
                                     <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->note }}">{{ $row->note}}</td>
-    
+
                                     {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))) --}}
                                     @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
                                         <td>
@@ -412,7 +382,7 @@
                                     @else
                                         <td></td>
                                     @endif
-    
+
                                     @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
                                         <td>
                                             @if ($row->recurring)
@@ -424,8 +394,8 @@
                                     @else
                                         <td></td>
                                     @endif
-    
-    
+
+
                                     {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)) || (in_array(((Auth::user())->id), (is_array($teams)? $teams : []))))
                                         <td class="text-center">
                                             @if ($row->files != null)
@@ -444,14 +414,14 @@
                                                     >{{$index + 1}}</button>
                                                 @endforeach
                                             @else
-    
+
                                             @endif
                                             <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="cont">upload</button>
                                         </td>
                                     @else
                                         <td></td>
                                     @endif --}}
-    
+
                                     {{-- Share Btn --}}
                                     <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="cont" teamlist="{{json_encode($teamlist)}}"
                                         @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
@@ -468,7 +438,7 @@
                                         @endphp
                                         </button>
                                     </td>
-    
+
                                     @can('staff')
                                     <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="check">
                                         @php
@@ -554,7 +524,7 @@
                                     <td>{{ $row->party}}</td>
                                     @php
                                         $dates = explode(" - ", $row->time_range);
-    
+
                                         // Create Carbon instances for the start and end dates
                                         $startDate = Carbon\Carbon::createFromFormat('d/m/Y', $dates[0]);
                                         $endDate = Carbon\Carbon::createFromFormat('d/m/Y', $dates[1]);
@@ -564,7 +534,7 @@
                                     <td>{{ $row->getUser->name ?? ''}}</td>
                                     <td>{{ $row->created_at}}</td>
                                     <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->note }}">{{ $row->note}}</td>
-    
+
                                     {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))) --}}
                                     @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
                                         <td>
@@ -573,7 +543,7 @@
                                     @else
                                         <td></td>
                                     @endif
-    
+
                                     @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
                                         <td>
                                             @if ($row->recurring)
@@ -585,8 +555,8 @@
                                     @else
                                         <td></td>
                                     @endif
-    
-    
+
+
                                     {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)) || (in_array(((Auth::user())->id), (is_array($teams)? $teams : []))))
                                         <td class="text-center">
                                             @if ($row->files != null)
@@ -605,14 +575,14 @@
                                                     >{{$index + 1}}</button>
                                                 @endforeach
                                             @else
-    
+
                                             @endif
                                             <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="cont">upload</button>
                                         </td>
                                     @else
                                         <td></td>
                                     @endif --}}
-    
+
                                     {{-- Share Btn --}}
                                     <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="cont" teamlist="{{json_encode($teamlist)}}"
                                         @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
@@ -629,7 +599,7 @@
                                         @endphp
                                         </button>
                                     </td>
-    
+
                                     @can('staff')
                                     <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="check">
                                         @php

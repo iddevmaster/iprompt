@@ -66,6 +66,12 @@
                                 })
                             </script>
                         </div>
+                        @can('addProjCode')
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-success" id="addProjCodebtn" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-plus"></i></button>
+
+                            </div>
+                        @endcan
                     </div>
 
                     <div class="row g-3 mb-3 d-flex justify-content-center">
@@ -104,21 +110,24 @@
                         </div>
                     </div>
 
-                    @if (!$contract->recurring)
-                        <div class="row g-3 mb-3 d-flex justify-content-center">
-                            <div class="col-auto">
-                                <label for="recurring" class="col-form-label">การเกิดซ้ำ</label>
-                            </div>
-                            <div class="col-8">
+                    <div class="row g-3 mb-3 d-flex justify-content-center">
+                        <div class="col-auto">
+                            <input class="form-check-input" name="recur_toggle" type="checkbox" {{ $contract->recurring ? 'checked' : '' }} value="1" id="recurring">
+                            <label for="recurring" class="col-form-label p-0">การเกิดซ้ำ</label>
+                        </div>
+                        <div class="col-8">
+                            <p class="recur_text text-start" style="display: {{ $contract->recurring ? 'none' : 'block' }};"><span class="badge text-bg-primary">ไม่มีการเกิดซ้ำ</span></p>
+                            <div class="recur_input" style="display: {{ $contract->recurring ? 'block' : 'none' }};">
                                 <div class="row g-3 mb-3 d-flex justify-content-center">
                                     <div class="col-auto">
                                         <label for="selectday" class="col-form-label"><span class="text-danger">*</span>วันที่</label>
                                     </div>
+
                                     <div class="col-8">
                                         <!-- Options -->
-                                        <select id="selectday" name="recur_d[]" multiple required>
+                                        <select id="selectday" name="recur_d[]" multiple>
                                             @for ($i = 1; $i <= 31; $i++)
-                                                <option value="{{ $i }}">{{ $i }}</option>
+                                                <option value="{{ $i }}" {{ in_array("$i", $contract->recurring['recur_d'] ?? []) ? 'selected' : '' }}>{{ $i }}</option>
                                             @endfor
                                         </select>
                                         <script>
@@ -142,13 +151,13 @@
                                     </div>
                                     <div class="col-8">
                                         <!-- Options -->
-                                        <select id="selectmonth" name="recur_m[]" multiple required>
+                                        <select id="selectmonth" name="recur_m[]" multiple >
                                             @for ($i = 1; $i <= 12; $i++)
                                                 @php
                                                     $date = \Carbon\Carbon::create()->day(1)->month($i)->year(2022); // Replace 2022 with the desired year
                                                     $thaiMonth = $date->locale('th')->monthName;
                                                 @endphp
-                                                <option value="{{ $i }}">{{ $thaiMonth }}</option>
+                                                <option value="{{ $i }}" {{ in_array("$i", $contract->recurring['recur_m'] ?? []) ? 'selected' : '' }}>{{ $thaiMonth }}</option>
                                             @endfor
                                         </select>
                                         <script>
@@ -171,7 +180,7 @@
                                         <label for="recur_y" class="col-form-label">ทุก</label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="number" name="recur_y" id="recur_y" value="1" min="1" max="100" class="form-control bg-white" required>
+                                        <input type="number" name="recur_y" id="recur_y" value="{{ $contract->recurring['recur_y'] ?? 1 }}" min="1" max="100" class="form-control bg-white" required>
                                     </div>
                                     <div class="col-auto">
                                         <p>ปี</p>
@@ -183,7 +192,7 @@
                                         <label for="recur_count" class="col-form-label">จำนวน</label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="number" name="recur_count" id="recur_count" placeholder="ไม่จำเป็นต้องกรอก"  min="1" max="100" class="form-control bg-white">
+                                        <input type="number" name="recur_count" value="{{ $contract->recurring['recur_count'] ?? '' }}" id="recur_count" placeholder="ไม่จำเป็นต้องกรอก"  min="1" max="100" class="form-control bg-white">
                                     </div>
                                     <div class="col-auto">
                                         <p>ครั้ง , งวด</p>
@@ -191,7 +200,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    </div>
 
                     <div class="row g-3 mb-3 d-flex justify-content-center">
                         <div class="col-auto">
@@ -209,6 +218,32 @@
                         </div>
                     </div>
                 </form>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <form action="{{ route('add-projcode') }}" method="POST">
+                            @csrf
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">เพิ่ม Project Code</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <input type="text" name="projcode" class="form-control mb-2" id="projcode" placeholder="กรอก Project Code ที่ต้องการเพิ่ม" required>
+                                    <input type="text" name="projname" class="form-control mb-2" id="projname" placeholder="กรอก Project Name" required>
+                                    <p class="text-warning" style="font-size: 12px">*หลังจากบันทึกแล้ว กรุณา roload หน้าเว็บ</p>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -293,6 +328,18 @@
         $('.enableCheck').change(function() {
             // Enable or disable checkboxes with class checkdate based on the checked status of check1
             $('.checkdate').prop('disabled', !$(this).prop('checked'));
+        });
+
+        $('#recurring').change(function() {
+            if($(this).is(":checked")) {
+                $('.recur_input').show();
+                $('.recur_text').hide();
+                console.log("Checkbox is checked");
+            } else {
+                $('.recur_input').hide();
+                $('.recur_text').show();
+                console.log("Checkbox is unchecked");
+            }
         });
     });
 </script>

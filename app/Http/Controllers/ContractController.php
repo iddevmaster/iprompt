@@ -44,39 +44,55 @@ class ContractController extends Controller
     }
 
     public function storeContract (Request $request) {
+        if ($request->recur_toggle) {
+            $request->validate([
+                'recur_d' => ['required'], // Adjust your_table_name to the actual name of your table
+                'recur_m' => ['required'],
+                'recur_y' => ['required'],
+            ]);
+        }
+
         try {
-            $periodeDates = $this->getPeriod($request->recur_count, $request->recur_y, $request->recur_m, $request->recur_d, $request->dateRange);
             $cont = Contract::create([
                 'by' => $request->user()->id,
                 'book_num' => $request->cont_bnum,
                 'title' => $request->cont_title,
                 'party' => $request->cont_party,
-                'budget' => $request->cont_budget ?? 0,
+                'budget' => (int) str_replace(',', '', $request->cont_budget ?? '0'),
                 'time_range' => $request->dateRange,
                 'note' => $request->cont_note,
                 'files' => json_encode($request->cont_files),
                 'type' => $request->contact_type,
                 'submit_by' => json_encode([$request->user()->id]),
                 'project_code' => $request->proj_code ?? '',
-                'recurring' => json_encode([
+            ]);
+
+            if ($request->recur_toggle) {
+
+                $periodeDates = $this->getPeriod($request->recur_count, $request->recur_y, $request->recur_m, $request->recur_d, $request->dateRange);
+
+                foreach ($periodeDates as $index => $date) {
+                    Installment::create([
+                        'contract' => $cont->id,
+                        'date' => $date,
+                        'periot_num' => $index + 1
+                    ]);
+                }
+                $cont->recurring = json_encode([
                     'recur_count' => $request->recur_count,
                     'recur_y' => $request->recur_y,
                     'recur_m' => $request->recur_m,
                     'recur_d' => $request->recur_d,
-                ]),
-            ]);
-
-            foreach ($periodeDates as $index => $date) {
-                Installment::create([
-                    'contract' => $cont->id,
-                    'date' => $date,
-                    'periot_num' => $index + 1
                 ]);
+
+                $cont->save();
             }
+
             Alert::toast('Save contract successfully!','success');
             return redirect()->back();
         } catch (\Throwable $th) {
             //throw $th;
+            dd($th->getMessage());
             Alert::toast('Save contract unsuccessful!','error');
             return redirect()->back();
         }
@@ -94,17 +110,12 @@ class ContractController extends Controller
                 'project_code' => $request->proj_code ?? '',
             ]);
 
-            if (!$contract->recurring) {
-                $recurr = [
-                    'recur_count' => $request->recur_count ?? '',
-                    'recur_y' => $request->recur_y,
-                    'recur_m' => $request->recur_m,
-                    'recur_d' => $request->recur_d,
-                ];
+            $installments = Installment::where('contract', $contract->id)->get();
+            foreach ($installments ?? [] as $install) {
+                $install->delete();
+            }
 
-                $contract->recurring = json_encode($recurr);
-                $contract->save();
-
+            if ($request->recur_toggle) {
                 $periodeDates = $this->getPeriod($request->recur_count, $request->recur_y, $request->recur_m, $request->recur_d, $contract->time_range);
 
                 foreach ($periodeDates as $index => $date) {
@@ -114,7 +125,18 @@ class ContractController extends Controller
                         'periot_num' => $index + 1
                     ]);
                 }
+                $contract->recurring = json_encode([
+                    'recur_count' => $request->recur_count,
+                    'recur_y' => $request->recur_y,
+                    'recur_m' => $request->recur_m,
+                    'recur_d' => $request->recur_d,
+                ]);
+
+            } else {
+                $contract->recurring = null;
             }
+
+            $contract->save();
 
             Alert::toast('Save contract successfully!','success');
             return redirect()->route('contTable');
@@ -250,24 +272,47 @@ class ContractController extends Controller
         ];
 
         $events = [];
-        foreach ($installments as $index => $installment) {
-            $start = Carbon::createFromFormat('d/m/Y', $installment->date);
-            $end = $start->copy();
+        if (count($installments ?? []) > 0) {
+            foreach ($installments as $index => $installment) {
+                $start = Carbon::createFromFormat('d/m/Y', $installment->date);
+                $end = $start->copy();
+                $event = [
+                    'start' => $start,
+                    'end' => $end,
+                    'id' => optional($installment->getCont)->book_num,
+                    'groupId' => $eventType[optional($installment->getCont)->type],
+                    'title' => optional($installment->getCont)->title,
+                    'description' => optional($installment->getCont)->note ?? '',
+                    'proj' => (optional(optional($installment->getCont)->getProject)->project_code ?? '') . ' : ' . (optional(optional($installment->getCont)->getProject)->project_name ?? ''),
+                    'periot' => $index + 1,
+                    'party' => optional($installment->getCont)->party ?? '',
+                    'color' => $eventColor[optional($installment->getCont)->type],
+                    'allDay' => true,
+                ];
+                $events[] = $event;
+            }
+        } else {
+            $dates = explode(" - ", $contract->time_range);
+
+            // Create Carbon instances for the start and end dates
+            $startDate = Carbon::createFromFormat('d/m/Y', $dates[0]);
+            $endDate = Carbon::createFromFormat('d/m/Y', $dates[1]);
             $event = [
-                'start' => $start,
-                'end' => $end,
-                'id' => optional($installment->getCont)->book_num,
-                'groupId' => $eventType[optional($installment->getCont)->type],
-                'title' => optional($installment->getCont)->title,
-                'description' => optional($installment->getCont)->note ?? '',
-                'proj' => (optional(optional($installment->getCont)->getProject)->project_code ?? '') . ' : ' . (optional(optional($installment->getCont)->getProject)->project_name ?? ''),
-                'periot' => $index + 1,
-                'party' => optional($installment->getCont)->party ?? '',
-                'color' => $eventColor[optional($installment->getCont)->type],
+                'start' => $startDate,
+                'end' => $endDate,
+                'id' => $contract->book_num ?? '',
+                'groupId' => $eventType[$contract->type],
+                'title' => $contract->title,
+                'description' => $contract->note ?? '',
+                'proj' => (optional($contract->getProject)->project_code ?? '') . ' : ' . (optional($contract->getProject)->project_name ?? ''),
+                'periot' => 0,
+                'party' => $contract->party ?? '',
+                'color' => $eventColor[$contract->type],
                 'allDay' => true,
             ];
             $events[] = $event;
         }
+
 
         return view('contract-detail', compact('contract', 'installments', 'project', 'events'));
     }

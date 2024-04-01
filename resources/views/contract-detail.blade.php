@@ -101,11 +101,13 @@
             </div>
         </div>
         <hr>
-        <div class="row">
-            <div class="text-center my-3"><h2>รายละเอียดงวดงาน</h2></div>
-            <livewire:installment :cont="$contract->id" />
-        </div>
-        <hr>
+        @if ($contract->recurring)
+            <div class="row">
+                <div class="text-center my-3"><h2>รายละเอียดงวดงาน</h2></div>
+                <livewire:installment :cont="$contract->id" />
+            </div>
+            <hr>
+        @endif
         <div class="row">
             <div class="container">
                 <div class="text-center mb-4"><h2>Calendar</h2></div>
