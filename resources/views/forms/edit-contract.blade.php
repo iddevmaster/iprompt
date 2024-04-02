@@ -106,7 +106,7 @@
                             <label for="dateRange" class="col-form-label"><span class="text-danger">*</span>ระยะเวลาสัญญา</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="dateRange" id="dateRange" class="form-control dateRangePicker " value="{{ $contract->time_range }}" required>
+                            <input type="text" name="dateRange" id="dateRange" class="form-control dateRangePicker bg-white" value="{{ $contract->time_range }}" required>
                         </div>
                     </div>
 
