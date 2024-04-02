@@ -116,7 +116,7 @@
                                 </div>
                                 <div class="col-8">
                                     <input type="text" name="dateRange" id="dateRange" class="form-control dateRangePicker bg-white" value="" required>
-                                    <p class="text-warning" style="font-size: 15px">*หากบันทึกแล้วจะไม่สามารถแก้ไขได้</p>
+
                                 </div>
                             </div>
 
@@ -318,7 +318,7 @@
                                 </div>
                                 <div class="col-8">
                                     <input type="text" name="dateRange" id="dateRange2" class="form-control dateRangePicker bg-white" value="" required>
-                                    <p class="text-warning" style="font-size: 15px">*หากบันทึกแล้วจะไม่สามารถแก้ไขได้</p>
+
                                 </div>
                             </div>
 
@@ -520,7 +520,7 @@
                                 </div>
                                 <div class="col-8">
                                     <input type="text" name="dateRange" id="dateRange3" class="form-control bg-white dateRangePicker" value="" required>
-                                    <p class="text-warning" style="font-size: 15px">*หากบันทึกแล้วจะไม่สามารถแก้ไขได้</p>
+
                                 </div>
                             </div>
 
