@@ -108,6 +108,7 @@ class ContractController extends Controller
                 'note' => $request->cont_note,
                 'budget' => $request->cont_budget ?? 0,
                 'project_code' => $request->proj_code ?? '',
+                'time_range' => $request->dateRange,
             ]);
 
             $installments = Installment::where('contract', $contract->id)->get();
@@ -116,7 +117,7 @@ class ContractController extends Controller
             }
 
             if ($request->recur_toggle) {
-                $periodeDates = $this->getPeriod($request->recur_count, $request->recur_y, $request->recur_m, $request->recur_d, $contract->time_range);
+                $periodeDates = $this->getPeriod($request->recur_count, $request->recur_y, $request->recur_m, $request->recur_d, $request->dateRange);
 
                 foreach ($periodeDates as $index => $date) {
                     Installment::create([
@@ -187,18 +188,35 @@ class ContractController extends Controller
     }
 
     public function contractCalendar(Request $request) {
-        // if ($request->user()->hasRole('admin')) {
-        //     $contracts = Contract::all();
-        // } else {
-        //     $contracts = Contract::where('by', $request->user()->id)->get();
-        // }
-        $installments = Installment::all();
+        if ($request->user()->hasRole('admin')) {
+            $contracts = Contract::all();
+        } else {
+            $contracts = Contract::where('by', $request->user()->id)->get();
+        }
 
         $eventColor = [
-            'creditor' => '#6633C6',
-            'debtor' => '#0063FF',
-            'outdoor' => '#5AA136',
+            '#6633C6', // Original purple
+            '#0063FF', // Original blue
+            '#5AA136', // Original green
+            '#FF5733', // A vibrant orange
+            '#C70039', // A rich maroon
+            '#FFC300', // A bright yellow
+            '#DAF7A6', // A light pastel green
+            '#581845', // A deep purple
+            '#900C3F', // A strong wine
+            '#FF5733', // A vivid red
+            '#5D76CB', // Cool blue
+            '#009688', // Teal
+            '#4DB6AC', // Light teal
+            '#00796B', // Dark teal
+            '#B2DFDB', // Pale teal
+            '#80CBC4', // Soft cyan
+            '#4DD0E1', // Bright sky blue
+            '#81D4FA', // Light blue
+            '#4FC3F7', // Vivid sky blue
+            '#B39DDB', // Lavender
         ];
+
 
         $eventType = [
             'creditor' => 'สัญญา-เจ้าหนี้',
@@ -207,23 +225,48 @@ class ContractController extends Controller
         ];
 
         $events = [];
-        foreach ($installments as $index => $installment) {
-            $start = Carbon::createFromFormat('d/m/Y', $installment->date);
-            $end = $start->copy();
-            $event = [
-                'start' => $start,
-                'end' => $end,
-                'id' => optional($installment->getCont)->book_num,
-                'groupId' => $eventType[optional($installment->getCont)->type],
-                'title' => optional($installment->getCont)->title,
-                'description' => optional($installment->getCont)->note ?? '',
-                'proj' => (optional(optional($installment->getCont)->getProject)->project_code ?? '') . ' : ' . (optional(optional($installment->getCont)->getProject)->project_name ?? ''),
-                'periot' => $installment->periot_num ? $installment->periot_num : $index,
-                'party' => optional($installment->getCont)->party ?? '',
-                'color' => $eventColor[optional($installment->getCont)->type],
-                'allDay' => true,
-            ];
-            $events[] = $event;
+        foreach ($contracts ?? [] as $index => $contract) {
+            $installments = Installment::where('contract', $contract->id)->get();
+            if (count($installments ?? []) > 0) {
+                foreach ($installments as $index => $installment) {
+                    $start = Carbon::createFromFormat('d/m/Y', $installment->date);
+                    $end = $start->copy();
+                    $event = [
+                        'start' => $start,
+                        'end' => $end,
+                        'id' => optional($installment->getCont)->book_num,
+                        'groupId' => $eventType[optional($installment->getCont)->type],
+                        'title' => optional($installment->getCont)->title,
+                        'description' => optional($installment->getCont)->note ?? '',
+                        'proj' => (optional(optional($installment->getCont)->getProject)->project_code ?? '') . ' : ' . (optional(optional($installment->getCont)->getProject)->project_name ?? ''),
+                        'periot' => $installment->periot_num ? $installment->periot_num : $index,
+                        'party' => optional($installment->getCont)->party ?? '',
+                        'color' => $eventColor[rand(0, count($eventColor) - 1)],
+                        'allDay' => true,
+                    ];
+                    $events[] = $event;
+                }
+            } else {
+                $dates = explode(" - ", $contract->time_range);
+
+                // Create Carbon instances for the start and end dates
+                $startDate = Carbon::createFromFormat('d/m/Y', $dates[0]);
+                $endDate = Carbon::createFromFormat('d/m/Y', $dates[1]);
+                $event = [
+                    'start' => $startDate,
+                    'end' => $endDate,
+                    'id' => $contract->book_num ?? '',
+                    'groupId' => $eventType[$contract->type],
+                    'title' => $contract->title,
+                    'description' => $contract->note ?? '',
+                    'proj' => (optional($contract->getProject)->project_code ?? '') . ' : ' . (optional($contract->getProject)->project_name ?? ''),
+                    'periot' => 0,
+                    'party' => $contract->party ?? '',
+                    'color' => $eventColor[rand(0, count($eventColor) - 1)],
+                    'allDay' => true,
+                ];
+                $events[] = $event;
+            }
         }
 
         // dd($events[1]);

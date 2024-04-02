@@ -106,7 +106,7 @@
                             <label for="dateRange" class="col-form-label"><span class="text-danger">*</span>ระยะเวลาสัญญา</label>
                         </div>
                         <div class="col-8">
-                            <input type="text" name="dateRange" id="dateRange" class="form-control dateRangePicker " value="{{ $contract->time_range }}" required disabled>
+                            <input type="text" name="dateRange" id="dateRange" class="form-control dateRangePicker " value="{{ $contract->time_range }}" required>
                         </div>
                     </div>
 
@@ -210,7 +210,9 @@
                             <textarea class="form-control" name="cont_note" id="cont_note" rows="3">{!! $contract->note !!}</textarea>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <p class="text-warning" style="font-size: 15px">*Note: หากมีการเปลี่ยนแปลงการเกิดซ้ำ งวดงานเดิมจะถูกลบ</p>
+                    </div>
                     <div class="row">
                         <div class="d-flex justify-content-center">
                             <button id="cancel" type="button" class="btn btn-danger ms-2" >ยกเลิก</button>
