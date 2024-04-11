@@ -62,8 +62,8 @@
                                 @php
                                     $app = json_decode($row->app);
                                     $ins = json_decode($row->ins);
-                                    $appName = $user->firstWhere('id', $app->appId ?? '') ?? '-';
-                                    $insName = $user->firstWhere('id', $ins->appId ?? '') ?? '-';
+                                    $appName = $user->firstWhere('id', $app->appId ?? '') ?? [];
+                                    $insName = $user->firstWhere('id', $ins->appId ?? '') ?? [];
                                     $note = $app->note ?? '-';
                                     $insnote = $ins->note ?? '-';
                                     $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
@@ -81,8 +81,8 @@
                                             id="passbtn"
                                             note="{{$note}}"
                                             insnote="{{$insnote}}"
-                                            appName="{{$appName->name}}"
-                                            insName="{{$insName->name}}"
+                                            appName="{{$appName ? $appName->name : 'Unknow'}}"
+                                            insName="{{$insName ? $insName->name : 'Unknow'}}"
                                             value="{{$row->id}}">{{$row->stat}}</button>
                                 @elseif ($row->stat === 'ไม่ผ่านการตรวจสอบ' || $row->stat === 'ไม่ผ่านการอนุมัติ')
 
@@ -91,8 +91,8 @@
                                             id="notpass"
                                             note="{{$note}}"
                                             insnote="{{$insnote}}"
-                                            appName="{{$appName->name}}"
-                                            insName="{{$insName->name}}"
+                                            appName="{{$appName ? $appName->name : 'Unknow'}}"
+                                            insName="{{$insName ? $insName->name : 'Unknow'}}"
                                             docType="{{$row->type}}"
                                             value="{{$row->id}}">{{$row->stat}}</button>
                                 @else
