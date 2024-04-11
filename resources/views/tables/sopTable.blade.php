@@ -79,8 +79,8 @@
                                                 id="passbtn"
                                                 note="{{$note}}"
                                                 insnote="{{$insnote}}"
-                                                appName="{{count($appName) > 0 ? $appName->name : 'Unknow'}}"
-                                                insName="{{count($insName) > 0 ? $insName->name : 'Unknow'}}"
+                                                appName="{{$appName ? $appName->name : 'Unknow'}}"
+                                                insName="{{$insName ? $insName->name : 'Unknow'}}"
                                                 value="{{$row->id}}">{{$row->stat}}</button>
                                 @elseif ($row->stat === 'ไม่ผ่านการตรวจสอบ' || $row->stat === 'ไม่ผ่านการอนุมัติ')
 
@@ -89,8 +89,8 @@
                                             id="notpass"
                                             note="{{$note}}"
                                             insnote="{{$insnote}}"
-                                            appName="{{count($appName) > 0 ? $appName->name : 'Unknow'}}"
-                                            insName="{{count($insName) > 0 ? $insName->name : 'Unknow'}}"
+                                            appName="{{$appName ? $appName->name : 'Unknow'}}"
+                                            insName="{{$insName ? $insName->name : 'Unknow'}}"
                                             docType="{{$row->type}}"
                                             value="{{$row->id}}">{{$row->stat}}</button>
                                 @else
