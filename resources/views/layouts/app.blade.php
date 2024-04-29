@@ -228,7 +228,7 @@
                                     @can('course')
                                         <li><a class="dropdown-item" href="{{ route('courseTable') }}">course</a></li>
                                     @endcan
-                                    @can('check')
+                                    @can('checklist')
                                         <li><a class="dropdown-item" href="{{ route('checkTable') }}">Check List</a></li>
                                     @endcan
                                     @can('media')
