@@ -7,7 +7,7 @@
 <?php $permis = Auth::user()->role ;
       $dpm = Auth::user()->dpm;
 ?>
-    <div class="container">
+    <div class="px-lg-5 px-md-4 px-1">
         <div class="text-center mb-4"><h2>ทะเบียนสัญญา</h2></div>
 
         <nav>
@@ -69,7 +69,7 @@
                                     }
                                 @endphp
                                 <td class="text-nowrap">{{ $row->book_num}}</td>
-                                <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
+                                <td class="truncate w-25" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                     {{ $row->title }}
                                 </td>
                                 <td>{{ $row->party}}</td>
@@ -196,7 +196,7 @@
                                 <tr>
                                     <td>{{ $num }}</td>
                                     <td class="text-nowrap">{{ $row->book_num}}</td>
-                                    <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
+                                    <td class="truncate w-25" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                         {{ $row->title }}
                                     </td>
                                     <td>{{ $row->party}}</td>
@@ -353,7 +353,7 @@
                                 <tr>
                                     <td>{{ $num2 }}</td>
                                     <td class="text-nowrap">{{ $row->book_num}}</td>
-                                    <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
+                                    <td class="truncate w-25" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                         {{ $row->title }}
                                     </td>
                                     <td>{{ $row->party}}</td>
@@ -510,7 +510,7 @@
                                 <tr>
                                     <td>{{ $num3 }}</td>
                                     <td class="text-nowrap">{{ $row->book_num}}</td>
-                                    <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
+                                    <td class="truncate w-25" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                         {{ $row->title }}
                                     </td>
                                     <td>{{ $row->party}}</td>

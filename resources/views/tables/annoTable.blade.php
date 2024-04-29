@@ -5,7 +5,7 @@
 
 @section('content')
 <body>
-    <div class="container">
+    <div class="px-lg-5 px-md-4 px-1">
         <div class="text-center mb-4"><h2>ทะเบียนประกาศ</h2></div>
         <!-- Table -->
         <div class="table-responsive">
@@ -37,7 +37,7 @@
                         <tr>
                             <td>{{$counter}}</td>
                             <td>{{ $row->book_num}}</td>
-                            <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
+                            <td class="truncate w-25" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                 {{ $row->title }}
                             </td>
                             <td>{{ $row->created_date}}</td>
@@ -124,8 +124,8 @@
                                         @php
                                             $fileList = $row->files;
                                         @endphp
-                                        @foreach (json_decode($fileList) as $file)
-                                            <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$file}}</button>
+                                        @foreach (json_decode($fileList) as $index => $file)
+                                            <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{$file}}">{{$index +1}}</button>
                                         @endforeach
                                     @else
 

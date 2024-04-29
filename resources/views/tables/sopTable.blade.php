@@ -5,7 +5,7 @@
 
 @section('content')
 <body>
-    <div class="container">
+    <div class="px-lg-5 px-md-4 px-1">
         <div class="text-center mb-4"><h2>ทะเบียน WF</h2></div>
         <!-- Table -->
         <div class="table-responsive">
@@ -16,7 +16,7 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">เลขที่หนังสือ</th>
-                        <th scope="col">ผู้สร้าง</th>
+                        {{-- <th scope="col">ผู้สร้าง</th> --}}
                         <th scope="col">เรื่อง</th>
                         <th scope="col">วันที่สร้าง</th>
                         <th scope="col">ผู้บันทึก</th>
@@ -38,8 +38,8 @@
                         <tr>
                             <td>{{$counter}}</td>
                             <td>{{ $row->book_num}}</td>
-                            <td>{{ $row->bcreater}}</td>
-                            <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
+                            {{-- <td>{{ $row->bcreater}}</td> --}}
+                            <td class="truncate w-25" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                 {{ $row->title }}
                             </td>
                             <td>{{ $row->created_date}}</td>
