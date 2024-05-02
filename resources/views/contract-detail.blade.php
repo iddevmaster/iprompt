@@ -133,17 +133,17 @@
     </div>
 
     <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://fastly.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <!-- rrule lib -->
-    <script src='https://cdn.jsdelivr.net/npm/rrule@2.6.4/dist/es5/rrule.min.js'></script>
+    <script src='https://fastly.jsdelivr.net/npm/rrule@2.6.4/dist/es5/rrule.min.js'></script>
 
     <!-- fullcalendar bundle -->
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+    <script src='https://fastly.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
 
     <!-- the rrule-to-fullcalendar connector. must go AFTER the rrule lib -->
-    <script src='https://cdn.jsdelivr.net/npm/@fullcalendar/rrule@6.1.11/index.global.min.js'></script>
+    <script src='https://fastly.jsdelivr.net/npm/@fullcalendar/rrule@6.1.11/index.global.min.js'></script>
     <script>
         $(document).ready(function() {
             $('[id^="myFile"]').each(function(index, element) {
