@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="icon" type="image/png" href="{{ asset('dist/img/logo.png') }}"  />
+    <link rel="icon" type="image/png" href="{{ asset('dist/img/logoiddrives.png') }}"  />
         <title>ระบบสารบรรณ</title>
     <!-- icon -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
