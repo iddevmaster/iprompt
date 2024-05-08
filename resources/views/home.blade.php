@@ -94,7 +94,7 @@
                             </div>
                         @endif
 
-                        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xxl-6 mb-2 justify-content-around border-bottom">
+                        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xxl-6 mb-2 border-bottom">
                             @can('cMOU')
                             <div class="col">
                                 <a class="a-tag" href="{{ route('mouForm') }}">
@@ -272,7 +272,7 @@
                         @endif
 
 
-                        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xxl-6 mb-2 justify-content-around border-bottom">
+                        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xxl-6 mb-2 border-bottom">
                             @can('MOU')
                             <div class="col col-4">
                                 <a class="a-tag" href="{{ route('mouTable') }}">
