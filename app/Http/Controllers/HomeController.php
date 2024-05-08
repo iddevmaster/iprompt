@@ -58,7 +58,6 @@ class HomeController extends Controller
             $contract->save();
 
         }
-
         return view('home', compact('contracts'));
     }
 

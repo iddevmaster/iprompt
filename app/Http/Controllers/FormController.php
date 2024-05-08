@@ -11,6 +11,7 @@ use Dompdf\Dompdf;
 use PDF;
 Use Alert;
 use App\Models\department;
+use Illuminate\Support\Facades\Crypt;
 
 class FormController extends Controller
 {
@@ -289,7 +290,8 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormwi(Request $request,$dorv,$id){
-        $form = gendoc::find($id);
+        $did = Crypt::decrypt($id);
+        $form = gendoc::find($did);
         // dd($form);
         if ($form) {
             $formtype = $form->type;
@@ -315,7 +317,8 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormmedia(Request $request,$dorv,$id){
-        $form = gendoc::find($id);
+        $did = Crypt::decrypt($id);
+        $form = gendoc::find($did);
         // dd($form);
         if ($form) {
             $formtype = $form->type;
@@ -342,7 +345,8 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormcourse(Request $request,$dorv,$id){
-        $form = gendoc::find($id);
+        $did = Crypt::decrypt($id);
+        $form = gendoc::find($did);
         // dd($form);
         if ($form) {
             $formtype = $form->type;
@@ -369,7 +373,8 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormcheck(Request $request,$dorv,$id){
-        $form = gendoc::find($id);
+        $did = Crypt::decrypt($id);
+        $form = gendoc::find($did);
         // dd($form);
         if ($form) {
             $formtype = $form->type;
@@ -395,7 +400,8 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormsop(Request $request,$dorv,$id){
-        $form = gendoc::find($id);
+        $did = Crypt::decrypt($id);
+        $form = gendoc::find($did);
         // dd($form);
         $formtype = $form->type;
         $class = 1;
@@ -417,7 +423,8 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormproj(Request $request,$dorv,$id){
-        $form = project_doc::find($id);
+        $did = Crypt::decrypt($id);
+        $form = project_doc::find($did);
         $data = [
             'proj_subm' => '',
             'proj_ins' => '',
@@ -443,7 +450,8 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormpol(Request $request,$dorv,$id){
-        $form = gendoc::find($id);
+        $did = Crypt::decrypt($id);
+        $form = gendoc::find($did);
         // dd($form);
         $formtype = $form->type;
         $class = 1;
@@ -465,7 +473,8 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormmou(Request $request,$dorv,$id){
-        $form = mou_doc::find($id);
+        $did = Crypt::decrypt($id);
+        $form = mou_doc::find($did);
 
         $class = 1;
         $formtype = $form->type;
@@ -488,8 +497,8 @@ class FormController extends Controller
 
     // Function for download form
     public function downloadFormanno(Request $request,$dorv,$id){
-
-        $form = announce_doc::find($id);
+        $did = Crypt::decrypt($id);
+        $form = announce_doc::find($did);
         $class = 1;
         $formtype = $form->type;
         $editorContent = $form->detail;

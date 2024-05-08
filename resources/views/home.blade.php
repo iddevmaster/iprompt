@@ -75,7 +75,7 @@
     @endcan
 
 
-    <div class="container">
+    <div class="">
         <div class="row justify-content-center">
             <div class="col-md-8 mb-5 d-flex justify-content-center">
                 <div class="head-name my-5">
@@ -94,9 +94,9 @@
                             </div>
                         @endif
 
-                        <div class="row mb-2 justify-content-around border-bottom">
+                        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xxl-6 mb-2 justify-content-around border-bottom">
                             @can('cMOU')
-                            <div class="col col-4">
+                            <div class="col">
                                 <a class="a-tag" href="{{ route('mouForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/MOU.png') }}" alt="" height="50px">
@@ -107,7 +107,7 @@
                             @endcan
 
                             @can('cPOL')
-                            <div class="col col-4">
+                            <div class="col">
                                 <a class="a-tag" href="{{ route('policyForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Policy.png') }}" alt="" height="50px">
@@ -118,7 +118,7 @@
                             @endcan
 
                             @can('cANNO')
-                            <div class="col col-4">
+                            <div class="col">
                                 <a class="a-tag" href="{{ route('annoForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Announce.png') }}" alt="" height="50px">
@@ -127,13 +127,9 @@
                                 </a>
                             </div>
                             @endcan
-                        </div>
-
-
-                        <div class="row border-bottom">
 
                             @can('cPRO')
-                            <div class="col col-4">
+                            <div class="col">
                                 <a class="a-tag" href="{{ route('projForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Project.png') }}" alt="" height="50px">
@@ -144,7 +140,7 @@
                             @endcan
 
                             @can('cSOP')
-                            <div class="col col-4">
+                            <div class="col">
                                 <a class="a-tag" href="{{ route('sopForm') }}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-arrow-return-right"></i>
@@ -155,7 +151,7 @@
                             @endcan
 
                             @can('cWI')
-                            <div class="col col-4">
+                            <div class="col">
                                 <a class="a-tag" href="{{ route('wiForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/WI.png') }}" alt="" height="50px">
@@ -164,11 +160,9 @@
                                 </a>
                             </div>
                             @endcan
-                        </div>
 
-                        <div class="row ">
                             @can('ccheck')
-                            <div class="col col-4">
+                            <div class="col">
                                 <a class="a-tag" href="{{ route('checkForm')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
@@ -179,7 +173,7 @@
                             @endcan
 
                             @can('ccourse')
-                            <div class="col col-4">
+                            <div class="col">
                                 <a class="a-tag" href="{{ route('courseForm')}}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-book"></i>
@@ -190,7 +184,7 @@
                             @endcan
 
                             @can('cmedia')
-                            <div class="col col-4">
+                            <div class="col">
                                 <a class="a-tag" href="{{ route('mediaForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Brochure.png') }}" alt="" height="50px">
@@ -199,11 +193,9 @@
                                 </a>
                             </div>
                             @endcan
-                        </div>
 
-                        <div class="row ">
                             @role('admin')
-                            <div class="col col-4">
+                            <div class="col">
                                 <a class="a-tag" href="">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/card.png') }}" alt="" height="50px">
@@ -212,7 +204,7 @@
                                 </a>
                             </div>
 
-                            <div class="col col-4">
+                            <div class="col">
                                 <a class="a-tag" href="">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/member.png') }}" alt="" height="50px">
@@ -223,7 +215,7 @@
                             @endrole
 
                             @can('cCONT')
-                                <div class="col col-4">
+                                <div class="col">
                                     <a class="a-tag" href="{{ route('contract') }}">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
@@ -232,38 +224,36 @@
                                     </a>
                                 </div>
                             @endcan
+
+                            @role('admin')
+                                <div class="col">
+                                    <a class="a-tag" href="">
+                                        <div class="w-100 h-100">
+                                            <img src="{{ asset('dist/logo/iso.png') }}" alt="" height="50px">
+                                            <p class="icon-title">ISO</p>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col">
+                                    <a class="a-tag" href="{{ route('jdForm') }}">
+                                        <div class="w-100 h-100">
+                                            <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
+                                            <p class="icon-title">รายละเอียดงาน</p>
+                                        </div>
+                                    </a>
+                                </div>
+
+                                <div class="col">
+                                    <a class="a-tag" href="">
+                                        <div class="w-100 h-100">
+                                            <img src="{{ asset('dist/logo/manual.png') }}" alt="" height="50px">
+                                            <p class="icon-title">คู่มือพนักงาน</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endrole
                         </div>
-
-                        @role('admin')
-                        <div class="row ">
-                            <div class="col col-4">
-                                <a class="a-tag" href="">
-                                    <div class="w-100 h-100">
-                                        <img src="{{ asset('dist/logo/iso.png') }}" alt="" height="50px">
-                                        <p class="icon-title">ISO</p>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col col-4">
-                                <a class="a-tag" href="{{ route('jdForm') }}">
-                                    <div class="w-100 h-100">
-                                        <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
-                                        <p class="icon-title">รายละเอียดงาน</p>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="col col-4">
-                                <a class="a-tag" href="">
-                                    <div class="w-100 h-100">
-                                        <img src="{{ asset('dist/logo/manual.png') }}" alt="" height="50px">
-                                        <p class="icon-title">คู่มือพนักงาน</p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        @endrole
                     </div>
                 </div>
             </div>
@@ -282,7 +272,7 @@
                         @endif
 
 
-                        <div class="row mb-2 justify-content-around border-bottom">
+                        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xxl-6 mb-2 justify-content-around border-bottom">
                             @can('MOU')
                             <div class="col col-4">
                                 <a class="a-tag" href="{{ route('mouTable') }}">
@@ -315,9 +305,6 @@
                                 </a>
                             </div>
                             @endcan
-                        </div>
-
-                        <div class="row">
 
                             @can('PRO')
                             <div class="col col-4">
@@ -351,8 +338,7 @@
                                 </a>
                             </div>
                             @endcan
-                        </div>
-                        <div class="row">
+
                             @can('media')
                             <div class="col col-4">
                                 <a class="a-tag" href="{{ route('mediaTable')}}">
@@ -385,9 +371,7 @@
                                 </a>
                             </div>
                             @endcan
-                        </div>
 
-                        <div class="row">
                             @can('CONT')
                                 <div class="col col-4">
                                     <a class="a-tag" href="{{ route('contTable') }}">

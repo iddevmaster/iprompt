@@ -156,16 +156,14 @@
             <p id="footertext">เอกสารนี้ ฉบับทางการ จะอยู่ในรูปไฟล์อิเล็กทรอนิกส์ อยู่ในระบบเครือข่ายสารสนเทศ เท่านั้น หากปรากฎเอกสารนี้ส่วนหนึ่งส่วนใด หรือทั้งฉบับ<br>
                 ในรูปสื่อกระดาษให้ตรวจสอบความทันสมัยกับฉบับทางการในระบบเครือข่ายสารสนเทศ ก่อนใช้อ้างอิง และทำลายทิ้งทันที หากพบว่าเป็นฉบับไม่ทันสมัย <br>
                 เอกสารนี้ เป็น สมบัติของบริษัท ไอดีไดรฟ์ จำกัดห้ามแจกจ่ายไปยังภายนอก โดยไม่ได้รับอนุญาตจาก กรรมการผู้จัดการ บริษัท ไอดีไดรฟ์ จำกัด <br>
-                <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: I-Prompt <?php echo date('Y-m-d H:i:s') ?></p>
+                <p class="mb-0" style="font-size:8px">Printed On: I-Prompt <?php echo date('Y-m-d H:i:s') ?></p>
             </p>
         </div> <!-- end footer -->
     </div> <!-- end page -->
     @if ($dorv == 'download')
-        @if ((Auth::user()->id == $submitb) || !(auth()->user()->can('staff')) || Auth::user()->hasRole(['admin', 'ceo']))
         <div class="d-flex justify-content-center downloadbtn">
             <button class="btn btn-success ms-2" onclick="printDiv()">Print</button>
         </div>
-        @endif
     @endif
 <script>
 function printDiv() {

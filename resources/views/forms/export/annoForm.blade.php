@@ -136,7 +136,7 @@
             <p id="footertext">เอกสารนี้ ฉบับทางการ จะอยู่ในรูปไฟล์อิเล็กทรอนิกส์ อยู่ในระบบเครือข่ายสารสนเทศ เท่านั้น หากปรากฎเอกสารนี้ส่วนหนึ่งส่วนใด หรือทั้งฉบับ
                 ในรูปสื่อกระดาษให้ตรวจสอบความทันสมัยกับฉบับทางการในระบบเครือข่ายสารสนเทศ ก่อนใช้อ้างอิง และทำลายทิ้งทันที หากพบว่าเป็นฉบับไม่ทันสมัย <br>
                 เอกสารนี้ เป็น สมบัติของบริษัท ไอดีไดรฟ์ จำกัดห้ามแจกจ่ายไปยังภายนอก โดยไม่ได้รับอนุญาตจาก กรรมการผู้จัดการ บริษัท ไอดีไดรฟ์ จำกัด
-                <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: I-Prompt <?php date_default_timezone_set('Asia/Bangkok');
+                <p class="mb-0" style="font-size:8px">Printed On: I-Prompt <?php date_default_timezone_set('Asia/Bangkok');
                                                                                                                         $now = time();
                                                                                                                         $thaiYear = intval(date('Y', $now)) + 543;
                                                                                                                         echo date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s', $now) . " +543 years")); ?>
@@ -145,11 +145,9 @@
         </div> <!-- end footer -->
     </div>
     @if ($dorv == 'download')
-        @if ((Auth::user()->id == $submitb) || !(auth()->user()->can('staff')) || Auth::user()->hasRole(['admin', 'ceo']))
         <div class="d-flex justify-content-center downloadbtn">
             <button class="btn btn-success ms-2" onclick="printDiv()">Print</button>
         </div>
-        @endif
     @endif
     <script>
     function printDiv() {

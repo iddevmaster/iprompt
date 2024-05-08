@@ -136,14 +136,18 @@
                                 <td></td>
                             @endif
 
+                            @php
+                                $encryptedId = Illuminate\Support\Facades\Crypt::encrypt($row->id);
+                            @endphp
+
                             {{-- 9 --}}
                             @if ((((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo'])) || (auth()->user()->can('download')) || (in_array((Auth::user())->dpm, $shares)) || (in_array(((Auth::user())->id), (is_array($teams)? $teams : []))))
                                 <td>
-                                    <a href="{{url('/form/downloadproj/download/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
+                                    <a href="{{url('/form/downloadproj/download/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
                                 </td>
                             @else
                                 <td>
-                                    <a href="{{url('/form/downloadproj/view/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                    <a href="{{url('/form/downloadproj/view/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                 </td>
                             @endif
 

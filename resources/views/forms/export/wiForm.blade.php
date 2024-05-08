@@ -246,7 +246,7 @@
                     เอกสารนี้ เป็น สมบัติของบริษัท ไอดีไดรฟ์
                     จำกัดห้ามแจกจ่ายไปยังภายนอก โดยไม่ได้รับอนุญาตจาก
                     กรรมการผู้จัดการ บริษัท ไอดีไดรฟ์ จำกัด
-                    <p class="mb-0" style="font-size:8px">Printed By {{ Auth::user()->name }}. Printed On: I-Prompt <?php echo date('Y-m-d H:i:s') ?></p>
+                    <p class="mb-0" style="font-size:8px">Printed On: I-Prompt <?php echo date('Y-m-d H:i:s') ?></p>
                 </p>
             </div>
             <!-- end footer -->
@@ -254,13 +254,11 @@
         <!-- end paper page -->
 
         @if ($dorv == 'download')
-            @if ((Auth::user()->id == $submitb) || !(auth()->user()->can('staff')) || Auth::user()->hasRole(['admin', 'ceo']))
             <div class="d-flex justify-content-center downloadbtn">
                 <button class="btn btn-success ms-2" onclick="printDiv()">
                     Print
                 </button>
             </div>
-            @endif
         @endif
         <!-- Scripts -->
         @vite(['resources/sass/app.scss', 'resources/css/app.css' ,

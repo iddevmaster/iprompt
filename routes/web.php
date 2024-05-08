@@ -106,31 +106,31 @@ Route::post('/table/deleteFile', [App\Http\Controllers\TablesController::class, 
 
 // Edit & export form
 Route::get('/form/editwi/{id}',[App\Http\Controllers\FormController::class,'editFormwi']);
-Route::get('/form/downloadwi/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormwi']);
+Route::get('/form/downloadwi/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormwi'])->withoutMiddleware('auth');
 
 Route::get('/form/editsop/{id}',[App\Http\Controllers\FormController::class,'editFormsop']);
-Route::get('/form/downloadsop/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormsop']);
+Route::get('/form/downloadsop/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormsop'])->withoutMiddleware('auth');
 
 Route::get('/form/editproj/{id}',[App\Http\Controllers\FormController::class,'editFormproj']);
-Route::get('/form/downloadproj/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormproj']);
+Route::get('/form/downloadproj/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormproj'])->withoutMiddleware('auth');
 
 Route::get('/form/editpol/{id}',[App\Http\Controllers\FormController::class,'editFormpol']);
-Route::get('/form/downloadpol/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormpol']);
+Route::get('/form/downloadpol/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormpol'])->withoutMiddleware('auth');
 
 Route::get('/form/editmou/{id}',[App\Http\Controllers\FormController::class,'editFormmou']);
-Route::get('/form/downloadmou/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormmou']);
+Route::get('/form/downloadmou/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormmou'])->withoutMiddleware('auth');
 
 Route::get('/form/editanno/{id}',[App\Http\Controllers\FormController::class,'editFormanno']);
-Route::get('/form/downloadanno/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormanno']);
+Route::get('/form/downloadanno/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormanno'])->withoutMiddleware('auth');
 
 Route::get('/form/editmedia/{id}',[App\Http\Controllers\FormController::class,'editFormmedia']);
-Route::get('/form/downloadmedia/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormmedia']);
+Route::get('/form/downloadmedia/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormmedia'])->withoutMiddleware('auth');
 
 Route::get('/form/editcourse/{id}',[App\Http\Controllers\FormController::class,'editFormcourse']);
-Route::get('/form/downloadcourse/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormcourse']);
+Route::get('/form/downloadcourse/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormcourse'])->withoutMiddleware('auth');
 
 Route::get('/form/editcheck/{id}',[App\Http\Controllers\FormController::class,'editFormcheck']);
-Route::get('/form/downloadcheck/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormcheck']);
+Route::get('/form/downloadcheck/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormcheck'])->withoutMiddleware('auth');
 
 Route::get('/export/table/{type}',[App\Http\Controllers\TablesController::class,'exTable']);
 
