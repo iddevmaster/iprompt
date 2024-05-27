@@ -63,25 +63,28 @@
                                     <button class="btn btn-secondary" name="{{$row->id}}" id="{{$row->stat}}" docType="{{$row->type}}">{{$row->stat}}</button>
                                 </td>
 
+                                @php
+                                    $encryptedId = Illuminate\Support\Facades\Crypt::encrypt($row->id);
+                                @endphp
                                 <td>
                                     @if ($row->type === 'wiForm')
-                                        <a href="{{url('/form/downloadwi/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                        <a href="{{url('/form/downloadwi/verify/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @elseif ($row->type === 'sopForm')
-                                        <a href="{{url('/form/downloadsop/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                        <a href="{{url('/form/downloadsop/verify/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @elseif ($row->type === 'policyForm')
-                                        <a href="{{url('/form/downloadpol/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                        <a href="{{url('/form/downloadpol/verify/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @elseif ($row->type === 'annoForm')
-                                        <a href="{{url('/form/downloadanno/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                        <a href="{{url('/form/downloadanno/verify/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @elseif ($row->type === 'mouForm')
-                                        <a href="{{url('/form/downloadmou/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                        <a href="{{url('/form/downloadmou/verify/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @elseif ($row->type === 'projForm')
-                                        <a href="{{url('/form/downloadproj/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                        <a href="{{url('/form/downloadproj/verify/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @elseif ($type[0] === 'courseForm')
-                                        <a href="{{url('/form/downloadcourse/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                        <a href="{{url('/form/downloadcourse/verify/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @elseif ($type[0] === 'mediaForm')
-                                        <a href="{{url('/form/downloadmedia/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                        <a href="{{url('/form/downloadmedia/verify/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @elseif ($type[0] === 'checkForm')
-                                        <a href="{{url('/form/downloadcheck/verify/'.$row->id)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                        <a href="{{url('/form/downloadcheck/verify/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @endif
                                 </td>
                             </tr>
