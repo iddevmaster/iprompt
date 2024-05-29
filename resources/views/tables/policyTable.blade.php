@@ -123,23 +123,19 @@
                             @endif
 
 
-                            @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)))
-                                <td class="text-center">
-                                    @if ($row->files != null)
-                                        @php
-                                            $fileList = $row->files;
-                                        @endphp
-                                        @foreach (json_decode($fileList) as $index => $file)
-                                            <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{$file}}">{{$index +1}}</button>
-                                        @endforeach
-                                    @else
+                            <td class="text-center">
+                                @if ($row->files != null)
+                                    @php
+                                        $fileList = $row->files;
+                                    @endphp
+                                    @foreach (json_decode($fileList) as $index => $file)
+                                        <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{$file}}">{{$index +1}}</button>
+                                    @endforeach
+                                @else
 
-                                    @endif
-                                    <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="policy">upload</button>
-                                </td>
-                            @else
-                                <td></td>
-                            @endif
+                                @endif
+                                <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="policy">upload</button>
+                            </td>
 
                             @can('staff')
                                 <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="policy">

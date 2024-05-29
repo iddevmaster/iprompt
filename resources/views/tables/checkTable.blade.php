@@ -153,31 +153,27 @@
                                 @endif
 
 
-                                @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)))
-                                    <td class="text-center">
-                                        @if ($row->files != null)
-                                            @php
-                                                $fileList = $row->files;
-                                            @endphp
-                                            @foreach (json_decode($fileList) as $index => $file)
-                                                <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}"
-                                                    candel=
-                                                    @if ( ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']))
-                                                        "1"
-                                                    @else
-                                                        "0"
-                                                    @endif
-                                                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{$file}}"
-                                                >{{$index + 1}}</button>
-                                            @endforeach
-                                        @else
+                                <td class="text-center">
+                                    @if ($row->files != null)
+                                        @php
+                                            $fileList = $row->files;
+                                        @endphp
+                                        @foreach (json_decode($fileList) as $index => $file)
+                                            <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}"
+                                                candel=
+                                                @if ( ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']))
+                                                    "1"
+                                                @else
+                                                    "0"
+                                                @endif
+                                            data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{$file}}"
+                                            >{{$index + 1}}</button>
+                                        @endforeach
+                                    @else
 
-                                        @endif
-                                        <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="check">upload</button>
-                                    </td>
-                                @else
-                                    <td></td>
-                                @endif
+                                    @endif
+                                    <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="check">upload</button>
+                                </td>
 
                                 {{-- Share Btn --}}
                                 <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="check" teamlist="{{json_encode($teamlist)}}"
