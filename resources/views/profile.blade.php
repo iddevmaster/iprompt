@@ -81,6 +81,21 @@
                         <label for="phone" class="form-label">Phone:</label>
                         <input class="form-control ms-2" id="phone" type="text" value="{{$user->phone ?? '-Unknow-'}}" disabled>
                     </div>
+                    <div class="mb-4">
+                        <div class="d-flex">
+                            <label for="formFile" class="form-label">Sign:</label>
+                            <input class="form-control ms-2" type="file" id="sign" accept="image/png, image/jpeg" disabled>
+                        </div>
+                        <p style="font-size: 10px; color:rgb(148, 148, 0)">ขนาดที่แนะนำ 5MB ความกว้าง 100px, ความสูง 50px (26*13 mm), ประเภทไฟล์ png, jpeg</p>
+                    </div>
+                    <div class="mb-4">
+                        <label for="formFile" class="form-label">Sign example:</label>
+                        @if ($user->image)
+                            <img src="/files/signs/{{$user->image}}" alt="sign" class="img-thumbnail" style="width: 100px; height: 50px;">
+                        @else
+                            <p class="badge text-bg-secondary">Sign not found</p>
+                        @endif
+                    </div>
                     <div class="d-flex justify-content-center mt-auto">
                         <a href="{{url('/change-password/'.$user->id)}}"><button type="button" class="btn btn-secondary">เปลี่ยนรหัสผ่าน</button></a>
                         <button type="button" id="editbtn" class="btn btn-primary ms-2" data-bs-toggle="button">Edit</button>
@@ -308,6 +323,7 @@
                         const agn = document.getElementById('agn');
                         const brn = document.getElementById('brn');
                         const phone = document.getElementById('phone');
+                        const sign = document.getElementById('sign');
                         const  down_yes = document.getElementById('down_yes');
                         const down_no = document.getElementById('down_no');
                         // const create_yes = document.getElementById('create_yes');
@@ -353,6 +369,7 @@
                                 name.disabled = false;
                                 username.disabled = false;
                                 phone.disabled = false;
+                                sign.disabled = false;
 
                                 if ( userRole == 'admin') {
                                     role.disabled = false;
@@ -403,53 +420,55 @@
                             } else {
                                 const download = document.querySelector('input[name="download"]:checked').value;
                                 // const create = document.querySelector('input[name="create"]:checked').value;
+
+                                let formData = new FormData();
+                                formData.append('id', userid.value);
+                                formData.append('name', name.value);
+                                formData.append('username', username.value);
+                                formData.append('dpm', dpm.value);
+                                formData.append('agn', agn.value);
+                                formData.append('brn', brn.value);
+                                formData.append('phone', phone.value);
+                                formData.append('sign', sign.files[0]);
+                                formData.append('role', role && role.value ? role.value : userRole);
+                                formData.append('permiss', JSON.stringify({
+                                    // permission,
+                                    download: (download == 1 ? true : false),
+                                    approve: approver.checked,
+                                    inspect: inspector.checked,
+
+                                    WI: wi.checked,
+                                    SOP: sop.checked,
+                                    POL: pol.checked,
+                                    PRO: pro.checked,
+                                    MOU: mou.checked,
+                                    ANNO: anno.checked,
+                                    CONT: cont.checked,
+                                    checklist: check.checked,
+                                    course: course.checked,
+                                    media: media.checked,
+
+                                    cWI: cwi.checked,
+                                    cSOP: csop.checked,
+                                    cPOL: cpol.checked,
+                                    cPRO: cpro.checked,
+                                    cMOU: cmou.checked,
+                                    cANNO: canno.checked,
+                                    cCONT: ccont.checked,
+                                    ccheck: ccheck.checked,
+                                    ccourse: ccourse.checked,
+                                    cmedia: cmedia.checked,
+
+                                    staff: staff.checked,
+                                    addProjCode: addProjCode.checked,
+                                }));
+
                                 const response = fetch('/users/update', {
                                     method: "POST",
                                     headers: {
-                                        'Content-Type': 'application/json',
                                         'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
                                     },
-                                    body: JSON.stringify({
-                                        id : userid.value,
-                                        name: name.value,
-                                        username: username.value,
-                                        dpm: dpm.value,
-                                        agn: agn.value,
-                                        brn: brn.value,
-                                        phone: phone.value,
-                                        role: role.value,
-                                        permiss: {
-                                            // permission,
-                                            download: (download == 1 ? true : false),
-                                            approve: approver.checked,
-                                            inspect: inspector.checked,
-
-                                            WI: wi.checked,
-                                            SOP: sop.checked,
-                                            POL: pol.checked,
-                                            PRO: pro.checked,
-                                            MOU: mou.checked,
-                                            ANNO: anno.checked,
-                                            CONT: cont.checked,
-                                            checklist: check.checked,
-                                            course: course.checked,
-                                            media: media.checked,
-
-                                            cWI: cwi.checked,
-                                            cSOP: csop.checked,
-                                            cPOL: cpol.checked,
-                                            cPRO: cpro.checked,
-                                            cMOU: cmou.checked,
-                                            cANNO: canno.checked,
-                                            cCONT: ccont.checked,
-                                            ccheck: ccheck.checked,
-                                            ccourse: ccourse.checked,
-                                            cmedia: cmedia.checked,
-
-                                            staff: staff.checked,
-                                            addProjCode: addProjCode.checked,
-                                        }
-                                    }),
+                                    body: formData,
                                 })
                                 .then((response) => {
                                     if (!response.ok) {
@@ -474,49 +493,55 @@
 
                                 name.disabled = true;
                                 username.disabled = true;
-                                dpm.disabled = true;
-                                agn.disabled = true;
-                                brn.disabled = true;
                                 phone.disabled = true;
-                                role.disabled = true;
+                                sign.disabled = true;
 
-                                down_yes.disabled = true;
-                                down_no.disabled = true;
+                                if ( userRole == 'admin') {
+                                    dpm.disabled = true;
+                                    agn.disabled = true;
+                                    brn.disabled = true;
 
-                                // Create
-                                // create_yes.disabled = true;
-                                // create_no.disabled = true;
+                                    role.disabled = true;
 
-                                // Confirmable
-                                approver.disabled = true;
-                                inspector.disabled = true;
+                                    down_yes.disabled = true;
+                                    down_no.disabled = true;
+
+                                    // Create
+                                    // create_yes.disabled = true;
+                                    // create_no.disabled = true;
+
+                                    // Confirmable
+                                    approver.disabled = true;
+                                    inspector.disabled = true;
 
 
-                                // Access
-                                wi.disabled = true;
-                                sop.disabled = true;
-                                pol.disabled = true;
-                                pro.disabled = true;
-                                mou.disabled = true;
-                                anno.disabled = true;
-                                cont.disabled = true;
-                                check.disabled = true;
-                                course.disabled = true;
-                                media.disabled = true;
+                                    // Access
+                                    wi.disabled = true;
+                                    sop.disabled = true;
+                                    pol.disabled = true;
+                                    pro.disabled = true;
+                                    mou.disabled = true;
+                                    anno.disabled = true;
+                                    cont.disabled = true;
+                                    check.disabled = true;
+                                    course.disabled = true;
+                                    media.disabled = true;
 
-                                cwi.disabled = true;
-                                csop.disabled = true;
-                                cpol.disabled = true;
-                                cpro.disabled = true;
-                                cmou.disabled = true;
-                                canno.disabled = true;
-                                ccont.disabled = true;
-                                ccheck.disabled = true;
-                                ccourse.disabled = true;
-                                cmedia.disabled = true;
+                                    cwi.disabled = true;
+                                    csop.disabled = true;
+                                    cpol.disabled = true;
+                                    cpro.disabled = true;
+                                    cmou.disabled = true;
+                                    canno.disabled = true;
+                                    ccont.disabled = true;
+                                    ccheck.disabled = true;
+                                    ccourse.disabled = true;
+                                    cmedia.disabled = true;
 
-                                staff.disabled = true;
-                                addProjCode.disabled = true;
+                                    staff.disabled = true;
+
+                                    addProjCode.disabled = true;
+                                }
 
                                 editbtn.textContent = 'Edit';
 

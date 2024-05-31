@@ -28,6 +28,7 @@ class User extends Authenticatable
         'branch',
         'phone',
         'dpm',
+        'image',
     ];
 
     /**

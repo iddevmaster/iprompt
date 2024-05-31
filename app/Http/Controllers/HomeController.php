@@ -139,13 +139,30 @@ class HomeController extends Controller
         $log = [];
         $user = User::find($data['id']);
         try {
-            foreach ($data['permiss'] as $key => $value) {
+            $permiss = json_decode($data['permiss']);
+            foreach ($permiss ?? [] as $key => $value) {
                 if ($value){
                     $log[] = 'if ' . $key;
                     $user->givePermissionTo($key);
                 } else {
                     $log[] = 'else ' . $key;
                     $user->revokePermissionTo($key);
+                }
+            }
+
+            $destinationPath = 'files/signs/';
+            // Handle file upload
+            if ($request->hasFile('sign')) {
+                $file = $request->file('sign');
+                $fileName = $user->email . '.' . $file->getClientOriginalExtension();
+                // if file size is over 5MB not upload
+                if ($file->getSize() < 5 * 1024 * 1024) {
+                    // if has same name file, delete it
+                    if (file_exists($destinationPath . $fileName)) {
+                        unlink($destinationPath . $fileName);
+                    }
+                    $file->move($destinationPath, $fileName);
+                    $user->image = $fileName;
                 }
             }
 
@@ -160,7 +177,7 @@ class HomeController extends Controller
 
             $user->save();
             Alert::toast('User update successfully!','success');
-            return response()->json(['data' => $data, 'user' => $user, 'log' => $log]);
+            return response()->json(['data' => $request->hasFile('sign'), 'log' => $log, 'user' => $user]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'data is not save']);
         }
