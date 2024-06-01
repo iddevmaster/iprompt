@@ -195,9 +195,9 @@
                     @php
                         $app = json_decode($form->app);
                         $ins = json_decode($form->ins);
-                        $appName = App\Models\User::find($app->appId);
-                        $insName = App\Models\User::find($ins->appId);
-                        $submit_id = json_decode($form->submit_by);
+                        $appName = App\Models\User::find($app->appId ?? '');
+                        $insName = App\Models\User::find($ins->appId ?? '');
+                        $submit_id = json_decode($form->submit_by ?? '');
 
                         // check type of submit_id
                         if (is_array($submit_id)) {
