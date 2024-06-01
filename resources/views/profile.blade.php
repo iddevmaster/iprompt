@@ -84,7 +84,7 @@
                     <div class="mb-1">
                         <div class="d-flex">
                             <label for="formFile" class="form-label">Sign:</label>
-                            <input class="form-control ms-2" type="file" id="sign" accept="image/png, image/jpeg" disabled>
+                            <input class="form-control ms-2" type="file" id="sign" accept="image/png, image/jpeg, image/jpg" disabled>
                         </div>
                         <p class="m-0" style="font-size: 10px; color:rgb(148, 148, 0)">ขนาดที่แนะนำ 5MB ความกว้าง 100px, ความสูง 50px (26*13 mm), ประเภทไฟล์ png, jpeg</p>
                     </div>
