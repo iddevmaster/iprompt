@@ -134,7 +134,13 @@
                     $appName = App\Models\User::find($app->appId);
                     $insName = App\Models\User::find($ins->appId);
                     $submit_id = json_decode($form->submit_by);
-                    $owner = App\Models\User::find($submit_id[0]);
+
+                    // check type of submit_id
+                    if (is_array($submit_id)) {
+                        $owner = App\Models\User::find($submit_id[0]);
+                    } else {
+                        $owner = App\Models\User::find($submit_id);
+                    }
                 @endphp
                 <div class="col py-2 text-start align-items-start">
                     <div class="d-flex">

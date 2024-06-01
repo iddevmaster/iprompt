@@ -126,19 +126,52 @@
 
             <!-- header row 2 -->
             <div class="row mx-0 w-100 border border-black border-top-0 justify-content-center text-center">
+                @php
+                    $app = json_decode($form->app);
+                    $ins = json_decode($form->ins);
+                    $appName = App\Models\User::find($app->appId);
+                    $insName = App\Models\User::find($ins->appId);
+                    $submit_id = json_decode($form->submit_by);
+
+                    // check type of submit_id
+                    if (is_array($submit_id)) {
+                        $owner = App\Models\User::find($submit_id[0]);
+                    } else {
+                        $owner = App\Models\User::find($submit_id);
+                    }
+                @endphp
                 <div class="col py-2 text-start align-items-start">
-                    <p class="mb-1">ผู้จัดทำ:</p>
-                        <p class="mb-0 text-center mt-2">{{ $creater }}</p>
-                        <input type="hidden" name="creater" value="{{ $creater }}">
+                    <div class="d-flex">
+                        <p class="mb-1">ผู้จัดทำ:</p>
+                        @if ($owner->image ?? false)
+                            <img src="/files/signs/{{ $owner->image }}" alt="sign" style="width: 100px; height: 50px;">
+                        @endif
+                    </div>
+                    <p class="mb-0 text-center">{{ $creater }}</p>
+                    <input type="hidden" name="creater" value="{{ $creater }}">
                 </div>
                 <div class="col-5 py-2 text-start align-items-start border border-black border-top-0 border-bottom-0">
-                    <p class="mb-1">ผู้ตรวจสอบ:</p>
-                        <p class="mb-0 text-center mt-2">{{ $inspector }}</p>
+                    <div class="d-flex">
+                        <p class="mb-1">ผู้ตรวจสอบ:</p>
+                        @if ($form->stat === 'ผ่านการอนุมัติ')
+                            @if ($insName->image ?? false)
+                                <img src="/files/signs/{{ $insName->image }}" alt="sign" style="width: 100px; height: 50px;">
+                            @endif
+                        @endif
+                    </div>
+                        <p class="mb-0 text-center">{{ $inspector }}</p>
                         <input type="hidden" name="inspector" value="{{ $inspector }}">
                 </div>
                 <div class="col py-2 text-start align-items-start">
-                    <p class="mb-1">ผู้อนุมัติ:</p>
-                        <p class="mb-0 text-center mt-2">{{ $approver }}</p>
+                    <div class="d-flex">
+                        <p class="mb-1">ผู้อนุมัติ:</p>
+                        @if ($form->stat === 'ผ่านการอนุมัติ')
+                            @if ($appName->image ?? false)
+                                <img src="/files/signs/{{ $appName->image }}" alt="sign" style="width: 100px; height: 50px;">
+                            @endif
+                        @endif
+                    </div>
+                        <p class="mb-0 text-center">{{ $approver }}</p>
                         <input type="hidden" name="approver" value="{{ $approver }}">
                 </div>
             </div><!-- end header row 2 -->

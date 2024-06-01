@@ -192,34 +192,53 @@
                 <div
                     class="row mx-0 w-100 border border-black border-top-0 justify-content-center text-center"
                 >
-                    <div class="col py-2 text-start d-flex align-items-start">
-                        <p class="no-wrap">ผู้จัดทำ:</p>
-                        <p class="no-wrap mt-4">{{ $creater }}</p>
-                        <input
-                            type="hidden"
-                            name="creater"
-                            value="{{ $creater }}"
-                        />
+                    @php
+                        $app = json_decode($form->app);
+                        $ins = json_decode($form->ins);
+                        $appName = App\Models\User::find($app->appId);
+                        $insName = App\Models\User::find($ins->appId);
+                        $submit_id = json_decode($form->submit_by);
+
+                        // check type of submit_id
+                        if (is_array($submit_id)) {
+                            $owner = App\Models\User::find($submit_id[0]);
+                        } else {
+                            $owner = App\Models\User::find($submit_id);
+                        }
+                    @endphp
+                    <div class="col py-2 text-start align-items-start">
+                        <div class="d-flex">
+                            <p class="mb-1">ผู้จัดทำ:</p>
+                            @if ($owner->image ?? false)
+                                <img src="/files/signs/{{ $owner->image }}" class="ms-2" alt="sign" style="width: 100px; height: 50px;">
+                            @endif
+                        </div>
+                        <p class="text-center mb-0">{{ $creater }}</p>
+                        <input type="hidden" name="creater" value="{{ $creater }}">
                     </div>
-                    <div
-                        class="col-5 py-2 text-start d-flex align-items-start border border-black border-top-0 border-bottom-0"
-                    >
-                        <p class="no-wrap">ผู้ตรวจสอบ:</p>
-                        <p class="no-wrap mt-4">{{ $inspector }}</p>
-                        <input
-                            type="hidden"
-                            name="inspector"
-                            value="{{ $inspector }}"
-                        />
+                    <div class="col-5 py-2 text-start align-items-start border border-black border-top-0 border-bottom-0">
+                        <div class="d-flex">
+                            <p class="mb-1">ผู้ตรวจสอบ:</p>
+                            @if ($form->stat === 'ผ่านการอนุมัติ')
+                                @if ($insName->image ?? false)
+                                    <img src="/files/signs/{{ $insName->image }}" class="ms-2" alt="sign" style="width: 100px; height: 50px;">
+                                @endif
+                            @endif
+                        </div>
+                        <p class="mb-0 text-center">{{ $inspector }}</p>
+                        <input type="hidden" name="inspector" value="{{ $inspector }}">
                     </div>
-                    <div class="col py-2 text-start d-flex align-items-start">
-                        <p class="no-wrap">ผู้อนุมัติ:</p>
-                        <p class="no-wrap mt-4">{{ $approver }}</p>
-                        <input
-                            type="hidden"
-                            name="approver"
-                            value="{{ $approver }}"
-                        />
+                    <div class="col py-2 text-start align-items-start">
+                        <div class="d-flex">
+                            <p class="mb-1">ผู้อนุมัติ:</p>
+                            @if ($form->stat === 'ผ่านการอนุมัติ')
+                                @if ($appName->image ?? false)
+                                    <img src="/files/signs/{{ $appName->image }}" class="ms-2" alt="sign" style="width: 100px; height: 50px;">
+                                @endif
+                            @endif
+                        </div>
+                        <p class="mb-0 text-center">{{ $approver }}</p>
+                        <input type="hidden" name="approver" value="{{ $approver }}">
                     </div>
                 </div>
                 <!-- end header row 2 -->

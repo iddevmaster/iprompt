@@ -81,12 +81,12 @@
                         <label for="phone" class="form-label">Phone:</label>
                         <input class="form-control ms-2" id="phone" type="text" value="{{$user->phone ?? '-Unknow-'}}" disabled>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-1">
                         <div class="d-flex">
                             <label for="formFile" class="form-label">Sign:</label>
                             <input class="form-control ms-2" type="file" id="sign" accept="image/png, image/jpeg" disabled>
                         </div>
-                        <p style="font-size: 10px; color:rgb(148, 148, 0)">ขนาดที่แนะนำ 5MB ความกว้าง 100px, ความสูง 50px (26*13 mm), ประเภทไฟล์ png, jpeg</p>
+                        <p class="m-0" style="font-size: 10px; color:rgb(148, 148, 0)">ขนาดที่แนะนำ 5MB ความกว้าง 100px, ความสูง 50px (26*13 mm), ประเภทไฟล์ png, jpeg</p>
                     </div>
                     <div class="mb-4">
                         <label for="formFile" class="form-label">Sign example:</label>

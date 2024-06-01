@@ -81,6 +81,8 @@
                                             insnote="{{$insnote}}"
                                             appName="{{$appName ? $appName->name : 'Unknow'}}"
                                             insName="{{$insName ? $insName->name : 'Unknow'}}"
+                                            appSign="{{ $appName ? $appName->image : ''}}"
+                                            insSign="{{ $insName ? $insName->image : ''}}"
                                             value="{{$row->id}}">{{$row->stat}}</button>
                                 @elseif ($row->stat === 'ไม่ผ่านการตรวจสอบ' || $row->stat === 'ไม่ผ่านการอนุมัติ')
                                     <button class="btn btn-danger"
@@ -348,13 +350,15 @@
             let appnote = ckbtn.getAttribute('note');
             let insName = ckbtn.getAttribute('insName');
             let insnote = ckbtn.getAttribute('insnote');
+            let appSign = ckbtn.getAttribute('appSign');
+            let insSign = ckbtn.getAttribute('insSign');
             ckbtn.addEventListener('click', function () {
                 Swal.fire({
                     title: status,
-                    html: `ผู้ตรวจสอบ: ${insName}<br>Note: ${insnote}
+                    html: `ผู้ตรวจสอบ: ${insName}<br>Note: ${insnote}<br>${insSign ? '<img src="/files/signs/' + insSign + '" alt="sign" class="img-thumbnail" style="width: 100px; height: 50px;">' : ''}
                             <br>
                             <br>
-                            ผู้อนุมัติ: ${appName}<br>Note: ${appnote}
+                            ผู้อนุมัติ: ${appName}<br>Note: ${appnote}<br>${appSign ? '<img src="/files/signs/' + appSign + '" alt="sign" class="img-thumbnail" style="width: 100px; height: 50px;">' : ''}
                             `,
                     showCancelButton: false,
                     confirmButtonText: 'OK',
