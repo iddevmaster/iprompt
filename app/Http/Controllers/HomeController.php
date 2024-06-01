@@ -161,6 +161,11 @@ class HomeController extends Controller
                     if (file_exists($destinationPath . $fileName)) {
                         unlink($destinationPath . $fileName);
                     }
+                    if ($user->image) {
+                        if (file_exists($destinationPath . $user->image)) {
+                            unlink($destinationPath . $user->image);
+                        }
+                    }
                     $file->move($destinationPath, $fileName);
                     $user->image = $fileName;
                 }
