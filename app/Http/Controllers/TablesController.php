@@ -1189,39 +1189,39 @@ class TablesController extends Controller
     public function deleteFile(Request $request) {
         try {
             // Handle file upload
-            // $filePath = $request->fileName; // Provide the relative path to the file
+            $filePath = $request->fileName; // Provide the relative path to the file
 
-            // if (Storage::disk('files')->exists($filePath)) {
-            //     Storage::disk('files')->delete($filePath);
-            // } elseif (Storage::disk('files')->exists('contract/'.$filePath)) {
-            //     Storage::disk('files')->delete('contract/'. $filePath);
-            // }
-            // $fileList = [];
-            // $finallist = [];
-            // if ($request->type == 'proj') {
-            //     $yourModel = project_doc::find($request->input('id'));
-            //     $fileData = json_decode($yourModel->files);
-            // } elseif ($request->type == 'announce') {
-            //     $yourModel = announce_doc::find($request->input('id'));
-            //     $fileData = json_decode($yourModel->files);
-            // } elseif ($request->type == 'mou') {
-            //     $yourModel = mou_doc::find($request->input('id'));
-            //     $fileData = json_decode($yourModel->files);
-            // } elseif ($request->type == 'cont') {
-            //     $yourModel = Contract::find($request->input('id'));
-            //     $fileData = $yourModel->files;
-            // } else {
-            //     $yourModel = gendoc::find($request->input('id'));
-            //     $fileData = json_decode($yourModel->files);
-            // }
-            // $fileList = $fileData;
-            // foreach ($fileList as $item) {
-            //     if ($item !== $request->fileName) {
-            //         $finallist[] = $item;
-            //     }
-            // }
-            // $yourModel->files = $finallist;
-            // $yourModel->save();
+            if (Storage::disk('files')->exists($filePath)) {
+                Storage::disk('files')->delete($filePath);
+            } elseif (Storage::disk('files')->exists('contract/'.$filePath)) {
+                Storage::disk('files')->delete('contract/'. $filePath);
+            }
+            $fileList = [];
+            $finallist = [];
+            if ($request->type == 'proj') {
+                $yourModel = project_doc::find($request->input('id'));
+                $fileData = json_decode($yourModel->files);
+            } elseif ($request->type == 'announce') {
+                $yourModel = announce_doc::find($request->input('id'));
+                $fileData = json_decode($yourModel->files);
+            } elseif ($request->type == 'mou') {
+                $yourModel = mou_doc::find($request->input('id'));
+                $fileData = json_decode($yourModel->files);
+            } elseif ($request->type == 'cont') {
+                $yourModel = Contract::find($request->input('id'));
+                $fileData = $yourModel->files;
+            } else {
+                $yourModel = gendoc::find($request->input('id'));
+                $fileData = json_decode($yourModel->files);
+            }
+            $fileList = $fileData;
+            foreach ($fileList as $item) {
+                if ($item !== $request->fileName) {
+                    $finallist[] = $item;
+                }
+            }
+            $yourModel->files = $finallist;
+            $yourModel->save();
 
             return response()->json(['success' => $request->all()]);
         } catch (\Exception $e) {
