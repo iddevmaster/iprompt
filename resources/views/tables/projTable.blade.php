@@ -520,7 +520,7 @@
                             // Handle the response if needed
                             console.log(data);
                             // You can also reload the page to see the changes, if required
-                            Swal.fire('Success!', 'ลบไฟล์สำเร็จ.', 'success');
+                            window.location.reload();
                         })
                         .catch((error) => {
                             // Handle errors if any
