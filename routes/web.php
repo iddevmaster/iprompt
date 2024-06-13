@@ -18,12 +18,10 @@ Route::get('/', function () {
     return view('auth/login');
 });
 
-// Route::get('/phpinfo', function () {
-//     phpinfo();
-// });
-
 Auth::routes();
-
+Route::get('/phpinfo', function () {
+    phpinfo();
+});
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/alluser', [App\Http\Controllers\HomeController::class, 'alluser'])->name('alluser');
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
