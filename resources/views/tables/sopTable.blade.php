@@ -420,7 +420,7 @@
             ckbtn.addEventListener('click', function () {
                 Swal.fire({
                     title: 'Select file',
-                    text: 'ไฟล์ที่รองรับ: pdf, jpg, jpeg, png, docx, doc, txt',
+                    text: 'ไฟล์ที่รองรับ: pdf, jpg, jpeg, png, docx, doc, txt ไม่เกิน 128MB',
                     input: 'file',
                     inputAttributes: {
                         'accept': 'pdf/*',
