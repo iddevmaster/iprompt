@@ -465,6 +465,7 @@
             ckbtn.addEventListener('click', function () {
                 Swal.fire({
                     title: 'Select file',
+                    text: 'Please upload your file here',
                     input: 'file',
                     inputAttributes: {
                         'accept': 'pdf/*',
