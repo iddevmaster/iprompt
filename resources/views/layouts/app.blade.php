@@ -148,7 +148,7 @@
                                     @php
                                         $userDpm = (App\Models\department::find((Auth::user())->dpm ?? ''))->prefix ?? '-';
                                     @endphp
-                                    @if ($userDpm === 'AD' || Auth::user()->role === 'admin')
+                                    @if ($userDpm === 'AD' || Auth::user()->role === 'admin' || Auth::user()->role === 'ceo')
                                         <li><a class="dropdown-item" href="{{ route('imported') }}">รับเข้าหนังสือ</a></li>
                                     @endif
                                         <li><a class="dropdown-item" href="{{ route('importedTable') }}">ทะเบียนหนังสือ</a></li>
