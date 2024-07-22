@@ -1153,7 +1153,7 @@ class TablesController extends Controller
             // Handle file upload
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
-                $fileName = $request->type.str_replace(' ', '', $file->getClientOriginalName());
+                $fileName = str_replace(' ', '', $file->getClientOriginalName());
                 $file->move($destinationPath, $fileName);
             } else {
                 return response()->json(['error' => 'File not found'], 400);
