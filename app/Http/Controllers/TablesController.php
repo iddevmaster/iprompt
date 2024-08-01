@@ -1101,6 +1101,10 @@ class TablesController extends Controller
                 $gendoc = project_doc::find($request->bid);
             } elseif ($request->type === 'cont') {
                 $gendoc = Contract::find($request->bid);
+            } elseif ($request->type === 'anno') {
+                $gendoc = announce_doc::find($request->bid);
+            } elseif ($request->type === 'mou') {
+                $gendoc = mou_doc::find($request->bid);
             } else {
                 $gendoc = gendoc::find($request->bid);
             }
