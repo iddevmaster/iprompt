@@ -65,7 +65,6 @@
                             @if ($_SESSION['data'] ?? false)
                                 {!! $_SESSION['data'] !!}
                             @endif
-                        <?php session_destroy();?>
                     </textarea>
                 @endif
 

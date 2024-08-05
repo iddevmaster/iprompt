@@ -100,14 +100,13 @@
                         $_SESSION['data'] = $editorContent;
                     ?>
                     <div class="editorContent2" style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
-                    <input type="hidden" name="editorContent" value="{!! $editorContent !!}">
+                    <input type="hidden" name="editorContent" value="{{ $editorContent }}">
                 @else
                     <textarea id="editor" name="myInput">
                         <?php session_start();?>
                             @if ($_SESSION['data'] ?? false)
                                 {!! $_SESSION['data'] !!}
                             @endif
-                        <?php session_destroy();?>
                     </textarea>
                 @endif
             </div><!-- end content -->
