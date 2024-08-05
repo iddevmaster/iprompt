@@ -13,9 +13,11 @@ use App\Models\type;
 use PDF;
 Use Alert;
 use App\Models\Contract;
+use App\Models\costs_doc;
 use App\Models\department;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 
 class TablesController extends Controller
@@ -284,6 +286,120 @@ class TablesController extends Controller
         $type = type::where('type', 'check')->get();
         $dpms = department::all();
         return view('/tables/checkTable', compact('inspectors','approvers','gendoc', 'user', 'type', 'dpms'));
+    }
+
+    public function costTable() {
+        if ((Auth::user()->hasRole('employee')) && (((department::find((Auth::user())->dpm))->prefix == 'IDD') || ((department::find((Auth::user())->dpm))->prefix == 'INS'))) {
+            $gendoc = costs_doc::where('dpm', (department::find((Auth::user())->dpm))->prefix)
+                ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
+                ->orWhere('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')
+                ->orderBy('id', 'desc')
+                ->select([
+                    'id',
+                    'book_num',
+                    'submit_by',
+                    'created_date',
+                    'type',
+                    'title',
+                    'bcreater',
+                    'binspector',
+                    'bapprover',
+                    'shares',
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
+                ])
+                ->get();
+        }
+        elseif ((Auth::user()->hasRole('employee'))) {
+            $gendoc = costs_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')
+                ->orderBy('id', 'desc')
+                ->select([
+                    'id',
+                    'book_num',
+                    'submit_by',
+                    'created_date',
+                    'type',
+                    'title',
+                    'bcreater',
+                    'binspector',
+                    'bapprover',
+                    'shares',
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
+                ])
+                ->get();
+        }
+        elseif (Auth::user()->hasRole('leader_dpm')) {
+            $gendoc = costs_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
+                ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')
+                ->orderBy('id', 'desc')
+                ->select([
+                    'id',
+                    'book_num',
+                    'submit_by',
+                    'created_date',
+                    'type',
+                    'title',
+                    'bcreater',
+                    'binspector',
+                    'bapprover',
+                    'shares',
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
+                ])
+                ->get();
+        }
+        else {
+            $gendoc = costs_doc::orderBy('id', 'desc')
+                ->select([
+                    'id',
+                    'book_num',
+                    'submit_by',
+                    'created_date',
+                    'type',
+                    'title',
+                    'bcreater',
+                    'binspector',
+                    'bapprover',
+                    'shares',
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
+                ])
+                ->get();
+        };
+        foreach($gendoc as $doc) {
+            if ($doc->dpm == '-'){
+                $usersub = json_decode($doc->submit_by);
+                $doc->dpm = (department::find((User::find(is_array($usersub) ? $usersub[0] : $doc->submit_by))->dpm))->prefix;
+                $doc->save();
+            }
+        };
+
+        $user = User::all();
+        $approvers = User::permission('approve')->get();
+        $inspectors = User::permission('inspect')->get();
+        $type = type::where('type', 'cost')->get();
+        $dpms = department::all();
+        return view('/tables/costTable', compact('inspectors','approvers','gendoc', 'user', 'type', 'dpms'));
     }
 
     public function courseTable() {
@@ -859,12 +975,6 @@ class TablesController extends Controller
         // download PDF file with download method
         return $pdf->stream('pdf_file.pdf');
     }
-    // public function viewBeforDownload(Request $request,$id)
-    // {
-    //     $form = Form::find($id);
-    //     $pdf = PDF::loadView('export.form.pdfform', compact('form'));
-    //     return $pdf->stream('preview.pdf'); // Stream the PDF to the browser
-    // }
 
     public function viewwi(Request $request,$id) {
 
@@ -975,11 +1085,13 @@ class TablesController extends Controller
         $mouDocQuery = mou_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($mouDocColumns);
         $projectDocQuery = project_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($projectDocColumns);
         $announceDocQuery = announce_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($announceDocColumns);
+        $costDocQuery = costs_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($gendocColumns);
 
         $form = $gendocQuery
                     ->union($mouDocQuery)
                     ->union($projectDocQuery)
                     ->union($announceDocQuery)
+                    ->union($costDocQuery)
                     ->orderBy('id', 'desc')->get();
         $user = User::all();
         return view('/tables/verify', compact('form','user'));
@@ -996,6 +1108,9 @@ class TablesController extends Controller
             }
             elseif ($request->type === 'projForm') {
                 $form = project_doc::find($id);
+            }
+            elseif (Str::contains($request->type, 'costForm')) {
+                $form = costs_doc::find($id);
             }
             else {
                 $form = gendoc::find($id);
@@ -1105,6 +1220,8 @@ class TablesController extends Controller
                 $gendoc = announce_doc::find($request->bid);
             } elseif ($request->type === 'mou') {
                 $gendoc = mou_doc::find($request->bid);
+            } elseif ($request->type === 'cost') {
+                $gendoc = costs_doc::find($request->bid);
             } else {
                 $gendoc = gendoc::find($request->bid);
             }
@@ -1132,6 +1249,8 @@ class TablesController extends Controller
                 $gendoc = project_doc::find($request->bid);
             } elseif ($request->type === 'cont') {
                 $gendoc = Contract::find($request->bid);
+            } elseif ($request->type === 'cost') {
+                $gendoc = costs_doc::find($request->bid);
             } else {
                 $gendoc = gendoc::find($request->bid);
             }
@@ -1175,6 +1294,9 @@ class TablesController extends Controller
             } elseif ($request->type == 'cont') {
                 $yourModel = Contract::find($request->input('valueid'));
                 $fileData = $yourModel->files;
+            } elseif ($request->type == 'cost') {
+                $yourModel = costs_doc::find($request->input('valueid'));
+                $fileData = json_decode($yourModel->files);
             } else {
                 $yourModel = gendoc::find($request->input('valueid'));
                 $fileData = json_decode($yourModel->files);
@@ -1192,14 +1314,6 @@ class TablesController extends Controller
 
     public function deleteFile(Request $request) {
         try {
-            // Handle file upload
-            $filePath = $request->fileName; // Provide the relative path to the file
-
-            if (Storage::disk('files')->exists($filePath)) {
-                Storage::disk('files')->delete($filePath);
-            } elseif (Storage::disk('files')->exists('contract/'.$filePath)) {
-                Storage::disk('files')->delete('contract/'. $filePath);
-            }
             $fileList = [];
             $finallist = [];
             if ($request->type == 'proj') {
@@ -1214,6 +1328,9 @@ class TablesController extends Controller
             } elseif ($request->type == 'cont') {
                 $yourModel = Contract::find($request->input('id'));
                 $fileData = $yourModel->files;
+            } elseif ($request->type == 'cost') {
+                $yourModel = costs_doc::find($request->input('id'));
+                $fileData = json_decode($yourModel->files);
             } else {
                 $yourModel = gendoc::find($request->input('id'));
                 $fileData = json_decode($yourModel->files);
@@ -1227,7 +1344,16 @@ class TablesController extends Controller
             $yourModel->files = $finallist;
             $yourModel->save();
 
-            return response()->json(['success' => $request->all()]);
+            // Handle file upload
+            $filePath = $request->fileName; // Provide the relative path to the file
+
+            if (Storage::disk('files')->exists($filePath)) {
+                Storage::disk('files')->delete($filePath);
+            } elseif (Storage::disk('files')->exists('contract/'.$filePath)) {
+                Storage::disk('files')->delete('contract/'. $filePath);
+            }
+
+            return response()->json(['success' => "Delete file success."]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }

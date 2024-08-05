@@ -74,6 +74,7 @@ Route::get('/form/projForm', [App\Http\Controllers\FormController::class, 'projF
 Route::get('/form/mouForm', [App\Http\Controllers\FormController::class, 'mouForm'])->name('mouForm');
 Route::post('/form/preview', [App\Http\Controllers\FormController::class, 'preview'])->name('preview');
 Route::get('/form/checklist', [App\Http\Controllers\FormController::class, 'checkForm'])->name('checkForm');
+Route::get('/form/costs', [App\Http\Controllers\FormController::class, 'costForm'])->name('costForm');
 Route::get('/form/course', [App\Http\Controllers\FormController::class, 'courseForm'])->name('courseForm');
 Route::get('/form/media', [App\Http\Controllers\FormController::class, 'mediaForm'])->name('mediaForm');
 
@@ -90,6 +91,7 @@ Route::get('/tables/createPDF', [App\Http\Controllers\TablesController::class, '
 Route::get('/tables/imported', [App\Http\Controllers\ImportController::class, 'imported'])->name('importedTable');
 Route::get('/tables/verify', [App\Http\Controllers\TablesController::class, 'verifyDoc'])->name('verifyDoc');
 Route::get('/tables/checkTable', [App\Http\Controllers\TablesController::class, 'checkTable'])->name('checkTable');
+Route::get('/tables/costTable', [App\Http\Controllers\TablesController::class, 'costTable'])->name('costTable');
 Route::get('/tables/courseTable', [App\Http\Controllers\TablesController::class, 'courseTable'])->name('courseTable');
 Route::get('/tables/mediaTable', [App\Http\Controllers\TablesController::class, 'mediaTable'])->name('mediaTable');
 
@@ -129,6 +131,9 @@ Route::get('/form/downloadcourse/{dorv}/{id}',[App\Http\Controllers\FormControll
 
 Route::get('/form/editcheck/{id}',[App\Http\Controllers\FormController::class,'editFormcheck']);
 Route::get('/form/downloadcheck/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormcheck'])->withoutMiddleware('auth');
+
+Route::get('/form/editcost/{id}',[App\Http\Controllers\FormController::class,'editFormcost']);
+Route::get('/form/downloadcost/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormcost'])->withoutMiddleware('auth');
 
 Route::get('/export/table/{type}',[App\Http\Controllers\TablesController::class,'exTable']);
 

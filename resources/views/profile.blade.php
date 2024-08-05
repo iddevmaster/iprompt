@@ -134,13 +134,13 @@
                         <div class="form-check mx-3">
                             <input class="form-check-input" type="checkbox" value="" id="approver" disabled>
                             <label class="form-check-label" for="approver">
-                            Approver
+                                ผู้อนุมัติ
                             </label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="checkbox" value="" id="inspector" disabled>
                             <label class="form-check-label" for="inspector">
-                            Inspector
+                                ผู้ตรวจสอบ
                             </label>
                         </div>
                     </div>
@@ -175,13 +175,13 @@
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="POL" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Policy
+                                    นโยบาย
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="PRO" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Project
+                                    โครงการ
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">
@@ -193,13 +193,13 @@
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="ANNO" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Announcement
+                                    ประกาศ
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="CONT" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Contract
+                                    สัญญา
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">
@@ -218,6 +218,12 @@
                                 <input class="form-check-input" type="checkbox" value="" id="media" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Media
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="COST" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    ค้นทุนงาน
                                 </label>
                             </div>
                         </div>
@@ -241,13 +247,13 @@
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="cPOL" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Policy
+                                    นโยบาย
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="cPRO" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Project
+                                    โครงการ
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">
@@ -259,13 +265,13 @@
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="cANNO" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Announcement
+                                    ประกาศ
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="cCONT" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Contract
+                                    สัญญา
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">
@@ -284,6 +290,12 @@
                                 <input class="form-check-input" type="checkbox" value="" id="cmedia" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
                                     Media
+                                </label>
+                            </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="cCOST" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    ต้นทุนงาน
                                 </label>
                             </div>
                         </div>
@@ -341,6 +353,7 @@
                         const mou = document.getElementById('MOU');
                         const anno = document.getElementById('ANNO');
                         const cont = document.getElementById('CONT');
+                        const cost = document.getElementById('COST');
 
                         const cwi = document.getElementById('cWI');
                         const csop = document.getElementById('cSOP');
@@ -352,6 +365,7 @@
                         const cmou = document.getElementById('cMOU');
                         const canno = document.getElementById('cANNO');
                         const ccont = document.getElementById('cCONT');
+                        const ccost = document.getElementById('cCOST');
 
                         const staff = document.getElementById('staff');
                         const addProjCode = document.getElementById('addProjCode');
@@ -398,6 +412,7 @@
                                     mou.disabled = false;
                                     anno.disabled = false;
                                     cont.disabled = false;
+                                    cost.disabled = false;
                                     check.disabled = false;
                                     course.disabled = false;
                                     media.disabled = false;
@@ -409,6 +424,7 @@
                                     cmou.disabled = false;
                                     canno.disabled = false;
                                     ccont.disabled = false;
+                                    ccost.disabled = false;
                                     ccheck.disabled = false;
                                     ccourse.disabled = false;
                                     cmedia.disabled = false;
@@ -444,6 +460,7 @@
                                     MOU: mou.checked,
                                     ANNO: anno.checked,
                                     CONT: cont.checked,
+                                    COST: cost.checked,
                                     checklist: check.checked,
                                     course: course.checked,
                                     media: media.checked,
@@ -455,6 +472,7 @@
                                     cMOU: cmou.checked,
                                     cANNO: canno.checked,
                                     cCONT: ccont.checked,
+                                    cCOST: ccost.checked,
                                     ccheck: ccheck.checked,
                                     ccourse: ccourse.checked,
                                     cmedia: cmedia.checked,
@@ -523,6 +541,7 @@
                                     mou.disabled = true;
                                     anno.disabled = true;
                                     cont.disabled = true;
+                                    cost.disabled = true;
                                     check.disabled = true;
                                     course.disabled = true;
                                     media.disabled = true;
@@ -534,6 +553,7 @@
                                     cmou.disabled = true;
                                     canno.disabled = true;
                                     ccont.disabled = true;
+                                    ccost.disabled = true;
                                     ccheck.disabled = true;
                                     ccourse.disabled = true;
                                     cmedia.disabled = true;

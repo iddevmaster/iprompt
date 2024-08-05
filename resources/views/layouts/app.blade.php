@@ -195,6 +195,9 @@
                                     @can('cCONT')
                                         <li><a class="dropdown-item" href="{{ route('contract') }}">สัญญา</a></li>
                                     @endcan
+                                    @can('cCOST')
+                                        <li><a class="dropdown-item" href="{{ route('contract') }}">ต้นทุนงาน</a></li>
+                                    @endcan
                                 </div>
                             </ul>
                         </li>
@@ -236,6 +239,9 @@
                                     @endcan
                                     @can('CONT')
                                         <li><a class="dropdown-item" href="{{ route('contTable') }}">สัญญา</a></li>
+                                    @endcan
+                                    @can('COST')
+                                        <li><a class="dropdown-item" href="{{ route('contTable') }}">ต้นทุนงาน</a></li>
                                     @endcan
                                 </div>
                             </ul>

@@ -357,7 +357,7 @@
                                                 @else
 
                                                 @endif
-                                                <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="policy">upload</button>
+                                                <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="check">upload</button>
                                             </td>
                                         @else
                                             <td></td>

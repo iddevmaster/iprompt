@@ -8,7 +8,7 @@
       $dpm = Auth::user()->dpm;
 ?>
     <div class="px-lg-5 px-md-4 px-1">
-        <div class="text-center mb-4"><h2>ทะเบียน Course</h2></div>
+        <div class="text-center mb-4"><h2>ทะเบียนเอกสารต้นทุนงาน</h2></div>
 
         <nav>
             <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -20,8 +20,7 @@
             </div>
         </nav>
 
-
-        <div class="tab-content pt-3" id="nav-tabContent">
+        <div class="tab-content pt-4" id="nav-tabContent">
         <!-- Table -->
             <div class="tab-pane table-responsive fade show active" id="nav-all" role="tabpanel" aria-labelledby="nav-all-tab" tabindex="0">
                 <table class="table table-hover listTable">
@@ -31,7 +30,7 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">เลขที่หนังสือ</th>
-                            <th scope="col">ผู้สร้าง</th>
+                            {{-- <th scope="col">ผู้สร้าง</th> --}}
                             <th scope="col">เรื่อง</th>
                             <th scope="col">วันที่สร้าง</th>
                             <th scope="col">ผู้บันทึก</th>
@@ -40,9 +39,6 @@
                             <th scope="col">Download</th>
                             <th scope="col">แนบไฟล์</th>
                             <th scope="col">Share</th>
-                            @can('staff')
-                                <th scope="col">Share</th>
-                            @endcan
                         </tr>
                     </thead>
 
@@ -70,7 +66,7 @@
                             <tr>
                                 <td>{{$counter}}</td>
                                 <td>{{ $row->book_num}}</td>
-                                <td>{{ $row->bcreater}}</td>
+                                {{-- <td>{{ $row->bcreater}}</td> --}}
                                 <td class="truncate w-25" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                     {{ $row->title }}
                                 </td>
@@ -95,6 +91,7 @@
                                         $insName = $user->firstWhere('id', $ins->appId ?? '') ?? [];
                                         $note = $app->note ?? '-';
                                         $insnote = $ins->note ?? '-';
+                                        $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
                                     @endphp
                                     @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
                                         <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}"
@@ -130,9 +127,11 @@
                                     @endif
                                 </td>
 
-                                @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)))
+
+                                {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))) --}}
+                                @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
                                     <td>
-                                        <a href="{{url('/form/editcourse/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
+                                        <a href="{{url('/form/editcost/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
                                     </td>
                                 @else
                                     <td></td>
@@ -144,35 +143,39 @@
 
                                 @if ((((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo'])) || (auth()->user()->can('download')) || (in_array((Auth::user())->dpm, $shares)))
                                     <td>
-                                        <a href="{{url('/form/downloadcourse/download/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
+                                        <a href="{{url('/form/downloadcost/download/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
                                     </td>
                                 @else
                                     <td>
-                                        <a href="{{url('/form/downloadcourse/view/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                        <a href="{{url('/form/downloadcost/view/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     </td>
                                 @endif
 
 
-                                @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)))
-                                    <td class="text-center">
-                                        @if ($row->files != null)
-                                            @php
-                                                $fileList = $row->files;
-                                            @endphp
-                                            @foreach (json_decode($fileList) as $index => $file)
-                                                <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$index + 1}}</button>
-                                            @endforeach
-                                        @else
+                                <td class="text-center">
+                                    @if ($row->files != null)
+                                        @php
+                                            $fileList = $row->files;
+                                        @endphp
+                                        @foreach (json_decode($fileList) as $index => $file)
+                                            <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}"
+                                                candel=
+                                                @if ( ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']))
+                                                    "1"
+                                                @else
+                                                    "0"
+                                                @endif
+                                            data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{$file}}"
+                                            >{{$index + 1}}</button>
+                                        @endforeach
+                                    @else
 
-                                        @endif
-                                        <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="course">upload</button>
-                                    </td>
-                                @else
-                                    <td></td>
-                                @endif
+                                    @endif
+                                    <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="cost">upload</button>
+                                </td>
 
                                 {{-- Share Btn --}}
-                                <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="course" teamlist="{{json_encode($teamlist)}}"
+                                <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="cost" teamlist="{{json_encode($teamlist)}}"
                                     @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                         disabled
                                     @endif>
@@ -187,25 +190,6 @@
                                     @endphp
                                     </button>
                                 </td>
-
-                                @can('staff')
-                                    <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="course">
-                                        @php
-                                            $share = $row->shares;
-                                            $teamArr = json_decode($share);
-                                            if (is_array($teamArr)) {
-                                                foreach ($teamArr as $memb) {
-                                                    echo ($memb ? (App\Models\department::find($memb))->name : '') . " / ";
-                                                }
-                                            } else {
-                                                echo "share";
-                                            }
-                                            $permis = Auth::user()->role ;
-                                            $dpm = Auth::user()->dpm;
-                                        @endphp
-                                        </button>
-                                    </td>
-                                @endcan
                             </tr>
                             <?php $counter++ ?>
                         @endforeach
@@ -224,7 +208,7 @@
                             <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">เลขที่หนังสือ</th>
-                                <th scope="col">ผู้สร้าง</th>
+                                {{-- <th scope="col">ผู้สร้าง</th> --}}
                                 <th scope="col">เรื่อง</th>
                                 <th scope="col">วันที่สร้าง</th>
                                 <th scope="col">ผู้บันทึก</th>
@@ -233,9 +217,6 @@
                                 <th scope="col">Download</th>
                                 <th scope="col">แนบไฟล์</th>
                                 <th scope="col">Share</th>
-                                @can('staff')
-                                    <th scope="col">Share</th>
-                                @endcan
                             </tr>
                         </thead>
 
@@ -244,27 +225,11 @@
                             <!-- Table rows will be dynamically added here -->
                             <?php  $counter = 1 ?>
                             @foreach ($gendoc as $row)
-                                @php
-                                    $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
-                                    $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : [];
-                                    $team = $row->submit_by;
-                                    $teamArr = json_decode($team);
-                                    $teamlist = [];
-                                    $permis = Auth::user()->role ;
-                                    $dpm = Auth::user()->dpm;
-                                    if (is_array($teamArr)) {
-                                        foreach ($teamArr as $index => $memb) {
-                                            if ($index == 0) continue;
-                                            $submitUser = $user->firstWhere('id', $memb);
-                                            $teamlist[] = ($submitUser ? $submitUser->name : 'Unknow');
-                                        }
-                                    }
-                                @endphp
                                 @if (strpos($row->type, $item->subtype) !== false)
                                     <tr>
                                         <td>{{$counter}}</td>
                                         <td>{{ $row->book_num}}</td>
-                                        <td>{{ $row->bcreater}}</td>
+                                        {{-- <td>{{ $row->bcreater}}</td> --}}
                                         <td class="truncate w-25" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->title }}">
                                             {{ $row->title }}
                                         </td>
@@ -289,13 +254,14 @@
                                                 $insName = $user->firstWhere('id', $ins->appId ?? '') ?? [];
                                                 $note = $app->note ?? '-';
                                                 $insnote = $ins->note ?? '-';
+                                                $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
                                             @endphp
                                             @if ($row->stat === 'ยังไม่ได้ตรวจสอบ')
                                                 <button class="btn btn-info" name="{{$row->stat}}" docType="{{$row->type}}" id="status" value="{{$row->id}}"
                                                     @if (!(((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                                         disabled
                                                     @endif
-                                                >{{$row->stat}}</button>
+                                                    >{{$row->stat}}</button>
                                             @elseif ($row->stat === 'ผ่านการอนุมัติ')
                                                 <button class="btn btn-success"
                                                         name="{{$row->stat}}"
@@ -327,7 +293,7 @@
 
                                         @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)))
                                             <td>
-                                                <a href="{{url('/form/editcourse/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
+                                                <a href="{{url('/form/editcost/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
                                             </td>
                                         @else
                                             <td></td>
@@ -339,14 +305,13 @@
 
                                         @if ((((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo'])) || (auth()->user()->can('download')) || (in_array((Auth::user())->dpm, $shares)))
                                             <td>
-                                                <a href="{{url('/form/downloadcourse/download/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
+                                                <a href="{{url('/form/downloadcost/download/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
                                             </td>
                                         @else
                                             <td>
-                                                <a href="{{url('/form/downloadcourse/view/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                                <a href="{{url('/form/downloadcost/view/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                             </td>
                                         @endif
-
 
                                         @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)))
                                             <td class="text-center">
@@ -354,20 +319,26 @@
                                                     @php
                                                         $fileList = $row->files;
                                                     @endphp
-                                                    @foreach (json_decode($fileList) as $index => $file)
-                                                        <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}">{{$index + 1}}</button>
+                                                    @foreach (json_decode($fileList) as $file)
+                                                        <button type="button" data-file-path="{{ asset('files/' . $file) }}" class="btn btn-secondary viewFilebtn mb-1"  value="{{$file}}" fileId="{{$row->id}}"
+                                                            candel=
+                                                            @if (((App\Models\department::find((Auth::user())->dpm))->prefix == $row->dpm) || Auth::user()->hasRole(['admin', 'ceo']))
+                                                                "1"
+                                                            @else
+                                                            "0"
+                                                            @endif
+                                                        >{{$file}}</button>
                                                     @endforeach
                                                 @else
 
                                                 @endif
-                                                <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="course">upload</button>
+                                                <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="cost">upload</button>
                                             </td>
                                         @else
                                             <td></td>
                                         @endif
 
-                                        {{-- Share Btn --}}
-                                        <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="course" teamlist="{{json_encode($teamlist)}}"
+                                        <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="cost" teamlist="{{json_encode($teamlist)}}"
                                             @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                                 disabled
                                             @endif>
@@ -382,36 +353,17 @@
                                             @endphp
                                             </button>
                                         </td>
-
-                                        @can('staff')
-                                            <td><button class="btn btn-success" id="shareBtn" value="{{ $row->share}}" bookid="{{ $row->id}}" fileType="wi">
-                                                @php
-                                                    $share = $row->shares;
-                                                    $teamArr = json_decode($share);
-                                                    if (is_array($teamArr)) {
-                                                        foreach ($teamArr as $memb) {
-                                                            echo ($memb ? (App\Models\department::find($memb))->name : '') . " / ";
-                                                        }
-                                                    } else {
-                                                        echo "share";
-                                                    }
-                                                    $permis = Auth::user()->role ;
-                                                    $dpm = Auth::user()->dpm;
-                                                @endphp
-                                                </button>
-                                            </td>
-                                        @endcan
                                     </tr>
                                 @endif
                                 <?php $counter++ ?>
                             @endforeach
                         </tbody>
                     </table>
-                    <!-- Pagination Links -->
                 </div>
 
             @endforeach
-        </div>
+
+        </div> {{-- close tab content --}}
     </div>
     <script src="https://fastly.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -621,6 +573,7 @@
             const fileNameValue = pdfbtn.value;
             const formId = pdfbtn.getAttribute('fileId');
             const fileType = document.querySelector('.uploadBtn').getAttribute('fileType');
+            const canDel = pdfbtn.getAttribute('candel');
             pdfbtn.addEventListener('click', function () {
                 const pdfUrl = this.getAttribute('data-file-path');
                 Swal.fire({
@@ -629,7 +582,7 @@
                     html: '<div style="height: 600px;">' +
                         '<iframe src="' + pdfUrl + '" style="width: 100%; height: 100%;" frameborder="0"></iframe>' +
                         '</div>',
-                    showDenyButton: true,
+                    showDenyButton: (canDel != 0 ? true : false),
                     denyButtonText: 'Delete',
                 }).then((result) => {
                     if (result.isDenied) {
@@ -662,19 +615,15 @@
             });
         });
 
-        const checkbtn = document.querySelectorAll('.uploadBtn');
+        const costbtn = document.querySelectorAll('.uploadBtn');
         let statusValue;
-        checkbtn.forEach((ckbtn) => {
+        costbtn.forEach((ckbtn) => {
             const type = ckbtn.getAttribute('fileType');
             ckbtn.addEventListener('click', function () {
                 Swal.fire({
                     title: 'Select file',
                     text: 'ไฟล์ที่รองรับ: pdf, jpg, jpeg, png, docx, doc, txt ไม่เกิน 128MB',
                     input: 'file',
-                    inputAttributes: {
-                        'accept': 'pdf/*',
-                        'aria-label': 'Upload your profile picture'
-                    }
                 }).then((result) => {
                     const file = result.value; // Get the selected file from the result object
                     statusValue = ckbtn.value;
@@ -716,9 +665,9 @@
         addSubtype.addEventListener('click',async function () {
             const { value: email } = await Swal.fire({
                 title: 'เพิ่มหมวดหมู่',
-                input: 'text',
                 inputLabel: '#กรุณาอย่าใส่ตัวอักษรพิเศษ เช่น / @ " (สามารถใส่ - และ _ ได้)',
                 inputPlaceholder: "ห้ามเว้นวรรคข้อความ",
+                input: 'text',
                 confirmButtonText: 'บันทึก',
             });
 
@@ -730,7 +679,7 @@
                         'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
                     },
                     body: JSON.stringify({
-                        type: "course",
+                        type: "cost",
                         subtype: email,
                     }),
                 })
@@ -834,7 +783,6 @@
                 });
             });
         });
-
 
         const teambtns = document.querySelectorAll('#teamBtn');
         teambtns.forEach((ckbtn) => {

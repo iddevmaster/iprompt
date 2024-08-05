@@ -172,6 +172,17 @@
                             </div>
                             @endcan
 
+                            @can('cCOST')
+                            <div class="col">
+                                <a class="a-tag" href="{{ route('costForm')}}">
+                                    <div class="w-100 h-100">
+                                        <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
+                                        <p class="icon-title">ต้นทุนงาน</p>
+                                    </div>
+                                </a>
+                            </div>
+                            @endcan
+
                             @can('ccourse')
                             <div class="col">
                                 <a class="a-tag" href="{{ route('courseForm')}}">
@@ -367,6 +378,17 @@
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
                                         <p class="icon-title">CheckList</p>
+                                    </div>
+                                </a>
+                            </div>
+                            @endcan
+
+                            @can('COST')
+                            <div class="col col-4">
+                                <a class="a-tag" href="{{ route('costTable')}}">
+                                    <div class="w-100 h-100">
+                                        <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
+                                        <p class="icon-title">ต้นทุนงาน</p>
                                     </div>
                                 </a>
                             </div>

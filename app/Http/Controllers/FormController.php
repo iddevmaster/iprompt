@@ -10,8 +10,11 @@ use App\Models\mou_doc;
 use Dompdf\Dompdf;
 use PDF;
 Use Alert;
+use App\Models\costs_doc;
 use App\Models\department;
+use App\Models\User;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\File;
 
 class FormController extends Controller
 {
@@ -52,6 +55,13 @@ class FormController extends Controller
         $len = gendoc::withTrashed()->where('type', 'LIKE' , 'checkForm%')->count()+1;
         $class = 0;
         return view('/forms/checkForm', compact('class','len'));
+    }
+
+    public function costForm()
+    {
+        $len = gendoc::withTrashed()->where('type', 'LIKE' , 'costForm%')->count()+1;
+        $class = 0;
+        return view('/forms/costForm', compact('class','len'));
     }
 
     public function courseForm()
@@ -263,7 +273,11 @@ class FormController extends Controller
             Alert::toast('Your Form as been Saved!','success');
         }
         else{
-            $gendoc = new gendoc;
+            if ($formtype === "costForm") {
+                $gendoc = new costs_doc;
+            } else {
+                $gendoc = new gendoc;
+            }
             $gendoc->book_num = $request->bookNo;
             $gendoc->submit_by = $request->user()->id;
             $gendoc->created_date = date('Y-m-d');
@@ -388,6 +402,56 @@ class FormController extends Controller
             $submitb = $form->submit_by;
         }
         return view('/forms/export/checkForm', compact('submitb', 'form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+
+    }
+
+    public function editFormcost(Request $request,$id){
+        // แก้ไข wi form
+        $form = costs_doc::find($id);
+        // dd($form->title);
+        return view('/editForms/costForm', compact('form'));
+    }
+
+    // Function for download form
+    public function downloadFormcost(Request $request,$dorv,$id){
+        $did = Crypt::decrypt($id);
+        $form = costs_doc::find($did);
+        // dd($form);
+        if ($form) {
+            $formtype = $form->type;
+            $class = 1;
+            $editorContent = $form->detail;
+            $bookNo = $form->book_num;
+            $subject = $form->title;
+            $creater = $form->bcreater;
+            $inspector = $form->binspector;
+            $approver = $form->bapprover;
+            $submitb = $form->submit_by;
+
+            $app = json_decode($form->app);
+            $ins = json_decode($form->ins);
+            $appName = User::find($app->appId ?? '');
+            $insName = User::find($ins->appId ?? '');
+            $submit_id = json_decode($form->submit_by ?? '');
+
+            // check type of submit_id
+            if (is_array($submit_id)) {
+                $owner = User::find($submit_id[0]);
+            } else {
+                $owner = User::find($submit_id);
+            }
+
+            $cPath = public_path('files/signs/' . ($owner->image ?? ''));
+            $csign = File::exists($cPath);
+
+            $iPath = public_path('files/signs/' . ($insName->image ?? ''));
+            $isign = File::exists($iPath);
+
+            $aPath = public_path('files/signs/' . ($appName->image ?? ''));
+            $asign = File::exists($aPath);
+        }
+        return view('/forms/export/costForm',
+            compact('submitb', 'form', 'dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class', 'csign', 'appName', 'insName', 'owner', 'isign', 'asign'));
 
     }
 
@@ -587,7 +651,11 @@ class FormController extends Controller
             return redirect('/tables/projTable');
         }
         else {
-            $form = gendoc::find($request->formid);
+            if ($request->formtype === "costForm") {
+                $form = costs_doc::find($request->formid);
+            } else {
+                $form = gendoc::find($request->formid);
+            }
             if ($form) {
                 $editorContent = $request->myInput;
                 if ($request->input('iframeElement')) {
@@ -609,6 +677,8 @@ class FormController extends Controller
                 return redirect('/tables/sopTable');
             } elseif ($request->formtype === "policyForm") {
                 return redirect('/tables/policyTable');
+            } elseif ($request->formtype === "costForm") {
+                return redirect('/tables/costTable');
             } else {
                 return redirect('home');
             };

@@ -163,7 +163,7 @@
                                 @else
 
                                 @endif
-                                <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="check">upload</button>
+                                <button type="button" class="btn btn-info uploadBtn" value="{{$row->id}}" fileType="wi">upload</button>
                             </td>
 
                             {{-- Share with person --}}
