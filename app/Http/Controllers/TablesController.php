@@ -1076,10 +1076,10 @@ class TablesController extends Controller
 
 
     public function verifyDoc() {
-        $gendocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins'];
-        $mouDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins'];
-        $projectDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins'];
-        $announceDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins'];
+        $gendocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins', 'created_at'];
+        $mouDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins', 'created_at'];
+        $projectDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins', 'created_at'];
+        $announceDocColumns = ['id', 'book_num', 'type', 'title', 'created_date', 'submit_by', 'stat', 'app', 'ins', 'created_at'];
 
         $gendocQuery = gendoc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($gendocColumns);
         $mouDocQuery = mou_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($mouDocColumns);
@@ -1092,7 +1092,7 @@ class TablesController extends Controller
                     ->union($projectDocQuery)
                     ->union($announceDocQuery)
                     ->union($costDocQuery)
-                    ->orderBy('id', 'desc')->get();
+                    ->orderBy('created_at', 'desc')->get();
         $user = User::all();
         return view('/tables/verify', compact('form','user'));
     }
