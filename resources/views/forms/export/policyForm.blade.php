@@ -179,7 +179,7 @@
 
         <!-- content -->
         <div class="content py-5 w-100 h-100">
-                <div class="editorContent2" style="padding-left:1cm;padding-right:.5cm"> {!! $editorContent !!} </div>
+                <div class="editorContent2" style="padding-left:.5cm;padding-right:.5cm"> {!! $editorContent !!} </div>
                 <input type="hidden" name="editorContent" value="{{ $editorContent }}">
         </div><!-- end content -->
 
