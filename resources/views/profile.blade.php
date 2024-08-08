@@ -226,6 +226,12 @@
                                     ค้นทุนงาน
                                 </label>
                             </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="JD" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    JD
+                                </label>
+                            </div>
                         </div>
                     </div>
 
@@ -298,6 +304,12 @@
                                     ต้นทุนงาน
                                 </label>
                             </div>
+                            <div class="form-check mx-3 col-lg-3 col-md-6">
+                                <input class="form-check-input" type="checkbox" value="" id="cJD" disabled>
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    JD
+                                </label>
+                            </div>
                         </div>
                     </div>
 
@@ -354,6 +366,7 @@
                         const anno = document.getElementById('ANNO');
                         const cont = document.getElementById('CONT');
                         const cost = document.getElementById('COST');
+                        const jd = document.getElementById('JD');
 
                         const cwi = document.getElementById('cWI');
                         const csop = document.getElementById('cSOP');
@@ -366,6 +379,7 @@
                         const canno = document.getElementById('cANNO');
                         const ccont = document.getElementById('cCONT');
                         const ccost = document.getElementById('cCOST');
+                        const cjd = document.getElementById('cJD');
 
                         const staff = document.getElementById('staff');
                         const addProjCode = document.getElementById('addProjCode');
@@ -413,6 +427,7 @@
                                     anno.disabled = false;
                                     cont.disabled = false;
                                     cost.disabled = false;
+                                    jd.disabled = false;
                                     check.disabled = false;
                                     course.disabled = false;
                                     media.disabled = false;
@@ -425,6 +440,7 @@
                                     canno.disabled = false;
                                     ccont.disabled = false;
                                     ccost.disabled = false;
+                                    cjd.disabled = false;
                                     ccheck.disabled = false;
                                     ccourse.disabled = false;
                                     cmedia.disabled = false;
@@ -461,6 +477,7 @@
                                     ANNO: anno.checked,
                                     CONT: cont.checked,
                                     COST: cost.checked,
+                                    JD: jd.checked,
                                     checklist: check.checked,
                                     course: course.checked,
                                     media: media.checked,
@@ -473,6 +490,7 @@
                                     cANNO: canno.checked,
                                     cCONT: ccont.checked,
                                     cCOST: ccost.checked,
+                                    cJD: cjd.checked,
                                     ccheck: ccheck.checked,
                                     ccourse: ccourse.checked,
                                     cmedia: cmedia.checked,
@@ -542,6 +560,7 @@
                                     anno.disabled = true;
                                     cont.disabled = true;
                                     cost.disabled = true;
+                                    jd.disabled = true;
                                     check.disabled = true;
                                     course.disabled = true;
                                     media.disabled = true;
@@ -554,6 +573,7 @@
                                     canno.disabled = true;
                                     ccont.disabled = true;
                                     ccost.disabled = true;
+                                    cjd.disabled = true;
                                     ccheck.disabled = true;
                                     ccourse.disabled = true;
                                     cmedia.disabled = true;

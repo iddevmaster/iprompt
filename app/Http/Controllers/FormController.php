@@ -12,6 +12,7 @@ use PDF;
 Use Alert;
 use App\Models\costs_doc;
 use App\Models\department;
+use App\Models\jd_doc;
 use App\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
@@ -87,8 +88,10 @@ class FormController extends Controller
     public function jdForm()
     {
         // หน้า jd form
+        $currentYear = now()->year;
+        $len = jd_doc::withTrashed()->whereYear('created_at', $currentYear)->count()+1;
         $class = 0;
-        return view('/forms/jdForm', compact('class'));
+        return view('/forms/jdForm', compact('class', 'len'));
     }
     public function sopForm()
     {
@@ -275,6 +278,8 @@ class FormController extends Controller
         else{
             if ($formtype === "costForm") {
                 $gendoc = new costs_doc;
+            } elseif ($formtype === "jdForm") {
+                $gendoc = new jd_doc;
             } else {
                 $gendoc = new gendoc;
             }
@@ -479,6 +484,29 @@ class FormController extends Controller
         return view('/forms/export/sopForm', compact('submitb', 'form','dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
     }
 
+    public function editFormjd(Request $request,$id){
+        $form = jd_doc::find($id);
+        // dd($form->title);
+        return view('/editForms/jdForm', compact('form'));
+    }
+
+    // Function for download form
+    public function downloadFormjd(Request $request,$dorv,$id){
+        $did = Crypt::decrypt($id);
+        $form = jd_doc::find($did);
+        // dd($form);
+        $formtype = $form->type;
+        $class = 1;
+        $editorContent = $form->detail;
+        $bookNo = $form->book_num;
+        $subject = $form->title;
+        $creater = $form->bcreater;
+        $inspector = $form->binspector;
+        $approver = $form->bapprover;
+        $submitb = $form->submit_by;
+        return view('/forms/export/jdForm', compact('submitb', 'form','dorv' ,'bookNo','editorContent', 'approver', 'inspector', 'creater','subject','class'));
+    }
+
     // Function for edit form
     public function editFormproj(Request $request,$id){
         $form = project_doc::find($id);
@@ -653,6 +681,8 @@ class FormController extends Controller
         else {
             if ($request->formtype === "costForm") {
                 $form = costs_doc::find($request->formid);
+            } elseif ($request->formtype === "jdForm") {
+                $form = jd_doc::find($request->formid);
             } else {
                 $form = gendoc::find($request->formid);
             }
@@ -679,6 +709,8 @@ class FormController extends Controller
                 return redirect('/tables/policyTable');
             } elseif ($request->formtype === "costForm") {
                 return redirect('/tables/costTable');
+            } elseif ($request->formtype === "jdForm") {
+                return redirect('/tables/jdTable');
             } else {
                 return redirect('home');
             };

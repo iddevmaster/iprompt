@@ -198,6 +198,9 @@
                                     @can('cCOST')
                                         <li><a class="dropdown-item" href="{{ route('costForm') }}">ต้นทุนงาน</a></li>
                                     @endcan
+                                    @can('cJD')
+                                        <li><a class="dropdown-item" href="{{ route('jdForm') }}">รายละเอียดงาน</a></li>
+                                    @endcan
                                 </div>
                             </ul>
                         </li>
@@ -242,6 +245,9 @@
                                     @endcan
                                     @can('COST')
                                         <li><a class="dropdown-item" href="{{ route('costTable') }}">ต้นทุนงาน</a></li>
+                                    @endcan
+                                    @can('JD')
+                                        <li><a class="dropdown-item" href="{{ route('jdTable') }}">รายละเอียดงาน</a></li>
                                     @endcan
                                 </div>
                             </ul>

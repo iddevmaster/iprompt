@@ -236,21 +236,23 @@
                                 </div>
                             @endcan
 
+                            @can('cJD')
+                                <div class="col">
+                                    <a class="a-tag" href="{{ route('jdForm') }}">
+                                        <div class="w-100 h-100">
+                                            <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
+                                            <p class="icon-title">รายละเอียดงาน</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+
                             @role('admin')
                                 <div class="col">
                                     <a class="a-tag" href="">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/iso.png') }}" alt="" height="50px">
                                             <p class="icon-title">ISO</p>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="col">
-                                    <a class="a-tag" href="{{ route('jdForm') }}">
-                                        <div class="w-100 h-100">
-                                            <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
-                                            <p class="icon-title">รายละเอียดงาน</p>
                                         </div>
                                     </a>
                                 </div>
@@ -405,6 +407,17 @@
                                                     <span class="badge text-bg-danger">{{ count($alert_ins) }}</span>
                                                 @endif
                                             </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+
+                            @can('JD')
+                                <div class="col">
+                                    <a class="a-tag" href="{{ route('jdTable') }}">
+                                        <div class="w-100 h-100">
+                                            <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
+                                            <p class="icon-title">รายละเอียดงาน</p>
                                         </div>
                                     </a>
                                 </div>

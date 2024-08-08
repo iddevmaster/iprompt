@@ -104,8 +104,8 @@
                     <p class="mt-1">บริษัท ไอดีไดรฟ์ จำกัด</p>
                 </div>
                 <div class="col-5 border border-black border-top-0 border-bottom-0">
-                    <h5 class="mt-3 fw-bold">ระเบียบการปฏิบัติงาน</h5>
-                    <h5 class="fw-bold">Standard Operating Procedure (SOP)</h5>
+                    <h5 class="mt-3 fw-bold">มาตรฐานขั้นตอนการปฏิบัติงาน</h5>
+                    <h5 class="fw-bold">JOB DESCRIPTION (JD)</h5>
                     <div class="d-flex ">
                         <h5 class="text-start mt-3 fw-bold">เรื่อง</h5>
                             <h5 class="text-start mt-3 ms-2 " id="subject">{{$subject}}</h5>
@@ -145,7 +145,7 @@
                 <div class="col py-2 text-start align-items-start">
                     <div class="d-flex">
                         <p class="mb-1">ผู้จัดทำ:</p>
-                        @if ($owner->image ?? false)
+                        @if (($owner->image ?? false) && file_exists(public_path('/files/signs/' . $owner->image)))
                             <img src="/files/signs/{{ $owner->image }}" alt="sign" style="width: 100px; height: 50px;">
                         @endif
                     </div>

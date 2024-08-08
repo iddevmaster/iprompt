@@ -82,6 +82,7 @@ Route::get('/form/media', [App\Http\Controllers\FormController::class, 'mediaFor
 // Table
 Route::get('/tables/wiTable', [App\Http\Controllers\TablesController::class, 'wiTable'])->name('wiTable');
 Route::get('/tables/contract-table', [App\Http\Controllers\TablesController::class, 'contTable'])->name('contTable');
+Route::get('/tables/jdTable', [App\Http\Controllers\TablesController::class, 'jdTable'])->name('jdTable');
 Route::get('/tables/sopTable', [App\Http\Controllers\TablesController::class, 'sopTable'])->name('sopTable');
 Route::get('/tables/policyTable', [App\Http\Controllers\TablesController::class, 'policyTable'])->name('policyTable');
 Route::get('/tables/annoTable', [App\Http\Controllers\TablesController::class, 'annoTable'])->name('annoTable');
@@ -110,6 +111,9 @@ Route::get('/form/downloadwi/{dorv}/{id}',[App\Http\Controllers\FormController::
 
 Route::get('/form/editsop/{id}',[App\Http\Controllers\FormController::class,'editFormsop']);
 Route::get('/form/downloadsop/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormsop'])->withoutMiddleware('auth');
+
+Route::get('/form/editjd/{id}',[App\Http\Controllers\FormController::class,'editFormjd']);
+Route::get('/form/downloadjd/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormjd'])->withoutMiddleware('auth');
 
 Route::get('/form/editproj/{id}',[App\Http\Controllers\FormController::class,'editFormproj']);
 Route::get('/form/downloadproj/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormproj'])->withoutMiddleware('auth');

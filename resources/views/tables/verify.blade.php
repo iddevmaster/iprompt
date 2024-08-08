@@ -87,6 +87,8 @@
                                         <a href="{{url('/form/downloadcheck/verify/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @elseif ($type[0] === 'costForm')
                                         <a href="{{url('/form/downloadcost/verify/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
+                                    @elseif ($type[0] === 'jdForm')
+                                        <a href="{{url('/form/downloadjd/verify/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">View</button></a>
                                     @endif
                                 </td>
                             </tr>

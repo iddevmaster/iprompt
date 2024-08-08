@@ -15,6 +15,7 @@ Use Alert;
 use App\Models\Contract;
 use App\Models\costs_doc;
 use App\Models\department;
+use App\Models\jd_doc;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -400,6 +401,120 @@ class TablesController extends Controller
         $type = type::where('type', 'cost')->get();
         $dpms = department::all();
         return view('/tables/costTable', compact('inspectors','approvers','gendoc', 'user', 'type', 'dpms'));
+    }
+
+    public function jdTable() {
+        if ((Auth::user()->hasRole('employee')) && (((department::find((Auth::user())->dpm))->prefix == 'IDD') || ((department::find((Auth::user())->dpm))->prefix == 'INS'))) {
+            $gendoc = jd_doc::where('dpm', (department::find((Auth::user())->dpm))->prefix)
+                ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
+                ->orWhere('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')
+                ->orderBy('id', 'desc')
+                ->select([
+                    'id',
+                    'book_num',
+                    'submit_by',
+                    'created_date',
+                    'type',
+                    'title',
+                    'bcreater',
+                    'binspector',
+                    'bapprover',
+                    'shares',
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
+                ])
+                ->get();
+        }
+        elseif ((Auth::user()->hasRole('employee'))) {
+            $gendoc = jd_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')
+                ->orderBy('id', 'desc')
+                ->select([
+                    'id',
+                    'book_num',
+                    'submit_by',
+                    'created_date',
+                    'type',
+                    'title',
+                    'bcreater',
+                    'binspector',
+                    'bapprover',
+                    'shares',
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
+                ])
+                ->get();
+        }
+        elseif (Auth::user()->hasRole('leader_dpm')) {
+            $gendoc = jd_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
+                ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')
+                ->orderBy('id', 'desc')
+                ->select([
+                    'id',
+                    'book_num',
+                    'submit_by',
+                    'created_date',
+                    'type',
+                    'title',
+                    'bcreater',
+                    'binspector',
+                    'bapprover',
+                    'shares',
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
+                ])
+                ->get();
+        }
+        else {
+            $gendoc = jd_doc::orderBy('id', 'desc')
+                ->select([
+                    'id',
+                    'book_num',
+                    'submit_by',
+                    'created_date',
+                    'type',
+                    'title',
+                    'bcreater',
+                    'binspector',
+                    'bapprover',
+                    'shares',
+                    'files',
+                    'edit_count',
+                    'stat',
+                    'app',
+                    'ins',
+                    'dpm',
+                ])
+                ->get();
+        };
+        foreach($gendoc as $doc) {
+            if ($doc->dpm == '-'){
+                $usersub = json_decode($doc->submit_by);
+                $doc->dpm = (department::find((User::find(is_array($usersub) ? $usersub[0] : $doc->submit_by))->dpm))->prefix;
+                $doc->save();
+            }
+        };
+
+        $user = User::all();
+        $approvers = User::permission('approve')->get();
+        $inspectors = User::permission('inspect')->get();
+        $type = type::where('type', 'cost')->get();
+        $dpms = department::all();
+        return view('/tables/jdTable', compact('inspectors','approvers','gendoc', 'user', 'type', 'dpms'));
     }
 
     public function courseTable() {
@@ -1086,12 +1201,14 @@ class TablesController extends Controller
         $projectDocQuery = project_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($projectDocColumns);
         $announceDocQuery = announce_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($announceDocColumns);
         $costDocQuery = costs_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($gendocColumns);
+        $jdDocQuery = jd_doc::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->select($gendocColumns);
 
         $form = $gendocQuery
                     ->union($mouDocQuery)
                     ->union($projectDocQuery)
                     ->union($announceDocQuery)
                     ->union($costDocQuery)
+                    ->union($jdDocQuery)
                     ->orderBy('created_at', 'desc')->get();
         $user = User::all();
         return view('/tables/verify', compact('form','user'));
@@ -1111,6 +1228,9 @@ class TablesController extends Controller
             }
             elseif (Str::contains($request->type, 'costForm')) {
                 $form = costs_doc::find($id);
+            }
+            elseif ($request->type === 'jdForm') {
+                $form = jd_doc::find($id);
             }
             else {
                 $form = gendoc::find($id);
@@ -1222,6 +1342,8 @@ class TablesController extends Controller
                 $gendoc = mou_doc::find($request->bid);
             } elseif ($request->type === 'cost') {
                 $gendoc = costs_doc::find($request->bid);
+            } elseif ($request->type === 'jd') {
+                $gendoc = jd_doc::find($request->bid);
             } else {
                 $gendoc = gendoc::find($request->bid);
             }
@@ -1251,6 +1373,8 @@ class TablesController extends Controller
                 $gendoc = Contract::find($request->bid);
             } elseif ($request->type === 'cost') {
                 $gendoc = costs_doc::find($request->bid);
+            } elseif ($request->type === 'jd') {
+                $gendoc = jd_doc::find($request->bid);
             } else {
                 $gendoc = gendoc::find($request->bid);
             }
@@ -1297,6 +1421,9 @@ class TablesController extends Controller
             } elseif ($request->type == 'cost') {
                 $yourModel = costs_doc::find($request->input('valueid'));
                 $fileData = json_decode($yourModel->files);
+            } elseif ($request->type == 'jd') {
+                $yourModel = jd_doc::find($request->input('valueid'));
+                $fileData = json_decode($yourModel->files);
             } else {
                 $yourModel = gendoc::find($request->input('valueid'));
                 $fileData = json_decode($yourModel->files);
@@ -1330,6 +1457,9 @@ class TablesController extends Controller
                 $fileData = $yourModel->files;
             } elseif ($request->type == 'cost') {
                 $yourModel = costs_doc::find($request->input('id'));
+                $fileData = json_decode($yourModel->files);
+            } elseif ($request->type == 'jd') {
+                $yourModel = jd_doc::find($request->input('id'));
                 $fileData = json_decode($yourModel->files);
             } else {
                 $yourModel = gendoc::find($request->input('id'));
@@ -1382,6 +1512,10 @@ class TablesController extends Controller
                 $yourModel = announce_doc::find($request->input('bid'));
             } elseif ($request->type == 'mou') {
                 $yourModel = mou_doc::find($request->input('bid'));
+            } elseif ($request->type == 'cost') {
+                $yourModel = costs_doc::find($request->input('bid'));
+            } elseif ($request->type == 'jd') {
+                $yourModel = jd_doc::find($request->input('bid'));
             } else {
                 $yourModel = gendoc::find($request->input('bid'));
             }
@@ -1408,6 +1542,10 @@ class TablesController extends Controller
                 $yourModel = announce_doc::find($request->input('bid'));
             } elseif ($request->type == 'mou') {
                 $yourModel = mou_doc::find($request->input('bid'));
+            } elseif ($request->type == 'cost') {
+                $yourModel = costs_doc::find($request->input('bid'));
+            } elseif ($request->type == 'jd') {
+                $yourModel = jd_doc::find($request->input('bid'));
             } else {
                 $yourModel = gendoc::find($request->input('bid'));
             }
