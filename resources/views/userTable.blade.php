@@ -3,6 +3,7 @@
 <!-- Scripts -->
 @vite(['resources/css/table.css' , 'resources/js/table.js'])
 @section('content')
+
 <body>
     <div class="container">
         <div class="text-center"><h2>User Table</h2></div>
