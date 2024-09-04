@@ -60,7 +60,7 @@ class FormController extends Controller
 
     public function costForm()
     {
-        $len = gendoc::withTrashed()->where('type', 'LIKE' , 'costForm%')->count()+1;
+        $len = costs_doc::withTrashed()->count() + 1;
         $class = 0;
         return view('/forms/costForm', compact('class','len'));
     }
