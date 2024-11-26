@@ -56,7 +56,6 @@
                                     $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
                                     $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : [];
                                     $team = $row->submit_by;
-                                    dd(Auth::user()->id, $teams, $team);
                                     $teamArr = json_decode($team);
                                     $teamlist = [];
                                     $permis = Auth::user()->role ;
@@ -96,13 +95,16 @@
                                     <td></td>
                                 @endif
 
-                                @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
+                                <td>
+                                    <a href="{{ route('contract-detail', ['cid' => $row->id]) }}"><button type="button" class="btn btn-secondary ">detail</button></a>
+                                </td>
+                                {{-- @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
                                     <td>
                                         <a href="{{ route('contract-detail', ['cid' => $row->id]) }}"><button type="button" class="btn btn-secondary ">detail</button></a>
                                     </td>
                                 @else
                                     <td></td>
-                                @endif
+                                @endif --}}
 
 
                                 {{-- Share Btn --}}
