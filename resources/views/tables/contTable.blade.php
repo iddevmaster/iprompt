@@ -56,7 +56,7 @@
                                     $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
                                     $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : [];
                                     $team = $row->submit_by;
-                                    dd($teams, $team, (Auth::user())->id == (count($teams) > 0 ? $teams[0] : $team));
+                                    dd($teams, $team, Auth::user())->id, count($teams),  (Auth::user())->id == (count($teams) > 0 ? $teams[0] : $team));
                                     $teamArr = json_decode($team);
                                     $teamlist = [];
                                     $permis = Auth::user()->role ;
