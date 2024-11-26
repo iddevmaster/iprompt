@@ -71,7 +71,7 @@
 
                                 @php
                                     $file_saved = App\Models\TemporaryFile::find($file);
-                                    $teams = json_decode($contract->submit_by) ?? '';
+                                    $teams = json_decode($contract->submit_by) ? json_decode($contract->submit_by) : "";
                                 @endphp
                                 @if ($file_saved)
                                     <div class="d-flex">

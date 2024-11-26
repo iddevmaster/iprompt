@@ -179,7 +179,7 @@
                             @if ($row->type === 'creditor')
                                 @php
                                     $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
-                                    $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : [];
+                                    $teams = json_decode($row->submit_by) ?? '';
                                     $team = $row->submit_by;
                                     $teamArr = json_decode($team);
                                     $teamlist = [];
@@ -214,7 +214,7 @@
                                     <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->note }}">{{ $row->note}}</td>
 
                                     {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))) --}}
-                                    @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
+                                    @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $team)))
                                         <td>
                                             <a href="{{ route('edit-contract', ['cid' => $row->id]) }}"><button type="button" class="btn btn-warning">Edit</button></a>
                                         </td>
@@ -263,7 +263,7 @@
 
                                     {{-- Share Btn --}}
                                     <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="cont" teamlist="{{json_encode($teamlist)}}"
-                                        @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
+                                        @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $team)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                             disabled
                                         @endif>
                                         @php
@@ -340,7 +340,7 @@
                             @if ($row->type === 'debtor')
                                 @php
                                     $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
-                                    $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : [];
+                                    $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : '';
                                     $team = $row->submit_by;
                                     $teamArr = json_decode($team);
                                     $teamlist = [];
@@ -375,7 +375,7 @@
                                     <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->note }}">{{ $row->note}}</td>
 
                                     {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))) --}}
-                                    @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
+                                    @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $team)))
                                         <td>
                                             <a href="{{ route('edit-contract', ['cid' => $row->id]) }}"><button type="button" class="btn btn-warning">Edit</button></a>
                                         </td>
@@ -383,7 +383,7 @@
                                         <td></td>
                                     @endif
 
-                                    @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
+                                    @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $team)))
                                         <td>
                                             <a href="{{ route('contract-detail', ['cid' => $row->id]) }}"><button type="button" class="btn btn-secondary ">detail</button></a>
                                         </td>
@@ -420,7 +420,7 @@
 
                                     {{-- Share Btn --}}
                                     <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="cont" teamlist="{{json_encode($teamlist)}}"
-                                        @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
+                                        @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $team)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                             disabled
                                         @endif>
                                         @php
@@ -497,7 +497,7 @@
                             @if ($row->type === 'outdoor')
                                 @php
                                     $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
-                                    $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : [];
+                                    $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : "";
                                     $team = $row->submit_by;
                                     $teamArr = json_decode($team);
                                     $teamlist = [];
@@ -532,7 +532,7 @@
                                     <td class="truncate" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="{{ $row->note }}">{{ $row->note}}</td>
 
                                     {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))) --}}
-                                    @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
+                                    @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $team)))
                                         <td>
                                             <a href="{{ route('edit-contract', ['cid' => $row->id]) }}"><button type="button" class="btn btn-warning">Edit</button></a>
                                         </td>
@@ -540,7 +540,7 @@
                                         <td></td>
                                     @endif
 
-                                    @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
+                                    @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $team)))
                                         <td>
                                             <a href="{{ route('contract-detail', ['cid' => $row->id]) }}"><button type="button" class="btn btn-secondary ">detail</button></a>
                                         </td>
@@ -577,7 +577,7 @@
 
                                     {{-- Share Btn --}}
                                     <td><button class="btn btn-success" id="teamBtn" value="{{ $row->submit_by}}" bookid="{{ $row->id}}" bookType="cont" teamlist="{{json_encode($teamlist)}}"
-                                        @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
+                                        @if (!(((Auth::user())->id == (is_array($teams) ? $teams[0] : $team)) || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares))))
                                             disabled
                                         @endif>
                                         @php
