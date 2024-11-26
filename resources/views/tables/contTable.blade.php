@@ -222,13 +222,17 @@
                                         <td></td>
                                     @endif
 
-                                    @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
+                                        {{-- Detail btn --}}
+                                    <td>
+                                        <a href="{{ route('contract-detail', ['cid' => $row->id]) }}"><button type="button" class="btn btn-secondary ">detail</button></a>
+                                    </td>
+                                    {{-- @if ( Auth::user()->hasRole(['admin', 'ceo']) || ((Auth::user())->id == (is_array($teams) ? $teams[0] : $teams)))
                                         <td>
                                             <a href="{{ route('contract-detail', ['cid' => $row->id]) }}"><button type="button" class="btn btn-secondary ">detail</button></a>
                                         </td>
                                     @else
                                         <td></td>
-                                    @endif
+                                    @endif --}}
 
 
                                     {{-- @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)) || (in_array(((Auth::user())->id), (is_array($teams)? $teams : []))))
