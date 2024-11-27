@@ -44,7 +44,22 @@ class TablesController extends Controller
     }
 
     public function contTable () {
-        $contracts = Contract::orderBy('id', 'desc')->get();
+        // $contracts = Contract::orderBy('id', 'desc')->get();
+        if ((Auth::user()->hasRole('employee'))) {
+            $contracts = Contract::where(function ($query) {
+                    $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                        ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
+                })->orderBy('id', 'desc')->get();
+        }
+        elseif (Auth::user()->hasRole('leader_dpm')) {
+            $contracts = Contract::where(function ($query) {
+                    $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                        ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
+                })->orderBy('id', 'desc')->get();
+        }
+        else {
+            $contracts = Contract::orderBy('id', 'desc')->get();
+        };
         $user = User::all();
         $dpms = department::all();
         return view('/tables/contTable', compact('contracts', 'user', 'dpms'));
