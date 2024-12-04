@@ -13,6 +13,7 @@
 <body>
 <?php $permis = Auth::user()->role ;
       $dpm = Auth::user()->dpm;
+      $teams = json_decode($contract->submit_by) ? json_decode($contract->submit_by) : "";
 ?>
     <div class="container">
         <div class="text-center mb-4"><h2>รายละเอียดสัญญา</h2></div>
@@ -71,7 +72,6 @@
 
                                 @php
                                     $file_saved = App\Models\TemporaryFile::find($file);
-                                    $teams = json_decode($contract->submit_by) ? json_decode($contract->submit_by) : "";
                                 @endphp
                                 @if ($file_saved)
                                     <div class="d-flex">

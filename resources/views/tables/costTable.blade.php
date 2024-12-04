@@ -123,7 +123,18 @@
                                                 docType="{{$row->type}}"
                                                 value="{{$row->id}}">{{$row->stat}}</button>
                                     @else
-                                        <button class="btn btn-secondary" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button>
+                                        {{-- <button class="btn btn-secondary" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button> --}}
+                                        <button class="btn btn-secondary"
+                                            name="{{$row->stat}}"
+                                            docType="{{$row->type}}"
+                                            id="passbtn"
+                                            note="{{$note}}"
+                                            insnote="{{$insnote}}"
+                                            appName="{{$appName ? $appName->name : 'Unknow'}}"
+                                            insName="{{$insName ? $insName->name : 'Unknow'}}"
+                                            appSign="{{ $appName ? $appName->image : ''}}"
+                                            insSign="{{ $insName ? $insName->image : ''}}"
+                                            value="{{$row->id}}">{{$row->stat}}</button>
                                     @endif
                                 </td>
 
@@ -286,7 +297,18 @@
                                                         docType="{{$row->type}}"
                                                         value="{{$row->id}}">{{$row->stat}}</button>
                                             @else
-                                                <button class="btn btn-secondary" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button>
+                                                {{-- <button class="btn btn-secondary" name="{{$row->stat}}" docType="{{$row->type}}" value="{{$row->id}}">{{$row->stat}}</button> --}}
+                                                <button class="btn btn-secondary"
+                                                    name="{{$row->stat}}"
+                                                    docType="{{$row->type}}"
+                                                    id="passbtn"
+                                                    note="{{$note}}"
+                                                    insnote="{{$insnote}}"
+                                                    appName="{{$appName ? $appName->name : 'Unknow'}}"
+                                                    insName="{{$insName ? $insName->name : 'Unknow'}}"
+                                                    appSign="{{ $appName ? $appName->image : ''}}"
+                                                    insSign="{{ $insName ? $insName->image : ''}}"
+                                                    value="{{$row->id}}">{{$row->stat}}</button>
                                             @endif
                                         </td>
 
