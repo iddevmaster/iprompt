@@ -1039,7 +1039,7 @@ class TablesController extends Controller
     // query all project form from database to project table page
     public function projTable() {
         if ((Auth::user()->hasRole('employee')) && (((department::find((Auth::user())->dpm))->prefix == 'IDD') || ((department::find((Auth::user())->dpm))->prefix == 'INS'))) {
-            $gendoc = project_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')->where('dpm', (department::find((Auth::user())->dpm))->prefix)->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orderBy('id', 'desc')->get();
+            $gendoc = project_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')->orWhere('dpm', (department::find((Auth::user())->dpm))->prefix)->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orderBy('id', 'desc')->get();
         }
         elseif (Auth::user()->hasRole('employee')) {
             $gendoc = project_doc::where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%')->orderBy('id', 'desc')->get();
