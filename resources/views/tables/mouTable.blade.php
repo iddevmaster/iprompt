@@ -130,7 +130,9 @@
 
                             @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)))
                                 <td>
-                                    <a href="{{url('/form/editmou/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
+                                    @if (($row->stat ?? '') === 'ผ่านการอนุมัติ')
+                                        <a href="{{url('/form/editmou/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
+                                    @endif
                                 </td>
                             @else
                                 <td></td>
