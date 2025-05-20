@@ -25,7 +25,7 @@
                         <th scope="col">agency</th>
                         <th scope="col">branch</th>
                         <th scope="col">Dpm</th>
-                        <th scope="col">Phone</th>
+                        <th scope="col">Action</th>
                     </tr>
                 </thead>
 
@@ -34,7 +34,8 @@
                     <!-- Table rows will be dynamically added here -->
                     <?php  $counter = 1 ?>
                     @foreach ($user as $row)
-                        <tr onclick="navigateToUserDetails('{{ $row->id }}')">
+                        {{-- <tr onclick="navigateToUserDetails('{{ $row->id }}')"> --}}
+                        <tr>
                             <td>{{$counter}}</td>
                             <td>{{ $row->name}}</td>
                             <td>{{ $row->email}}</td>
@@ -52,7 +53,10 @@
                             <td class="truncate">
                                 <?php echo $dpm->firstWhere('id', $row->dpm)->name ?? '-Unknow-'; ?>
                             </td>
-                            <td>{{ $row->phone}}</td>
+                            <td>
+                                <a href="{{ route('userProfile', ['id'=> $row->id]) }}" class="btn btn-primary"><i class="bi bi-list-ul"></i></a>
+                                <button class="btn btn-danger btn-sm" id="deleteBtn"  user_id="{{ $row->id }}"><i class="bi bi-trash"></i></button>
+                            </td>
 
                         </tr>
                         <?php $counter++ ?>
@@ -68,6 +72,7 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://fastly.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(document).ready(function() {
             $('.listTable').DataTable({
@@ -78,6 +83,49 @@
                 language: {
                     search: "ค้นหา:"
                 }
+            });
+
+            $('#deleteBtn').on('click', function() {
+                var userId = $(this).attr('user_id');
+                Swal.fire({
+                    title: 'คุณแน่ใจหรือไม่?',
+                    text: "คุณจะไม่สามารถย้อนกลับได้!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'ใช่, ลบเลย!',
+                    cancelButtonText: 'ยกเลิก',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(`/user/delete/` + userId, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            },
+                        })
+                        .then(response => {
+                            if (response.ok) {
+                                // Handle success
+                                Swal.fire(
+                                    'ลบสำเร็จ!',
+                                    'ข้อมูลถูกลบเรียบร้อยแล้ว',
+                                    'success'
+                                ).then(() => {
+                                    location.reload(); // Reload the page after deletion
+                                });
+                            } else {
+                                // Handle error
+                                Swal.fire(
+                                    'เกิดข้อผิดพลาด!',
+                                    'เกิดข้อผิดพลาดในการลบข้อมูล',
+                                    'error'
+                                );
+                            }
+                        })
+                    }
+                })
             });
         });
     </script>

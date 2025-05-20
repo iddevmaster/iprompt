@@ -188,6 +188,16 @@ class HomeController extends Controller
         }
     }
 
+    public function deleteUser($user_id) {
+        $user = User::find($user_id);
+        if ($user) {
+            $user->delete();
+            return response()->json(['success' => 'success'], 201);
+        } else {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+    }
+
     public function addPermis (Request $request) {
         try {
             Permission::create(['name' => $request->value]);
