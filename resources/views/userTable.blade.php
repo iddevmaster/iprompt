@@ -77,7 +77,7 @@
         $(document).ready(function() {
             $('.listTable').DataTable({
                 "paging": true,
-                "pageLength": 10,
+                "pageLength": 5,
                 "searching": true,
                 "bLengthChange": false,
                 language: {
@@ -85,11 +85,11 @@
                 }
             });
 
-            $('.deleteUserBtn').on('click', function() {
+            $(document).on('click', '.deleteUserBtn', function() {
                 var userId = $(this).attr('user_id');
                 Swal.fire({
                     title: 'คุณแน่ใจหรือไม่?',
-                    text: "คุณจะไม่สามารถย้อนกลับได้!" + userId,
+                    text: "คุณจะไม่สามารถย้อนกลับได้!",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
