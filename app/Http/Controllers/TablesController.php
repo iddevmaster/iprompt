@@ -60,7 +60,7 @@ class TablesController extends Controller
         else {
             $contracts = Contract::orderBy('id', 'desc')->get();
         };
-        $user = withTrashed()->get();
+        $user = User::withTrashed()->get();
         $dpms = department::all();
         return view('/tables/contTable', compact('contracts', 'user', 'dpms'));
     }
@@ -177,7 +177,7 @@ class TablesController extends Controller
                 $doc->save();
             }
         };
-        $user = withTrashed()->get();
+        $user = User::withTrashed()->get();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         $dpms = department::all();
@@ -296,7 +296,7 @@ class TablesController extends Controller
             }
         };
 
-        $user = withTrashed()->get();
+        $user = User::withTrashed()->get();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         $type = type::where('type', 'check')->get();
@@ -410,7 +410,7 @@ class TablesController extends Controller
             }
         };
 
-        $user = withTrashed()->get();
+        $user = User::withTrashed()->get();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         $type = type::where('type', 'cost')->get();
@@ -524,7 +524,7 @@ class TablesController extends Controller
             }
         };
 
-        $user = withTrashed()->get();
+        $user = User::withTrashed()->get();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         $type = type::where('type', 'cost')->get();
@@ -642,7 +642,7 @@ class TablesController extends Controller
                 $doc->save();
             }
         };
-        $user = withTrashed()->get();
+        $user = User::withTrashed()->get();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         $type = type::where('type', 'course')->get();
@@ -762,7 +762,7 @@ class TablesController extends Controller
                 $doc->save();
             }
         };
-        $user = withTrashed()->get();
+        $user = User::withTrashed()->get();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         $type = type::where('type', 'media')->get();
@@ -874,7 +874,7 @@ class TablesController extends Controller
                 ])
                 ->get();
         };
-        $user = withTrashed()->get();
+        $user = User::withTrashed()->get();
         foreach($gendoc as $doc) {
             if ($doc->dpm === '-'){
                 $usersub = json_decode($doc->submit_by);
@@ -998,7 +998,7 @@ class TablesController extends Controller
                 $doc->save();
             }
         };
-        $user = withTrashed()->get();
+        $user = User::withTrashed()->get();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
@@ -1028,7 +1028,7 @@ class TablesController extends Controller
                 $doc->save();
             }
         };
-        $user = withTrashed()->get();
+        $user = User::withTrashed()->get();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
@@ -1088,7 +1088,7 @@ class TablesController extends Controller
                 $doc->save();
             }
         };
-        $user = withTrashed()->get();
+        $user = User::withTrashed()->get();
         $approvers = User::permission('approve')->get();
         $inspectors = User::permission('inspect')->get();
         // dd($gendoc);
@@ -1225,7 +1225,7 @@ class TablesController extends Controller
                     ->union($costDocQuery)
                     ->union($jdDocQuery)
                     ->orderBy('created_at', 'desc')->get();
-        $user = withTrashed()->get();
+        $user = User::withTrashed()->get();
         return view('/tables/verify', compact('form','user'));
     }
 
@@ -1300,37 +1300,37 @@ class TablesController extends Controller
     public function exTable (Request $request, $type) {
         if ($type === 'wiTable') {
             $gendoc = gendoc::where('type', 'wiForm')->orderBy('id', 'desc')->get();
-            $user = withTrashed()->get();
+            $user = User::withTrashed()->get();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
         }
         elseif ($type === 'sopTable') {
             $gendoc = gendoc::where('type', 'sopForm')->orderBy('id', 'desc')->get();
-            $user = withTrashed()->get();
+            $user = User::withTrashed()->get();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
         }
         elseif ($type === 'policyTable') {
             $gendoc = gendoc::where('type', 'policyForm')->orderBy('id', 'desc')->get();
-            $user = withTrashed()->get();
+            $user = User::withTrashed()->get();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
         }
         elseif ($type === 'projTable') {
             $gendoc = project_doc::orderBy('id', 'desc')->get();
-            $user = withTrashed()->get();
+            $user = User::withTrashed()->get();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
         }
         elseif ($type === 'mouTable') {
             $gendoc = mou_doc::orderBy('id', 'desc')->get();
-            $user = withTrashed()->get();
+            $user = User::withTrashed()->get();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
         }
         elseif ($type === 'annoTable') {
             $gendoc = announce_doc::orderBy('id', 'desc')->get();
-            $user = withTrashed()->get();
+            $user = User::withTrashed()->get();
             return view('/forms/export/'.$type, compact('gendoc', 'user'));
         }
         elseif ($type === 'imported') {
             $gendoc = imported::orderBy('id', 'desc')->get();
-            $user = withTrashed()->get();
+            $user = User::withTrashed()->get();
             $dpm = department::all();
             return view('/forms/export/'.$type, compact('gendoc', 'user', 'dpm'));
         };
