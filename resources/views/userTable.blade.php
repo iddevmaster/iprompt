@@ -77,7 +77,7 @@
         $(document).ready(function() {
             $('.listTable').DataTable({
                 "paging": true,
-                "pageLength": 5,
+                "pageLength": 10,
                 "searching": true,
                 "bLengthChange": false,
                 language: {
