@@ -55,7 +55,7 @@
                             </td>
                             <td>
                                 <a href="{{ route('userProfile', ['id'=> $row->id]) }}" class="btn btn-primary"><i class="bi bi-list-ul"></i></a>
-                                <button class="btn btn-danger btn-sm" id="deleteBtn"  user_id="{{ $row->id }}"><i class="bi bi-trash"></i></button>
+                                <button class="btn btn-danger btn-sm deleteUserBtn"  user_id="{{ $row->id }}"><i class="bi bi-trash"></i></button>
                             </td>
 
                         </tr>
@@ -85,11 +85,11 @@
                 }
             });
 
-            $('#deleteBtn').on('click', function() {
+            $('.deleteUserBtn').on('click', function() {
                 var userId = $(this).attr('user_id');
                 Swal.fire({
                     title: 'คุณแน่ใจหรือไม่?',
-                    text: "คุณจะไม่สามารถย้อนกลับได้!",
+                    text: "คุณจะไม่สามารถย้อนกลับได้!" + userId,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
