@@ -55,7 +55,7 @@ class TablesController extends Controller
         elseif (Auth::user()->hasRole('leader_dpm')) {
             $contracts = Contract::where(function ($query) {
                     $query->where('submit_by', 'LIKE', '%'.((Auth::user())->id).'%')
-                        ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
+                        // ->orWhere('dpm', 'LIKE', '%'.((department::find((Auth::user())->dpm))->prefix).'%')
                         ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
                 })->orderBy('id', 'desc')->get();
         }
