@@ -30,6 +30,17 @@ class gendoc extends Model
         'dpm',
     ];
 
+    public function darDocuments()
+    {
+        return $this->hasMany(DarDocument::class, 'doc_id');
+    }
 
+    public function inDarDocument() {
+        $get_doc_dar = DarDocument::where('doc_id', $this->id)
+            ->whereIn('doc_type', ['WI', 'SOP', 'POL', 'checklist', 'course', 'media'])
+            ->where('status', 1)
+            ->first();
+        return $get_doc_dar;
+    }
 
 }

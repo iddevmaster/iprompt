@@ -11,11 +11,15 @@ use Dompdf\Dompdf;
 use PDF;
 Use Alert;
 use App\Models\costs_doc;
+use App\Models\DarDocument;
 use App\Models\department;
+use App\Models\DocActionReq;
 use App\Models\jd_doc;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class FormController extends Controller
 {
@@ -83,6 +87,14 @@ class FormController extends Controller
         $len = gendoc::withTrashed()->where('type', 'LIKE' , 'mediaForm%')->count()+1;
         $class = 0;
         return view('/forms/mediaForm', compact('class','len'));
+    }
+
+    public function darForm()
+    {
+        // หน้า document action request form
+        $lastDar = DocActionReq::latest('created_at')->first();
+        $len = $lastDar ? $lastDar->id+1 : 1;
+        return view('/forms/darForm', compact('len'));
     }
 
     public function jdForm()
@@ -212,6 +224,73 @@ class FormController extends Controller
         }
     }
 
+    public function duplicateForm(Request $request, $formtype, $id, $darid)
+    {
+        $return_type = '-';
+        // duplicate form
+        if ($formtype === 'annoForm') {
+            $form = announce_doc::find($id);
+            $return_type = 'editanno';
+        }
+        elseif ($formtype === 'mouForm') {
+            $form = mou_doc::find($id);
+            $return_type = 'editmou';
+        }
+        elseif ($formtype === 'projForm') {
+            $form = project_doc::find($id);
+            $return_type = 'editproj';
+        }
+        elseif ($formtype === 'costForm') {
+            $form = costs_doc::find($id);
+            $return_type = 'editcost';
+        }
+        elseif ($formtype === 'jdForm') {
+            $form = jd_doc::find($id);
+            $return_type = 'editjd';
+        }
+        else {
+            $form = gendoc::find($id);
+            switch ($formtype) {
+                case 'wiForm':
+                    $return_type = 'editwi';
+                    break;
+                case 'mediaForm':
+                    $return_type = 'editmedia';
+                    break;
+                case 'courseForm':
+                    $return_type = 'editcourse';
+                    break;
+                case 'checkForm':
+                    $return_type = 'editcheck';
+                    break;
+                case 'sopForm':
+                    $return_type = 'editsop';
+                    break;
+                case 'policyForm':
+                    $return_type = 'editpol';
+                    break;
+                default:
+                    // Handle unknown form type if necessary
+                    break;
+            }
+        }
+
+        $copy = $form->replicate();
+        $copy->stat = 'ยังไม่ได้ตรวจสอบ';
+        $copy->app = null;
+        $copy->ins = null;
+        $copy->created_date = date('Y-m-d');
+        $editCount = $form->edit_count + 1;
+        $copy->edit_count = $editCount;
+        $parts = explode('-', $form->book_num);
+        $parts[3] = str_pad($editCount, 2, '0', STR_PAD_LEFT);
+        $newBookNum = implode('-', $parts);
+        $copy->book_num = $newBookNum;
+        $copy->save();
+        DarDocument::where('id', $darid)->update(['status' => 2]); // 2 = completed
+        return redirect('/form/'.$return_type.'/'.$copy->id);
+    }
+
     public function store(Request $request)
     {
         // บันทึกเอกสารแต่ละประเภทไปยัง Database
@@ -297,6 +376,77 @@ class FormController extends Controller
             $gendoc->save();
             Alert::toast('Your Form as been Saved!','success');
         }
+    }
+
+    public function storeDarForm(Request $request) {
+        $request->validate([
+            'bnum' => 'required|string|max:255',
+            'req_for' => 'required|string|max:255',
+            'doc_owner' => 'required|string|max:255',
+            'req_by' => 'required|string|max:255',
+            'req_date' => 'required|date',
+            'doc_types' => 'required|array|min:1',
+            'doc_types.*' => 'string',
+            'doc_target' => 'required|array|min:1',
+            'doc_target.*' => 'string',
+        ], [
+            'bnum.required' => 'กรุณากรอกเลขที่หนังสือ',
+            'bnum.string' => 'เลขที่หนังสือต้องเป็นข้อความ',
+            'bnum.max' => 'เลขที่หนังสือต้องไม่เกิน :max ตัวอักษร',
+
+            'req_for.required' => 'กรุณาระบุเหตุผลการขอ',
+            'req_for.string' => 'ขอเพื่อ ต้องเป็นข้อความ',
+            'req_for.max' => 'ขอเพื่อ ต้องไม่เกิน :max ตัวอักษร',
+
+            'doc_owner.required' => 'กรุณาระบุผู้ถือครอง',
+            'doc_owner.string' => 'ผู้ถือครองต้องเป็นข้อความ',
+            'doc_owner.max' => 'ผู้ถือครองต้องไม่เกิน :max ตัวอักษร',
+
+            'req_by.required' => 'กรุณาระบุผู้ขอ',
+            'req_by.string' => 'ผู้ขอต้องเป็นข้อความ',
+            'req_by.max' => 'ผู้ขอต้องไม่เกิน :max ตัวอักษร',
+
+            'req_date.required' => 'กรุณาระบุวันที่ขอ',
+            'req_date.date' => 'รูปแบบวันที่ไม่ถูกต้อง',
+
+            'doc_types.required' => 'กรุณาเลือกประเภทเอกสาร',
+            'doc_types.array' => 'ค่าประเภทเอกสารไม่ถูกต้อง',
+            'doc_types.min' => 'กรุณาเลือกประเภทเอกสารอย่างน้อย :min รายการ',
+            'doc_types.*.string' => 'ประเภทเอกสารต้องเป็นข้อความ',
+
+            'doc_target.required' => 'กรุณาเลือกเอกสารที่ดำเนินการ',
+            'doc_target.array' => 'ค่าของเอกสารที่ดำเนินการไม่ถูกต้อง',
+            'doc_target.min' => 'กรุณาเลือกเอกสารที่ดำเนินการอย่างน้อย :min รายการ',
+            'doc_target.*.string' => 'ค่าที่เลือกของเอกสารต้องเป็นข้อความ',
+        ]);
+
+        $new_dar = DocActionReq::create([
+            'dar_id' => Str::uuid()->toString(),
+            'doc_type'  => json_encode($request->doc_types),
+            'book_num'  => $request->bnum,
+            'action_type'  => $request->req_for,
+            'created_by'  => Auth::user()->id,
+            'stat'  => 'ยังไม่ได้ตรวจสอบ',
+            'dpm'  => (department::find($request->user()->dpm))->prefix,
+            'request_by' => $request->req_by,
+            'request_at' => $request->req_date,
+            'doc_owner' => $request->doc_owner,
+        ]);
+
+        foreach ($request->doc_target ?? [] as $key => $doc) {
+            $doc_data = explode('-', $doc);
+            // dd($doc_data[0], $doc_data[1]);
+            if (!DarDocument::where('dar_id', $new_dar->id)->where('doc_id', $doc_data[1])->exists()) {
+                DarDocument::create([
+                    'dar_id' => $new_dar->id,
+                    'doc_id' => $doc_data[1],
+                    'doc_type' => $doc_data[0],
+                ]);
+            }
+        }
+
+        Alert::toast('Your Form as been Saved!','success');
+        return redirect('/home');
     }
 
     // Function for edit form
@@ -715,6 +865,182 @@ class FormController extends Controller
                 return redirect('home');
             };
         }
+    }
+
+    public function downloadFormDar($darid) {
+        $dar_data = DocActionReq::findOrFail($darid);
+        $user = User::withTrashed()->get(['id', 'name', 'image']);
+        $dar_doc_ids = DarDocument::where('dar_id', $darid)->get();
+
+        $docs = collect();
+        foreach ($dar_doc_ids as $key => $dar_doc) {
+            if ($dar_doc->doc_type == 'PRO') {
+                $docs = $docs->concat(
+                    project_doc::where('id', $dar_doc->doc_id ?? '')->get(['id','proj_code','title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->proj_code, // แปลง key
+                            'title'    => $item->title,
+                            'type'     => 'PRO',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'ANNO') {
+                $docs = $docs->concat(
+                    announce_doc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'ANNO',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'MOU') {
+                $docs = $docs->concat(
+                    mou_doc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'MOU',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'COST') {
+                $docs = $docs->concat(
+                    costs_doc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'COST',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'JD') {
+                $docs = $docs->concat(
+                    jd_doc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'JD',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'WI') {
+                $docs = $docs->concat(
+                    gendoc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'WI',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'SOP') {
+                $docs = $docs->concat(
+                    gendoc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'SOP',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'POL') {
+                $docs = $docs->concat(
+                    gendoc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'POL',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'checklist') {
+                $docs = $docs->concat(
+                    gendoc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'checklist',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'course') {
+                $docs = $docs->concat(
+                    gendoc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'course',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'media') {
+                $docs = $docs->concat(
+                    gendoc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'media',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+        }
+        $docs_list = $docs->values();
+        return view('/forms/export/darForm', compact('dar_data', 'user', 'docs_list'));
     }
 
 }

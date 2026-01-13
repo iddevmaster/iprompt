@@ -21,7 +21,7 @@ i {
     box-shadow: 1px 1px 8px 1px rgba(0, 0, 0, 0.2);
     -ms-transform: scale(1.5); /* IE 9 */
     -webkit-transform: scale(1.5); /* Safari 3-8 */
-    transform: scale(1.1); 
+    transform: scale(1.1);
 }
 .col:hover i{
     color: aqua;

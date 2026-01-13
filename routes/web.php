@@ -80,6 +80,11 @@ Route::get('/form/course', [App\Http\Controllers\FormController::class, 'courseF
 Route::get('/form/media', [App\Http\Controllers\FormController::class, 'mediaForm'])->name('mediaForm');
 
 
+Route::get('/form/document-action-request', [App\Http\Controllers\FormController::class, 'darForm'])->name('darForm');
+Route::post('/form/store-document-action-request', [App\Http\Controllers\FormController::class, 'storeDarForm'])->name('store-dar-form');
+Route::get('/form/download-dar/{darid}',[App\Http\Controllers\FormController::class,'downloadFormDar'])->name('download-dar');
+
+
 // Table
 Route::get('/tables/wiTable', [App\Http\Controllers\TablesController::class, 'wiTable'])->name('wiTable');
 Route::get('/tables/contract-table', [App\Http\Controllers\TablesController::class, 'contTable'])->name('contTable');
@@ -92,10 +97,13 @@ Route::get('/tables/mouTable', [App\Http\Controllers\TablesController::class, 'm
 Route::get('/tables/createPDF', [App\Http\Controllers\TablesController::class, 'createPDF'])->name('createPDF');
 Route::get('/tables/imported', [App\Http\Controllers\ImportController::class, 'imported'])->name('importedTable');
 Route::get('/tables/verify', [App\Http\Controllers\TablesController::class, 'verifyDoc'])->name('verifyDoc');
+Route::get('/tables/verify-dar', [App\Http\Controllers\TablesController::class, 'verifyReq'])->name('verifyReq');
 Route::get('/tables/checkTable', [App\Http\Controllers\TablesController::class, 'checkTable'])->name('checkTable');
 Route::get('/tables/costTable', [App\Http\Controllers\TablesController::class, 'costTable'])->name('costTable');
 Route::get('/tables/courseTable', [App\Http\Controllers\TablesController::class, 'courseTable'])->name('courseTable');
 Route::get('/tables/mediaTable', [App\Http\Controllers\TablesController::class, 'mediaTable'])->name('mediaTable');
+Route::get('/tables/darTable', [App\Http\Controllers\TablesController::class, 'darTable'])->name('darTable');
+Route::get('/dar-detail/{darid}',[App\Http\Controllers\TablesController::class,'darDetail'])->name('dar-detail');
 
 Route::post('/table/form/verify', [App\Http\Controllers\TablesController::class, 'setVerify']);
 Route::post('/table/form/addTeam', [App\Http\Controllers\TablesController::class, 'addTeam']);
@@ -105,8 +113,12 @@ Route::post('/table/form/clearShare', [App\Http\Controllers\TablesController::cl
 Route::post('/table/uploadFile', [App\Http\Controllers\TablesController::class, 'uploadFile']);
 Route::post('/table/deleteFile', [App\Http\Controllers\TablesController::class, 'deleteFile']);
 
+Route::post('/form/get-from-type', [App\Http\Controllers\TablesController::class, 'getFromType']);
+
 
 // Edit & export form
+Route::get('/form/duplicate-{formtype}/{id}/{darid}',[App\Http\Controllers\FormController::class,'duplicateForm'])->name('duplicate-form');
+
 Route::get('/form/editwi/{id}',[App\Http\Controllers\FormController::class,'editFormwi']);
 Route::get('/form/downloadwi/{dorv}/{id}',[App\Http\Controllers\FormController::class,'downloadFormwi'])->withoutMiddleware('auth');
 

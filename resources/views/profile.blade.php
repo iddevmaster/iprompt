@@ -223,7 +223,7 @@
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="COST" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    ค้นทุนงาน
+                                    ต้นทุนงาน
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">
@@ -314,20 +314,24 @@
                     </div>
 
                     <p class="mt-4 ms-3 fw-bold">Other :</p>
-                    <div class="d-flex ms-4">
-                        <div class="row">
-                            <div class="form-check mx-3 col-lg-3 col-md-6">
-                                <input class="form-check-input" type="checkbox" value="" id="staff" disabled>
-                                <label class="form-check-label" for="flexCheckDefault">
-                                    Staff
-                                </label>
-                            </div>
-                            <div class="form-check mx-3 col-lg-3 col-md-6">
-                                <input class="form-check-input" type="checkbox" value="" id="addProjCode" disabled>
-                                <label class="form-check-label" for="addProjCode">
-                                    AddProjectcode
-                                </label>
-                            </div>
+                    <div class="d-flex ms-4 flex-wrap">
+                        <div class="form-check mx-3 col-lg-3 col-md-6">
+                            <input class="form-check-input" type="checkbox" value="" id="staff" disabled>
+                            <label class="form-check-label" for="flexCheckDefault">
+                                Staff
+                            </label>
+                        </div>
+                        <div class="form-check mx-3 col-lg-3 col-md-6">
+                            <input class="form-check-input" type="checkbox" value="" id="addProjCode" disabled>
+                            <label class="form-check-label" for="addProjCode">
+                                AddProjectcode
+                            </label>
+                        </div>
+                        <div class="form-check mx-3 col-lg-3 col-md-6">
+                            <input class="form-check-input" type="checkbox" value="" id="DAR" disabled>
+                            <label class="form-check-label" for="DAR">
+                                DAR
+                            </label>
                         </div>
                     </div>
                     @foreach ($permissions as $perm)
@@ -383,6 +387,7 @@
 
                         const staff = document.getElementById('staff');
                         const addProjCode = document.getElementById('addProjCode');
+                        const dar = document.getElementById('DAR');
 
                         const userid = document.getElementById('userid');
                         const role = document.getElementById('role');
@@ -447,6 +452,7 @@
 
                                     staff.disabled = false;
                                     addProjCode.disabled = false;
+                                    dar.disabled = false;
                                 };
                                 editbtn.textContent = 'Save';
                             } else {
@@ -497,6 +503,7 @@
 
                                     staff: staff.checked,
                                     addProjCode: addProjCode.checked,
+                                    DAR: dar.checked,
                                 }));
 
                                 const response = fetch('/users/update', {
@@ -581,6 +588,7 @@
                                     staff.disabled = true;
 
                                     addProjCode.disabled = true;
+                                    dar.disabled = true;
                                 }
 
                                 editbtn.textContent = 'Edit';

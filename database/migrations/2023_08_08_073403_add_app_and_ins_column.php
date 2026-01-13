@@ -12,28 +12,28 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('gendocs', function (Blueprint $table) {
-            $table->longText('app')->default('-');
+            $table->longText('app')->nullable();
         });
         Schema::table('announce_docs', function (Blueprint $table) {
-            $table->longText('app')->default('-');
+            $table->longText('app')->nullable();
         });
         Schema::table('mou_docs', function (Blueprint $table) {
-            $table->longText('app')->default('-');
+            $table->longText('app')->nullable();
         });
         Schema::table('project_docs', function (Blueprint $table) {
-            $table->longText('app')->default('-');
+            $table->longText('app')->nullable();
         });
         Schema::table('gendocs', function (Blueprint $table) {
-            $table->longText('ins')->default('-');
+            $table->longText('ins')->nullable();
         });
         Schema::table('announce_docs', function (Blueprint $table) {
-            $table->longText('ins')->default('-');
+            $table->longText('ins')->nullable();
         });
         Schema::table('mou_docs', function (Blueprint $table) {
-            $table->longText('ins')->default('-');
+            $table->longText('ins')->nullable();
         });
         Schema::table('project_docs', function (Blueprint $table) {
-            $table->longText('ins')->default('-');
+            $table->longText('ins')->nullable();
         });
     }
 
@@ -42,6 +42,20 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('gendocs', function (Blueprint $table) {
+            $table->dropColumn(['app', 'ins']);
+        });
+
+        Schema::table('announce_docs', function (Blueprint $table) {
+            $table->dropColumn(['app', 'ins']);
+        });
+
+        Schema::table('mou_docs', function (Blueprint $table) {
+            $table->dropColumn(['app', 'ins']);
+        });
+
+        Schema::table('project_docs', function (Blueprint $table) {
+            $table->dropColumn(['app', 'ins']);
+        });
     }
 };

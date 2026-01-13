@@ -26,6 +26,9 @@ class mou_doc extends Model
         'files'
     ];
 
-
+    public function darDocuments()
+    {
+        return $this->hasMany(DarDocument::class, 'doc_id');
+    }
 
 }

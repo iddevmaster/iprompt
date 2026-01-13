@@ -43,7 +43,7 @@
                 <label for="rolFetch" class="form-label">Delete</label>
                 <div class="input-group mb-3">
                     <select class="form-select" aria-label="Default select example" id="rolFetch">
-                        <option selected disabled>Select permission</option>
+                        <option selected disabled>Select Role</option>
                         @foreach ($roles as $role)
                             <option value="{{$role->name}}">{{$role->name}}</option>
                         @endforeach

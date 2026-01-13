@@ -51,4 +51,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getDpm() {
+        return $this->belongsTo(department::class, 'dpm');
+    }
 }

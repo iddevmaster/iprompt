@@ -24,9 +24,16 @@ class announce_doc extends Model
         'sign_name',
         'sign_position',
         'shares',
-        'files'
+        'files',
+        'stat',
+        'app',
+        'ins',
+        'dpm',
     ];
 
-
+    public function darDocuments()
+    {
+        return $this->hasMany(DarDocument::class, 'doc_id');
+    }
 
 }

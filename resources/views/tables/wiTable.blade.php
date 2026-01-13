@@ -39,6 +39,7 @@
                     <?php  $counter = 1 ?>
                     @foreach ($gendoc as $row)
                         @php
+                            $dar_detail = $row->inDarDocument() ?? null;
                             $shares = json_decode($row->shares) ? json_decode($row->shares) : [];
                             $teams = json_decode($row->submit_by) ? json_decode($row->submit_by) : [];
                             $team = $row->submit_by;
@@ -74,6 +75,8 @@
                                     }
                                 @endphp
                             </td>
+
+                            {{-- status --}}
                             <td>
                                 @php
                                     $app = json_decode($row->app);
@@ -132,10 +135,15 @@
                                 @endif
                             </td>
 
+                            {{-- edit --}}
                             @if (((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo']) || (in_array((Auth::user())->dpm, $shares)))
                                 <td>
                                     @if (($row->stat ?? '') !== 'ผ่านการอนุมัติ')
-                                        <a href="{{url('/form/editwi/'.$row->id)}}"><button type="button" class="btn btn-warning">Edit</button></a>
+                                        <a href="{{url('/form/editwi/'.$row->id)}}"><button type="button" class="btn btn-warning">แก้ไข</button></a>
+                                    @else
+                                        @if ($dar_detail?->status === 1)
+                                            <a href="{{ route('duplicate-form', ['formtype' => 'wiForm', 'id' => $row->id, 'darid' => $dar_detail->id]) }}"><button type="button" class="btn btn-warning">สำเนา</button></a>
+                                        @endif
                                     @endif
                                 </td>
                             @else

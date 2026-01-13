@@ -20,8 +20,14 @@ class project_doc extends Model
         'sign',
         'created_date',
         'shares',
-        'files'
+        'files',
+        'book_num',
 
     ];
+
+    public function darDocuments()
+    {
+        return $this->hasMany(DarDocument::class, 'doc_id');
+    }
 
 }

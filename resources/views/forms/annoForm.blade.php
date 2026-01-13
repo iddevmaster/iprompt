@@ -38,7 +38,7 @@
                             // Get the current date
                             var currentDate = new Date();
                             var currentYear = currentDate.getFullYear()+543;
-                            document.getElementsByName('annNo')[0].value = "AN0{{$len}}/"+currentYear;
+                            document.getElementsByName('annNo')[0].value = "AN-ID-{{$len}}-00-"+currentYear;
                         </script>
                     @endif
 

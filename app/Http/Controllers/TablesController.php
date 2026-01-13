@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\gendoc;
-use App\Models\User;
-use App\Models\project_doc;
+use Alert;
 use App\Models\announce_doc;
-use App\Models\mou_doc;
-use App\Models\imported;
-use App\Models\type;
-use PDF;
-Use Alert;
 use App\Models\Contract;
 use App\Models\costs_doc;
 use App\Models\department;
+use App\Models\DarDocument;
+use App\Models\DocActionReq;
+use App\Models\gendoc;
+use App\Models\imported;
 use App\Models\jd_doc;
+use App\Models\mou_doc;
+use App\Models\project_doc;
+use App\Models\type;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
+use PDF;
 
 class TablesController extends Controller
 {
@@ -58,6 +59,24 @@ class TablesController extends Controller
         $user = User::withTrashed()->get();
         $dpms = department::all();
         return view('/tables/contTable', compact('contracts', 'user', 'dpms'));
+    }
+
+    public function darTable () {
+        if ((Auth::user()->hasRole('employee'))) {
+            $dars = DocActionReq::where(function ($query) {
+                    $query->where('created_by', 'LIKE', '%'.((Auth::user())->id).'%')
+                        ->orWhere('shares', 'LIKE', '%"'.((Auth::user())->dpm).'"%');
+                })->orderBy('id', 'desc')->get();
+
+        }
+        else {
+            $dars = DocActionReq::orderBy('id', 'desc')->get();
+        };
+        $user = User::withTrashed()->get();
+        $dpms = department::all();
+        $approvers = User::permission('approve')->get();
+        $inspectors = User::permission('inspect')->get();
+        return view('/tables/darTable', compact( 'user', 'inspectors', 'approvers', 'user', 'dpms', 'dars'));
     }
 
     // query all wi form from database to wi table page
@@ -1224,6 +1243,14 @@ class TablesController extends Controller
         return view('/tables/verify', compact('form','user'));
     }
 
+    public function verifyReq() {
+
+        $darQuery = DocActionReq::whereIn('stat', ['รอตรวจสอบ', 'รออนุมัติ'])->get();
+
+        $user = User::withTrashed()->get();
+        return view('/tables/verifyDar', compact('darQuery','user'));
+    }
+
     public function setVerify(Request $request) {
         try {
             $id = $request->docId;
@@ -1242,6 +1269,9 @@ class TablesController extends Controller
             elseif ($request->type === 'jdForm') {
                 $form = jd_doc::find($id);
             }
+            elseif ($request->type === 'darForm') {
+                $form = DocActionReq::find($id);
+            }
             else {
                 $form = gendoc::find($id);
             }
@@ -1250,12 +1280,12 @@ class TablesController extends Controller
                 $app = [
                     'appId' => $request->app,
                     'note' => '-',
-                    'date' => date('Y-m-d H:i:s'),
+                    'date' => '-',
                 ];
                 $ins = [
                     'appId' => $request->ins,
                     'note' => '-',
-                    'date' => date('Y-m-d H:i:s'),
+                    'date' => '-',
                 ];
                 $form->app = $app;
                 $form->ins = $ins;
@@ -1278,6 +1308,9 @@ class TablesController extends Controller
                 $app->date = date('Y-m-d H:i:s');
                 $form->app = json_encode($app);
                 if ($request->res) {
+                    if ($request->type === 'darForm') {
+                        DarDocument::where('dar_id', $form->id)->update(['status' => 1]);
+                    }
                     $form->stat = 'ผ่านการอนุมัติ';
                 } else {
                     $form->stat = 'ไม่ผ่านการอนุมัติ';
@@ -1568,4 +1601,363 @@ class TablesController extends Controller
             return response()->json(['error' => $e]);
         }
     }
+
+    public function getFromType(Request $request)
+    {
+        $types = $request->types;
+
+        $docs = collect(); // collection กลาง
+
+        if (in_array('PRO', $types)) {
+            $docs = $docs->concat(
+                project_doc::where('stat', 'ผ่านการอนุมัติ')
+                ->whereDoesntHave('darDocuments', function ($q) {
+                    $q->where('doc_type', 'PRO');
+                })
+                ->get(['id','proj_code','title'])->map(function ($item) {
+                    return [
+                        'id'       => $item->id,
+                        'book_num' => $item->proj_code, // แปลง key
+                        'title'    => $item->title,
+                        'type'     => 'PRO',
+                    ];
+                })
+            );
+        }
+
+        if (in_array('ANNO', $types)) {
+            $docs = $docs->concat(
+                announce_doc::where('stat', 'ผ่านการอนุมัติ')
+                ->whereDoesntHave('darDocuments', function ($q) {
+                    $q->where('doc_type', 'ANNO');
+                })
+                ->get(['id','book_num', 'title'])->map(fn ($item) => [
+                    'id'       => $item->id,
+                    'book_num' => $item->book_num,
+                    'title'    => $item->title,
+                    'type'     => 'ANNO',
+                ])
+            );
+        }
+
+        if (in_array('MOU', $types)) {
+            $docs = $docs->concat(
+                mou_doc::where('stat', 'ผ่านการอนุมัติ')
+                ->whereDoesntHave('darDocuments', function ($q) {
+                    $q->where('doc_type', 'MOU');
+                })
+                ->get(['id','book_num', 'title'])->map(fn ($item) => [
+                    'id'       => $item->id,
+                    'book_num' => $item->book_num,
+                    'title'    => $item->title,
+                    'type'     => 'MOU',
+                ])
+            );
+        }
+
+        if (in_array('COST', $types)) {
+            $docs = $docs->concat(
+                costs_doc::where('stat', 'ผ่านการอนุมัติ')
+                ->whereDoesntHave('darDocuments', function ($q) {
+                    $q->where('doc_type', 'COST');
+                })
+                ->get(['id','book_num', 'title'])->map(fn ($item) => [
+                    'id'       => $item->id,
+                    'book_num' => $item->book_num,
+                    'title'    => $item->title,
+                    'type'     => 'COST',
+                ])
+            );
+        }
+
+        if (in_array('JD', $types)) {
+            $docs = $docs->concat(
+                jd_doc::where('stat', 'ผ่านการอนุมัติ')
+                ->whereDoesntHave('darDocuments', function ($q) {
+                    $q->where('doc_type', 'JD');
+                })
+                ->get(['id','book_num', 'title'])->map(fn ($item) => [
+                    'id'       => $item->id,
+                    'book_num' => $item->book_num,
+                    'title'    => $item->title,
+                    'type'     => 'JD',
+                ])
+            );
+        }
+
+        if (in_array('WI', $types)) {
+            $docs = $docs->concat(
+                gendoc::where('stat', 'ผ่านการอนุมัติ')->where('type', 'LIKE', 'wi%')
+                ->whereDoesntHave('darDocuments', function ($q) {
+                    $q->where('doc_type', 'WI');
+                })
+                ->get(['id','book_num', 'title'])
+                    ->map(fn ($item) => [
+                        'id'       => $item->id,
+                        'book_num' => $item->book_num,
+                        'title'    => $item->title,
+                        'type'     => 'WI',
+                    ])
+            );
+        }
+
+        if (in_array('SOP', $types)) {
+            $docs = $docs->concat(
+                gendoc::where('stat', 'ผ่านการอนุมัติ')->where('type', 'LIKE', 'sop%')
+                ->whereDoesntHave('darDocuments', function ($q) {
+                    $q->where('doc_type', 'SOP');
+                })
+                ->get(['id','book_num', 'title'])
+                    ->map(fn ($item) => [
+                        'id'       => $item->id,
+                        'book_num' => $item->book_num,
+                        'title'    => $item->title,
+                        'type'     => 'SOP',
+                    ])
+            );
+        }
+
+        if (in_array('POL', $types)) {
+            $docs = $docs->concat(
+                gendoc::where('stat', 'ผ่านการอนุมัติ')->where('type', 'LIKE', 'policy%')
+                ->whereDoesntHave('darDocuments', function ($q) {
+                    $q->where('doc_type', 'POL');
+                })
+                ->get(['id','book_num', 'title'])
+                    ->map(fn ($item) => [
+                        'id'       => $item->id,
+                        'book_num' => $item->book_num,
+                        'title'    => $item->title,
+                        'type'     => 'POL',
+                    ])
+            );
+        }
+
+        if (in_array('checklist', $types)) {
+            $docs = $docs->concat(
+                gendoc::where('stat', 'ผ่านการอนุมัติ')->where('type', 'LIKE', 'checkForm%')
+                ->whereDoesntHave('darDocuments', function ($q) {
+                    $q->where('doc_type', 'checklist');
+                })
+                ->get(['id','book_num', 'title'])
+                    ->map(fn ($item) => [
+                        'id'       => $item->id,
+                        'book_num' => $item->book_num,
+                        'title'    => $item->title,
+                        'type'     => 'checklist',
+                    ])
+            );
+        }
+
+        if (in_array('course', $types)) {
+            $docs = $docs->concat(
+                gendoc::where('stat', 'ผ่านการอนุมัติ')->where('type', 'LIKE', 'courseForm%')
+                ->whereDoesntHave('darDocuments', function ($q) {
+                    $q->where('doc_type', 'course');
+                })
+                ->get(['id','book_num', 'title'])
+                    ->map(fn ($item) => [
+                        'id'       => $item->id,
+                        'book_num' => $item->book_num,
+                        'title'    => $item->title,
+                        'type'     => 'course',
+                    ])
+            );
+        }
+
+        if (in_array('media', $types)) {
+            $docs = $docs->concat(
+                gendoc::where('stat', 'ผ่านการอนุมัติ')->where('type', 'LIKE', 'mediaForm%')
+                ->whereDoesntHave('darDocuments', function ($q) {
+                    $q->where('doc_type', 'media');
+                })
+                ->get(['id','book_num', 'title'])
+                    ->map(fn ($item) => [
+                        'id'       => $item->id,
+                        'book_num' => $item->book_num,
+                        'title'    => $item->title,
+                        'type'     => 'media',
+                    ])
+            );
+        }
+
+        return response()->json($docs->values());
+    }
+
+    public function darDetail ($darid) {
+        $dar_data = DocActionReq::findOrFail($darid);
+        $user = User::withTrashed()->get(['id', 'name']);
+        $dar_doc_ids = DarDocument::where('dar_id', $darid)->get();
+
+        $docs = collect();
+        foreach ($dar_doc_ids as $key => $dar_doc) {
+            if ($dar_doc->doc_type == 'PRO') {
+                $docs = $docs->concat(
+                    project_doc::where('id', $dar_doc->doc_id ?? '')->get(['id','proj_code','title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->proj_code, // แปลง key
+                            'title'    => $item->title,
+                            'type'     => 'PRO',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'ANNO') {
+                $docs = $docs->concat(
+                    announce_doc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'ANNO',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'MOU') {
+                $docs = $docs->concat(
+                    mou_doc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'MOU',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'COST') {
+                $docs = $docs->concat(
+                    costs_doc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'COST',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'JD') {
+                $docs = $docs->concat(
+                    jd_doc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'JD',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'WI') {
+                $docs = $docs->concat(
+                    gendoc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'WI',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'SOP') {
+                $docs = $docs->concat(
+                    gendoc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'SOP',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'POL') {
+                $docs = $docs->concat(
+                    gendoc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'POL',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'checklist') {
+                $docs = $docs->concat(
+                    gendoc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'checklist',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'course') {
+                $docs = $docs->concat(
+                    gendoc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'course',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+
+            if ($dar_doc->doc_type == 'media') {
+                $docs = $docs->concat(
+                    gendoc::where('id', $dar_doc->doc_id ?? '')->get(['id','book_num', 'title', 'app', 'edit_count'])->map(function ($item) {
+                        return [
+                            'id'       => $item->id,
+                            'book_num' => $item->book_num,
+                            'title'    => $item->title,
+                            'type'     => 'media',
+                            'approve' => $item->app,
+                            'edit_count' => $item->edit_count
+                        ];
+                    })
+                );
+            }
+        }
+        $docs_list = $docs->values();
+        return view('dar_detail', compact('dar_data', 'user', 'docs_list'));
+    }
+
 }

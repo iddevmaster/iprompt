@@ -77,30 +77,27 @@
 
     <div class="">
         <div class="row justify-content-center">
-            <div class="col-md-8 mb-5 d-flex justify-content-center">
-                <div class="head-name my-5">
-                    <p>I-Prompt</p>
+            <div class="col-md-8 d-flex justify-content-center">
+                <div class="head-name mb-4">
+                    <p>ระบบบริหารจัดการคุณภาพ</p>
+                    <p>Quality Management System</p>
                 </div>
             </div>
             <!-- create doc card -->
-            <div class="col-md-8 mb-5">
-                <div class="card">
-                    <div class="card-header">{{ __('Create Documents - สร้างเอกสาร') }}</div>
+            <div class="col-md-10 mb-5 d-flex flex-wrap gap-4">
+
+                {{-- Policy group --}}
+                <div class="card flex-grow-1">
+                    <div class="card-header" style="background-color: #E1EEFF;">{{ __('นโยบาย - Policy & Manual') }} <span class="badge text-bg-success">Create</span></div>
 
                     <div class="card-body text-center">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xxl-6 mb-2 border-bottom">
+                        <div class="d-flex flex-wrap">
                             @can('cMOU')
                             <div class="col">
                                 <a class="a-tag" href="{{ route('mouForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/MOU.png') }}" alt="" height="50px">
-                                        <p class="icon-title">บันทึกความร่วมมือ</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">QM</span> บันทึกความร่วมมือ</p>
                                     </div>
                                 </a>
                             </div>
@@ -111,7 +108,7 @@
                                 <a class="a-tag" href="{{ route('policyForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Policy.png') }}" alt="" height="50px">
-                                        <p class="icon-title">นโยบาย</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">QM</span> นโยบาย</p>
                                     </div>
                                 </a>
                             </div>
@@ -122,51 +119,78 @@
                                 <a class="a-tag" href="{{ route('annoForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Announce.png') }}" alt="" height="50px">
-                                        <p class="icon-title">ประกาศ</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">QM</span> ประกาศ</p>
                                     </div>
                                 </a>
                             </div>
                             @endcan
+                        </div>
+                    </div>
+                </div>
 
-                            @can('cPRO')
-                            <div class="col">
-                                <a class="a-tag" href="{{ route('projForm') }}">
-                                    <div class="w-100 h-100">
-                                        <img src="{{ asset('dist/logo/Project.png') }}" alt="" height="50px">
-                                        <p class="icon-title">โครงการ</p>
-                                    </div>
-                                </a>
-                            </div>
-                            @endcan
+                {{-- Process management --}}
+                <div class="card flex-grow-1">
+                    <div class="card-header" style="background-color: #DDF3E6">{{ __('การบริหารจัดการ - Process Mananagement') }} <span class="badge text-bg-success">Create</span></div>
 
+                    <div class="card-body text-center">
+                        <div class="d-flex flex-wrap">
                             @can('cSOP')
                             <div class="col">
                                 <a class="a-tag" href="{{ route('sopForm') }}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-arrow-return-right"></i>
-                                        <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">PM</span> ระเบียบการปฏิบัติงาน</p>
                                     </div>
                                 </a>
                             </div>
                             @endcan
+                        </div>
+                    </div>
+                </div>
 
+                {{-- Work flow --}}
+                <div class="card flex-grow-1">
+                    <div class="card-header" style="background-color: #FFE3ED">{{ __('ขั้นตอนการปฏิบัติงาน  - Work procedures') }} <span class="badge text-bg-success">Create</span></div>
+
+                    <div class="card-body text-center">
+                        <div class="d-flex flex-wrap">
                             @can('cWI')
                             <div class="col">
                                 <a class="a-tag" href="{{ route('wiForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/WI.png') }}" alt="" height="50px">
-                                        <p class="icon-title">ขั้นตอนการปฏิบัติงาน</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">WI</span> ขั้นตอนการปฏิบัติงาน</p>
                                     </div>
                                 </a>
                             </div>
                             @endcan
 
+                            @can('cJD')
+                                <div class="col">
+                                    <a class="a-tag" href="{{ route('jdForm') }}">
+                                        <div class="w-100 h-100">
+                                            <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
+                                            <p class="icon-title mb-0"><span class="badge text-bg-primary">JD</span> รายละเอียดงาน</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Support & ref --}}
+                <div class="card flex-grow-1">
+                    <div class="card-header" style="background-color: #FFF2CC">{{ __('เอกสารสนับสนุน & อ้างอิง  - Support & Reference') }} <span class="badge text-bg-success">Create</span></div>
+
+                    <div class="card-body text-center">
+                        <div class="d-flex flex-wrap">
                             @can('ccheck')
                             <div class="col">
                                 <a class="a-tag" href="{{ route('checkForm')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
-                                        <p class="icon-title">CheckList</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">SD</span> CheckList</p>
                                     </div>
                                 </a>
                             </div>
@@ -177,7 +201,7 @@
                                 <a class="a-tag" href="{{ route('costForm')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
-                                        <p class="icon-title">ต้นทุนงาน</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">SD</span> ต้นทุนงาน</p>
                                     </div>
                                 </a>
                             </div>
@@ -188,24 +212,80 @@
                                 <a class="a-tag" href="{{ route('courseForm')}}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-book"></i>
-                                        <p class="icon-title">Course</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">SD</span> Course</p>
                                     </div>
                                 </a>
                             </div>
                             @endcan
 
+                            @can('cCONT')
+                                <div class="col">
+                                    <a class="a-tag" href="{{ route('contract') }}">
+                                        <div class="w-100 h-100">
+                                            <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
+                                            <p class="icon-title mb-0"><span class="badge text-bg-primary">SD</span> สัญญา</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+
+                            @can('cPRO')
+                                <div class="col">
+                                    <a class="a-tag" href="{{ route('projForm') }}">
+                                        <div class="w-100 h-100">
+                                            <img src="{{ asset('dist/logo/Project.png') }}" alt="" height="50px">
+                                            <p class="icon-title mb-0"><span class="badge text-bg-primary">ED</span> โครงการ</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endcan
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Support & ref --}}
+                <div class="card flex-grow-1">
+                    <div class="card-header" style="background-color: #E6DEFA">{{ __('บันทึกหลักฐาน  - Record') }} <span class="badge text-bg-success">Create</span></div>
+
+                    <div class="card-body text-center">
+                        <div class="d-flex flex-wrap">
+                            @can('DAR')
+                            <div class="col">
+                                <a class="a-tag" href="{{ route('darForm') }}">
+                                    <div class="w-100 h-100">
+                                        <i class="bi bi-book"></i>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">FD</span> คำขอดำเนินการเอกสาร</p>
+                                    </div>
+                                </a>
+                            </div>
+                            @endcan
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card flex-grow-1">
+                    <div class="card-header" style="background-color: #EDEDED">{{ __('เอกสารอื่นๆ - Other Document') }} <span class="badge text-bg-success">Create</span></div>
+
+                    <div class="card-body text-center">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
+                        <div class="d-flex flex-wrap">
                             @can('cmedia')
                             <div class="col">
                                 <a class="a-tag" href="{{ route('mediaForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Brochure.png') }}" alt="" height="50px">
-                                        <p class="icon-title">Brochure</p>
+                                        <p class="icon-title mb-0">Brochure</p>
                                     </div>
                                 </a>
                             </div>
                             @endcan
 
-                            @role('admin')
+                            {{-- @role('admin')
                             <div class="col">
                                 <a class="a-tag" href="">
                                     <div class="w-100 h-100">
@@ -223,49 +303,25 @@
                                     </div>
                                 </a>
                             </div>
-                            @endrole
 
-                            @can('cCONT')
-                                <div class="col">
-                                    <a class="a-tag" href="{{ route('contract') }}">
-                                        <div class="w-100 h-100">
-                                            <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
-                                            <p class="icon-title">สัญญา</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endcan
+                            <div class="col">
+                                <a class="a-tag" href="">
+                                    <div class="w-100 h-100">
+                                        <img src="{{ asset('dist/logo/iso.png') }}" alt="" height="50px">
+                                        <p class="icon-title">ISO</p>
+                                    </div>
+                                </a>
+                            </div>
 
-                            @can('cJD')
-                                <div class="col">
-                                    <a class="a-tag" href="{{ route('jdForm') }}">
-                                        <div class="w-100 h-100">
-                                            <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
-                                            <p class="icon-title">รายละเอียดงาน</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endcan
-
-                            @role('admin')
-                                <div class="col">
-                                    <a class="a-tag" href="">
-                                        <div class="w-100 h-100">
-                                            <img src="{{ asset('dist/logo/iso.png') }}" alt="" height="50px">
-                                            <p class="icon-title">ISO</p>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="col">
-                                    <a class="a-tag" href="">
-                                        <div class="w-100 h-100">
-                                            <img src="{{ asset('dist/logo/manual.png') }}" alt="" height="50px">
-                                            <p class="icon-title">คู่มือพนักงาน</p>
-                                        </div>
-                                    </a>
-                                </div>
-                            @endrole
+                            <div class="col">
+                                <a class="a-tag" href="">
+                                    <div class="w-100 h-100">
+                                        <img src="{{ asset('dist/logo/manual.png') }}" alt="" height="50px">
+                                        <p class="icon-title">คู่มือพนักงาน</p>
+                                    </div>
+                                </a>
+                            </div>
+                            @endrole --}}
                         </div>
                     </div>
                 </div>
@@ -275,7 +331,7 @@
             <!-- Table card -->
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Table Documents - ทะเบียนเอกสาร') }}</div>
+                    <div class="card-header text-white" style="background-color: #5e5e5e;">{{ __('Table Documents - ทะเบียนเอกสาร') }} <span class="badge text-bg-warning">Table</span></div>
 
                     <div class="card-body text-center">
                         @if (session('status'))
@@ -285,13 +341,13 @@
                         @endif
 
 
-                        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xxl-6 mb-2 border-bottom">
+                        <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xxl-6 mb-2">
                             @can('MOU')
                             <div class="col col-4">
                                 <a class="a-tag" href="{{ route('mouTable') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/MOU.png') }}" alt="" height="50px">
-                                        <p class="icon-title">บันทึกความร่วมมือ</p>
+                                        <p class="icon-title mb-0">บันทึกความร่วมมือ</p>
                                     </div>
                                 </a>
                             </div>
@@ -302,7 +358,7 @@
                                 <a class="a-tag" href="/tables/policyTable">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Policy.png') }}" alt="" height="50px">
-                                        <p class="icon-title">นโยบาย</p>
+                                        <p class="icon-title mb-0">นโยบาย</p>
                                     </div>
                                 </a>
                             </div>
@@ -313,7 +369,7 @@
                                 <a class="a-tag" href="{{ route('annoTable') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Announce.png') }}" alt="" height="50px">
-                                        <p class="icon-title">ประกาศ</p>
+                                        <p class="icon-title mb-0">ประกาศ</p>
                                     </div>
                                 </a>
                             </div>
@@ -324,7 +380,7 @@
                                 <a class="a-tag" href="{{ route('projTable') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Project.png') }}" alt="" height="50px">
-                                        <p class="icon-title">โครงการ</p>
+                                        <p class="icon-title mb-0">โครงการ</p>
                                     </div>
                                 </a>
                             </div>
@@ -335,7 +391,7 @@
                                 <a class="a-tag" href="/tables/sopTable">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-arrow-return-right"></i>
-                                        <p class="icon-title">ระเบียบการปฏิบัติงาน</p>
+                                        <p class="icon-title mb-0">ระเบียบการปฏิบัติงาน</p>
                                     </div>
                                 </a>
                             </div>
@@ -346,7 +402,7 @@
                                 <a class="a-tag" href="/tables/wiTable">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/WI.png') }}" alt="" height="50px">
-                                        <p class="icon-title">ขั้นตอนการปฏิบัติงาน</p>
+                                        <p class="icon-title mb-0">ขั้นตอนการปฏิบัติงาน</p>
                                     </div>
                                 </a>
                             </div>
@@ -357,7 +413,7 @@
                                 <a class="a-tag" href="{{ route('mediaTable')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Brochure.png') }}" alt="" height="50px">
-                                        <p class="icon-title">Brochure</p>
+                                        <p class="icon-title mb-0">Brochure</p>
                                     </div>
                                 </a>
                             </div>
@@ -368,7 +424,7 @@
                                 <a class="a-tag" href="{{ route('courseTable')}}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-book"></i>
-                                        <p class="icon-title">Course</p>
+                                        <p class="icon-title mb-0">Course</p>
                                     </div>
                                 </a>
                             </div>
@@ -379,7 +435,7 @@
                                 <a class="a-tag" href="{{ route('checkTable')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
-                                        <p class="icon-title">CheckList</p>
+                                        <p class="icon-title mb-0">CheckList</p>
                                     </div>
                                 </a>
                             </div>
@@ -390,7 +446,7 @@
                                 <a class="a-tag" href="{{ route('costTable')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
-                                        <p class="icon-title">ต้นทุนงาน</p>
+                                        <p class="icon-title mb-0">ต้นทุนงาน</p>
                                     </div>
                                 </a>
                             </div>
@@ -401,7 +457,7 @@
                                     <a class="a-tag" href="{{ route('contTable') }}">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
-                                            <p class="icon-title">
+                                            <p class="icon-title mb-0">
                                                 สัญญา
                                                 @if (count($alert_ins ?? []) > 0)
                                                     <span class="badge text-bg-danger">{{ count($alert_ins) }}</span>
@@ -417,10 +473,21 @@
                                     <a class="a-tag" href="{{ route('jdTable') }}">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
-                                            <p class="icon-title">รายละเอียดงาน</p>
+                                            <p class="icon-title mb-0">รายละเอียดงาน</p>
                                         </div>
                                     </a>
                                 </div>
+                            @endcan
+
+                            @can('DAR')
+                            <div class="col">
+                                <a class="a-tag" href="{{ route('darTable') }}">
+                                    <div class="w-100 h-100">
+                                        <i class="bi bi-book"></i>
+                                        <p class="icon-title mb-0">คำขอดำเนินการเอกสาร</p>
+                                    </div>
+                                </a>
+                            </div>
                             @endcan
                         </div>
                     </div>

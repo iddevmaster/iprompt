@@ -57,8 +57,8 @@
                                 // Get the current date
                                 var currentDate = new Date();
                                 var currentYear = currentDate.getFullYear()+543;
-                                document.getElementById("currentYear").innerText = "COS-ID-{{$formattedLen}}";
-                                document.getElementsByName('bookNo')[0].value = "COS-ID-{{$formattedLen}}";
+                                document.getElementById("currentYear").innerText = "COS-ID-{{$formattedLen}}-00-"+currentYear;
+                                document.getElementsByName('bookNo')[0].value = "COS-ID-{{$formattedLen}}-00-"+currentYear;
                             </script>
                         @endif
                     </div>

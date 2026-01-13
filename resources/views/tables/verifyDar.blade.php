@@ -1,0 +1,290 @@
+@extends('layouts.app')
+
+<!-- Scripts -->
+@vite(['resources/css/table.css' , 'resources/js/table.js'])
+@section('content')
+<body>
+<?php $permis = Auth::user()->role ;
+      $dpm = Auth::user()->dpm;
+?>
+    <div class="container">
+        <div class="text-center mb-4"><h2>ตรวจสอบ / อนุมัติ คำขอ</h2></div>
+        <!-- Table -->
+        <div class="table-responsive">
+            <table class="table table-hover listTable">
+
+                <!-- Table Header -->
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">เลขที่หนังสือ</th>
+                        <th scope="col">ประเภทเอกสาร</th>
+                        <th scope="col">ขอเพื่อ</th>
+                        <th scope="col">ผู้ขอ</th>
+                        <th scope="col">วันที่ขอ</th>
+                        <th scope="col">สถานะ</th>
+                        <th scope="col">หนังสือ</th>
+                    </tr>
+                </thead>
+
+                <!-- Table Body -->
+                <tbody class="table-group-divider" id="tableBody">
+                    <!-- Table rows will be dynamically added here -->
+                    <?php  $counter = 1 ?>
+                    @foreach ($darQuery ?? [] as $row)
+                        @php
+                            $app = json_decode($row->app);
+                            $ins = json_decode($row->ins);
+                            $type = explode('.', $row->type);
+                            $doc_types = json_decode($row->doc_type);
+                        @endphp
+                        @if (($row->stat === 'รออนุมัติ' && $app->appId == Auth::user()->id) || ($row->stat === 'รอตรวจสอบ' && $ins->appId == Auth::user()->id) || (Auth::user()->role  === 'admin'))
+                            <tr>
+                                <td>{{$counter}}</td>
+                                <td>{{ $row->book_num}}</td>
+                                <td>{{ implode(',', $doc_types) }}</td>
+                                <td>{{ $row->action_type}}</td>
+                                <td>{{ $row->request_by}}</td>
+                                <td>{{ $row->request_at}}</td>
+                                <td>
+                                    <button class="btn btn-secondary" name="{{$row->id}}" id="{{$row->stat}}" docType="darForm">{{$row->stat}}</button>
+                                </td>
+
+                                @php
+                                    $encryptedId = Illuminate\Support\Facades\Crypt::encrypt($row->id);
+                                @endphp
+                                <td>
+                                    <a href="{{ route('dar-detail', ['darid' => $row->id]) }}"><button type="button" class="btn btn-secondary ">รายละเอียด</button></a>
+                                </td>
+                            </tr>
+                        @endif
+                    <?php $counter++ ?>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="https://fastly.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.listTable').DataTable({
+                "paging": true,
+                "pageLength": 10,
+                "searching": true,
+                "bLengthChange": false,
+                language: {
+                    search: "ค้นหา:"
+                },
+                drawCallback: function() {
+                    $('[data-bs-toggle="tooltip"]').tooltip();
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        const statbtns = document.querySelectorAll('#รอตรวจสอบ');
+        const appbtns = document.querySelectorAll('#รออนุมัติ');
+        statbtns.forEach((ckbtn) => {
+            let status = ckbtn.getAttribute('id');
+            let docid = ckbtn.getAttribute('name');
+            let type = ckbtn.getAttribute('docType');
+            ckbtn.addEventListener('click', function () {
+                Swal.fire({
+                title: 'ผลการตรวจสอบ',
+                showCancelButton: true,
+                showDenyButton: true,
+                confirmButtonText: 'ผ่าน',
+                denyButtonText: 'ไม่ผ่าน',
+                cancelButtonText: 'Cancel'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                    input: 'textarea',
+                    inputLabel: 'ผ่านการตรวจสอบ',
+                    inputPlaceholder: 'หมายเหตุ',
+                    inputAttributes: {
+                        'aria-label': 'Type your message here'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Submit',
+                    cancelButtonText: 'Cancel'
+                    }).then((confirmationResult) => {
+                    if (confirmationResult.isConfirmed) {
+                        fetch('/table/form/verify', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                            },
+                            body: JSON.stringify({
+                                docId: docid,
+                                status: status,
+                                type: type,
+                                note: confirmationResult.value,
+                                res : true,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Handle the response if needed
+                            console.log(data);
+                            // You can also reload the page to see the changes,
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            // Handle errors if any
+                            Swal.fire('Error!', error.message, 'error');
+                        });
+                    }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire({
+                    input: 'textarea',
+                    inputLabel: 'ไม่ผ่านการตรวจสอบ',
+                    inputPlaceholder: 'หมายเหตุ',
+                    inputAttributes: {
+                        'aria-label': 'Type your message here'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Submit',
+                    cancelButtonText: 'Cancel'
+                    }).then((denialResult) => {
+                    if (denialResult.isConfirmed) {
+                        fetch('/table/form/verify', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                            },
+                            body: JSON.stringify({
+                                docId: docid,
+                                status: status,
+                                type: type,
+                                note: denialResult.value,
+                                res : false,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Handle the response if needed
+                            console.log(data);
+                            // You can also reload the page to see the changes,
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            // Handle errors if any
+                            Swal.fire('Error!', error.message, 'error');
+                        });
+                    }
+                    });
+                }
+                });
+
+            });
+        });
+
+
+        appbtns.forEach((ckbtn) => {
+            let status = ckbtn.getAttribute('id');
+            let docid = ckbtn.getAttribute('name');
+            let type = ckbtn.getAttribute('docType');
+            ckbtn.addEventListener('click', function () {
+                Swal.fire({
+                title: 'ผลการอนุมัติ',
+                showCancelButton: true,
+                showDenyButton: true,
+                confirmButtonText: 'ผ่าน',
+                denyButtonText: 'ไม่ผ่าน',
+                cancelButtonText: 'Cancel'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                    input: 'textarea',
+                    inputLabel: 'ผ่านการอนุมัติ',
+                    inputPlaceholder: 'หมายเหตุ',
+                    inputAttributes: {
+                        'aria-label': 'Type your message here'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Submit',
+                    cancelButtonText: 'Cancel'
+                    }).then((confirmationResult) => {
+                    if (confirmationResult.isConfirmed) {
+                        fetch('/table/form/verify', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                            },
+                            body: JSON.stringify({
+                                docId: docid,
+                                status: status,
+                                type: type,
+                                note: confirmationResult.value,
+                                res : true,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Handle the response if needed
+                            console.log(data);
+                            // You can also reload the page to see the changes,
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            // Handle errors if any
+                            Swal.fire('Error!', error.message, 'error');
+                        });
+                    }
+                    });
+                } else if (result.isDenied) {
+                    Swal.fire({
+                    input: 'textarea',
+                    inputLabel: 'ไม่ผ่านการอนุมัติ',
+                    inputPlaceholder: 'หมายเหตุ',
+                    inputAttributes: {
+                        'aria-label': 'Type your message here'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Submit',
+                    cancelButtonText: 'Cancel'
+                    }).then((denialResult) => {
+                    if (denialResult.isConfirmed) {
+                        fetch('/table/form/verify', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
+                            },
+                            body: JSON.stringify({
+                                docId: docid,
+                                status: status,
+                                type: type,
+                                note: denialResult.value,
+                                res : false,
+                            }),
+                        })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            // Handle the response if needed
+                            console.log(data);
+                            // You can also reload the page to see the changes,
+                            window.location.reload();
+                        })
+                        .catch((error) => {
+                            // Handle errors if any
+                            Swal.fire('Error!', error.message, 'error');
+                        });
+                    }
+                    });
+                }
+                });
+            });
+        });
+    </script>
+</body>
+@endsection

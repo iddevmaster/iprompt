@@ -25,6 +25,8 @@
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet"></link>
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/css/app.css' , 'resources/js/app.js'])
 
@@ -129,8 +131,11 @@
         <nav class="navbar navbar-expand-md nav-light shadow-sm" id="navb">
             <div class="container">
                 <a id="brand" class="navbar-brand" href="{{ url('/home') }}">
-                    <img src="{{ asset('dist/img/logoiddrives.png') }}" height="50">
+                    <img src="{{ asset('dist/img/logoiddrives.png') }}" height="40">
                 </a>
+                <div class="d-flex justify-content-center align-items-center m-0 px-2 text-warning text-center border border-3 border-warning rounded-3">
+                    <p class="m-0">I-Prompt</p>
+                </div>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -253,7 +258,8 @@
                             </ul>
                         </li>
                         @if (auth()->check() && (auth()->user()->can('approve') || auth()->user()->can('inspect')))
-                            <li class="nav-item"><a href="{{ route('verifyDoc') }}" class="nav-link navbarMenu">ตรวจสอบ/อนุมัติ</a></li>
+                            <li class="nav-item"><a href="{{ route('verifyDoc') }}" class="nav-link navbarMenu">ตรวจสอบ/อนุมัติ หนังสือ</a></li>
+                            <li class="nav-item"><a href="{{ route('verifyReq') }}" class="nav-link navbarMenu">ตรวจสอบ/อนุมัติ คำขอ</a></li>
                         @endif
                         @role('admin')
                         <li class="nav-item "><a href="{{ route('alluser') }}" class="nav-link navbarMenu">จัดการบัญชีผู้ใช้</a></li>

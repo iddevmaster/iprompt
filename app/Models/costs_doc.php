@@ -29,4 +29,9 @@ class costs_doc extends Model
         'ins',
         'dpm',
     ];
+
+    public function darDocuments()
+    {
+        return $this->hasMany(DarDocument::class, 'doc_id');
+    }
 }
