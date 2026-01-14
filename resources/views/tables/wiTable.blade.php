@@ -154,6 +154,7 @@
                                 $encryptedId = Illuminate\Support\Facades\Crypt::encrypt($row->id);
                             @endphp
 
+                            {{-- download/view btn --}}
                             @if ((((App\Models\department::find((Auth::user())->dpm))->prefix) == $row->dpm || Auth::user()->hasRole(['admin', 'ceo'])) || (auth()->user()->can('download')) || (in_array((Auth::user())->dpm, $shares)))
                                 <td>
                                     <a href="{{url('/form/downloadwi/download/'.$encryptedId)}}" target="_blank"><button type="button" class="btn btn-primary">Download</button></a>
@@ -202,6 +203,11 @@
                                     }
                                 @endphp
                                 </button>
+                                <div class="mt-1">
+                                    @foreach ($teamlist ?? [] as $member)
+                                        <span class="badge text-bg-secondary">{{ $member }}</span>
+                                    @endforeach
+                                </div>
                             </td>
 
                             @can('staff')
