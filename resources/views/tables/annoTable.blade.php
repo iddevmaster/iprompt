@@ -179,6 +179,11 @@
                                     }
                                 @endphp
                                 </button>
+                                <div class="mt-1">
+                                    @foreach ($teamlist ?? [] as $member)
+                                        <span class="badge text-bg-secondary">{{ $member }}</span>
+                                    @endforeach
+                                </div>
                             </td>
 
                             @can('staff')
