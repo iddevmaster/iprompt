@@ -36,10 +36,11 @@
                     </div>
                     <div class="col pt-2">
                         <?php
-                            $datetime = (json_decode($form->app))->date ?? null;
-                            $date = $datetime ? new DateTime($datetime) : null;
-                            $dated = $date ? $date->format('Y-m-d') : "";
-                         ?>
+                            $app = json_decode($form->app);
+                            $dated = (!empty($app?->date) && $app->date !== '-')
+                                ? (new DateTime($app->date))->format('Y-m-d')
+                                : '';
+                        ?>
                         <p class="text-start mb-0">เลขที่เอกสาร: {{$form->book_num}}</p>
                         <p class="text-start mb-0">แก้ไขครั้งที่: {{$form->edit_count}}</p>
                         <p class="text-start mb-0">วันที่บังคับใช้: {{$dated}}</p>
