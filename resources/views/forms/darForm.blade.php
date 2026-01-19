@@ -11,7 +11,7 @@
         <?php $regData = \App\CoreFunction\Helper::regData(); ?>
         <div class="container">
             <div class="row d-flex justify-content-center text-center">
-                <h2 class="my-3">คำขอดำเนินการเอกสาร</h2>
+                <h2 class="my-3">ใบคำขอดำเนินการด้านเอกสาร (DAR)</h2>
 
                 <div class="card p-4">
                     <div class="tab-content" id="pills-tabContent">

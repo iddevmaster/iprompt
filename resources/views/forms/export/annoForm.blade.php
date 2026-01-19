@@ -99,7 +99,7 @@
 
         <!-- header -->
         <div class="header border-bottom d-flex flex-column justify-content-center text-center align-items-center">
-            <div class="mb-2"><img style="" src="{{ asset('dist/img/logoiddrives.png') }}" height="80"></div>
+            <div class="mb-2"><img style="" src="{{ asset('dist/img/logoiddrives.png') }}" height="60"></div>
             <h4 class="fw-bold">บริษัท ไอดีไดรฟ์ จำกัด (สำนักงานใหญ่)</h4>
             <p>200/222 หมู่2 ถนนชัยพฤกษ์ อำเภอเมืองขอนแก่น จังหวัดขอนแก่น Tel:043-228-899 <br>
                 เลขที่ผู้เสียภาษี 0 4055 36000 53 1  Email: idofficer@iddrives.co.th</p>

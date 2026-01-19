@@ -97,7 +97,7 @@
                                 <a class="a-tag" href="{{ route('mouForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/MOU.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">QM</span> บันทึกความร่วมมือ</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">QM</span> Mou-Moa</p>
                                     </div>
                                 </a>
                             </div>
@@ -108,7 +108,7 @@
                                 <a class="a-tag" href="{{ route('policyForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Policy.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">QM</span> นโยบาย</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">QM</span> Policy</p>
                                     </div>
                                 </a>
                             </div>
@@ -119,7 +119,7 @@
                                 <a class="a-tag" href="{{ route('annoForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Announce.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">QM</span> ประกาศ</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">QM</span> Announce</p>
                                     </div>
                                 </a>
                             </div>
@@ -139,7 +139,7 @@
                                 <a class="a-tag" href="{{ route('sopForm') }}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-arrow-return-right"></i>
-                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">PM</span> ระเบียบการปฏิบัติงาน</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">PM</span> SOP</p>
                                     </div>
                                 </a>
                             </div>
@@ -159,7 +159,7 @@
                                 <a class="a-tag" href="{{ route('wiForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/WI.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">WI</span> ขั้นตอนการปฏิบัติงาน</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">WI</span> WI-SOP</p>
                                     </div>
                                 </a>
                             </div>
@@ -170,7 +170,7 @@
                                     <a class="a-tag" href="{{ route('jdForm') }}">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
-                                            <p class="icon-title mb-0"><span class="badge text-bg-primary">JD</span> รายละเอียดงาน</p>
+                                            <p class="icon-title mb-0"><span class="badge text-bg-primary">JD</span> JD</p>
                                         </div>
                                     </a>
                                 </div>
@@ -201,7 +201,7 @@
                                 <a class="a-tag" href="{{ route('costForm')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">SD</span> ต้นทุนงาน</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">SD</span> Cost</p>
                                     </div>
                                 </a>
                             </div>
@@ -223,7 +223,7 @@
                                     <a class="a-tag" href="{{ route('contract') }}">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
-                                            <p class="icon-title mb-0"><span class="badge text-bg-primary">SD</span> สัญญา</p>
+                                            <p class="icon-title mb-0"><span class="badge text-bg-primary">SD</span> Contract</p>
                                         </div>
                                     </a>
                                 </div>
@@ -234,7 +234,7 @@
                                     <a class="a-tag" href="{{ route('projForm') }}">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/Project.png') }}" alt="" height="50px">
-                                            <p class="icon-title mb-0"><span class="badge text-bg-primary">ED</span> โครงการ</p>
+                                            <p class="icon-title mb-0"><span class="badge text-bg-primary">ED</span> Project</p>
                                         </div>
                                     </a>
                                 </div>
@@ -254,7 +254,7 @@
                                 <a class="a-tag" href="{{ route('darForm') }}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-book"></i>
-                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">FD</span> คำขอดำเนินการเอกสาร</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">FD</span> DAR</p>
                                     </div>
                                 </a>
                             </div>
@@ -347,7 +347,7 @@
                                 <a class="a-tag" href="{{ route('mouTable') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/MOU.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0">บันทึกความร่วมมือ</p>
+                                        <p class="icon-title mb-0">QM-Mou-Moa</p>
                                     </div>
                                 </a>
                             </div>
@@ -358,7 +358,7 @@
                                 <a class="a-tag" href="/tables/policyTable">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Policy.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0">นโยบาย</p>
+                                        <p class="icon-title mb-0">QM-Policy</p>
                                     </div>
                                 </a>
                             </div>
@@ -369,7 +369,7 @@
                                 <a class="a-tag" href="{{ route('annoTable') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Announce.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0">ประกาศ</p>
+                                        <p class="icon-title mb-0">QM-Announce</p>
                                     </div>
                                 </a>
                             </div>
@@ -380,7 +380,7 @@
                                 <a class="a-tag" href="{{ route('projTable') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Project.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0">โครงการ</p>
+                                        <p class="icon-title mb-0">ED-Project</p>
                                     </div>
                                 </a>
                             </div>
@@ -391,7 +391,7 @@
                                 <a class="a-tag" href="/tables/sopTable">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-arrow-return-right"></i>
-                                        <p class="icon-title mb-0">ระเบียบการปฏิบัติงาน</p>
+                                        <p class="icon-title mb-0">PM</p>
                                     </div>
                                 </a>
                             </div>
@@ -402,7 +402,7 @@
                                 <a class="a-tag" href="/tables/wiTable">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/WI.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0">ขั้นตอนการปฏิบัติงาน</p>
+                                        <p class="icon-title mb-0">WI-SOP</p>
                                     </div>
                                 </a>
                             </div>
@@ -424,7 +424,7 @@
                                 <a class="a-tag" href="{{ route('courseTable')}}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-book"></i>
-                                        <p class="icon-title mb-0">Course</p>
+                                        <p class="icon-title mb-0">SD-Course</p>
                                     </div>
                                 </a>
                             </div>
@@ -435,7 +435,7 @@
                                 <a class="a-tag" href="{{ route('checkTable')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0">CheckList</p>
+                                        <p class="icon-title mb-0">SD-CheckList</p>
                                     </div>
                                 </a>
                             </div>
@@ -446,7 +446,7 @@
                                 <a class="a-tag" href="{{ route('costTable')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/sop.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0">ต้นทุนงาน</p>
+                                        <p class="icon-title mb-0">SD-Cost</p>
                                     </div>
                                 </a>
                             </div>
@@ -458,7 +458,7 @@
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/contrac.png') }}" alt="" height="50px">
                                             <p class="icon-title mb-0">
-                                                สัญญา
+                                                SD-Contract
                                                 @if (count($alert_ins ?? []) > 0)
                                                     <span class="badge text-bg-danger">{{ count($alert_ins) }}</span>
                                                 @endif
@@ -473,7 +473,7 @@
                                     <a class="a-tag" href="{{ route('jdTable') }}">
                                         <div class="w-100 h-100">
                                             <img src="{{ asset('dist/logo/JD.png') }}" alt="" height="50px">
-                                            <p class="icon-title mb-0">รายละเอียดงาน</p>
+                                            <p class="icon-title mb-0">JD</p>
                                         </div>
                                     </a>
                                 </div>
@@ -484,7 +484,7 @@
                                 <a class="a-tag" href="{{ route('darTable') }}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-book"></i>
-                                        <p class="icon-title mb-0">คำขอดำเนินการเอกสาร</p>
+                                        <p class="icon-title mb-0">DAR</p>
                                     </div>
                                 </a>
                             </div>

@@ -171,40 +171,43 @@
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
                                     @can('cMOU')
-                                        <li><a class="dropdown-item" href="{{ route('mouForm') }}">บันทึกความร่วมมือ</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('mouForm') }}">QM-Mou-Moa</a></li>
                                     @endcan
                                     @can('cPRO')
-                                        <li><a class="dropdown-item" href="{{ route('projForm') }}">โครงการ</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('projForm') }}">ED-Project</a></li>
                                     @endcan
                                     @can('cPOL')
-                                        <li><a class="dropdown-item" href="{{ route('policyForm') }}">นโยบาย</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('policyForm') }}">QM-Policy</a></li>
                                     @endcan
                                     @can('cSOP')
-                                        <li><a class="dropdown-item" href="{{ route('sopForm') }}">ระเบียบการปฏิบัติงาน</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('sopForm') }}">PM-SOP</a></li>
                                     @endcan
                                     @can('cWI')
-                                        <li><a class="dropdown-item" href="{{ route('wiForm') }}">ขั้นตอนการปฏิบัติงาน</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('wiForm') }}">WI-SOP</a></li>
                                     @endcan
                                     @can('cANNO')
-                                        <li><a class="dropdown-item" href="{{ route('annoForm') }}">ประกาศ</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('annoForm') }}">QM-Announce</a></li>
                                     @endcan
                                     @can('ccourse')
-                                        <li><a class="dropdown-item" href="{{ route('courseForm') }}">Course</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('courseForm') }}">SD-Course</a></li>
                                     @endcan
                                     @can('ccheck')
-                                        <li><a class="dropdown-item" href="{{ route('checkForm') }}">Check List</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('checkForm') }}">SD-CheckList</a></li>
                                     @endcan
                                     @can('cmedia')
-                                        <li><a class="dropdown-item" href="{{ route('mediaForm') }}">Media</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('mediaForm') }}">Brochure</a></li>
                                     @endcan
                                     @can('cCONT')
-                                        <li><a class="dropdown-item" href="{{ route('contract') }}">สัญญา</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('contract') }}">SD-Contract</a></li>
                                     @endcan
                                     @can('cCOST')
-                                        <li><a class="dropdown-item" href="{{ route('costForm') }}">ต้นทุนงาน</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('costForm') }}">SD-Cost</a></li>
                                     @endcan
                                     @can('cJD')
-                                        <li><a class="dropdown-item" href="{{ route('jdForm') }}">รายละเอียดงาน</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('jdForm') }}">JD</a></li>
+                                    @endcan
+                                    @can('DAR')
+                                        <li><a class="dropdown-item" href="{{ route('darForm') }}">DAR</a></li>
                                     @endcan
                                 </div>
                             </ul>
@@ -219,40 +222,43 @@
                             <ul class="dropdown-menu dropdown-menu-end ">
                                 <div class="d-flex flex-column justify-content-center">
                                     @can('MOU')
-                                        <li><a class="dropdown-item" href="{{ route('mouTable') }}">บันทึกความร่วมมือ</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('mouTable') }}">QM-Mou-Moa</a></li>
                                     @endcan
                                     @can('PRO')
-                                        <li><a class="dropdown-item" href="{{ route('projTable') }}">โครงการ</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('projTable') }}">ED-Project</a></li>
                                     @endcan
                                     @can('POL')
-                                        <li><a class="dropdown-item" href="{{ route('policyTable') }}">นโยบาย</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('policyTable') }}">QM-Policy</a></li>
                                     @endcan
                                     @can('SOP')
-                                        <li><a class="dropdown-item" href="{{ route('sopTable') }}">ระเบียบการปฏิบัติงาน</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('sopTable') }}">PM-SOP</a></li>
                                     @endcan
                                     @can('WI')
-                                        <li><a class="dropdown-item" href="{{ route('wiTable') }}">ขั้นตอนการปฏิบัติงาน</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('wiTable') }}">WI-SOP</a></li>
                                     @endcan
                                     @can('ANNO')
-                                        <li><a class="dropdown-item" href="{{ route('annoTable') }}">ประกาศ</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('annoTable') }}">QM-Announce</a></li>
                                     @endcan
                                     @can('course')
-                                        <li><a class="dropdown-item" href="{{ route('courseTable') }}">course</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('courseTable') }}">SD-Course</a></li>
                                     @endcan
                                     @can('checklist')
-                                        <li><a class="dropdown-item" href="{{ route('checkTable') }}">Check List</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('checkTable') }}">SD-CheckList</a></li>
                                     @endcan
                                     @can('media')
-                                        <li><a class="dropdown-item" href="{{ route('mediaTable') }}">Media</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('mediaTable') }}">Brochure</a></li>
                                     @endcan
                                     @can('CONT')
-                                        <li><a class="dropdown-item" href="{{ route('contTable') }}">สัญญา</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('contTable') }}">SD-Contract</a></li>
                                     @endcan
                                     @can('COST')
-                                        <li><a class="dropdown-item" href="{{ route('costTable') }}">ต้นทุนงาน</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('costTable') }}">SD-Cost</a></li>
                                     @endcan
                                     @can('JD')
-                                        <li><a class="dropdown-item" href="{{ route('jdTable') }}">รายละเอียดงาน</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('jdTable') }}">JD</a></li>
+                                    @endcan
+                                    @can('DAR')
+                                        <li><a class="dropdown-item" href="{{ route('darTable') }}">DAR</a></li>
                                     @endcan
                                 </div>
                             </ul>

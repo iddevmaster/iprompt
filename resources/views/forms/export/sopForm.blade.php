@@ -100,12 +100,12 @@
             <!-- header row 1 -->
             <div class="row border border-black mx-0  text-center" id="page-header">
                 <div class="col pt-2">
-                    <img style="" src="{{ asset('dist/img/logoiddrives.png') }}" height="80">
+                    <img style="" src="{{ asset('dist/img/logoiddrives.png') }}" height="60">
                     <p class="mt-1">บริษัท ไอดีไดรฟ์ จำกัด</p>
                 </div>
                 <div class="col-5 border border-black border-top-0 border-bottom-0">
                     <h5 class="mt-3 fw-bold">ระเบียบการปฏิบัติงาน</h5>
-                    <h5 class="fw-bold">Standard Operating Procedure (SOP)</h5>
+                    <h5 class="fw-bold" style="font-size: 14px;">Standard Operating Procedure (SOP)</h5>
                     <div class="d-flex ">
                         <h5 class="text-start mt-3 fw-bold">เรื่อง</h5>
                             <h5 class="text-start mt-3 ms-2 " id="subject">{{$subject}}</h5>
@@ -119,10 +119,10 @@
                         $date = $datetime ? new DateTime($datetime) : null;
                         $dated = $date ? $date->format('Y-m-d') : "";
                         ?>
-                    <p class="text-start mb-0">เลขที่เอกสาร: {{$form->book_num}}</p>
-                    <p class="text-start mb-0">แก้ไขครั้งที่: {{$form->edit_count}}</p>
-                    <p class="text-start mb-0">วันที่บังคับใช้: {{$dated}}</p>
-                    <p class="text-start">หน้าที่:</p>
+                    <p class="text-start mb-0" style="font-size: 14px;">เลขที่: {{$form->book_num}}</p>
+                    <p class="text-start mb-0" style="font-size: 14px;">แก้ไขครั้งที่: {{$form->edit_count}}</p>
+                    <p class="text-start mb-0" style="font-size: 14px;">วันที่บังคับใช้: {{$dated}}</p>
+                    <p class="text-start" style="font-size: 14px;">หน้าที่:</p>
                 </div>
             </div><!-- end header row 1 -->
 

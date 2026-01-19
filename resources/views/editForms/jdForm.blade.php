@@ -37,7 +37,7 @@
                                 ? (new DateTime($app->date))->format('Y-m-d')
                                 : '';
                         ?>
-                        <p class="text-start mb-0">เลขที่เอกสาร: {{$form->book_num}}</p>
+                        <p class="text-start mb-0">เลขที่: {{$form->book_num}}</p>
                         <p class="text-start mb-0">แก้ไขครั้งที่: {{$form->edit_count}}</p>
                         <p class="text-start mb-0">วันที่บังคับใช้: {{$dated}}</p>
                         <p class="text-start">หน้าที่:</p>

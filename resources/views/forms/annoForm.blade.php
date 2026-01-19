@@ -11,7 +11,7 @@
 </head>
 <body onbeforeunload="return myFunction()">
     <div class="text-center my-4">
-        <h2>ประกาศ</h2>
+        <h2>ใบคำขอดำเนินการด้านเอกสาร (DAR)</h2>
     </div>
     <form id="myForm" class="overflow-x-auto" action="{{ route('preview') }}" method="POST" >
         @csrf
@@ -33,14 +33,38 @@
                         <h5 class="fw-bold">ประกาศที่ <span class="fw-normal">{{ $annNo }}</span></h5>
                         <input type="hidden" name="annNo" value="{{$annNo}}">
                     @else
-                        <h5 class="fw-bold">ประกาศที่ <input type="text" value="" name="annNo" readonly></h5>
-                        <script>
-                            // Get the current date
-                            var currentDate = new Date();
-                            var currentYear = currentDate.getFullYear()+543;
-                            document.getElementsByName('annNo')[0].value = "AN-ID-{{$len}}-00-"+currentYear;
-                        </script>
+                        @php
+                            $dpm_prefix = strlen(Auth::user()->getDpm->prefix) > 4 ? 'ID' : Auth::user()->getDpm->prefix;
+                        @endphp
+                        <div class="d-flex mb-2">
+                            <h5 class="fw-bold m-0">ประกาศที่ <input type="text" value="" id="annNo" name="annNo" readonly required></h5>
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#genModal">
+                                Generate
+                            </button>
+                        </div>
                     @endif
+
+                    <div class="modal fade" id="genModal" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">เลือกการใช้งานเลขเอกสาร</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <div class="modal-body text-center">
+                                    <button type="button" class="btn btn-outline-primary w-100 mb-2" onclick="generateDoc('company')">
+                                        ใช้ทั้งบริษัท
+                                    </button>
+
+                                    <button type="button" class="btn btn-outline-secondary w-100" onclick="generateDoc('department')">
+                                        ใช้ภายในฝ่าย
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                     @if ($class)
@@ -141,6 +165,43 @@
     </form>
 </body>
 
+<script>
+    function generateDoc(type) {
+        const year = new Date().getFullYear() + 543;
+        const len = "{{ $len ?? '1' }}";
+        const department = "{{ $dpm_prefix ?? 'ID' }}"; // เช่น IT, HR, QA
 
+        let docNo = '';
+
+        if (type === 'company') {
+            // AN-ID/ฝ่าย-0x-00-ปี
+            docNo = `AN-ID/${department}-0${len}-00-${year}`;
+        } else {
+            // AN-ฝ่าย-0x-00-ปี
+            docNo = `AN-${department}-0${len}-00-${year}`;
+        }
+
+        // เปลี่ยนปุ่ม Generate เป็น text
+        // document.getElementById('docArea').innerText = docNo;
+
+        // set hidden input
+        document.getElementById('annNo').value = docNo;
+
+        // ปิด modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('genModal'));
+        modal.hide();
+    }
+
+    document.getElementById('myForm').addEventListener('submit', function (e) {
+        const bookNo = document.getElementById('annNo').value.trim();
+
+        // เช็คว่า bookNo ว่างหรือไม่
+        if (bookNo.length === 0) {
+            e.preventDefault(); // ❌ หยุด submit
+            alert('กรุณากด Generate เพื่อสร้างเลขที่ก่อน');
+            return false;
+        }
+    });
+</script>
 
 @endsection

@@ -12,7 +12,7 @@
 <body onbeforeunload="return myFunction()">
 
     <div class="text-center my-4">
-        <h2>โครงการ</h2>
+        <h2>ใบคำขอดำเนินการด้านเอกสาร (DAR)</h2>
     </div>
     <form id="myForm" class="overflow-x-auto" action="{{ route('preview') }}" method="POST" >
         @csrf

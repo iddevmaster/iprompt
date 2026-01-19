@@ -11,7 +11,7 @@
 </head>
 <body onbeforeunload="return myFunction()">
     <div class="text-center my-4">
-        <h2>นโยบาย</h2>
+        <h2>ใบคำขอดำเนินการด้านเอกสาร (DAR)</h2>
     </div>
     <form id="myForm" class="overflow-x-auto" action="{{ route('preview') }}" method="POST" >
         @csrf
@@ -22,7 +22,7 @@
                 <!-- header row 1 -->
                 <div class="row border border-black mx-0  text-center" id="page-header">
                     <div class="col pt-2">
-                        <img style="" src="{{ asset('dist/img/logoiddrives.png') }}" height="100">
+                        <img style="" src="{{ asset('dist/img/logoiddrives.png') }}" height="60">
                         <p class="mt-1">บริษัท ไอดีไดรฟ์ จำกัด</p>
                     </div>
                     <div class="col-5 border border-black border-top-0 border-bottom-0">
@@ -37,28 +37,53 @@
 
                     <div class="col pt-2">
                         @if ($class)
-                            <p class="text-start mb-0">เลขที่เอกสาร {{$bookNo}}</p>
+                            <p class="text-start mb-0" style="font-size: 12px;">เลขที่ {{$bookNo}}</p>
                             <input type="hidden" name="bookNo" value="{{$bookNo}}">
-                            <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
-                            <p class="text-start mb-0">วันที่บังคับใช้ </p>
-                            <p class="text-start">หน้าที่ 1/1</p>
+                            <p class="text-start mb-0" style="font-size: 12px;">แก้ไขครั้งที่ 0</p>
+                            <p class="text-start mb-0" style="font-size: 12px;">วันที่บังคับใช้ </p>
+                            <p class="text-start" style="font-size: 12px;">หน้าที่ 1/1</p>
                         @else
-                            <p class="text-start mb-0">เลขที่เอกสาร <span id="currentYear"></span></p>
-                            <input type="hidden" name="bookNo" value="">
-                            <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
-                            <p class="text-start mb-0">วันที่บังคับใช้ </p>
-                            <p class="text-start">หน้าที่ 1/1</p>
+                            @php
+                                $dpm_prefix = strlen(Auth::user()->getDpm->prefix) > 4 ? 'ID' : Auth::user()->getDpm->prefix;
+                            @endphp
+                            <p class="text-start mb-0">
+                                เลขที่
+                                <span id="docArea">
+                                    <input type="text" name="bookNo" id="bookNo" required readonly>
+                                    <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                        data-bs-target="#genModal">
+                                        Generate
+                                    </button>
+                                </span>
+                            </p>
 
-                            <script>
-                                // Get the current date
-                                var currentDate = new Date();
-                                var currentYear = currentDate.getFullYear()+543;
-                                document.getElementById("currentYear").innerText = "POL-ID-0{{$len}}-00-"+currentYear;
-                                document.getElementsByName('bookNo')[0].value = "POL-ID-0{{$len}}-00-"+currentYear;
-                            </script>
+                            <p class="text-start mb-0">แก้ไขครั้งที่ 0</p>
+                            <p class="text-start mb-0">วันที่บังคับใช้</p>
+                            <p class="text-start">หน้าที่ 1/1</p>
                         @endif
                     </div>
                 </div><!-- end header row 1 -->
+
+                <div class="modal fade" id="genModal" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">เลือกการใช้งานเลขเอกสาร</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <div class="modal-body text-center">
+                                <button type="button" class="btn btn-outline-primary w-100 mb-2" onclick="generateDoc('company')">
+                                    ใช้ทั้งบริษัท
+                                </button>
+
+                                <button type="button" class="btn btn-outline-secondary w-100" onclick="generateDoc('department')">
+                                    ใช้ภายในฝ่าย
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- header row 2 -->
                 <div class="row mx-0 w-100 border border-black border-top-0 justify-content-center text-center">
@@ -151,6 +176,43 @@
     </form>
 </body>
 
+<script>
+    function generateDoc(type) {
+        const year = new Date().getFullYear() + 543;
+        const len = "{{ $len ?? '1' }}";
+        const department = "{{ $dpm_prefix ?? 'ID' }}"; // เช่น IT, HR, QA
 
+        let docNo = '';
+
+        if (type === 'company') {
+            // POL-ID/ฝ่าย-0x-00-ปี
+            docNo = `POL-ID/${department}-0${len}-00-${year}`;
+        } else {
+            // POL-ฝ่าย-0x-00-ปี
+            docNo = `POL-${department}-0${len}-00-${year}`;
+        }
+
+        // เปลี่ยนปุ่ม Generate เป็น text
+        // document.getElementById('docArea').innerText = docNo;
+
+        // set hidden input
+        document.getElementById('bookNo').value = docNo;
+
+        // ปิด modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('genModal'));
+        modal.hide();
+    }
+
+    document.getElementById('myForm').addEventListener('submit', function (e) {
+        const bookNo = document.getElementById('bookNo').value.trim();
+
+        // เช็คว่า bookNo ว่างหรือไม่
+        if (bookNo.length === 0) {
+            e.preventDefault(); // ❌ หยุด submit
+            alert('กรุณากด Generate เพื่อสร้างเลขที่ก่อน');
+            return false;
+        }
+    });
+</script>
 
 @endsection
