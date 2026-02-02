@@ -391,7 +391,7 @@
                                 <a class="a-tag" href="/tables/sopTable">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-arrow-return-right"></i>
-                                        <p class="icon-title mb-0">PM</p>
+                                        <p class="icon-title mb-0">PM-WF</p>
                                     </div>
                                 </a>
                             </div>
