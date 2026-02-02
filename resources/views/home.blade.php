@@ -139,7 +139,7 @@
                                 <a class="a-tag" href="{{ route('sopForm') }}">
                                     <div class="w-100 h-100">
                                         <i class="bi bi-arrow-return-right"></i>
-                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">PM</span> SOP</p>
+                                        <p class="icon-title mb-0"><span class="badge text-bg-primary">PM</span> WF</p>
                                     </div>
                                 </a>
                             </div>

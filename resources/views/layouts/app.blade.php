@@ -180,7 +180,7 @@
                                         <li><a class="dropdown-item" href="{{ route('policyForm') }}">QM-Policy</a></li>
                                     @endcan
                                     @can('cSOP')
-                                        <li><a class="dropdown-item" href="{{ route('sopForm') }}">PM-SOP</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('sopForm') }}">PM-WF</a></li>
                                     @endcan
                                     @can('cWI')
                                         <li><a class="dropdown-item" href="{{ route('wiForm') }}">WI-SOP</a></li>
@@ -231,7 +231,7 @@
                                         <li><a class="dropdown-item" href="{{ route('policyTable') }}">QM-Policy</a></li>
                                     @endcan
                                     @can('SOP')
-                                        <li><a class="dropdown-item" href="{{ route('sopTable') }}">PM-SOP</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('sopTable') }}">PM-WF</a></li>
                                     @endcan
                                     @can('WI')
                                         <li><a class="dropdown-item" href="{{ route('wiTable') }}">WI-SOP</a></li>

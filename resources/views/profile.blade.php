@@ -169,7 +169,7 @@
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="SOP" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    SOP
+                                    WF
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">
@@ -247,7 +247,7 @@
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="cSOP" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    SOP
+                                    WF
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">

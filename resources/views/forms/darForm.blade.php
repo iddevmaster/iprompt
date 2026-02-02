@@ -125,7 +125,7 @@
             $(document).ready(function() {
                 const docTypes = [
                     { id: 'WI', label: 'WI' },
-                    { id: 'SOP', label: 'SOP' },
+                    { id: 'SOP', label: 'WF' },
                     { id: 'POL', label: 'นโยบาย' },
                     { id: 'PRO', label: 'โครงการ' },
                     { id: 'MOU', label: 'MOU' },

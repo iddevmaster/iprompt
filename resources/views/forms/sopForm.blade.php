@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-5 border border-black border-top-0 border-bottom-0">
                         <h5 class="mt-3 fw-bold">ระเบียบการปฏิบัติงาน</h5>
-                        <h5 class="fw-bold" style="font-size: 14px;">Standard Operating Procedure (SOP)</h5>
+                        <h5 class="fw-bold" style="font-size: 14px;">Workflow (WF)</h5>
                         <div class="d-flex ">
                             <h5 class="text-start mt-3 fw-bold">เรื่อง</h5>
                             @if ($class)
@@ -195,11 +195,11 @@
             let docNo = '';
 
             if (type === 'company') {
-                // SOP-ID/ฝ่าย-0x-00-ปี
-                docNo = `SOP-ID/${department}-0${len}-00-${year}`;
+                // WF-ID/ฝ่าย-0x-00-ปี
+                docNo = `WF-ID/${department}-0${len}-00-${year}`;
             } else {
-                // SOP-ฝ่าย-0x-00-ปี
-                docNo = `SOP-${department}-0${len}-00-${year}`;
+                // WF-ฝ่าย-0x-00-ปี
+                docNo = `WF-${department}-0${len}-00-${year}`;
             }
 
             // เปลี่ยนปุ่ม Generate เป็น text

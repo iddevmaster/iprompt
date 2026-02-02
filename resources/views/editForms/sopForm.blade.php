@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-5 border border-black border-top-0 border-bottom-0">
                         <h5 class="mt-3 fw-bold">ระเบียบการปฏิบัติงาน</h5>
-                        <h5 class="fw-bold">Standard Operating Procedure (SOP)</h5>
+                        <h5 class="fw-bold">Workflow (WF)</h5>
                         <div class="d-flex ">
                             <h5 class="text-start mt-3 fw-bold">เรื่อง</h5>
                                 <input class="ms-2 w-100" id="subject" style="overflow-wrap: break-word;" value="{{$form->title}}" type="text" name="subject" required>
