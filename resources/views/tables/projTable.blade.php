@@ -45,10 +45,8 @@
                             if (is_array($teamArr)) {
                                 foreach ($teamArr as $index => $memb) {
                                     if ($index == 0) continue;
-                                    $submitUser = $user->firstWhere('id', $memb);
-                                    if ($submitUser && !$submitUser->trashed()) {
-                                        $teamlist[] = ($submitUser->name ?? 'Unknown');
-                                    }
+                                    $submitUser = $user->where('deleted_at', null)->firstWhere('id', $memb);
+                                    $teamlist[] = ($submitUser ? $submitUser->name : 'Unknow');
                                 }
                             }
                         @endphp
@@ -428,7 +426,7 @@
                         <hr>
                         <select class="form-select mb-2" id="usrt" >
                             <option value="" selected disabled>กรุณาเลือกผู้ร่วมโครงการ</option>
-                            @foreach ($user as $usr)
+                            @foreach ($user->where('deleted_at', null) as $usr)
                                 <option value="{{$usr->id}}">{{$usr->name}}</option>
                             @endforeach
                         </select>
