@@ -46,7 +46,9 @@
                                 foreach ($teamArr as $index => $memb) {
                                     if ($index == 0) continue;
                                     $submitUser = $user->firstWhere('id', $memb);
-                                    $teamlist[] = ($submitUser ? $submitUser->name : 'Unknow');
+                                    if ($submitUser && !$submitUser->trashed()) {
+                                        $teamlist[] = ($submitUser->name ?? 'Unknown');
+                                    }
                                 }
                             }
                         @endphp
