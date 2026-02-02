@@ -384,7 +384,7 @@
                         <hr>
                         <select class="form-select mb-2" id="usrt" >
                             <option value="" selected disabled>กรุณาเลือกผู้มีสิทธ์เข้าถึงเอกสาร</option>
-                            @foreach ($user as $usr)
+                            @foreach ($user->where('deleted_at', null) as $usr)
                                 <option value="{{$usr->id}}">{{$usr->name}}</option>
                             @endforeach
                         </select>

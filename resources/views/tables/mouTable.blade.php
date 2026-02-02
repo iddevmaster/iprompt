@@ -46,7 +46,7 @@
                             if (is_array($teamArr)) {
                                 foreach ($teamArr as $index => $memb) {
                                     if ($index == 0) continue;
-                                    $submitUserf = $user->firstWhere('id', $memb);
+                                    $submitUserf = $user->where('deleted_at', null)->firstWhere('id', $memb);
                                     $teamlist[] = ($submitUserf ? $submitUserf->name : 'Unknow');
                                 }
                             }
@@ -617,7 +617,7 @@
                         <hr>
                         <select class="form-select mb-2" id="usrt" >
                             <option value="" selected disabled>กรุณาเลือกผู้มีสิทธ์เข้าถึงเอกสาร</option>
-                            @foreach ($user as $usr)
+                            @foreach ($user->where('deleted_at', null) as $usr)
                                 <option value="{{$usr->id}}">{{$usr->name}}</option>
                             @endforeach
                         </select>
