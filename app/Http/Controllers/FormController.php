@@ -597,13 +597,13 @@ class FormController extends Controller
                 $owner = User::find($submit_id);
             }
 
-            $cPath = public_path('files/signs/' . ($owner->image ?? ''));
+            $cPath = public_path('files/signs/' . ($owner->image ?? '-'));
             $csign = File::exists($cPath);
 
-            $iPath = public_path('files/signs/' . ($insName->image ?? ''));
+            $iPath = public_path('files/signs/' . ($insName->image ?? '-'));
             $isign = File::exists($iPath);
 
-            $aPath = public_path('files/signs/' . ($appName->image ?? ''));
+            $aPath = public_path('files/signs/' . ($appName->image ?? '-'));
             $asign = File::exists($aPath);
         }
         return view('/forms/export/costForm',
