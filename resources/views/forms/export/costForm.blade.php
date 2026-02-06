@@ -132,7 +132,7 @@
                 <div class="col py-2 text-start align-items-start">
                     <div class="d-flex">
                         <p class="mb-1">ผู้จัดทำ:</p>
-                        @if ($csign)
+                        @if ($csign && file_exists(public_path('files/signs/' . $owner->image)))
                             <img src="/files/signs/{{ $owner->image }}" alt="sign" style="width: 100px; height: 50px;">
                         @endif
                     </div>
