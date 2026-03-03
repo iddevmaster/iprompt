@@ -217,7 +217,7 @@
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="media" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Media
+                                    Document
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">
@@ -295,7 +295,7 @@
                             <div class="form-check mx-3 col-lg-3 col-md-6">
                                 <input class="form-check-input" type="checkbox" value="" id="cmedia" disabled>
                                 <label class="form-check-label" for="flexCheckDefault">
-                                    Media
+                                    Document
                                 </label>
                             </div>
                             <div class="form-check mx-3 col-lg-3 col-md-6">

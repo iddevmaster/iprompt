@@ -195,7 +195,7 @@
                                         <li><a class="dropdown-item" href="{{ route('checkForm') }}">SD-CheckList</a></li>
                                     @endcan
                                     @can('cmedia')
-                                        <li><a class="dropdown-item" href="{{ route('mediaForm') }}">Media</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('mediaForm') }}">Document</a></li>
                                     @endcan
                                     @can('cCONT')
                                         <li><a class="dropdown-item" href="{{ route('contract') }}">SD-Contract</a></li>
@@ -246,7 +246,7 @@
                                         <li><a class="dropdown-item" href="{{ route('checkTable') }}">SD-CheckList</a></li>
                                     @endcan
                                     @can('media')
-                                        <li><a class="dropdown-item" href="{{ route('mediaTable') }}">Media</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('mediaTable') }}">Document</a></li>
                                     @endcan
                                     @can('CONT')
                                         <li><a class="dropdown-item" href="{{ route('contTable') }}">SD-Contract</a></li>

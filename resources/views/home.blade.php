@@ -279,7 +279,7 @@
                                 <a class="a-tag" href="{{ route('mediaForm') }}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Brochure.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0">Media</p>
+                                        <p class="icon-title mb-0">Document</p>
                                     </div>
                                 </a>
                             </div>
@@ -413,7 +413,7 @@
                                 <a class="a-tag" href="{{ route('mediaTable')}}">
                                     <div class="w-100 h-100">
                                         <img src="{{ asset('dist/logo/Brochure.png') }}" alt="" height="50px">
-                                        <p class="icon-title mb-0">Media</p>
+                                        <p class="icon-title mb-0">Document</p>
                                     </div>
                                 </a>
                             </div>

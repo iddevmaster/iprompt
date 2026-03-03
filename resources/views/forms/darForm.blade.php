@@ -132,7 +132,7 @@
                     { id: 'ANNO', label: 'ประกาศ' },
                     { id: 'checklist', label: 'CheckList' },
                     { id: 'course', label: 'Course' },
-                    { id: 'media', label: 'Media' },
+                    { id: 'media', label: 'Document' },
                     { id: 'COST', label: 'ต้นทุนงาน' },
                     { id: 'JD', label: 'JD' }
                 ];
