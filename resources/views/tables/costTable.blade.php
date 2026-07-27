@@ -740,12 +740,15 @@
                 Swal.fire({
                     title: 'เพิ่มฝ่ายที่เข้าถึงเอกสาร',
                     html: `
-                        <select class="form-select mb-2" id="usrt" multiple size="6">
+                        <div class="text-start" style="max-height: 260px; overflow-y: auto;">
                             @foreach ($dpms as $dpm)
-                                <option value="{{$dpm->id}}">{{$dpm->name}}</option>
+                                <div class="form-check">
+                                    <input class="form-check-input usrt-check" type="checkbox" value="{{$dpm->id}}" id="usrt-{{$dpm->id}}">
+                                    <label class="form-check-label" for="usrt-{{$dpm->id}}">{{$dpm->name}}</label>
+                                </div>
                             @endforeach
-                        </select>
-                        <small class="text-muted">กด Ctrl (หรือ Cmd) ค้างไว้เพื่อเลือกหลายฝ่าย</small>
+                        </div>
+                        <small class="text-muted">เลือกได้หลายฝ่าย</small>
                         `,
                     showCancelButton: true,
                     showDenyButton: true,
@@ -753,8 +756,7 @@
                     confirmButtonText: 'บันทึก',
                     cancelButtonText: 'ยกเลิก',
                     preConfirm: () => {
-                        const usrtSelect = document.getElementById('usrt');
-                        const usrtValues = Array.from(usrtSelect.selectedOptions).map((opt) => opt.value);
+                        const usrtValues = Array.from(document.querySelectorAll('.usrt-check:checked')).map((el) => el.value);
                         if (usrtValues.length === 0) {
                             return Promise.reject('โปรดเลือกฝ่าย');
                         }
