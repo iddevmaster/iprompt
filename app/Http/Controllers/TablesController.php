@@ -1374,7 +1374,8 @@ class TablesController extends Controller
                 $data[] = $oldt;
             }
 
-            $data[] = $request->memb;
+            $newMembers = is_array($request->memb) ? $request->memb : [$request->memb];
+            $data = array_values(array_unique(array_merge($data, $newMembers)));
             if ($request->type === 'proj') {
                 $gendoc = project_doc::find($request->bid);
             } elseif ($request->type === 'cont') {
@@ -1567,8 +1568,7 @@ class TablesController extends Controller
             if ($share) {
                 $fileList = json_decode($share);
             }
-            $newMembers = is_array($request->memb) ? $request->memb : [$request->memb];
-            $fileList = array_values(array_unique(array_merge($fileList, $newMembers)));
+            $fileList[] = $request->memb;
             $yourModel->shares = $fileList;
             $yourModel->save();
 

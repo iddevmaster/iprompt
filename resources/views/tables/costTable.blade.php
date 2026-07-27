@@ -740,15 +740,12 @@
                 Swal.fire({
                     title: 'เพิ่มฝ่ายที่เข้าถึงเอกสาร',
                     html: `
-                        <div class="text-start" style="max-height: 260px; overflow-y: auto;">
+                        <select class="form-select mb-2" id="usrt" >
+                            <option value="" selected disabled>กรุณาเลือกฝ่ายที่สามารถเข้าถึงเอกสารนี้ได้</option>
                             @foreach ($dpms as $dpm)
-                                <div class="form-check">
-                                    <input class="form-check-input usrt-check" type="checkbox" value="{{$dpm->id}}" id="usrt-{{$dpm->id}}">
-                                    <label class="form-check-label" for="usrt-{{$dpm->id}}">{{$dpm->name}}</label>
-                                </div>
+                                <option value="{{$dpm->id}}">{{$dpm->name}}</option>
                             @endforeach
-                        </div>
-                        <small class="text-muted">เลือกได้หลายฝ่าย</small>
+                        </select>
                         `,
                     showCancelButton: true,
                     showDenyButton: true,
@@ -756,12 +753,12 @@
                     confirmButtonText: 'บันทึก',
                     cancelButtonText: 'ยกเลิก',
                     preConfirm: () => {
-                        const usrtValues = Array.from(document.querySelectorAll('.usrt-check:checked')).map((el) => el.value);
-                        if (usrtValues.length === 0) {
+                        const usrtValue = document.getElementById('usrt').value;
+                        if (!usrtValue) {
                             return Promise.reject('โปรดเลือกฝ่าย');
                         }
 
-                        return usrtValues;
+                        return [usrtValue];
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -773,7 +770,7 @@
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
                             },
                             body: JSON.stringify({
-                                memb: result.value,
+                                memb: result.value[0],
                                 bid: bookid,
                                 oldT: team,
                                 type: type,
@@ -833,12 +830,15 @@
                     title: 'สิทธ์การเข้าถึงเอกสาร',
                     html: `<div ><b>รายชื่อ:</b> ${displayTeamlist}</div>
                         <hr>
-                        <select class="form-select mb-2" id="usrt" >
-                            <option value="" selected disabled>กรุณาเลือกผู้มีสิทธ์เข้าถึงเอกสาร</option>
+                        <div class="text-start" style="max-height: 260px; overflow-y: auto;">
                             @foreach ($user->where('deleted_at', null) as $usr)
-                                <option value="{{$usr->id}}">{{$usr->name}}</option>
+                                <div class="form-check">
+                                    <input class="form-check-input usrt-check" type="checkbox" value="{{$usr->id}}" id="usrt-{{$usr->id}}">
+                                    <label class="form-check-label" for="usrt-{{$usr->id}}">{{$usr->name}}</label>
+                                </div>
                             @endforeach
-                        </select>
+                        </div>
+                        <small class="text-muted">เลือกได้หลายคน</small>
                         `,
                     showCancelButton: true,
                     showDenyButton: true,
@@ -846,12 +846,12 @@
                     confirmButtonText: 'บันทึก',
                     cancelButtonText: 'ยกเลิก',
                     preConfirm: () => {
-                        const usrtValue = document.getElementById('usrt').value;
-                        if (!usrtValue) {
+                        const usrtValues = Array.from(document.querySelectorAll('.usrt-check:checked')).map((el) => el.value);
+                        if (usrtValues.length === 0) {
                             return Promise.reject('โปรดเลือกรายชื่อ');
                         }
 
-                        return [usrtValue];
+                        return usrtValues;
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -863,7 +863,7 @@
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
                             },
                             body: JSON.stringify({
-                                memb: result.value[0],
+                                memb: result.value,
                                 bid: bookid,
                                 oldT: team,
                                 type: bookty,
