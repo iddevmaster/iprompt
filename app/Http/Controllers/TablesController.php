@@ -1567,7 +1567,8 @@ class TablesController extends Controller
             if ($share) {
                 $fileList = json_decode($share);
             }
-            $fileList[] = $request->memb;
+            $newMembers = is_array($request->memb) ? $request->memb : [$request->memb];
+            $fileList = array_values(array_unique(array_merge($fileList, $newMembers)));
             $yourModel->shares = $fileList;
             $yourModel->save();
 

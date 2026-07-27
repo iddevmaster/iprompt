@@ -740,12 +740,12 @@
                 Swal.fire({
                     title: 'เพิ่มฝ่ายที่เข้าถึงเอกสาร',
                     html: `
-                        <select class="form-select mb-2" id="usrt" >
-                            <option value="" selected disabled>กรุณาเลือกฝ่ายที่สามารถเข้าถึงเอกสารนี้ได้</option>
+                        <select class="form-select mb-2" id="usrt" multiple size="6">
                             @foreach ($dpms as $dpm)
                                 <option value="{{$dpm->id}}">{{$dpm->name}}</option>
                             @endforeach
                         </select>
+                        <small class="text-muted">กด Ctrl (หรือ Cmd) ค้างไว้เพื่อเลือกหลายฝ่าย</small>
                         `,
                     showCancelButton: true,
                     showDenyButton: true,
@@ -753,12 +753,13 @@
                     confirmButtonText: 'บันทึก',
                     cancelButtonText: 'ยกเลิก',
                     preConfirm: () => {
-                        const usrtValue = document.getElementById('usrt').value;
-                        if (!usrtValue) {
+                        const usrtSelect = document.getElementById('usrt');
+                        const usrtValues = Array.from(usrtSelect.selectedOptions).map((opt) => opt.value);
+                        if (usrtValues.length === 0) {
                             return Promise.reject('โปรดเลือกฝ่าย');
                         }
 
-                        return [usrtValue];
+                        return usrtValues;
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -770,7 +771,7 @@
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}', // Replace with the actual CSRF token
                             },
                             body: JSON.stringify({
-                                memb: result.value[0],
+                                memb: result.value,
                                 bid: bookid,
                                 oldT: team,
                                 type: type,
